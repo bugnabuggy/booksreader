@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.authorization-parent{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: -20%;
+    left: 0;
+    display: flex;
+    align-items: center;
+    align-content: center; 
+    justify-content: center; 
+    overflow: auto;   
+
+}
+.form-authorization{
+    display: block;
+        border: none;
+}
+.authorization-center{
+    text-align: center;
+    align-items: center;
+}
+.size-input-authorization{
+    width: 65%;
+    margin-bottom: 10px;
+}
