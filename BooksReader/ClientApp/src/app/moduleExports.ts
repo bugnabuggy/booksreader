@@ -78,6 +78,7 @@ import { DashboardComponent,
 import { AuthorizationService,
          NotificationService,
          SecurityService } from './services';
+import { UserHubService } from './hubs';
 
 
 
@@ -94,7 +95,8 @@ const MODULE_COMPONENTS = [
 const MODULE_SERVICES = [
          AuthorizationService,
          NotificationService,
-         SecurityService
+         SecurityService,
+         UserHubService
 ];
 
 export { MODULE_COMPONENTS, MODULE_PIPES, MODULE_SERVICES, MATERIAL_DESIGN };

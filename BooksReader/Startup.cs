@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BooksReader.Configuration;
 using BooksReader.Models;
 using BooksReader.Configuration;
+using BooksReader.Hubs;
 using BooksReader.Infrastructure;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
@@ -149,7 +150,12 @@ namespace BooksReader
 					template: "api/{controller=Main}");
 			});
 
-			app.UseSpa(spa =>
+		    app.UseSignalR(routes =>
+		    {
+		        routes.MapHub<UserHub>("/hub/user");
+		    });
+
+            app.UseSpa(spa =>
 			{
 				// To learn more about options for serving an Angular SPA from ASP.NET Core,
 				// see https://go.microsoft.com/fwlink/?linkid=864501

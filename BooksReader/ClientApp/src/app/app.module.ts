@@ -28,7 +28,8 @@ import { SimpleHttpInterceptor } from './interceptors/simple-http.interceptor';
     BrowserAnimationsModule,
     AppRoutingModule
   ],
-  providers: [MODULE_SERVICES,
+  providers: [
+    MODULE_SERVICES,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SimpleHttpInterceptor,
