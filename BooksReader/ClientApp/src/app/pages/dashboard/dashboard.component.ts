@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SecurityService } from '../../services/';
 import { UserHubService } from '../../hubs';
 
@@ -6,11 +6,15 @@ import { UserHubService } from '../../hubs';
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   constructor(
     public security: SecurityService,
     public userHub: UserHubService
   ) {
+  }
+
+  ngOnInit(): void {
+    this.userHub.init();
   }
 
   sendMsg() {

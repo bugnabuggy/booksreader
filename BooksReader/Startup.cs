@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BooksReader.Configuration;
 using BooksReader.Models;
 using BooksReader.Configuration;
+using BooksReader.Helpers;
 using BooksReader.Hubs;
 using BooksReader.Infrastructure;
 using IdentityServer4.AccessTokenValidation;
@@ -84,6 +85,7 @@ namespace BooksReader
 					// this enables automatic token cleanup. this is optional.
 					options.EnableTokenCleanup = true;
 					options.TokenCleanupInterval = 30;
+
 				});
 
 			services.AddAuthentication(o =>
@@ -97,8 +99,9 @@ namespace BooksReader
 
 					options.Authority = Configuration["ServerUrl"];
 					options.RequireHttpsMetadata = false;
+				    options.TokenRetriever = CustomTokenRetriever.FromHeaderAndQueryString;
 
-					options.ApiName = Constants.ApiName;
+                    options.ApiName = Constants.ApiName;
 				});
 
 			services.ConfigureApplicationCookie(options =>

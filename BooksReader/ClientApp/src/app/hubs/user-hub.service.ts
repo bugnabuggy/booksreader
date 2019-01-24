@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HubConnectionBuilder, HubConnection } from '@aspnet/signalr';
+import { SecurityService } from '../services';
 
 
 @Injectable({
@@ -8,28 +9,36 @@ import { HubConnectionBuilder, HubConnection } from '@aspnet/signalr';
 export class UserHubService {
   connection: HubConnection;
 
-  constructor() {
+  constructor(
+    private security: SecurityService
+  ) {
     this.connection = new HubConnectionBuilder()
-      .withUrl('/hub/user')
+      .withUrl('/hub/user', { accessTokenFactory: () => this.security.token })
       .build();
 
 
     this.connection.on('GetStats', (val: any) => {
-      debugger;
       console.log(val);
+      alert(val);
     });
 
+    this.connection.on('Logout', (val: any) => {
+      console.warn('LOGOUT!!!');
+      security.logout();
+      this.connection.stop();
+      alert('logout');
+    });
+  }
+
+  init() {
     this.connection.start().then(val => {
-      debugger;
       console.log(val);
     });
   }
 
   checkStats(val: any) {
-    debugger;
     this.connection.invoke('CheckStatistics', val)
       .then((ok) => {
-        debugger;
         console.log(ok);
       });
   }

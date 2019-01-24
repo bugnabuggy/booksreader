@@ -26,16 +26,13 @@ export class SecurityService {
     }
 
     init() {
-        debugger;
         if (this.token) {
             this.getUserInfo()
             .subscribe((val: AppUser) => {
-                debugger;
                 this.user = val;
                 this.router.navigate(['dashboard']);
             },
             (err) => {
-                debugger;
             });
         }
     }
@@ -71,6 +68,11 @@ export class SecurityService {
             httpOptions).pipe(share());
 
         return observable;
+    }
+
+    logout() {
+        this.clearTokens();
+        this.router.navigate(['authorization']);
     }
 
     registration(username: string, password: string) {
