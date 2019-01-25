@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+@import "./parameters.scss";
+@import "./utilities.scss";
+
+html, body{
+    height: 100%;
+    width: 100%;
+    display: flex;    
+}
+ 
+app-root,
+app-login, 
+app-registration-component, 
+app-force-logout {
+    flex: 1;
+    display: flex;
+}
+
+
+
+.min-h-400{
+    min-height: 400px;
+    overflow: auto;
+}
+
+.mw-75 {
+    max-width: 75%;
+}
+
+.flex-1{
+    flex: 1;
+}
+
+// .size-input-authorization{
+//     width: 65%;
+//     margin-bottom: 10px;
+// }

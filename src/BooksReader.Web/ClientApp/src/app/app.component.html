@@ -1,0 +1,20 @@
+<div class='d-flex flex-column w-100'>
+  <header class=' border-bottom p-2' ngclass="{'text-center': security.isAuthenticated()}">
+    <h1 class='d-inline-block'>BooksReader</h1>
+    <nav class='float-right pr-4' *ngIf="security.isAuthenticated()">
+      <button class='' mat-button [matMenuTriggerFor]="menu"><i class='material-icons f-44'>menu</i></button>
+      <mat-menu #menu="matMenu">
+        <a mat-menu-item class=' '>Profile</a>
+        <a mat-menu-item routerLink="/dashboard" class=' '>Dashboard</a>
+        <a mat-menu-item routerLink="/admin/dashboard" *ngIf="security.isAdmin"> Admin dashboard</a>
+        <a mat-menu-item class=' ' (click)='userSvc.logOut()'>Logout</a>
+      </mat-menu>
+    </nav>
+
+
+
+  </header>
+  <div class="d-flex flex-1 min-h-400">
+    <router-outlet></router-outlet>
+  </div>
+</div>

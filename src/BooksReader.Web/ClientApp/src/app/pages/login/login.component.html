@@ -1,0 +1,26 @@
+<div class="d-flex w-100 justify-content-center align-items-center">
+  <form class="text-center" (ngSubmit)="login($event)" #loginForm="ngForm">
+
+    <mat-form-field class="w-75">
+      <input matInput name="email" [formControl]="userNameFormControl" placeholder="User name" class="font-weight-light">
+      <mat-error *ngIf="userNameFormControl.hasError('required')">
+        User name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-75">
+      <input matInput [formControl]="passwordFormControl" type="password" name="password" placeholder="Password" class="font-weight-light">
+      <mat-error *ngIf="passwordFormControl.hasError('required')">
+        password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <div>
+      <button mat-raised-button class="mat-raised-btn w-50" color="primary">Log in</button>
+    </div>
+    <div class='d-inline-block text-right w-75  mt-3'>
+      <a [routerLink]="['/registration']" routerLinkActive="active">Registration</a>
+    </div>
+
+  </form>
+</div>
