@@ -1,2 +1,2 @@
 export * from './registration.model';
-export * from './api-contracts/user.contract';
+export * from './api-contracts';

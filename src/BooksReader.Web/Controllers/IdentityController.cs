@@ -77,7 +77,8 @@ namespace BooksReader.Web.Controllers
 			var user = await _userManager.GetUserAsync(User);
 
 			return Ok(new {
-				Name = user.UserName,
+				Username = user.UserName,
+                Name = user.Name,
 				user.Id,
 				Roles = await _userManager.GetRolesAsync(user)
 			});

@@ -6,37 +6,37 @@ using System.Threading.Tasks;
 using BooksReader.Core.Models;
 using BooksReader.Core.Models.DTO;
 using BooksReader.Core.Services;
+using BooksReader.Infrastructure.DataContext;
 using BooksReader.Infrastructure.Models;
+using BooksReader.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 
 namespace BooksReader.Infrastructure.Services
 {
     public class UsersService : IUsersService
     {
-        private readonly UserManager<BrUser> _userManager;
+        private readonly BrDbContext _ctx;
 
-        public UsersService(UserManager<BrUser> userManager)
+        public UsersService(BrDbContext ctx)
         {
-            _userManager = userManager;
+            _ctx = ctx;
         }
 
-        public WebResult<IEnumerable<UserResult>> GetUsers()
+        public IQueryable<UserResult> GetUsersWithRoles()
         {
-            var users = _userManager.Users.Select(x =>
-                new UserResult
+            var users = _ctx.Users
+                .Join(_ctx.UserRoles, x => x.Id, y => y.UserId,
+                    (user, userRole) => new {user, userRole})
+                .Join(_ctx.Roles, x => x.userRole.RoleId, y => y.Id,
+                    (userRole, role) => new {User = userRole.user, Role = role})
+                .GroupBy(x => x.User).Select(x => new UserResult
                 {
-                    UserName = x.UserName,
-                    Name = x.Name,
-                    Roles = _userManager.GetRolesAsync(x).Result
-                }).ToList();
+                    UserName = x.Key.UserName,
+                    Name =  x.Key.Name,
+                    Roles = x.Select(y=>y.Role.Name)
+                });
 
-            var result = new WebResult<IEnumerable<UserResult>>
-            {
-                  Data = users,
-                  Total = users.Count
-            };
-
-            return result;
+            return users;
         }
     }
 }

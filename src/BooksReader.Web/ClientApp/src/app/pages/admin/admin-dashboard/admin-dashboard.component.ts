@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminUsersService } from '../../../services';
+import { WebResult, AppUser } from '../../../models';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -15,8 +16,9 @@ export class AdminDashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.adminUsers.getUsers().subscribe(val => {
-      this.users = val;
+    this.adminUsers.getUsers().subscribe((val: WebResult<AppUser>) => {
+      debugger;
+      this.users = val.data;
     });
   }
 

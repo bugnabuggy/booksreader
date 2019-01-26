@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BooksReader.Core.Services;
 using BooksReader.Infrastructure.Models;
+using BooksReader.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,12 +17,12 @@ namespace BooksReader.Infrastructure.Configuration
     {
         public static void ConfigureServices(IServiceCollection services)
         {
-           
+            services.AddTransient<IUsersService, UsersService>();
         }
 
         public static void InitRolesAndUsers(IServiceProvider services)
         {
-            var roles = new List<IdentityRole>()
+            var roles = new List<IdentityRole>
             {
                 new IdentityRole("Admin"),
                 new IdentityRole("User"),
@@ -29,7 +31,7 @@ namespace BooksReader.Infrastructure.Configuration
 
             var users = new Dictionary<BrUser, string>()
             {
-                {new BrUser(){ UserName = "admin"}, "123"},
+                {new BrUser(){ UserName = "admin", Name = "admin"}, "123"},
             };
 
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();

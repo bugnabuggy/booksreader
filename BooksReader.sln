@@ -11,13 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7390E882
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{676410E1-D2C3-454F-BBF8-79E5E662302A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksReader.Web.Tests", "tests\BooksReader.Web.Tests\BooksReader.Web.Tests.csproj", "{93394147-B8BB-4E12-BBB0-DAB8C1938478}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksReader.Infrastructure", "src\BooksReader.Infrastructure\BooksReader.Infrastructure.csproj", "{883E7A4B-7292-47CF-B99C-1D4CAD7207F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksReader.TestData", "tests\BooksReader.TestData\BooksReader.TestData.csproj", "{0C0A7CEE-5336-4E82-8B5A-CB9C4B9EBE29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksReader.Infrastructure.Tests", "tests\BooksReader.Infrastructure.Tests\BooksReader.Infrastructure.Tests.csproj", "{881A9D89-F60D-44FF-911F-3BCC1039012C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksReader.Web.Tests", "tests\BooksReader.Web.Tests\BooksReader.Web.Tests.csproj", "{8A7EE752-B593-44C6-8DA8-9A227CC449C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +33,6 @@ Global
 		{CBD39F73-2DE1-4AAE-A86D-13392BF5F1C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBD39F73-2DE1-4AAE-A86D-13392BF5F1C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBD39F73-2DE1-4AAE-A86D-13392BF5F1C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93394147-B8BB-4E12-BBB0-DAB8C1938478}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93394147-B8BB-4E12-BBB0-DAB8C1938478}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93394147-B8BB-4E12-BBB0-DAB8C1938478}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93394147-B8BB-4E12-BBB0-DAB8C1938478}.Release|Any CPU.Build.0 = Release|Any CPU
 		{883E7A4B-7292-47CF-B99C-1D4CAD7207F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{883E7A4B-7292-47CF-B99C-1D4CAD7207F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{883E7A4B-7292-47CF-B99C-1D4CAD7207F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,6 +45,10 @@ Global
 		{881A9D89-F60D-44FF-911F-3BCC1039012C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{881A9D89-F60D-44FF-911F-3BCC1039012C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{881A9D89-F60D-44FF-911F-3BCC1039012C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A7EE752-B593-44C6-8DA8-9A227CC449C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A7EE752-B593-44C6-8DA8-9A227CC449C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A7EE752-B593-44C6-8DA8-9A227CC449C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A7EE752-B593-44C6-8DA8-9A227CC449C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,10 +56,10 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{676C0605-635B-4BB5-82CC-7469F0CBEFC4} = {676410E1-D2C3-454F-BBF8-79E5E662302A}
 		{CBD39F73-2DE1-4AAE-A86D-13392BF5F1C3} = {676410E1-D2C3-454F-BBF8-79E5E662302A}
-		{93394147-B8BB-4E12-BBB0-DAB8C1938478} = {7390E882-A02E-4E03-ABB8-4E85098CE0EE}
 		{883E7A4B-7292-47CF-B99C-1D4CAD7207F4} = {676410E1-D2C3-454F-BBF8-79E5E662302A}
 		{0C0A7CEE-5336-4E82-8B5A-CB9C4B9EBE29} = {7390E882-A02E-4E03-ABB8-4E85098CE0EE}
 		{881A9D89-F60D-44FF-911F-3BCC1039012C} = {7390E882-A02E-4E03-ABB8-4E85098CE0EE}
+		{8A7EE752-B593-44C6-8DA8-9A227CC449C7} = {7390E882-A02E-4E03-ABB8-4E85098CE0EE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {70867093-87D2-4495-A704-07DA9C527CAC}

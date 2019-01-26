@@ -1,12 +1,31 @@
 ﻿using System;
+using System.Dynamic;
+using System.Threading;
+using System.Threading.Tasks;
+using BooksReader.Infrastructure.Models;
+using BooksReader.TestData.Helpers;
+using BooksReader.Web.Hubs;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using NUnit.Framework;
+using static Moq.It;
 
 namespace BooksReader.Web.Tests
 {
 	[TestFixture]
 	public class HubUsersTests
-	{
+    {
+        private static UserManager<BrUser> _userManager;
 
+        [OneTimeSetUp]
+        public void Start()
+        {
+            var services = new DatabaseDiBootstrapperInMemory().GetServiceProvider();
+            _userManager = services.GetService<UserManager<BrUser>>();
+        }
+             
 
 		[Test]
 		public void ShouldPassTest()
@@ -17,8 +36,32 @@ namespace BooksReader.Web.Tests
 		[Test]
 		public void ShouldRemoveConnection()
 		{
-			// var hub = new BooksReader.Web.Hubs.UserHub();
-		}
+            bool sendCalled = false;
+            string calledMethod = "";
+            object parameter;
+            var hub = new UserHub(_userManager);
+
+            var all = new Mock<IClientProxy>();
+            all.Setup(x=>x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>(), It.IsAny<CancellationToken>()))
+                .Callback<string, object, CancellationToken>((x, y, z) =>
+                {
+                    calledMethod = x;
+                    parameter = y;
+                })
+                .Returns(() =>
+                {
+                    sendCalled = true;
+                    return  Task.CompletedTask;
+                } );
+
+            
+            var mockClients = new Mock<IHubCallerClients>();
+            mockClients.Setup(m => m.All).Returns(() => all.Object);
+            hub.Clients = mockClients.Object;
+            
+            hub.CheckStatistics("any"); // ("TestUser", "TestMessage");
+            Assert.True(sendCalled);
+        }
 
 	}
 }

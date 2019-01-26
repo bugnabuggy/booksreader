@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Threading.Tasks;
+using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
 using BooksReader.Infrastructure.Models;
 using BooksReader.Web.Configuration;
@@ -53,8 +54,6 @@ namespace BooksReader
 				.AddAuthorization(opt =>
 				{
 				});
-
-			
 
 			services.AddIdentity<BrUser, IdentityRole>(opts =>
 				{
@@ -119,6 +118,8 @@ namespace BooksReader
 			{
 				configuration.RootPath = "ClientApp/dist";
 			});
+
+            AppConfigurator.ConfigureServices(services);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

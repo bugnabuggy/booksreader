@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BooksReader.Core.Models;
+using BooksReader.Core.Models.DTO;
+using BooksReader.Core.Services;
+using BooksReader.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +17,26 @@ namespace BooksReader.Web.Controllers.Admin
     [Authorize(Roles = "Admin")]
     public class UsersController : ControllerBase
     {
+        private readonly IUsersService _usersService;
+
+        public UsersController(IUsersService usersService)
+        {
+            _usersService = usersService;
+        }
+
         // GET: api/Users
         [HttpGet]
-        public IEnumerable<string> Get()
+        public WebResult<IEnumerable<UserResult>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var data = _usersService.GetUsersWithRoles().ToList();
+
+            var result = new WebResult<IEnumerable<UserResult>>
+            {
+                Data = data,
+                Total = data.Count()
+            };
+
+            return result;
         }
 
         // GET: api/Users/5

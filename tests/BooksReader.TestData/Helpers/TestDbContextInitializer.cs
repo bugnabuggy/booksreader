@@ -4,33 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BooksReader.Infrastructure.Configuration;
+using BooksReader.Infrastructure.DataContext;
+using BooksReader.Infrastructure.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BooksReader.TestData.Helpers
 {
     class TestDbContextInitializer
     {
-        private static bool _isInitialized = false;
+
         private Random _random = new Random();
 
         public async Task SeedData(IServiceProvider services)
         {
-            if (TestDbContextInitializer._isInitialized)
-            {
-                return;
-            }
-
-            TestDbContextInitializer._isInitialized = true;
-
-            // because we have service permission checks, principal should be an admin
-
-            
             AppConfigurator.InitRolesAndUsers(services);
 
-            //_context = services.GetService<N2NDataContext>();
-            //var apiUserSrv = services.GetService<N2NApiUserService>();
+            var context = services.GetService<BrDbContext>();
+            var userManager = services.GetService<UserManager<BrUser>>();
 
-            //var _userManager = services.GetService<UserManager<N2NIdentityUser>>();
-            //await _userManager.CreateAsync(N2N.TestData.N2NUsersList.GetN2NIdentityUser(), HardCoddedConfig.DefaultPassword);
+            await AddUsers(userManager);
 
             ////create users, create promises for users
             //_users = N2NUsersList.GetList().ToArray();
@@ -51,6 +44,22 @@ namespace BooksReader.TestData.Helpers
             //    AddPostcards(user, _context);
             //    AddAddressess(user, _context);
             //}
+        }
+
+        private static async Task AddUsers(UserManager<BrUser> manager)
+        {
+            var users = BrUsersList.GetUsers();
+
+            foreach (var user in users)
+            {
+                var brUser = new BrUser()
+                {
+                    Name = user.Username,
+                    UserName = user.Username
+                };
+                await manager.CreateAsync(brUser, user.Password);
+                await manager.AddToRolesAsync(brUser, user.Roles);
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 export interface AppUser {
     name: string;
-    login: string;
+    username: string;
+    id: string;
     roles: string[];
 }
