@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-using BooksReader.Web.Models;
+using BooksReader.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 
-namespace BooksReader.Web.Configuration
+namespace BooksReader.Infrastructure.Configuration
 {
     public class AppConfigurator
     {
-        public static void ConfigureDataServices(IServiceCollection services)
+        public static void ConfigureServices(IServiceCollection services)
         {
            
         }
@@ -30,12 +29,12 @@ namespace BooksReader.Web.Configuration
 
             var users = new Dictionary<BrUser, string>()
             {
-                {new BrUser(){ UserName = "admin"}, "Password@123"},
+                {new BrUser(){ UserName = "admin"}, "123"},
             };
 
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = services.GetRequiredService<UserManager<BrUser>>();
-            var logger = services.GetRequiredService<ILogger<Program>>();
+            var logger = services.GetRequiredService<ILoggerFactory>().CreateLogger("AppConfigurator");
             var config = services.GetRequiredService<IConfigurationRoot>();
 
             foreach (var role in roles)

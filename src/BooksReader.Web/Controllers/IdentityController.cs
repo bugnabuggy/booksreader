@@ -5,16 +5,15 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using BooksReader.Web.Models;
+using BooksReader.Infrastructure.Models;
+using BooksReader.Infrastructure.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using BooksReader.Web.Configuration;
-using BooksReader.Web.Models;
-using BooksReader.Web.Models.DTO;
-
+using BooksReader.Infrastructure.Configuration;
 
 namespace BooksReader.Web.Controllers
 {
@@ -43,13 +42,13 @@ namespace BooksReader.Web.Controllers
             var validTill = DateTime.UtcNow.AddMinutes(5);
 
             // cleanup
-            var keysToRemove = Constants.AntiforgeryKeys.Where(pair => pair.Value <= DateTime.UtcNow);
+            var keysToRemove = StaticLists.AntiforgeryKeys.Where(pair => pair.Value <= DateTime.UtcNow);
             foreach (var keyValuePair in keysToRemove)
             {
-                Constants.AntiforgeryKeys.Remove(keyValuePair.Key);
+                StaticLists.AntiforgeryKeys.Remove(keyValuePair.Key);
             }
 
-            Constants.AntiforgeryKeys.Add(key, validTill);
+            StaticLists.AntiforgeryKeys.Add(key, validTill);
             return Ok(key);
         }
 

@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using BooksReader.Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
-using BooksReader.Web.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 
-namespace BooksReader.Web.Infrastructure
+namespace BooksReader.Infrastructure.DataContext
 {
     public class BrDbContext : IdentityDbContext<BrUser>
     {

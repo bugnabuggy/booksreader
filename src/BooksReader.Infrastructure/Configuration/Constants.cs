@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BooksReader.Web.Configuration
+namespace BooksReader.Infrastructure.Configuration
 {
     public class Constants
     {
         public const int AsyncTaskWaitTime = 10_000;
-        public const string ApiName = "api";
-
-        public static Dictionary<Guid, DateTime> AntiforgeryKeys = new Dictionary<Guid, DateTime>();
+        
     }
 }

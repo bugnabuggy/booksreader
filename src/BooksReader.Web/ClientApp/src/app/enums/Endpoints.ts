@@ -15,6 +15,9 @@ class Endpoints {
         },
         user: {
             info: Endpoints.baseApiUrl + 'api/identity/me'
+        },
+        users: {
+            all: Endpoints.baseApiUrl + 'api/admin/users'
         }
     };
 }

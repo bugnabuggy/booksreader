@@ -6,6 +6,8 @@ namespace BooksReader.Web.Tests
 	[TestFixture]
 	public class HubUsersTests
 	{
+
+
 		[Test]
 		public void ShouldPassTest()
 		{

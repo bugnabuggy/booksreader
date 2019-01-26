@@ -1,11 +1,10 @@
 using System.Reflection;
 using System.Threading.Tasks;
-using BooksReader.Web.Configuration;
-using BooksReader.Web.Models;
+using BooksReader.Infrastructure.DataContext;
+using BooksReader.Infrastructure.Models;
 using BooksReader.Web.Configuration;
 using BooksReader.Web.Helpers;
 using BooksReader.Web.Hubs;
-using BooksReader.Web.Infrastructure;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -73,19 +72,19 @@ namespace BooksReader
 
 			services.AddIdentityServer()
 				.AddDeveloperSigningCredential()
-				.AddInMemoryApiResources(Config.GetApiResources())
-				.AddInMemoryClients(Config.GetClients())
+				.AddInMemoryApiResources(IdServerConfig.GetApiResources())
+                .AddInMemoryIdentityResources(IdServerConfig.GetIdentityResources())
+                .AddInMemoryClients(IdServerConfig.GetClients())
 				.AddAspNetIdentity<BrUser>()
 				.AddOperationalStore(options =>
 				{
 					options.ConfigureDbContext = builder =>
 						builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-							sql => sql.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name));
+							sql => sql.MigrationsAssembly(typeof(BrUser).GetTypeInfo().Assembly.GetName().Name));
 
 					// this enables automatic token cleanup. this is optional.
 					options.EnableTokenCleanup = true;
 					options.TokenCleanupInterval = 30;
-
 				});
 
 			services.AddAuthentication(o =>
@@ -100,8 +99,8 @@ namespace BooksReader
 					options.Authority = Configuration["ServerUrl"];
 					options.RequireHttpsMetadata = false;
 				    options.TokenRetriever = CustomTokenRetriever.FromHeaderAndQueryString;
-
-                    options.ApiName = Constants.ApiName;
+                    
+                    options.ApiName = IdServerConfig.ApiName;
 				});
 
 			services.ConfigureApplicationCookie(options =>

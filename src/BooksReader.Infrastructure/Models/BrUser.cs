@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace BooksReader.Web.Models
+namespace BooksReader.Infrastructure.Models
 {
     public class BrUser : IdentityUser
     {

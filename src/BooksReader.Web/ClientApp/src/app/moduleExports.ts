@@ -80,7 +80,9 @@ import { DashboardComponent,
 
 import { UserService,
          NotificationService,
-         SecurityService } from './services';
+         SecurityService,
+        AdminUsersService
+        } from './services';
 import { UserHubService } from './hubs';
 
 
@@ -101,7 +103,8 @@ const MODULE_SERVICES = [
          UserService,
          NotificationService,
          SecurityService,
-         UserHubService
+         UserHubService,
+         AdminUsersService
 ];
 
 export { MODULE_COMPONENTS, MODULE_PIPES, MODULE_SERVICES, MATERIAL_DESIGN };

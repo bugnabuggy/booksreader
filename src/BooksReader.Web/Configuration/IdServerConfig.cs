@@ -1,19 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
 
 namespace BooksReader.Web.Configuration
 {
-    public class Config
+    public class IdServerConfig
     {
+        public const string ApiName = "api";
+
         public static IEnumerable<ApiResource> GetApiResources()
         {
             return new List<ApiResource>
             {
-                new ApiResource(Constants.ApiName, "API for CPA Traffic Manager UI Site")
+                new ApiResource(ApiName, "API for BooksReader site")
+                {
+                    UserClaims = { JwtClaimTypes.Name, JwtClaimTypes.Role}
+                }
+            };
+        }
+
+        public static IEnumerable<IdentityResource> GetIdentityResources()
+        {
+            return new List<IdentityResource>()
+            {
+                new IdentityResources.Profile(),
+                
             };
         }
 
@@ -39,7 +55,8 @@ namespace BooksReader.Web.Configuration
 
                     AllowedScopes =
                     {
-                        Constants.ApiName
+                        ApiName
+                        
                     },
                     AllowOfflineAccess = true
                 }
