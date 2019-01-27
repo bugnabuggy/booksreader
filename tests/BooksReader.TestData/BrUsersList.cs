@@ -21,6 +21,12 @@ namespace BooksReader.TestData
             {
                 new UserForInitialization()
                 {
+                    Username = "empty",
+                    Password = "123",
+                    Roles = new List<string>(){}
+                },
+                new UserForInitialization()
+                {
                     Username = "tony",
                     Password = "123",
                     Roles = new List<string>(){ "User", "Author"}

@@ -24,9 +24,9 @@ namespace BooksReader.Infrastructure.Configuration
         {
             var roles = new List<IdentityRole>
             {
-                new IdentityRole("Admin"),
-                new IdentityRole("User"),
-	            new IdentityRole("Author")
+                new IdentityRole(SiteRoles.Admin),
+                new IdentityRole(SiteRoles.User),
+	            new IdentityRole(SiteRoles.Author)
 			};
 
             var users = new Dictionary<BrUser, string>()

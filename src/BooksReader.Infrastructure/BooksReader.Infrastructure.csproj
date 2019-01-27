@@ -280,6 +280,7 @@
   <ItemGroup>
     <Compile Include="Configuration\AppConfigurator.cs" />
     <Compile Include="Configuration\Constants.cs" />
+    <Compile Include="Configuration\SiteRoles.cs" />
     <Compile Include="DataContext\BrDbContext.cs" />
     <Compile Include="Migrations\20190122104913_name.cs" />
     <Compile Include="Migrations\20190122104913_name.Designer.cs">

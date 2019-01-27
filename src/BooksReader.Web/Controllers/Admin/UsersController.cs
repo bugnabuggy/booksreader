@@ -6,6 +6,7 @@ using BooksReader.Core.Models;
 using BooksReader.Core.Models.DTO;
 using BooksReader.Core.Services;
 using BooksReader.Infrastructure.Services;
+using BooksReader.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -46,9 +47,33 @@ namespace BooksReader.Web.Controllers.Admin
             return "value";
         }
 
+        [HttpPost("{username}/{role}")]
+        public async Task<OperationResult> Post([FromRoute] string username, [FromRoute] string role)
+        {
+            var result = await _usersService.AddUserRole(username, role);
+
+            return result;
+        }
+
+        [HttpDelete("{username}/{role}")]
+        public async Task<OperationResult> Delete([FromRoute] string username, [FromRoute] string role)
+        {
+            var result = await _usersService.RemoveUserRole(username, role);
+
+            return result;
+        }
+
+        [HttpPut("{username}/{role}")]
+        public async Task<OperationResult> Put([FromRoute] string username, [FromRoute] string role)
+        {
+            var result = await _usersService.ToggleUserRole(username, role);
+
+            return result;
+        }
+
         // POST: api/Users
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] string user)
         {
         }
 

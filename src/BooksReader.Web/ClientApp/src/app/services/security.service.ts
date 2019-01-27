@@ -30,7 +30,7 @@ export class SecurityService {
             this.getUserInfo()
                 .pipe(share())
                 .subscribe(() => {
-                    this.router.navigate(['dashboard']);
+                    // this.router.navigate(['dashboard']);
                 },
                     (err) => {
                     });

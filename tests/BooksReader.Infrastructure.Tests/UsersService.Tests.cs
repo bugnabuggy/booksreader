@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
 using BooksReader.Infrastructure.Models;
 using BooksReader.Infrastructure.Services;
@@ -36,14 +37,69 @@ namespace BooksReader.Infrastructure.Tests
         public void Should_Get_Users_Records()
         {
             var context = services.GetService<BrDbContext>();
-
-            var userSvc = new UsersService(context);
+            var manager = services.GetService<UserManager<BrUser>>();
+            var userSvc = new UsersService(context, manager);
 
             var result = userSvc.GetUsersWithRoles().ToList();
 
-            Assert.AreEqual(3, result.Count, "Users count not than expected");
+            Assert.AreEqual(4, result.Count, "Users count not than expected");
             var roles = result.FirstOrDefault().Roles;
             Assert.IsTrue(roles.Count() == 3);
+
+            roles = result[1].Roles;
+            Assert.IsTrue(roles.Count() == 0);
+        }
+
+        [Test]
+        public async Task Should_add_user_to_role()
+        {
+            var context = services.GetService<BrDbContext>();
+            var manager = services.GetService<UserManager<BrUser>>();
+            var userSvc = new UsersService(context, manager);
+
+            var result = await userSvc.AddUserRole("test", SiteRoles.Author);
+
+            var user = await manager.FindByNameAsync("test");
+            var roles = await manager.GetRolesAsync(user);
+
+            Assert.IsTrue(result.Success);
+            Assert.IsTrue(result.Messages.Count() == 0);
+            Assert.IsTrue(roles.Contains(SiteRoles.Author));
+
+            // second time
+            result = await userSvc.AddUserRole("test", SiteRoles.Author);
+            Assert.IsTrue(result.Success);
+            Assert.IsTrue(result.Messages.Count() == 0);
+            roles = await manager.GetRolesAsync(user);
+            Assert.IsTrue(roles.Contains(SiteRoles.Author));
+
+            // remove
+            result = await userSvc.RemoveUserRole("test", SiteRoles.Author);
+            Assert.IsTrue(result.Success);
+            Assert.IsTrue(result.Messages.Count() == 0);
+            roles = await manager.GetRolesAsync(user);
+            Assert.IsFalse(roles.Contains(SiteRoles.Author));
+
+            // second time
+            result = await userSvc.RemoveUserRole("test", SiteRoles.Author);
+            Assert.IsTrue(result.Success);
+            Assert.IsTrue(result.Messages.Count() == 0);
+            roles = await manager.GetRolesAsync(user);
+            Assert.IsFalse(roles.Contains(SiteRoles.Author));
+
+            // toggle
+            result = await userSvc.ToggleUserRole("test", SiteRoles.Author);
+            Assert.IsTrue(result.Success);
+            Assert.IsTrue(result.Messages.Count() == 0);
+            roles = await manager.GetRolesAsync(user);
+            Assert.IsTrue(roles.Contains(SiteRoles.Author));
+
+            // toggle
+            result = await userSvc.ToggleUserRole("test", SiteRoles.Author);
+            Assert.IsTrue(result.Success);
+            Assert.IsTrue(result.Messages.Count() == 0);
+            roles = await manager.GetRolesAsync(user);
+            Assert.IsFalse(roles.Contains(SiteRoles.Author));
         }
     }
 }

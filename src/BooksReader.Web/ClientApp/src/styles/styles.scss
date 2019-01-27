@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "material-design-icons/iconfont/material-icons.css";
 
 @import "./parameters.scss";
 @import "./utilities.scss";
@@ -13,7 +14,8 @@ html, body{
 app-root,
 app-login, 
 app-registration-component, 
-app-force-logout {
+app-force-logout,
+app-admin-dashboard {
     flex: 1;
     display: flex;
 }

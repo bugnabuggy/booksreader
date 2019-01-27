@@ -24,26 +24,7 @@ namespace BooksReader.TestData.Helpers
             var userManager = services.GetService<UserManager<BrUser>>();
 
             await AddUsers(userManager);
-
-            ////create users, create promises for users
-            //_users = N2NUsersList.GetList().ToArray();
-
-            //foreach (var user in _users)
-            //{
-            //    var result = await apiUserSrv.CreateUserAsync(user, HardCoddedConfig.DefaultPassword, new[] { N2NRoles.User });
-            //    if (!result.Success)
-            //    {
-            //        throw new Exception(string.Concat(result.Messages));
-            //    }
-            //}
-
-            ////to avoid foreing keys insert conflicts
-            //foreach (var user in _users)
-            //{
-            //    AddPromises(user, _context);
-            //    AddPostcards(user, _context);
-            //    AddAddressess(user, _context);
-            //}
+           
         }
 
         private static async Task AddUsers(UserManager<BrUser> manager)

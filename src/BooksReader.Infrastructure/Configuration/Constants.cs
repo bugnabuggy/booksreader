@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace BooksReader.Infrastructure.Configuration
 {
-    public class Constants
+    public static class Constants
     {
         public const int AsyncTaskWaitTime = 10_000;
-        
-    }
+    }    
 }

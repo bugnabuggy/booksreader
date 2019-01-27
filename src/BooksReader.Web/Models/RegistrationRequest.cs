@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BooksReader.Infrastructure.Models.DTO
+namespace BooksReader.Web.Models
 {
 	public class RegistrationRequest
 	{

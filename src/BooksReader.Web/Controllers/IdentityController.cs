@@ -6,7 +6,6 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using BooksReader.Infrastructure.Models;
-using BooksReader.Infrastructure.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using BooksReader.Web.Configuration;
 using BooksReader.Infrastructure.Configuration;
+using BooksReader.Web.Models;
 
 namespace BooksReader.Web.Controllers
 {

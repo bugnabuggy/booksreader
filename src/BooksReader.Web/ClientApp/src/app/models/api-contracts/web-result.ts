@@ -1,8 +1,7 @@
-export interface WebResult<T> {
-    data: T;
+import {OperationResult} from './operation-result';
+
+export interface WebResult<T> extends OperationResult<T> {
     total: number;
-    success: boolean;
-    messages: string[];
     pageSize: number;
     pageNumber: number;
 }
