@@ -111,12 +111,20 @@ export class SecurityService {
         return observable;
     }
 
-    get isAdmin(): boolean {
+    isInRole(role: string) {
         try {
-            return this.user.roles.findIndex(x => x === 'Admin') > -1;
+            return this.user.roles.findIndex(x => x === role) > -1;
         } catch (exp) {
             return false;
         }
+    }
+
+    get isAdmin(): boolean {
+        return this.isInRole('Admin');
+    }
+
+    get isAuthor(): boolean {
+        return this.isInRole('Author');
     }
 
 

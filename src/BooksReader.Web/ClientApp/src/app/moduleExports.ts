@@ -71,18 +71,26 @@ const MATERIAL_DESIGN = [
     CdkTableModule
 ];
 
-import { DashboardComponent,
-         RegistrationComponent,
-         LoginComponent,
-         ForceLogoutComponent,
-         AdminDashboardComponent
-        } from './pages';
+import {
+    DashboardComponent,
+    RegistrationComponent,
+    LoginComponent,
+    ForceLogoutComponent,
+    AdminDashboardComponent,
+    AuthorDashboardComponent
+} from './pages';
 
-import { UserService,
-         NotificationService,
-         SecurityService,
-        AdminUsersService
-        } from './services';
+import {
+    BookEditDialogComponent
+} from './components';
+
+
+import {
+    UserService,
+    NotificationService,
+    SecurityService,
+    AdminUsersService
+} from './services';
 import { UserHubService } from './hubs';
 
 
@@ -92,19 +100,25 @@ const MODULE_PIPES = [
 ];
 
 const MODULE_COMPONENTS = [
-         DashboardComponent,
-         RegistrationComponent,
-         LoginComponent,
-         ForceLogoutComponent,
-         AdminDashboardComponent
+    DashboardComponent,
+    RegistrationComponent,
+    LoginComponent,
+    ForceLogoutComponent,
+    AdminDashboardComponent,
+    AuthorDashboardComponent,
+    BookEditDialogComponent
 ];
 
 const MODULE_SERVICES = [
-         UserService,
-         NotificationService,
-         SecurityService,
-         UserHubService,
-         AdminUsersService
+    UserService,
+    NotificationService,
+    SecurityService,
+    UserHubService,
+    AdminUsersService
 ];
 
-export { MODULE_COMPONENTS, MODULE_PIPES, MODULE_SERVICES, MATERIAL_DESIGN };
+const MODULE_ENTRY_COMPONENTS = [
+    BookEditDialogComponent
+];
+
+export { MODULE_COMPONENTS, MODULE_PIPES, MODULE_SERVICES, MATERIAL_DESIGN, MODULE_ENTRY_COMPONENTS};

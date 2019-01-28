@@ -4,7 +4,7 @@ import {
   UserService,
   SecurityService,
   NotificationService
-} from '../../services';
+} from '../../../services';
 
 @Component({
   selector: 'app-login',

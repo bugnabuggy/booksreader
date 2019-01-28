@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SecurityService } from '../../services/';
-import { UserHubService } from '../../hubs';
-import { LogoutData } from '../../models/api-contracts';
+import { SecurityService } from '../../../services/';
+import { UserHubService } from '../../../hubs';
+import { LogoutData } from '../../../models/api-contracts';
 
 @Component({
   selector: 'app-dashboard',

@@ -4,8 +4,8 @@ import {
     UserService,
     SecurityService,
     NotificationService
-} from '../../services';
-import { RegistrationModel } from '../../models';
+} from '../../../services';
+import { RegistrationModel } from '../../../models';
 
 @Component({
     selector: 'app-registration-component',

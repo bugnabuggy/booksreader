@@ -1,7 +1,8 @@
 export * from './admin';
+export * from './author';
 
-export * from './dashboard/dashboard.component';
-export * from './login/login.component';
-export * from './registration/registration.component';
-export * from './force-logout/force-logout.component';
+export * from './reader/dashboard/dashboard.component';
+export * from './common/login/login.component';
+export * from './common/registration/registration.component';
+export * from './common/force-logout/force-logout.component';
 

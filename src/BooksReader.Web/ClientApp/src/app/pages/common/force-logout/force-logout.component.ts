@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SecurityService } from '../../services';
+import { SecurityService } from '../../../services';
 
 @Component({
   selector: 'app-force-logout',

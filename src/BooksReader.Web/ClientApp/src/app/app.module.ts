@@ -9,6 +9,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {  MODULE_COMPONENTS,
   MODULE_SERVICES,
   MODULE_PIPES,
+  MODULE_ENTRY_COMPONENTS,
   MATERIAL_DESIGN } from './moduleExports';
 
 import { SimpleHttpInterceptor } from './interceptors/simple-http.interceptor';
@@ -18,6 +19,9 @@ import { SimpleHttpInterceptor } from './interceptors/simple-http.interceptor';
     AppComponent,
     MODULE_COMPONENTS,
     MODULE_PIPES,
+  ],
+  entryComponents: [
+    MODULE_ENTRY_COMPONENTS
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

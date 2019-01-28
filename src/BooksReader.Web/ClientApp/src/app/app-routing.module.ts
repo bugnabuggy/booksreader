@@ -7,7 +7,8 @@ import {
   LoginComponent,
   RegistrationComponent,
   ForceLogoutComponent,
-  AdminDashboardComponent
+  AdminDashboardComponent,
+  AuthorDashboardComponent
 } from './pages';
 
 
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [SecurityService] },
   { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [SecurityService] },
+  { path: 'author/dashboard', component: AuthorDashboardComponent, canActivate: [SecurityService] }
 ];
 
 @NgModule({
