@@ -32,16 +32,13 @@ namespace BooksReader.Web.Controllers.Author
 		    _userManager = userManager;
 	    }
 
-		// GET: api/Book
+        // GET: api/Book
         [HttpGet]
         public async Task<WebResult<IEnumerable<Book>>> Get()
         {
 		    var user = await _userManager.GetUserAsync(User);
-	        var isAdmin = await _userManager.IsInRoleAsync(user, SiteRoles.Admin);
 
-			var books = isAdmin
-						? _booksService.Get().ToList()
-						: _booksService.Get(user.Id).ToList();
+			var books = _booksService.Get(user.Id).ToList();
 
 	        return new WebResult<IEnumerable<Book>>
 			{ 

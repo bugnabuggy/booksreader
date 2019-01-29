@@ -26,7 +26,6 @@ export class AuthorDashboardComponent implements OnInit {
 
   add() {
     const dialogRef = this.dialog.open(BookEditDialogComponent, {
-      width: '250px',
       data: {  }
     });
 

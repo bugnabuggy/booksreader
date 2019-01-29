@@ -21,6 +21,10 @@ app-author-dashboard {
     display: flex;
 }
 
+.w-75-vw {
+    min-width: 75vw;
+}
+
 .min-h-400{
     min-height: 400px;
     overflow: auto;
@@ -32,6 +36,10 @@ app-author-dashboard {
 
 .flex-1{
     flex: 1;
+}
+
+.book {
+    min-height: 300px;
 }
 
 // .size-input-authorization{
