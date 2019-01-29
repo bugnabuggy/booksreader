@@ -1,10 +1,13 @@
 <div class="container-fluid">
   <h1>
-    Books <button (click)="add()" class='btn btn-sm btn-default p-0 text-success'><i class="material-icons f-44">add_box</i></button>
+    Books <button mat-mini-fab color="primary" (click)="add()">
+      <mat-icon >add</mat-icon>
+    </button>
+    <!-- <button (click)="add()" class='btn btn-sm btn-default p-0 text-success'><i class="material-icons f-44">add_box</i></button> -->
   </h1>
   <ul class="border rounded" >
     <li class="book" *ngFor="let book of books">
-      {{book.name}}
+      {{book.title}}
     </li>
   </ul>
 

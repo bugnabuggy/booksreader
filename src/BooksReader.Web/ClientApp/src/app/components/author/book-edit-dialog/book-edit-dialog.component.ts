@@ -1,5 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { BookEditRequest } from '../../../models';
+import { BooksService } from '../../../services';
 
 @Component({
   selector: 'app-book-edit-dialog',
@@ -8,12 +10,20 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 })
 export class BookEditDialogComponent implements OnInit {
 
+  model = {
+    title: '',
+    author: ''
+  } as BookEditRequest;
+
   constructor(
     public dialogRef: MatDialogRef<BookEditDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: BookEditRequest
   ) { }
 
   ngOnInit() {
   }
 
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

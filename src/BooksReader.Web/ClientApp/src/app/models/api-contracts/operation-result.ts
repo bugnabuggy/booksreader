@@ -1,5 +1,5 @@
 export interface OperationResult<T> {
-    data: T[];
+    data: T;
     success: boolean;
     messages: string[];
 }

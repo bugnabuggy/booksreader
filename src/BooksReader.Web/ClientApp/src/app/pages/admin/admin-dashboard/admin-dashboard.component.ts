@@ -16,7 +16,7 @@ export class AdminDashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.adminUsers.getUsers().subscribe((val: WebResult<AppUser>) => {
+    this.adminUsers.getUsers().subscribe((val: WebResult<AppUser[]>) => {
       this.users = val.data;
     });
   }

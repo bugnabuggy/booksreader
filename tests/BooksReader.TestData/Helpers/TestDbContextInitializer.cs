@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BooksReader.Core.Entities;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
 using BooksReader.Infrastructure.Models;
+using BooksReader.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,9 +24,10 @@ namespace BooksReader.TestData.Helpers
 
             var context = services.GetService<BrDbContext>();
             var userManager = services.GetService<UserManager<BrUser>>();
+			var booksRepo = services.GetService<IRepository<Book>>();
 
-            await AddUsers(userManager);
-           
+			await AddUsers(userManager);
+	        await AddBooks(booksRepo);
         }
 
         private static async Task AddUsers(UserManager<BrUser> manager)
@@ -42,5 +45,10 @@ namespace BooksReader.TestData.Helpers
                 await manager.AddToRolesAsync(brUser, user.Roles);
             }
         }
+
+	    private static async Task AddBooks(IRepository<Book> booksRepo)
+	    {
+		   await booksRepo.AddAsync(BooksList.GetBooks());
+	    }
     }
 }

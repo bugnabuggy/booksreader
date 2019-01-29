@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BooksReader.Core.Entities;
 using BooksReader.Core.Services;
 using BooksReader.Infrastructure.Models;
+using BooksReader.Infrastructure.Repositories;
 using BooksReader.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +20,9 @@ namespace BooksReader.Infrastructure.Configuration
         public static void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IUsersService, UsersService>();
-        }
+	        services.AddTransient<IRepository<Book>, DbRepository<Book>>();
+	        services.AddTransient<IBooksService, BooksService>();
+		}
 
         public static void InitRolesAndUsers(IServiceProvider services)
         {

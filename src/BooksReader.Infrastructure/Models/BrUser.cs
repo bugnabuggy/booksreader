@@ -8,6 +8,9 @@ namespace BooksReader.Infrastructure.Models
 {
     public class BrUser : IdentityUser
     {
+	    public BrUser() : base()
+	    {
+	    }
         public string Name { get; set; }
     }
 }

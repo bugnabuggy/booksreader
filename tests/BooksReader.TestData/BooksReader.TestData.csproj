@@ -227,6 +227,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BooksList.cs" />
     <Compile Include="BrUsersList.cs" />
     <Compile Include="Helpers\DatabaseDiBootstrapperInMemory.cs" />
     <Compile Include="Helpers\DatabaseDiBootstrapperSQLServer.cs" />

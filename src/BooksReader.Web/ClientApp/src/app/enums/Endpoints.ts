@@ -19,6 +19,10 @@ class Endpoints {
         users: {
             all: Endpoints.baseApiUrl + 'api/admin/users',
             userRole: Endpoints.baseApiUrl + 'api/admin/users/{username}/{role}',
+        },
+        books: {
+            books: Endpoints.baseApiUrl + 'api/book',
+            deleteBook: Endpoints.baseApiUrl + 'api/book/{id}'
         }
     };
 }

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ForceLogoutComponent } from './force-logout.component';
+import { MOCKED_PROVIDERS } from '../../../../tests/mocks/mockedProviders';
 
 describe('ForceLogoutComponent', () => {
   let component: ForceLogoutComponent;
@@ -8,7 +9,8 @@ describe('ForceLogoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ForceLogoutComponent ]
+      declarations: [ ForceLogoutComponent ],
+      providers: MOCKED_PROVIDERS
     })
     .compileComponents();
   }));

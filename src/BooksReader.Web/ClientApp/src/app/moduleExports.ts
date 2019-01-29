@@ -89,7 +89,8 @@ import {
     UserService,
     NotificationService,
     SecurityService,
-    AdminUsersService
+    AdminUsersService,
+    BooksService
 } from './services';
 import { UserHubService } from './hubs';
 
@@ -114,7 +115,8 @@ const MODULE_SERVICES = [
     NotificationService,
     SecurityService,
     UserHubService,
-    AdminUsersService
+    AdminUsersService,
+    BooksService
 ];
 
 const MODULE_ENTRY_COMPONENTS = [

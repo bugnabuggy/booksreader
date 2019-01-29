@@ -19,7 +19,49 @@ namespace BooksReader.Web.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("BooksReader.Web.Models.BrUser", b =>
+            modelBuilder.Entity("BooksReader.Core.Entities.Book", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Author");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<Guid>("OwnerId");
+
+                    b.Property<DateTime>("Published");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.BookChapter", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("BookId");
+
+                    b.Property<string>("Content");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<int>("Number");
+
+                    b.Property<Guid>("OwnerId");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BookChapters");
+                });
+
+            modelBuilder.Entity("BooksReader.Infrastructure.Models.BrUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -192,7 +234,7 @@ namespace BooksReader.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("BooksReader.Web.Models.BrUser")
+                    b.HasOne("BooksReader.Infrastructure.Models.BrUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -200,7 +242,7 @@ namespace BooksReader.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("BooksReader.Web.Models.BrUser")
+                    b.HasOne("BooksReader.Infrastructure.Models.BrUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -213,7 +255,7 @@ namespace BooksReader.Web.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BooksReader.Web.Models.BrUser")
+                    b.HasOne("BooksReader.Infrastructure.Models.BrUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -221,7 +263,7 @@ namespace BooksReader.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("BooksReader.Web.Models.BrUser")
+                    b.HasOne("BooksReader.Infrastructure.Models.BrUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
