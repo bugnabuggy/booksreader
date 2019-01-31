@@ -1,5 +1,34 @@
-<div>
+<div class="flex-1">
     <h1>This is {{security.user.name}} dashboard</h1>
-
-    <button (click)='sendMsg()' class='btn btn-primary'>Show statistics</button>   
+    <button (click)='sendMsg()' class='btn btn-primary'>Show statistics</button>  
+    <div class='col p-0 px-sm-2'>
+        <table mat-table [dataSource]="logHistory" class="mat-elevation-z8 w-100">
+          <!--  Date time Column -->
+          <ng-container matColumnDef="dateTime">
+            <th mat-header-cell *matHeaderCellDef> Date time </th>
+            <td mat-cell *matCellDef="let element"> {{element.dateTime}} </td>
+          </ng-container>
+      
+          <!-- IP address Column -->
+          <ng-container matColumnDef="ipAddress">
+            <th mat-header-cell *matHeaderCellDef> IP address </th>
+            <td mat-cell *matCellDef="let element"> {{element.ipAddress}} </td>
+          </ng-container>
+      
+          <!-- Browser Column -->
+          <ng-container matColumnDef="browser">
+            <th mat-header-cell *matHeaderCellDef> Browser </th>
+            <td mat-cell *matCellDef="let element">{{element.browser}}</td>
+          </ng-container>
+      
+          <!-- Geolocation Column -->
+          <ng-container matColumnDef="geolocation" >
+            <th mat-header-cell *matHeaderCellDef > Geolocation </th>
+            <td mat-cell *matCellDef="let element" >{{element.geolocation}}</td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div> 
 </div>

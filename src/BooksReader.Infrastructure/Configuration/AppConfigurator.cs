@@ -20,7 +20,8 @@ namespace BooksReader.Infrastructure.Configuration
         public static void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IUsersService, UsersService>();
-	        services.AddTransient<IRepository<Book>, DbRepository<Book>>();
+	        services.AddTransient<IRepository<LoginHistory>, DbRepository<LoginHistory>>();
+			services.AddTransient<IRepository<Book>, DbRepository<Book>>();
 	        services.AddTransient<IBooksService, BooksService>();
 		}
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BooksReader.Core.Entities;
 using BooksReader.Core.Models;
 using BooksReader.Core.Models.DTO;
 using BooksReader.Core.Services;
@@ -17,13 +18,16 @@ namespace BooksReader.Infrastructure.Services
     {
         private readonly BrDbContext _ctx;
         private readonly UserManager<BrUser> _userManager;
+	    private readonly IRepository<LoginHistory> _logHistory;
 
         public UsersService(
             BrDbContext ctx,
-            UserManager<BrUser> userManager
+            UserManager<BrUser> userManager,
+            IRepository<LoginHistory> logHistory
             )
         {
             _ctx = ctx;
+	        _logHistory = logHistory;
             _userManager = userManager;
         }
 
@@ -100,5 +104,31 @@ namespace BooksReader.Infrastructure.Services
                 Success = result.Succeeded
             };
         }
-    }
+
+	    public async Task<LoginHistoryResult> AddLogHistory(LoginHistoryResult logHistory, string userId)
+	    {
+			this._logHistory.Add(new LoginHistory
+		    {
+			    Id = Guid.NewGuid(),
+				DateTime = logHistory.DateTime,
+				IpAddress = logHistory.IpAddress,
+				Browser = logHistory.Browser,
+				UserId = userId,
+				Geolocation = logHistory.Geolocation
+			});
+		    return logHistory;
+
+	    }
+
+	    public async Task<List<LoginHistoryResult>> GetLogHistory(string userId)
+	    {
+		    return _logHistory.Data.Where(x => x.UserId == userId).Select(u => new LoginHistoryResult
+		    {
+			    DateTime = u.DateTime,
+				IpAddress = u.IpAddress,
+				Browser = u.Browser,
+				Geolocation = u.Geolocation
+		    }).ToList();
+	    }
+	}
 }

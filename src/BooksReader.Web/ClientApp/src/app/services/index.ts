@@ -1,6 +1,7 @@
 export * from './admin';
 
-export * from './books.service';
+export * from './author/author-books.service';
+export * from './reader/reader-books.service';
 
 export * from './user.service';
 export * from './security.service';

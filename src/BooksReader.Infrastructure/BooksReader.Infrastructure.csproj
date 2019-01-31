@@ -294,6 +294,10 @@
     <Compile Include="Migrations\20190129104020_books-structure-changed.designer.cs">
       <DependentUpon>20190129104020_books-structure-changed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190131070835_logHistory.cs" />
+    <Compile Include="Migrations\20190131070835_logHistory.designer.cs">
+      <DependentUpon>20190131070835_logHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PersistedGrantDb\20190122111603_PersistedGrantDbMigration.cs" />
     <Compile Include="Migrations\PersistedGrantDb\20190122111603_PersistedGrantDbMigration.Designer.cs">
       <DependentUpon>20190122111603_PersistedGrantDbMigration.cs</DependentUpon>

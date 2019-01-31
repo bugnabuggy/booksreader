@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BooksReader.Core.Entities;
+using BooksReader.Core.Models.DTO;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
 using BooksReader.Infrastructure.Models;
+using BooksReader.Infrastructure.Repositories;
 using BooksReader.Infrastructure.Services;
 using BooksReader.TestData.Helpers;
 using Microsoft.AspNetCore.Identity;
@@ -38,7 +41,8 @@ namespace BooksReader.Infrastructure.Tests
         {
             var context = services.GetService<BrDbContext>();
             var manager = services.GetService<UserManager<BrUser>>();
-            var userSvc = new UsersService(context, manager);
+	        var repository = services.GetService<IRepository<LoginHistory>>();
+            var userSvc = new UsersService(context, manager, repository);
 
             var result = userSvc.GetUsersWithRoles().ToList();
 
@@ -55,7 +59,8 @@ namespace BooksReader.Infrastructure.Tests
         {
             var context = services.GetService<BrDbContext>();
             var manager = services.GetService<UserManager<BrUser>>();
-            var userSvc = new UsersService(context, manager);
+	        var repository = services.GetService<IRepository<LoginHistory>>();
+			var userSvc = new UsersService(context, manager, repository);
 
             var result = await userSvc.AddUserRole("test", SiteRoles.Author);
 

@@ -14,6 +14,8 @@ namespace BooksReader.Core.Services
 
         Task<OperationResult> AddUserRole(string username, string role);
         Task<OperationResult> RemoveUserRole(string username, string role);
-        Task<OperationResult> ToggleUserRole(string username, string role);
+	    Task<OperationResult> ToggleUserRole(string username, string role);
+	    Task<LoginHistoryResult> AddLogHistory(LoginHistoryResult logHistory, string userId);
+	    Task<List<LoginHistoryResult>> GetLogHistory(string userId);
     }
 }

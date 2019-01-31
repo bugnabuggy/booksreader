@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { BookEditDialogComponent } from '../../../components';
-import { BooksService } from '../../../services';
+import { AuthorBooksService } from '../../../services';
 import { WebResult, Book, OperationResult } from '../../../models';
 
 @Component({
@@ -14,11 +14,11 @@ export class AuthorDashboardComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private booksService: BooksService
+    private authorBooksService: AuthorBooksService
   ) { }
 
   ngOnInit() {
-     this.booksService.getBooks()
+     this.authorBooksService.getBooks()
      .subscribe( (val: WebResult<Book[]> ) => {
       this.books = val.data;
      });
@@ -31,7 +31,7 @@ export class AuthorDashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe( (result: Book) => {
       if (result) {
-        this.booksService.addBook(result)
+        this.authorBooksService.addBook(result)
           .subscribe( (val: OperationResult<Book>) => {
             console.log(val);
             if (val.success) {
@@ -40,6 +40,20 @@ export class AuthorDashboardComponent implements OnInit {
           });
       }
       console.log(result);
+    });
+  }
+
+  edit() {
+
+  }
+
+  delete(bookId: string) {
+    this.authorBooksService.deleteBook(bookId)
+    .subscribe( (val: OperationResult<Book>) => {
+      if (val.success) {
+        const index = this.books.indexOf(val.data);
+        this.books.splice(index, 1);
+      }
     });
   }
 

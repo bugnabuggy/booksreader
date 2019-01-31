@@ -2,7 +2,7 @@ import { UserService,
          NotificationService,
          SecurityService,
          AdminUsersService,
-         BooksService
+         ReaderBooksService
          } from '../../app/services';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -20,7 +20,7 @@ const MOCKED_PROVIDERS = [
     {provide: MAT_DIALOG_DATA, useValue: {} },
     {provide: Router, useValue: {} },
     {provide: AdminUsersService, useValue: { getUsers() { return new Observable; } } },
-    {provide: BooksService, useValue: {} }
+    {provide: ReaderBooksService, useValue: { getBooks() { return new Observable; }}}
 
 ];
 

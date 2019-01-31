@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { BookEditRequest } from '../../../models';
-import { BooksService } from '../../../services';
 
 @Component({
   selector: 'app-book-edit-dialog',

@@ -16,15 +16,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BooksReader.Web.Controllers.Author
 {
-    [Route("api/book")]
+    [Route("api/author/books")]
 	[Authorize]
     [ApiController]
-    public class BookController : ControllerBase
+    public class AuthorBookController : ControllerBase
     {
 	    private readonly IBooksService _booksService;
 	    private readonly UserManager<BrUser> _userManager;
 
-		public BookController(
+		public AuthorBookController(
 			IBooksService booksService, 
 			UserManager<BrUser> userManager)
 	    {
@@ -119,7 +119,7 @@ namespace BooksReader.Web.Controllers.Author
         }
 
         // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{bookId}")]
         public OperationResult Delete(string bookId)
         {
 	        try

@@ -5,7 +5,6 @@ class Endpoints {
 
     static forntend = {
     };
-
     static api = {
         authorization: {
             login: Endpoints.baseApiUrl + 'connect/token',
@@ -14,15 +13,21 @@ class Endpoints {
             antiforgery: Endpoints.baseApiUrl + 'api/identity/antiforgery'
         },
         user: {
-            info: Endpoints.baseApiUrl + 'api/identity/me'
+            info: Endpoints.baseApiUrl + 'api/identity/me',
+            loginHistory: Endpoints.baseApiUrl + 'api/identity/log-history',
+        },
+        reader: {
+            books: Endpoints.baseApiUrl + 'api/books',
         },
         users: {
             all: Endpoints.baseApiUrl + 'api/admin/users',
             userRole: Endpoints.baseApiUrl + 'api/admin/users/{username}/{role}',
         },
-        books: {
-            books: Endpoints.baseApiUrl + 'api/book',
-            deleteBook: Endpoints.baseApiUrl + 'api/book/{id}'
+        author: {
+            books: Endpoints.baseApiUrl + 'api/author/books',
+            deleteBook: Endpoints.baseApiUrl + 'api/author/books/{id}'
+        },
+        admin: {
         }
     };
 }

@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Router, CanActivate } from '@angular/router';
 import { share, mergeMap, map } from 'rxjs/operators';
 import { Endpoints } from '../enums/Endpoints';
-import { AppUser } from '../models';
+import { AppUser, LoginHistoryModel } from '../models';
 import { LogoutData, AuthResponse } from '../models/api-contracts';
 
 @Injectable()
@@ -11,7 +11,6 @@ export class SecurityService {
     isLoggedIn: boolean = true;
     token: string;
     tokenExpirationDate: Date;
-
     logoutData: LogoutData;
     user = {} as AppUser;
 
@@ -70,7 +69,8 @@ export class SecurityService {
                 map((val: AuthResponse) => {
                     this.setTokens(val);
                 }),
-                mergeMap(() => this.getUserInfo()));
+                mergeMap(() => this.getUserInfo()),
+                mergeMap(() => this.addLogHistory()));
 
         return observable;
     }
@@ -100,6 +100,36 @@ export class SecurityService {
             );
 
         return observable;
+    }
+
+    sendLoggingData(loginHistory: LoginHistoryModel ) {
+        const url = Endpoints.api.user.loginHistory;
+
+        return this.http.post(url, loginHistory).pipe(share());
+    }
+
+    addLoginHistory() {
+        let loginHistory = {} as LoginHistoryModel;
+        let timeoutId;
+
+        navigator.geolocation.getCurrentPosition((val) => {
+            loginHistory. coordinates = val.coords;
+            if ( timeoutId > 0) {
+                clearTimeout(timeoutId);
+            }
+        });
+
+        timeoutId = setTimeout(() => {
+            const url = Endpoints.api.user.loginHistory;
+            const observable = this.http.post(url, this.geolocation).pipe(share());
+        return observable;
+        }, 10000);
+
+    }
+    getLogHistory() {
+            const url = Endpoints.api.userReader.getLogHistory;
+            const observable = this.http.get(url).pipe(share());
+            return observable;
     }
 
     getUserInfo() {

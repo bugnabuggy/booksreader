@@ -8,16 +8,18 @@ import {
   RegistrationComponent,
   ForceLogoutComponent,
   AdminDashboardComponent,
-  AuthorDashboardComponent
+  AuthorDashboardComponent,
+  BookMarketComponent
 } from './pages';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/authorize', pathMatch: 'full' },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'logout', component: ForceLogoutComponent },
   { path: 'authorize', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [SecurityService] },
+  { path: 'book-marker', component: BookMarketComponent, canActivate: [SecurityService] },
   { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [SecurityService] },
   { path: 'author/dashboard', component: AuthorDashboardComponent, canActivate: [SecurityService] }
 ];

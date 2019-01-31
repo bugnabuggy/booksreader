@@ -5,6 +5,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using BooksReader.Core.Models;
+using BooksReader.Core.Models.DTO;
+using BooksReader.Core.Services;
 using BooksReader.Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using BooksReader.Web.Configuration;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Web.Models;
+using Microsoft.EntityFrameworkCore.Query.Expressions;
 
 namespace BooksReader.Web.Controllers
 {
@@ -22,10 +26,12 @@ namespace BooksReader.Web.Controllers
     public class IdentityController : Controller
     {
 		private UserManager<BrUser> _userManager;
+	    private readonly IUsersService _usersService;
 
-		public IdentityController(UserManager<BrUser> userManager)
+		public IdentityController(UserManager<BrUser> userManager, IUsersService usersService)
 		{
 			_userManager = userManager;
+			_usersService = usersService;
 		}
 
 		[HttpGet]
@@ -85,5 +91,43 @@ namespace BooksReader.Web.Controllers
 
 		}
 
-    }
+		[HttpGet("getLogHistory")]
+		[Authorize]
+		public async Task<List<LoginHistoryResult>> GetLogHistory()
+	    {
+		    var user = await _userManager.GetUserAsync(User);
+		    var logHistory = await this._usersService.GetLogHistory(user.Id);
+		    logHistory.Sort(delegate (LoginHistoryResult log1, LoginHistoryResult log2)
+		    {
+			    return log2.DateTime.CompareTo(log1.DateTime);
+		    });
+
+		    return logHistory;
+	    }
+
+	    [HttpPost("addLogHistory")]
+	    [Authorize]
+		public async Task<IActionResult> AddLogHistory([FromBody]GeolocationRequest geolocationRequest)
+	    {
+		    var geolocation = "not found geolocation";
+
+			var user = await _userManager.GetUserAsync(User);
+		    if (geolocationRequest.Latitude >= 0 && geolocationRequest.Latitude >= 0)
+		    {
+			    geolocation = "Latitude: " + geolocationRequest.Latitude + ", Longitude: " + geolocationRequest.Longitude;
+
+		    }
+		    var logHistory = this._usersService.AddLogHistory(new LoginHistoryResult
+		    {
+			    DateTime = DateTime.Now,
+			    IpAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
+			    Browser = HttpContext.Request.Headers["User-Agent"].ToString(),
+			    Geolocation = geolocation
+			}, user.Id);
+
+		    return Ok();
+	    }
+
+
+	}
 }
