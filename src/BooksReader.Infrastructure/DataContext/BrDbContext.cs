@@ -20,6 +20,6 @@ namespace BooksReader.Infrastructure.DataContext
 
 	    public DbSet<Book> Books { get; set; }
 	    public DbSet<BookChapter> BookChapters { get; set; }
-	    public DbSet<LoginHistory> LogHistory { get; set; }
+	    public DbSet<LoginHistory> LoginHistory { get; set; }
 	}
 }

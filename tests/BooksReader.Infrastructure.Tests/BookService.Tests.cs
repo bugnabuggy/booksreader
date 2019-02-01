@@ -21,6 +21,7 @@ namespace BooksReader.Infrastructure.Tests
 	{
 		private ServiceProvider services;
 		private IRepository<Book> bookRepo;
+		private IRepository<BrUser> usersRepo;
 		private BooksService bookService;
 
 		[OneTimeSetUp]
@@ -29,7 +30,8 @@ namespace BooksReader.Infrastructure.Tests
 			services = await new DatabaseDiBootstrapperInMemory().GetServiceProviderWithSeedDB();
 			// services = await new DatabaseDiBootstrapperSQLServer().GetServiceProviderWithSeedDB();
 			bookRepo = services.GetService<IRepository<Book>>();
-			bookService = new BooksService(bookRepo);			
+			usersRepo = services.GetService<IRepository<BrUser>>();
+			bookService = new BooksService(bookRepo, usersRepo);			
 		}
 
 		[OneTimeTearDown]

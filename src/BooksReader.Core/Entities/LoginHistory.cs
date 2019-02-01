@@ -10,6 +10,7 @@ namespace BooksReader.Core.Entities
 		public DateTime DateTime { get; set; }
 		public string IpAddress { get; set; }
 		public string Browser { get; set; }
+		public string Screen { get; set; }
 		public string Geolocation { get; set; }
 	}
 }

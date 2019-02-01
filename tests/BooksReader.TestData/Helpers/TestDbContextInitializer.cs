@@ -38,6 +38,7 @@ namespace BooksReader.TestData.Helpers
             {
                 var brUser = new BrUser()
                 {
+					Id = user.Id,
                     Name = user.Username,
                     UserName = user.Username
                 };

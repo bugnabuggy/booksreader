@@ -61,7 +61,7 @@ namespace BooksReader.Web.Migrations
                     b.ToTable("BookChapters");
                 });
 
-            modelBuilder.Entity("BooksReader.Core.Models.DTO.LogHistory", b =>
+            modelBuilder.Entity("BooksReader.Core.Entities.LoginHistory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -74,11 +74,13 @@ namespace BooksReader.Web.Migrations
 
                     b.Property<string>("IpAddress");
 
+                    b.Property<string>("Screen");
+
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
-                    b.ToTable("LogHistory");
+                    b.ToTable("LoginHistory");
                 });
 
             modelBuilder.Entity("BooksReader.Infrastructure.Models.BrUser", b =>

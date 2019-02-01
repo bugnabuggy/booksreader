@@ -4,5 +4,6 @@ export * from './user.contract';
 export * from './web-result';
 export * from './operation-result';
 export * from './book-edit-request';
-export * from './book';
-export * from './log-history.contract';
+export * from './book.contract';
+export * from './login-history.contract';
+export * from './book-chapter.contract';

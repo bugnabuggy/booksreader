@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using BooksReader.Core.Entities;
 using BooksReader.Core.Models;
 using BooksReader.Core.Models.DTO;
 using BooksReader.Core.Services;
@@ -18,6 +19,7 @@ using BooksReader.Web.Configuration;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Web.Models;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
+using Newtonsoft.Json.Linq;
 
 namespace BooksReader.Web.Controllers
 {
@@ -91,38 +93,38 @@ namespace BooksReader.Web.Controllers
 
 		}
 
-		[HttpGet("getLogHistory")]
+		[HttpGet("login-history")]
 		[Authorize]
-		public async Task<List<LoginHistoryResult>> GetLogHistory()
+		public async Task<WebResult<IEnumerable<LoginHistoryResult>>> GetLogHistory(StandardFiltersDto filters)
 	    {
 		    var user = await _userManager.GetUserAsync(User);
-		    var logHistory = await this._usersService.GetLogHistory(user.Id);
-		    logHistory.Sort(delegate (LoginHistoryResult log1, LoginHistoryResult log2)
-		    {
-			    return log2.DateTime.CompareTo(log1.DateTime);
-		    });
+		    var logHistory = this._usersService.GetLoginHistory(filters, user.Id, out int totalItems);
+		    //logHistory.Sort((log1, log2) => log2.DateTime.CompareTo(log1.DateTime));
 
-		    return logHistory;
+		    return new WebResult<IEnumerable<LoginHistoryResult>>()
+		    {
+				Data = logHistory,
+				Total = totalItems,
+			    PageNumber = filters.PageNumber ?? 0,
+			    PageSize = filters.PageSize ?? 0,
+			};
+
+		    //logHistory;
 	    }
 
-	    [HttpPost("addLogHistory")]
+	    [HttpPost("login-history")]
 	    [Authorize]
-		public async Task<IActionResult> AddLogHistory([FromBody]GeolocationRequest geolocationRequest)
+		public async Task<IActionResult> AddLogHistory([FromBody]LoginHistoryRequest loginHistory)
 	    {
-		    var geolocation = "not found geolocation";
-
 			var user = await _userManager.GetUserAsync(User);
-		    if (geolocationRequest.Latitude >= 0 && geolocationRequest.Latitude >= 0)
-		    {
-			    geolocation = "Latitude: " + geolocationRequest.Latitude + ", Longitude: " + geolocationRequest.Longitude;
 
-		    }
-		    var logHistory = this._usersService.AddLogHistory(new LoginHistoryResult
+		    var logHistory = this._usersService.AddLoginHistory(new LoginHistory
 		    {
 			    DateTime = DateTime.Now,
 			    IpAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
 			    Browser = HttpContext.Request.Headers["User-Agent"].ToString(),
-			    Geolocation = geolocation
+				Screen = Newtonsoft.Json.JsonConvert.SerializeObject(loginHistory.Screen),
+				Geolocation = Newtonsoft.Json.JsonConvert.SerializeObject(loginHistory.Coordinates)
 			}, user.Id);
 
 		    return Ok();

@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BooksReader.Web.Controllers.Author
 {
-    [Route("api/author/books")]
+    [Route("api/author/book")]
 	[Authorize]
     [ApiController]
     public class AuthorBookController : ControllerBase
@@ -47,15 +47,17 @@ namespace BooksReader.Web.Controllers.Author
 				Total = books.Count
 	        };
         }
-
-        // GET: api/Book/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        
+        [HttpGet("{id:guid}")]
+        public OperationResult<Book> Get(Guid id)
         {
-            return "value";
+	        var book = _booksService.Get(id);
+	        return new OperationResult<Book>()
+	        {
+				Data = book
+	        };
         }
 
-        // POST: api/Book
         [HttpPost]
         public async Task<OperationResult> Post([FromBody] BookEditRequest model)
         {
@@ -89,7 +91,6 @@ namespace BooksReader.Web.Controllers.Author
 	        }
         }
 
-        // PUT: api/Book/5
         [HttpPut("{id}")]
         public OperationResult Put([FromBody] BookEditRequest model)
         {
@@ -109,6 +110,7 @@ namespace BooksReader.Web.Controllers.Author
 			}
 	        catch (Exception exp)
 	        {
+		        Response.StatusCode = StatusCodes.Status500InternalServerError;
 				return new OperationResult<BookEditRequest>()
 				{
 					Data = model,
@@ -118,7 +120,6 @@ namespace BooksReader.Web.Controllers.Author
 			}
         }
 
-        // DELETE: api/ApiWithActions/5
         [HttpDelete("{bookId}")]
         public OperationResult Delete(string bookId)
         {
@@ -133,9 +134,9 @@ namespace BooksReader.Web.Controllers.Author
 	        }
 	        catch (Exception exp)
 	        {
-		        return new OperationResult<BookEditRequest>()
+		        Response.StatusCode = StatusCodes.Status500InternalServerError;
+				return new OperationResult()
 		        {
-			        Data = {},
 			        Success = false,
 			        Messages = new List<string>() { exp.Message }
 		        };

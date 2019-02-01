@@ -106,5 +106,26 @@ namespace BooksReader.Infrastructure.Tests
             roles = await manager.GetRolesAsync(user);
             Assert.IsFalse(roles.Contains(SiteRoles.Author));
         }
-    }
+
+	    [Test]
+	    public async Task Should_add_login_history()
+	    {
+		    var context = services.GetService<BrDbContext>();
+		    var manager = services.GetService<UserManager<BrUser>>();
+		    var repository = services.GetService<IRepository<LoginHistory>>();
+		    var userSvc = new UsersService(context, manager, repository);
+		    var count = repository.Data.Count();
+
+		    var history = new LoginHistory()
+		    {
+
+		    };
+
+		    var result = await userSvc.AddLoginHistory(history, Guid.Empty.ToString());
+
+			Assert.AreEqual(repository.Data.Count(), count + 1);
+	    }
+	}
+
+	
 }

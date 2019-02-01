@@ -1,4 +1,4 @@
-import { Directive, Input } from "@angular/core";
+import { Directive, Input } from '@angular/core';
 
 @Directive({
     selector: '[routerLink], [routerLinkActive], routerLinkActive, routerLink',
@@ -10,8 +10,7 @@ import { Directive, Input } from "@angular/core";
     @Input('routerLink') linkParams: any;
     // tslint:disable-next-line:no-input-rename
     @Input('routerLinkActive') activeClass: any;
-    navigatedTo: any = null;
-  
+    navigatedTo: any = null;  
     onClick() {
       this.navigatedTo = this.linkParams;
     }

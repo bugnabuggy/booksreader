@@ -1,4 +1,4 @@
-export interface LogHistory {
+export interface LoginHistory {
     dateTime: string;
     ipAddress: string;
     browser: string;

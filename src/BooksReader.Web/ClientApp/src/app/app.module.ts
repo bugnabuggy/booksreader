@@ -14,11 +14,12 @@ import {  MODULE_COMPONENTS,
 
 import { SimpleHttpInterceptor } from './interceptors/simple-http.interceptor';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     MODULE_COMPONENTS,
-    MODULE_PIPES
+    MODULE_PIPES,
   ],
   entryComponents: [
     MODULE_ENTRY_COMPONENTS

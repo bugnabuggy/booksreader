@@ -22,7 +22,8 @@ namespace BooksReader.Infrastructure.Configuration
             services.AddTransient<IUsersService, UsersService>();
 	        services.AddTransient<IRepository<LoginHistory>, DbRepository<LoginHistory>>();
 			services.AddTransient<IRepository<Book>, DbRepository<Book>>();
-	        services.AddTransient<IBooksService, BooksService>();
+	        services.AddTransient<IRepository<BrUser>, DbRepository<BrUser>>();
+			services.AddTransient<IBooksService, BooksService>();
 		}
 
         public static void InitRolesAndUsers(IServiceProvider services)

@@ -10,18 +10,22 @@ using BooksReader.Core.Services;
 using BooksReader.Infrastructure.Models;
 using BooksReader.Infrastructure.Repositories;
 using IdentityServer4.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace BooksReader.Infrastructure.Services
 {
 	public class BooksService : IBooksService
 	{
 		private readonly IRepository<Book> _bookRepo;
+		private readonly IRepository<BrUser> _userRepo;
 
 		public BooksService(
-			IRepository<Book> bookRepo
+			IRepository<Book> bookRepo,
+			IRepository<BrUser> userRepo
 		)
 		{
 			_bookRepo = bookRepo;
+			_userRepo = userRepo;
 		}
 
 		public Book Add(Book item)
@@ -48,19 +52,37 @@ namespace BooksReader.Infrastructure.Services
 			return book;
 		}
 
+		private IQueryable<Book> JoinWithOwner(IQueryable<Book> bookQuery)
+		{
+			return bookQuery.Join(this._userRepo.Data, x => x.OwnerId.ToString(), y => y.Id, (x, y) =>
+					new Book()
+					{
+						Id = x.Id,
+						Title = x.Title,
+						OwnerId = x.OwnerId,
+						Author = x.Author,
+						Created = x.Created,
+						Published = x.Published,
+						OwnerUserName = y.UserName,
+						OwnerName = y.Name
+					}
+				);
+		}
+
 		public IQueryable<Book> Get()
 		{
-			return _bookRepo.Data;
+			return JoinWithOwner(_bookRepo.Data);
+				
 		}
 
 		public IQueryable<Book> Get(string userId)
 		{
-			return _bookRepo.Data.Where(x => x.OwnerId.ToString() == userId);
+			return JoinWithOwner(_bookRepo.Data.Where(x => x.OwnerId.ToString() == userId));
 		}
 
 		public Book Get(Guid id)
 		{
-			return _bookRepo.Data.FirstOrDefault(x => x.Id == id);
+			return JoinWithOwner(_bookRepo.Data.Where(x => x.Id == id)).FirstOrDefault();
 		}
 
 		public Book Delete(string id)

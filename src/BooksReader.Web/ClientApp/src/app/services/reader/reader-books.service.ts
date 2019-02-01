@@ -11,7 +11,7 @@ export class ReaderBooksService {
         public http: HttpClient
     ) { }
     getReaderBooks() {
-        const url = Endpoints.api.readerBooks.books;
+        const url = Endpoints.api.reader.books;
         const observable = this.http.get(url)
             .pipe(share());
 

@@ -14,7 +14,7 @@ class Endpoints {
         },
         user: {
             info: Endpoints.baseApiUrl + 'api/identity/me',
-            loginHistory: Endpoints.baseApiUrl + 'api/identity/log-history',
+            loginHistory: Endpoints.baseApiUrl + 'api/identity/login-history',
         },
         reader: {
             books: Endpoints.baseApiUrl + 'api/books',
@@ -24,8 +24,8 @@ class Endpoints {
             userRole: Endpoints.baseApiUrl + 'api/admin/users/{username}/{role}',
         },
         author: {
-            books: Endpoints.baseApiUrl + 'api/author/books',
-            deleteBook: Endpoints.baseApiUrl + 'api/author/books/{id}'
+            book: Endpoints.baseApiUrl + 'api/author/book/{id}',
+            chapter: Endpoints.baseApiUrl + 'api/author/book/{bookId}/chapter/{id}',
         },
         admin: {
         }

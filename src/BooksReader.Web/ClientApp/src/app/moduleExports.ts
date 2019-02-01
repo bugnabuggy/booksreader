@@ -78,11 +78,12 @@ import {
     ForceLogoutComponent,
     AdminDashboardComponent,
     AuthorDashboardComponent,
-    BookMarketComponent
+    BookMarketComponent,
+    BookEditComponent
 } from './pages';
 
 import {
-    BookEditDialogComponent
+    BookEditDialogComponent, BookComponent, EditableBookComponent
 } from './components';
 
 
@@ -92,7 +93,8 @@ import {
     SecurityService,
     AdminUsersService,
     AuthorBooksService,
-    ReaderBooksService
+    ReaderBooksService,
+    BookEditService
 } from './services';
 import { UserHubService } from './hubs';
 
@@ -110,7 +112,10 @@ const MODULE_COMPONENTS = [
     AdminDashboardComponent,
     AuthorDashboardComponent,
     BookEditDialogComponent,
-    BookMarketComponent
+    BookMarketComponent,
+    BookComponent,
+    EditableBookComponent,
+    BookEditComponent
 ];
 
 const MODULE_SERVICES = [
@@ -120,7 +125,8 @@ const MODULE_SERVICES = [
     UserHubService,
     AdminUsersService,
     AuthorBooksService,
-    ReaderBooksService
+    ReaderBooksService,
+    BookEditService
 ];
 
 const MODULE_ENTRY_COMPONENTS = [

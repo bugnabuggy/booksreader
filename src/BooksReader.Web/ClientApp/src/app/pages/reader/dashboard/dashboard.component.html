@@ -2,7 +2,7 @@
     <h1>This is {{security.user.name}} dashboard</h1>
     <button (click)='sendMsg()' class='btn btn-primary'>Show statistics</button>  
     <div class='col p-0 px-sm-2'>
-        <table mat-table [dataSource]="logHistory" class="mat-elevation-z8 w-100">
+        <table mat-table [dataSource]="loginHistory" class="mat-elevation-z8 w-100" matSort >
           <!--  Date time Column -->
           <ng-container matColumnDef="dateTime">
             <th mat-header-cell *matHeaderCellDef> Date time </th>
@@ -30,5 +30,7 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+        <mat-paginator #paginator (page)="pageChanged($event)" [pageIndex]="currentFilters.pageNumber" [pageSize]="currentFilters.pageSize" [pageSizeOptions]="itemsPerPage" [showFirstLastButtons]="true">
+        </mat-paginator>
       </div> 
 </div>

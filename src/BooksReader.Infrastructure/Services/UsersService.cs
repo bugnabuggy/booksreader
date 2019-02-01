@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
@@ -16,7 +17,18 @@ namespace BooksReader.Infrastructure.Services
 {
     public class UsersService : IUsersService
     {
-        private readonly BrDbContext _ctx;
+	    private Dictionary<string, Expression<Func<LoginHistory, object>>> orderBys = new Dictionary<string, Expression<Func<LoginHistory, object>>>()
+	    {
+		    {"dateTime", x => x.DateTime},
+		    {"browser", x=>x.Browser},
+		    {"geolocation", x=>x.Geolocation},
+		    {"ipAddress", x=>x.IpAddress},
+		    {"Screen", x=>x.Screen},
+		    {"Id", x=>x.Id},
+		    {"userId", x=>x.UserId}
+		};
+
+		private readonly BrDbContext _ctx;
         private readonly UserManager<BrUser> _userManager;
 	    private readonly IRepository<LoginHistory> _logHistory;
 
@@ -105,9 +117,9 @@ namespace BooksReader.Infrastructure.Services
             };
         }
 
-	    public async Task<LoginHistoryResult> AddLogHistory(LoginHistoryResult logHistory, string userId)
+	    public async Task<LoginHistoryResult> AddLoginHistory(LoginHistory logHistory, string userId)
 	    {
-			this._logHistory.Add(new LoginHistory
+			var result =  this._logHistory.Add(new LoginHistory
 		    {
 			    Id = Guid.NewGuid(),
 				DateTime = logHistory.DateTime,
@@ -116,19 +128,49 @@ namespace BooksReader.Infrastructure.Services
 				UserId = userId,
 				Geolocation = logHistory.Geolocation
 			});
-		    return logHistory;
+		    return new LoginHistoryResult()
+		    {
+			    DateTime =  result.DateTime,
+				Browser = result.Browser,
+				IpAddress = result.IpAddress,
+				Geolocation = result.Geolocation,
+				Screen = result.Screen
+		    };
 
 	    }
 
-	    public async Task<List<LoginHistoryResult>> GetLogHistory(string userId)
-	    {
-		    return _logHistory.Data.Where(x => x.UserId == userId).Select(u => new LoginHistoryResult
-		    {
-			    DateTime = u.DateTime,
+	    public IQueryable<LoginHistoryResult> GetLoginHistory(StandardFiltersDto filters, string userId, out int totalItems)
+		{
+			IQueryable<LoginHistory> data = _logHistory.Data;
+
+			filters.PageNumber = filters.PageNumber ?? 0;
+
+			totalItems = data.Count();
+
+			if (!string.IsNullOrWhiteSpace(filters.OrderByField) && orderBys.ContainsKey(filters.OrderByField))
+			{
+				var orderExp = orderBys[filters.OrderByField];
+
+				data = filters.IsDesc
+					? data.OrderByDescending(orderExp)
+					: data.OrderBy(orderExp);
+			}
+
+			data = filters.PageSize == null
+				? data
+				: data.Skip((int)(filters.PageNumber)
+				            * (int)filters.PageSize)
+					.Take((int)filters.PageSize);
+
+			return data.Select(u => new LoginHistoryResult()
+			{
+				DateTime = u.DateTime,
 				IpAddress = u.IpAddress,
 				Browser = u.Browser,
+				Screen = u.Screen,
 				Geolocation = u.Geolocation
-		    }).ToList();
+			});
+
 	    }
 	}
 }

@@ -9,7 +9,8 @@ import {
   ForceLogoutComponent,
   AdminDashboardComponent,
   AuthorDashboardComponent,
-  BookMarketComponent
+  BookMarketComponent,
+  BookEditComponent
 } from './pages';
 
 
@@ -19,9 +20,11 @@ const routes: Routes = [
   { path: 'authorize', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [SecurityService] },
-  { path: 'book-marker', component: BookMarketComponent, canActivate: [SecurityService] },
+  { path: 'book-market', component: BookMarketComponent, canActivate: [SecurityService] },
   { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [SecurityService] },
-  { path: 'author/dashboard', component: AuthorDashboardComponent, canActivate: [SecurityService] }
+  { path: 'author/dashboard', component: AuthorDashboardComponent, canActivate: [SecurityService] },
+  { path: 'author/book', component: BookEditComponent, canActivate: [SecurityService] },
+  { path: 'author/book/:id', component: BookEditComponent, canActivate: [SecurityService] }
 ];
 
 @NgModule({

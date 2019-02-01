@@ -5,6 +5,10 @@ import { share, mergeMap, map } from 'rxjs/operators';
 import { Endpoints } from '../enums/Endpoints';
 import { AppUser, LoginHistoryModel } from '../models';
 import { LogoutData, AuthResponse } from '../models/api-contracts';
+import { Observable, from } from 'rxjs';
+import { SiteConstants } from '../enums';
+import { flatten } from '../utilities/helpers';
+import { StandardFilters } from '../models/filters';
 
 @Injectable()
 export class SecurityService {
@@ -70,7 +74,7 @@ export class SecurityService {
                     this.setTokens(val);
                 }),
                 mergeMap(() => this.getUserInfo()),
-                mergeMap(() => this.addLogHistory()));
+                mergeMap(() => this.addLoginHistory()));
 
         return observable;
     }
@@ -104,31 +108,58 @@ export class SecurityService {
 
     sendLoggingData(loginHistory: LoginHistoryModel ) {
         const url = Endpoints.api.user.loginHistory;
-
         return this.http.post(url, loginHistory).pipe(share());
     }
 
     addLoginHistory() {
-        let loginHistory = {} as LoginHistoryModel;
+        const loginHistory = {
+            userAgent: navigator.userAgent,
+            screen: flatten(window.screen),
+        } as LoginHistoryModel;
+
         let timeoutId;
 
-        navigator.geolocation.getCurrentPosition((val) => {
-            loginHistory. coordinates = val.coords;
-            if ( timeoutId > 0) {
+        const promise = new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition((val) => {
+                loginHistory.coordinates = flatten(val.coords);
+                if ( timeoutId > 0) {
+                    clearTimeout(timeoutId);
+                    this.sendLoggingData(loginHistory)
+                    .subscribe( resp => {
+                        resolve(resp);
+                    }, (err) => {
+                        reject(err);
+                    });
+                }
+            });
+
+            timeoutId = setTimeout(() => {
                 clearTimeout(timeoutId);
-            }
+                timeoutId = 0;
+                this.sendLoggingData(loginHistory)
+                .subscribe( resp => {
+                    resolve(resp);
+                }, (err) => {
+                    reject(err);
+                });
+            }, SiteConstants.Short_timeout);
         });
 
-        timeoutId = setTimeout(() => {
-            const url = Endpoints.api.user.loginHistory;
-            const observable = this.http.post(url, this.geolocation).pipe(share());
-        return observable;
-        }, 10000);
-
+        // this will be bug ↓ because link to an object would change
+        return from(promise);
     }
-    getLogHistory() {
-            const url = Endpoints.api.userReader.getLogHistory;
-            const observable = this.http.get(url).pipe(share());
+    getLogHistory(filters?: StandardFilters) {
+        filters.isDesc = typeof filters.isDesc === 'undefined' ? null : filters.isDesc;
+        const  params = filters
+            ? new HttpParams()
+                .set('OrderByField', filters.orderByField || '')
+                .set('IsDesc', <string><any>filters.isDesc)
+                .set('PageSize', <string><any>filters.pageSize || '')
+                .set('PageNumber', <string><any>filters.pageNumber || '')
+            : null;
+            const url = Endpoints.api.user.loginHistory;
+            const observable = this.http.get(url,
+                { params }).pipe(share());
             return observable;
     }
 

@@ -8,7 +8,8 @@ namespace BooksReader.TestData
 {
     class UserForInitialization
     {
-        public string Username { get; set; }
+		public string Id { get; set; }
+		public string Username { get; set; }
         public string Password { get; set; }
         public IEnumerable<string> Roles { get; set; }
     }
@@ -21,13 +22,15 @@ namespace BooksReader.TestData
             {
                 new UserForInitialization()
                 {
-                    Username = "empty",
+	                Id =  "00000000-0000-0000-0000-000000000000",
+					Username = "empty",
                     Password = "123",
                     Roles = new List<string>(){}
                 },
                 new UserForInitialization()
                 {
-                    Username = "tony",
+	                Id =  "00000000-0000-0000-0000-000000000001",
+					Username = "tony",
                     Password = "123",
                     Roles = new List<string>(){ "User", "Author"}
                 },

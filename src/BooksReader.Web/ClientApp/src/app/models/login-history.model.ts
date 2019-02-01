@@ -1,5 +1,7 @@
 export interface LoginHistoryModel {
-    geolocation: Coordinates;
-    browser?: string;
+    coordinates: Coordinates;
+    userAgent?: string;
+    languages?: string[];
+    screen?: Screen;
     locale?: string;
 }
