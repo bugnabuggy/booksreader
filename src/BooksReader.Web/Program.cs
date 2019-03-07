@@ -1,20 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
-using BooksReader.Web.Configuration;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace BooksReader
+namespace BooksReader.Web
 {
 	public class Program
 	{

@@ -52,25 +52,42 @@ export class SecurityService {
     }
 
     login(login, password) {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/x-www-form-urlencoded',
-            })
-        };
-        const body = new HttpParams()
-            .set('client_id', 'mvc')
-            .set('client_secret', 'secret')
-            .set('grant_type', 'password')
-            .set('username', login)
-            .set('password', password);
+        const body = new FormData();
+        body.append('client_id', 'mvc');
+        body.append('client_secret', 'secret');
+        body.append('grant_type', 'password');
+        body.append('username', login);
+        body.append('password', password);
 
         const url = Endpoints.api.authorization.login;
 
         const observable = this.http.post(url,
-            body,
-            httpOptions).pipe(
+            body).pipe(
                 share(),
                 map((val: AuthResponse) => {
+                    this.setTokens(val);
+                }),
+                mergeMap(() => this.getUserInfo()),
+                mergeMap(() => this.addLoginHistory()));
+
+        return observable;
+    }
+
+    externalLogin(type: string, access_token) {
+        const url = Endpoints.api.authorization.login;
+
+        const body = new FormData();
+        body.append('client_id', 'mvc');
+        body.append('client_secret', 'secret');
+        body.append('grant_type', 'external');
+        body.append('provider', type);
+        body.append('external_token', access_token);
+
+        const observable = this.http.post(url,
+            body).pipe(
+                share(),
+                map((val: AuthResponse) => {
+                    debugger;
                     this.setTokens(val);
                 }),
                 mergeMap(() => this.getUserInfo()),
@@ -165,6 +182,7 @@ export class SecurityService {
 
     getUserInfo() {
         const url = Endpoints.api.user.info;
+        debugger;
         const observable = this.http.get(url).pipe(share());
         observable.subscribe((val: AppUser) => {
             this.user = val;

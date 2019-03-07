@@ -13,6 +13,7 @@ import {  MODULE_COMPONENTS,
   MATERIAL_DESIGN } from './moduleExports';
 
 import { SimpleHttpInterceptor } from './interceptors/simple-http.interceptor';
+import { BrIntegrationsModule } from './br-integrations/br-integrations.module';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { SimpleHttpInterceptor } from './interceptors/simple-http.interceptor';
     MATERIAL_DESIGN,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrIntegrationsModule
   ],
   providers: [
     MODULE_SERVICES,

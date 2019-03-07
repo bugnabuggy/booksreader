@@ -6,6 +6,7 @@ using BooksReader.Infrastructure.Models;
 using BooksReader.Web.Configuration;
 using BooksReader.Web.Helpers;
 using BooksReader.Web.Hubs;
+using BooksReader.Web.IdentityServerExtensions.Extensions;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,7 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BooksReader
+namespace BooksReader.Web
 {
 	public class Startup
 	{
@@ -86,13 +87,24 @@ namespace BooksReader
 					options.TokenCleanupInterval = 30;
 				});
 
+            // IdentityServer Extensions config
+            services
+                .AddIdentityServerExtensionsServices<BrUser>()
+                .AddIdentityServerExtensionsRepositories()
+                .AddIdentityServerExtensionsProviders<BrUser>();
+
 			services.AddAuthentication(o =>
 				{
 					o.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
 					o.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
 					o.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
 				})
-				.AddIdentityServerAuthentication(options =>
+                .AddFacebook(facebookOptions =>
+                {
+                    facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                    facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                })
+                .AddIdentityServerAuthentication(options =>
 				{
 
 					options.Authority = Configuration["ServerUrl"];

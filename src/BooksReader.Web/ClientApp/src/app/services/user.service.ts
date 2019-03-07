@@ -10,7 +10,7 @@ import { UserHubService } from '../hubs';
 
 @Injectable()
 export class UserService {
-    constructor(private http: HttpClient,
+    constructor(
         private securitySvc: SecurityService,
         private userHub: UserHubService,
         public router: Router,
@@ -45,6 +45,17 @@ export class UserService {
         return observable.pipe(finalize( () => {
             this.actionInProgress = false;
         }));
+    }
+
+    externalLogIn(type: string, access_token: string) {
+        if (this.actionInProgress) {
+            return of(null);
+        }
+
+        this.actionInProgress = true;
+        const observable = this.securitySvc.externalLogin(type, access_token);
+
+        return observable;
     }
 
     logOut() {

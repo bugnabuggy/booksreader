@@ -1,4 +1,4 @@
-<div class="d-flex w-100 justify-content-center align-items-center">
+<div class="d-flex flex-column w-100 justify-content-center align-items-center">
   <form class="text-center" (ngSubmit)="login($event)" #loginForm="ngForm">
     <mat-form-field class="w-75">
       <input matInput name="email" [formControl]="userNameFormControl" placeholder="User name" class="font-weight-light">
@@ -20,6 +20,10 @@
     <div class='d-inline-block text-right w-75  mt-3'>
       <a routerLink="/registration" >Registration</a>
     </div>
-
   </form>
+
+  <div class="row">
+    <button *ngIf="!loggedInWithFacebook" mat-raised-button (click)="socialLogin()" class="mat-raised-btn mt-4" color="primary">Log in with Facebook</button>
+    <button *ngIf="loggedInWithFacebook" mat-raised-button (click)="socialLogout()" class="mat-raised-btn mt-4" color="primary">Logout Facebook</button>
+  </div>
 </div>

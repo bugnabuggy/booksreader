@@ -28,8 +28,9 @@ namespace BooksReader.Web.Configuration
         {
             return new List<IdentityResource>()
             {
+                // new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                
+                // new IdentityResources.Email()
             };
         }
 
@@ -41,10 +42,15 @@ namespace BooksReader.Web.Configuration
                 {
                     ClientId = "mvc",
                     ClientName = "MVC Client",
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    AllowedGrantTypes = new[] {GrantType.ResourceOwnerPassword,"external"},
                                      
                     AccessTokenType = AccessTokenType.Jwt,
+                    AlwaysIncludeUserClaimsInIdToken = true,
                     AccessTokenLifetime = 60*60*24*30,
+                    IdentityTokenLifetime = 86400*30,
+                    AllowOfflineAccess = true,
+                    AlwaysSendClientClaims = true,
+                    Enabled = true,
 
                     RequireConsent = false,
 
@@ -55,10 +61,12 @@ namespace BooksReader.Web.Configuration
 
                     AllowedScopes =
                     {
-                        ApiName
-                        
+                        ApiName,
+                        //IdentityServerConstants.StandardScopes.Email,
+                        //IdentityServerConstants.StandardScopes.OpenId,
+                        //IdentityServerConstants.StandardScopes.Profile
                     },
-                    AllowOfflineAccess = true
+                    
                 }
             };
         }
