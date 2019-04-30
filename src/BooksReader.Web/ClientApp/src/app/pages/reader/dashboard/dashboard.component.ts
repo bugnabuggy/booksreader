@@ -3,7 +3,8 @@ import { SecurityService } from '../../../services/';
 import { UserHubService } from '../../../hubs';
 import { LogoutData, LoginHistory, WebResult } from '../../../models/api-contracts';
 import { StandardFilters } from '../../../models/filters';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
 import { SiteConstants } from '../../../enums';
 
 @Component({
@@ -16,8 +17,8 @@ export class DashboardComponent implements OnInit {
   currentFilters: StandardFilters = { pageSize: 10, pageNumber: 0, isDesc: true, orderByField: 'dateTime' };
   itemsPerPage = SiteConstants.itemsPerPage;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(
     public security: SecurityService,

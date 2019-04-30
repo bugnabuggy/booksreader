@@ -6,7 +6,7 @@ import {
     NotificationService
 } from '../../../services';
 
-import { SocialLoginService } from '../../../br-integrations/services';
+import { SocialLoginService } from '@br/integrations/services';
 
 @Component({
     selector: 'app-login',
@@ -67,7 +67,6 @@ export class LoginComponent implements OnInit {
         this.socialSvc.signOutWithFB().subscribe(val => {
             this.loggedInWithFacebook = false;
             console.log(val);
-            debugger;
         });
     }
 }

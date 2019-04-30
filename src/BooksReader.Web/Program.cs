@@ -42,7 +42,7 @@ namespace BooksReader.Web
 
 		public static IWebHost BuildWebHost(string[] args) =>
 			WebHost.CreateDefaultBuilder(args)
-				.UseStartup<Startup>()
+                .UseStartup<Startup>()
 				.Build();
 	}
 }

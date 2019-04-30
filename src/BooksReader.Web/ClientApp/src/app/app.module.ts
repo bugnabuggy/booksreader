@@ -13,7 +13,7 @@ import {  MODULE_COMPONENTS,
   MATERIAL_DESIGN } from './moduleExports';
 
 import { SimpleHttpInterceptor } from './interceptors/simple-http.interceptor';
-import { BrIntegrationsModule } from './br-integrations/br-integrations.module';
+import { BrIntegrationsModule } from '@br/integrations/br-integrations.module';
 
 
 @NgModule({

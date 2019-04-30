@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HubConnectionBuilder, HubConnection, HubConnectionState } from '@aspnet/signalr';
 import { SecurityService } from '../services/security.service';
 import { LogoutData } from '../models/api-contracts';
+import { environment } from '@br/env/environment';
 
 
 @Injectable({
@@ -14,7 +15,7 @@ export class UserHubService {
     private security: SecurityService
   ) {
     this.connection = new HubConnectionBuilder()
-      .withUrl('/hub/user', { accessTokenFactory: () => this.security.token })
+      .withUrl(environment.baseApiUrl + 'hub/user', { accessTokenFactory: () => this.security.token })
       .build();
 
 

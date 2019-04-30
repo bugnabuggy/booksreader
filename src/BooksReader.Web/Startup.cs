@@ -93,7 +93,7 @@ namespace BooksReader.Web
                 .AddIdentityServerExtensionsRepositories()
                 .AddIdentityServerExtensionsProviders<BrUser>();
 
-			services.AddAuthentication(o =>
+            services.AddAuthentication(o =>
 				{
 					o.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
 					o.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
@@ -136,8 +136,16 @@ namespace BooksReader.Web
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-		{
-			if (env.IsDevelopment())
+        {
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyOrigin();
+                builder.AllowAnyMethod();
+                builder.AllowAnyHeader();
+                builder.AllowCredentials();
+            });
+
+            if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
 			}
@@ -146,15 +154,9 @@ namespace BooksReader.Web
 				app.UseExceptionHandler("/Error");
 			}
 
-			
 			//app.UseSpaStaticFiles();
 
-			app.UseCors(builder =>
-			{
-				builder.AllowAnyOrigin();
-				builder.AllowAnyMethod();
-				builder.AllowAnyHeader();
-			});
+			
 			app.UseIdentityServer();
 			
 			app.UseStaticFiles();
@@ -171,17 +173,17 @@ namespace BooksReader.Web
 		    });
 
             app.UseSpa(spa =>
-			{
-				// To learn more about options for serving an Angular SPA from ASP.NET Core,
-				// see https://go.microsoft.com/fwlink/?linkid=864501
+           {
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
 
-				spa.Options.SourcePath = "ClientApp";
+                spa.Options.SourcePath = "ClientApp";
 
-				if (env.IsDevelopment())
-				{
-					spa.UseAngularCliServer(npmScript: "start");
-				}
-			});
-		}
+               if (env.IsDevelopment())
+               {
+                   spa.UseAngularCliServer(npmScript: "start");
+               }
+           });
+        }
 	}
 }

@@ -6,7 +6,8 @@ import { UserService,
          } from '../../app/services';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { Observable } from 'rxjs';
 import { AppUser } from '../../app/models';
 

@@ -5,18 +5,28 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
+    "module": "esnext",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
+      "es2018",
       "dom"
     ],
-    "module": "es2015",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "paths": {
+      "@br/env/*": ["src/environments/*"],
+      "@br/config": ["src/app/config"],
+      "@br/config/*": ["src/app/config/*"],
+      "@br/shared/*": ["src/app/modules/shared/*"],
+      "@br/core/*": ["src/app/modules/core/*"],
+      "@br/communications/*": ["src/app/modules/communications/*"],
+      "@br/public/*": ["src/app/modules/public/*"],
+      "@br/integrations/*": ["src/app/modules/integrations/*"],      
+    }
   }
 }
