@@ -119,7 +119,7 @@ namespace BooksReader.Infrastructure.Services
 
 	    public async Task<LoginHistoryResult> AddLoginHistory(LoginHistory logHistory, string userId)
 	    {
-			var result =  this._logHistory.Add(new LoginHistory
+			var result = await this._logHistory.AddAsync(new LoginHistory
 		    {
 			    Id = Guid.NewGuid(),
 				DateTime = logHistory.DateTime,
@@ -128,6 +128,7 @@ namespace BooksReader.Infrastructure.Services
 				UserId = userId,
 				Geolocation = logHistory.Geolocation
 			});
+
 		    return new LoginHistoryResult()
 		    {
 			    DateTime =  result.DateTime,

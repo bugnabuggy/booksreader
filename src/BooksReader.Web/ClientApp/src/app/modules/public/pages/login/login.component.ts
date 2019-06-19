@@ -1,12 +1,13 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormBuilder } from '@angular/forms';
 import {
     UserService,
     SecurityService,
     NotificationService
-} from '../../../services';
+} from '@br/core/services';
 
 import { SocialLoginService } from '@br/integrations/services';
+import { LoginModel } from '@br/core/models';
 
 @Component({
     selector: 'app-login',
@@ -14,21 +15,23 @@ import { SocialLoginService } from '@br/integrations/services';
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-    loggedInWithFacebook = false;
-    userNameFormControl = new FormControl('', [
-        Validators.required
-    ]);
+    
 
-    passwordFormControl = new FormControl('', [
-        Validators.required
-    ]);
+    errorMessage = '';
+    loggedInWithFacebook = false;
+
+    loginForm = this.fb.group({
+        username: ['', Validators.required],
+        password: ['', [Validators.required, Validators.minLength(3)]],
+    })
 
 
     constructor(
         private security: SecurityService,
         private authorization: UserService,
         private notifications: NotificationService,
-        public socialSvc: SocialLoginService
+        public socialSvc: SocialLoginService,
+        private fb: FormBuilder
     ) {
         this.security.isLoggedIn = false;
     }
@@ -41,12 +44,15 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        this.authorization.logIn(this.userNameFormControl.value, this.passwordFormControl.value)
+        const loginModel = this.loginForm.value as LoginModel;
+        this.authorization.logIn(loginModel.username, loginModel.password)
             .subscribe((data) => {
 
             }, (err) => {
+                debugger;
+                this.errorMessage = err.error.error_description;
                 if (err.status === 400) {
-                    this.notifications.showError(`Invalid login or password`);
+                    this.notifications.showError(`Invalid username or password`);
                 }
             });
     }
@@ -54,6 +60,7 @@ export class LoginComponent implements OnInit {
     socialLogin() {
         this.socialSvc.signInWithFB().subscribe(user => {
             this.loggedInWithFacebook = true;
+            debugger;
             this.authorization.externalLogIn('Facebook', user.authToken)
             .subscribe(val => {
                 console.log(val);

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { UserHubService } from './user-hub.service';
-import { MOCKED_PROVIDERS } from '../../tests/mocks/mockedProviders';
+import { MOCKED_PROVIDERS } from '../../../../tests/mocks/mockedProviders';
 
 describe('UserHubService', () => {
   beforeEach(() => TestBed.configureTestingModule({

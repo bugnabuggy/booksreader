@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Endpoints } from '../../enums';
+import { Endpoints } from '@br/config';
 import { share } from 'rxjs/operators';
 
 @Injectable({

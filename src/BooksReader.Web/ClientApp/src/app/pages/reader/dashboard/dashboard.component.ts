@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SecurityService } from '../../../services/';
-import { UserHubService } from '../../../hubs';
-import { LogoutData, LoginHistory, WebResult } from '../../../models/api-contracts';
-import { StandardFilters } from '../../../models/filters';
+import { SecurityService } from '@br/core/services';
+import { UserHubService } from '../../../modules/communications/hubs';
+import { LogoutData, LoginHistory, WebResult } from '@br/core/models';
+import { StandardFilters } from '../../../modules/core/models/filters';
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
-import { SiteConstants } from '../../../enums';
+import { SiteConstants } from '@br/config';
 
 @Component({
   selector: 'app-dashboard',

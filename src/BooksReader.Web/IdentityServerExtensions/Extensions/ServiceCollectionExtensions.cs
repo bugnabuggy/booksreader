@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using BooksReader.Infrastructure.Models;
 using BooksReader.Web.IdentityServerExtensions.ExtensionGrant;
 using BooksReader.Web.IdentityServerExtensions.Interfaces;
 using BooksReader.Web.IdentityServerExtensions.Interfaces.Processors;
@@ -14,7 +15,7 @@ namespace BooksReader.Web.IdentityServerExtensions.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddIdentityServerExtensionsServices<TUser>(this IServiceCollection services) where TUser:IdentityUser,new()
+        public static IServiceCollection AddIdentityServerExtensionsServices<TUser>(this IServiceCollection services) where TUser: BrUser,new()
         {
             services.AddScoped<INonEmailUserProcessor, NonEmailUserProcessor<TUser>>();
             services.AddScoped<IEmailUserProcessor, EmailUserProcessor<TUser>>();

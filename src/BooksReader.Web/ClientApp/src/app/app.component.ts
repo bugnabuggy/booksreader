@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SecurityService, UserService } from './services';
-import { UserHubService } from './hubs';
+import { SecurityService, UserService } from '@br/core/services';
+
 
 @Component({
   selector: 'app-root',
@@ -8,8 +8,6 @@ import { UserHubService } from './hubs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'app';
-
   constructor(
     public security: SecurityService,
     public userSvc: UserService

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminUsersService } from '../../../services';
-import { WebResult, AppUser, OperationResult } from '../../../models';
+import { WebResult, AppUser, OperationResult } from '@br/core/models';
 
 @Component({
   selector: 'app-admin-dashboard',

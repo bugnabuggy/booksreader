@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { share } from 'rxjs/operators';
-import { Endpoints } from '../../enums/Endpoints';
+import { Endpoints } from '@br/config';
 
 @Injectable({
   providedIn: 'root'

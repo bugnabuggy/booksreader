@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RegistrationComponent } from './registration.component';
-import { MOCKED_PROVIDERS } from '../../../../tests/mocks/mockedProviders';
-import { MATERIAL_DESIGN } from '../../../moduleExports';
+import { MOCKED_PROVIDERS } from '../../../../../tests/mocks/mockedProviders';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from 'src/app/modules/material/material.module';
 
 describe('registrationComponent', () => {
   let component: RegistrationComponent;
@@ -12,7 +12,7 @@ describe('registrationComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ RegistrationComponent ],
-      imports: [ FormsModule, MATERIAL_DESIGN, BrowserAnimationsModule ],
+      imports: [ FormsModule, MaterialModule, BrowserAnimationsModule ],
       providers: MOCKED_PROVIDERS
     })
     .compileComponents();

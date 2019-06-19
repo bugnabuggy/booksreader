@@ -4,7 +4,7 @@ import { BookEditDialogComponent } from './book-edit-dialog.component';
 import { MOCKED_PROVIDERS } from '../../../../tests/mocks/mockedProviders';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { MATERIAL_DESIGN } from '../../../moduleExports';
+import { MaterialModule } from 'src/app/modules/material/material.module';
 
 describe('BookEditDialogComponent', () => {
   let component: BookEditDialogComponent;
@@ -13,7 +13,7 @@ describe('BookEditDialogComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BookEditDialogComponent ],
-      imports: [ BrowserAnimationsModule, FormsModule, MATERIAL_DESIGN ],
+      imports: [ BrowserAnimationsModule, FormsModule, MaterialModule ],
       providers: MOCKED_PROVIDERS
     })
     .compileComponents();

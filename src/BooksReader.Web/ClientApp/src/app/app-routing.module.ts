@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SecurityService } from './services';
+import { SecurityService } from '@br/core/services';
 
 import {
   DashboardComponent,
-  LoginComponent,
-  RegistrationComponent,
   ForceLogoutComponent,
   AdminDashboardComponent,
   AuthorDashboardComponent,
@@ -17,8 +15,7 @@ import {
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'logout', component: ForceLogoutComponent },
-  { path: 'authorize', component: LoginComponent },
-  { path: 'registration', component: RegistrationComponent },
+  
   { path: 'dashboard', component: DashboardComponent, canActivate: [SecurityService] },
   { path: 'book-market', component: BookMarketComponent, canActivate: [SecurityService] },
   { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [SecurityService] },

@@ -1,14 +1,15 @@
 import { share , finalize } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Endpoints } from '../enums/Endpoints';
 import { SecurityService } from './security.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { UserHubService } from '../hubs';
+import { UserHubService } from '@br/communications/hubs';
+import { AppUser } from '../models';
 
-@Injectable()
+@Injectable({
+        providedIn: 'root'
+    })
 export class UserService {
     constructor(
         private securitySvc: SecurityService,
@@ -17,6 +18,10 @@ export class UserService {
        ) {
     }
 
+
+    user: AppUser = null;
+    
+    // TODO: refactor this ↓ because it is a source of bugs
     actionInProgress: boolean = false;
 
     get isLoggedIn() {
@@ -54,6 +59,11 @@ export class UserService {
 
         this.actionInProgress = true;
         const observable = this.securitySvc.externalLogin(type, access_token);
+
+        observable.subscribe(c=>{
+            this.actionInProgress = false;
+        })
+
 
         return observable;
     }

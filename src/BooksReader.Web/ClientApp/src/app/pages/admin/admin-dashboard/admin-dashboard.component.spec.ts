@@ -2,7 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { AdminDashboardComponent } from './admin-dashboard.component';
 import { MOCKED_PROVIDERS } from '../../../../tests/mocks/mockedProviders';
-import { MATERIAL_DESIGN } from '../../../moduleExports';
+import { MaterialModule } from 'src/app/modules/material/material.module';
+
 
 
 describe('AdminDashboardComponent', () => {
@@ -12,7 +13,7 @@ describe('AdminDashboardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AdminDashboardComponent ],
-      imports: [FormsModule, MATERIAL_DESIGN],
+      imports: [FormsModule, MaterialModule],
       providers: MOCKED_PROVIDERS
     })
     .compileComponents();

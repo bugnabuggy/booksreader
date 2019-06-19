@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
-import { MOCKED_PROVIDERS } from '../../../../tests/mocks/mockedProviders';
-import { MATERIAL_DESIGN } from '../../../moduleExports';
+import { MOCKED_PROVIDERS } from '../../../../../tests/mocks/mockedProviders';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from 'src/app/modules/material/material.module';
 
 describe('loginComponent', () => {
   let component: LoginComponent;
@@ -12,7 +12,7 @@ describe('loginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
-      imports: [FormsModule, ReactiveFormsModule, MATERIAL_DESIGN, BrowserAnimationsModule],
+      imports: [FormsModule, ReactiveFormsModule, MaterialModule, BrowserAnimationsModule],
       providers: MOCKED_PROVIDERS
     })
     .compileComponents();

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { BookEditDialogComponent } from '../../../components';
 import { AuthorBooksService } from '../../../services';
-import { WebResult, Book, OperationResult } from '../../../models';
+import { WebResult, Book, OperationResult } from '@br/core/models';
 
 @Component({
   selector: 'app-author-dashboard',

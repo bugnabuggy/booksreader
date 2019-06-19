@@ -1,28 +1,36 @@
-import { Injectable, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Router, CanActivate } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient,  HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { share, mergeMap, map } from 'rxjs/operators';
-import { Endpoints } from '../enums/Endpoints';
-import { AppUser, LoginHistoryModel } from '../models';
-import { LogoutData, AuthResponse } from '../models/api-contracts';
-import { Observable, from } from 'rxjs';
-import { SiteConstants } from '../enums';
-import { flatten } from '../utilities/helpers';
-import { StandardFilters } from '../models/filters';
+import { Endpoints } from '../../../config/endpoints';
 
-@Injectable()
+import { AppUser, LoginHistoryModel } from '@br/core/models';
+import { LogoutData, AuthResponse } from '../models/api-contracts';
+
+import { from } from 'rxjs';
+
+import { SiteConstants } from '@br/config';
+
+import { flatten } from '@br/utilities/helpers';
+import { StandardFilters } from '../models/filters';
+import { StorageService } from './storage.service';
+
+@Injectable({
+    providedIn: 'root'
+})
 export class SecurityService {
     isLoggedIn: boolean = true;
     token: string;
     tokenExpirationDate: Date;
     logoutData: LogoutData;
-    user = {} as AppUser;
+    user: AppUser = null;
 
     constructor(
         public router: Router,
-        public http: HttpClient
+        public http: HttpClient,
+        private storage: StorageService 
     ) {
-        const userTokens = JSON.parse(localStorage.getItem('adminTokens'));
+        const userTokens = JSON.parse(storage.getItem(SiteConstants.storageKeys.userToken));
         if (userTokens) {
             this.setTokens(userTokens);
         }
@@ -165,6 +173,7 @@ export class SecurityService {
         // this will be bug ↓ because link to an object would change
         return from(promise);
     }
+    
     getLogHistory(filters?: StandardFilters) {
         filters.isDesc = typeof filters.isDesc === 'undefined' ? null : filters.isDesc;
         const  params = filters
@@ -182,7 +191,6 @@ export class SecurityService {
 
     getUserInfo() {
         const url = Endpoints.api.user.info;
-        debugger;
         const observable = this.http.get(url).pipe(share());
         observable.subscribe((val: AppUser) => {
             this.user = val;
@@ -219,14 +227,15 @@ export class SecurityService {
             delete authResponse['expires_in'];
         }
 
-        localStorage.setItem('adminTokens', JSON.stringify(authResponse));
+        this.storage.setItem(SiteConstants.storageKeys.userToken, JSON.stringify(authResponse));
     }
 
     clearTokens() {
         this.token = null;
+        this.user = null;
 
         this.tokenExpirationDate = null;
-        localStorage.removeItem('adminTokens');
+        this.storage.removeItem(SiteConstants.storageKeys.userToken);
     }
 
     getToken(): string {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BooksReader.Infrastructure.Models;
 using BooksReader.Web.IdentityServerExtensions.Interfaces.Processors;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
@@ -8,7 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace BooksReader.Web.IdentityServerExtensions.Processors
 {
-    public class EmailUserProcessor<TUser> : IEmailUserProcessor where TUser: IdentityUser,new()
+    public class EmailUserProcessor<TUser> : IEmailUserProcessor where TUser: BrUser, new()
     {        
         private readonly UserManager<TUser> _userManager;
         public EmailUserProcessor(            
@@ -21,8 +22,8 @@ namespace BooksReader.Web.IdentityServerExtensions.Processors
         {
             var userEmail = email;
             var userExternalId = userInfo.Value<string>("id");
+            var userExternalName = userInfo.Value<string>("name");
 
-           
 
             if (string.IsNullOrWhiteSpace(userExternalId))
             {
@@ -36,7 +37,7 @@ namespace BooksReader.Web.IdentityServerExtensions.Processors
 
             }
 
-            var newUser = new TUser { Email = userEmail ,UserName = userEmail};
+            var newUser = new TUser { Email = userEmail ,UserName = userEmail, Name = userExternalName };
             var result =  _userManager.CreateAsync(newUser).Result;
             if (result.Succeeded)
             {                

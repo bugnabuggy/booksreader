@@ -6,41 +6,50 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 import {  MODULE_COMPONENTS,
   MODULE_SERVICES,
-  MODULE_PIPES,
   MODULE_ENTRY_COMPONENTS,
-  MATERIAL_DESIGN } from './moduleExports';
+   } from './moduleExports';
 
-import { SimpleHttpInterceptor } from './interceptors/simple-http.interceptor';
+import { SimpleHttpInterceptor } from '@br/core/interceptors';
 import { BrIntegrationsModule } from '@br/integrations/br-integrations.module';
+import { SharedModule } from '@br/shared/shared.module';
+import { PublicModule } from '@br/public/public.module';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MODULE_COMPONENTS,
-    MODULE_PIPES,
   ],
   entryComponents: [
     MODULE_ENTRY_COMPONENTS
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    MATERIAL_DESIGN,
-    ReactiveFormsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     AppRoutingModule,
-    BrIntegrationsModule
+    SimpleNotificationsModule.forRoot(
+      {
+        position: ['top', 'right'],
+      }
+    ),
+    SharedModule,
+    BrIntegrationsModule,
+    PublicModule
   ],
   providers: [
-    MODULE_SERVICES,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SimpleHttpInterceptor,
       multi: true
+    },
+    {
+      provide: Storage,
+      useValue: localStorage
     }
   ],
   bootstrap: [AppComponent]

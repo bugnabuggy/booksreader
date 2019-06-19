@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HubConnectionBuilder, HubConnection, HubConnectionState } from '@aspnet/signalr';
-import { SecurityService } from '../services/security.service';
-import { LogoutData } from '../models/api-contracts';
+import { SecurityService } from '@br/core/services/security.service';
+import { LogoutData } from '@br/core/models';
 import { environment } from '@br/env/environment';
 
 

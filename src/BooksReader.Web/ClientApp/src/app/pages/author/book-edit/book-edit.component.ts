@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Book, BookChapter, OperationResult } from '../../../models';
+import { Book, BookChapter, OperationResult } from '@br/core/models';
 import { BookEditService } from '../../../services';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap, map, mergeMap } from 'rxjs/operators';

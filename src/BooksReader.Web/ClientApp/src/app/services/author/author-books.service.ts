@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Endpoints } from '../../enums/Endpoints';
+import { Endpoints } from '@br/config';
 import { share } from 'rxjs/operators';
-import { BookEditRequest } from '../../models';
+import { BookEditRequest } from '@br/core/models';
 
 @Injectable()
 export class AuthorBooksService {

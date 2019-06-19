@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BooksReader.Infrastructure.Models;
 using BooksReader.Web.IdentityServerExtensions.Interfaces.Processors;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
@@ -9,7 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace BooksReader.Web.IdentityServerExtensions.Processors
 {
-    public class NonEmailUserProcessor<TUser> : INonEmailUserProcessor where TUser : IdentityUser , new()
+    public class NonEmailUserProcessor<TUser> : INonEmailUserProcessor where TUser : BrUser , new()
     {
        // private readonly IExternalUserRepository _externalUserRepository;
         private readonly UserManager<TUser> _userManager;
@@ -25,6 +26,7 @@ namespace BooksReader.Web.IdentityServerExtensions.Processors
         {
 
             var userEmail = userInfo.Value<string>("email");
+            var userName = userInfo.Value<string>("name");
 
             if (provider.ToLower() == "linkedin")
                 userEmail = userInfo.Value<string>("emailAddress");
@@ -51,7 +53,7 @@ namespace BooksReader.Web.IdentityServerExtensions.Processors
             }
             else
             {
-                var newUser = new TUser { Email = userEmail,UserName = userEmail };
+                var newUser = new TUser { Email = userEmail, UserName = userEmail, Name = userName };
                 var result = await _userManager.CreateAsync(newUser);
                 if (result.Succeeded)
                 {                   

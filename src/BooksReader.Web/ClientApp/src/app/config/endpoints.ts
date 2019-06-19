@@ -1,9 +1,10 @@
-import { environment } from '../../environments/environment';
+import { environment } from '@br/env/environment';
 
 class Endpoints {
     static baseApiUrl = environment.baseApiUrl;
 
     static forntend = {
+        authorization: 'authorize'
     };
     static api = {
         authorization: {
