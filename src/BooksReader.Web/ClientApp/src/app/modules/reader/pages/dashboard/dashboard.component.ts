@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SecurityService } from '@br/core/services';
-import { UserHubService } from '../../../modules/communications/hubs';
+import { UserHubService } from '@br/communications/hubs';
 import { LogoutData, LoginHistory, WebResult } from '@br/core/models';
-import { StandardFilters } from '../../../modules/core/models/filters';
+import { StandardFilters } from '@br/core/models';
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { SiteConstants } from '@br/config';

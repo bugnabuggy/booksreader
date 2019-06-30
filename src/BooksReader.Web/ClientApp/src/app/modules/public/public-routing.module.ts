@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LoginComponent, RegistrationComponent } from './pages';
+import {
+  LoginComponent,
+  RegistrationComponent,
+  ForceLogoutComponent
+} from './pages';
+
 
 const routes: Routes = [
   { path: 'authorize', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
+  { path: 'forceLogout', component: ForceLogoutComponent }
 ];
 
 @NgModule({

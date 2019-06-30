@@ -1,31 +1,28 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SecurityService } from '@br/core/services';
 
 import {
-  DashboardComponent,
-  ForceLogoutComponent,
-  AdminDashboardComponent,
-  AuthorDashboardComponent,
-  BookMarketComponent,
   BookEditComponent
 } from './pages';
+import { AuthGuard } from '@br/core/guards/auth-guard';
+import { MainComponent } from '@br/public/pages';
+import { Endpoints } from './config';
+
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'logout', component: ForceLogoutComponent },
+  { path: '', redirectTo: 'main', pathMatch: 'full' },
+  { path: 'main', component: MainComponent },
   
-  { path: 'dashboard', component: DashboardComponent, canActivate: [SecurityService] },
-  { path: 'book-market', component: BookMarketComponent, canActivate: [SecurityService] },
-  { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [SecurityService] },
-  { path: 'author/dashboard', component: AuthorDashboardComponent, canActivate: [SecurityService] },
-  { path: 'author/book', component: BookEditComponent, canActivate: [SecurityService] },
-  { path: 'author/book/:id', component: BookEditComponent, canActivate: [SecurityService] }
+  {    path: Endpoints.areas.user, canLoad: [AuthGuard], loadChildren: './modules/user/user.module#UserModule'  },
+  {    path: Endpoints.areas.reader, canLoad: [AuthGuard], loadChildren: './modules/reader/reader.module#ReaderModule'  },
+  {    path: Endpoints.areas.author, canLoad: [AuthGuard], loadChildren: './modules/author/author.module#AuthorModule'  },
+  {    path: Endpoints.areas.admin, canLoad: [AuthGuard], loadChildren: './modules/admin/admin.module#AdminModule'  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }

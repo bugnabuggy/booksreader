@@ -38,6 +38,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="Ruteco.AspNetCore.Translate" Version="1.0.0" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
   </ItemGroup>
 
@@ -49,7 +50,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BooksReader.Core\BooksReader.Core.csproj" />
+    <ProjectReference Include="..\BooksReader.Dictionaries\BooksReader.Dictionaries.csproj" />
     <ProjectReference Include="..\BooksReader.Infrastructure\BooksReader.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="i18n\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

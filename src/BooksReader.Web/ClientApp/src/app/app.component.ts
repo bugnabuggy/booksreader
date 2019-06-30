@@ -9,7 +9,6 @@ import { SecurityService, UserService } from '@br/core/services';
 })
 export class AppComponent implements OnInit {
   constructor(
-    public security: SecurityService,
     public userSvc: UserService
   ) {}
 

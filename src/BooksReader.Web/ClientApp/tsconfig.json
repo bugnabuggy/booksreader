@@ -22,6 +22,7 @@
       "@br/env/*": ["src/environments/*"],
       "@br/config": ["src/app/config"],
       "@br/config/*": ["src/app/config/*"],
+      "@br/material/*": ["src/app/modules/material/*"],
       "@br/shared/*": ["src/app/modules/shared/*"],
       "@br/core/*": ["src/app/modules/core/*"],
       "@br/communications/*": ["src/app/modules/communications/*"],

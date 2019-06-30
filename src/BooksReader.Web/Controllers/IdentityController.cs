@@ -9,6 +9,7 @@ using BooksReader.Core.Entities;
 using BooksReader.Core.Models;
 using BooksReader.Core.Models.DTO;
 using BooksReader.Core.Services;
+using BooksReader.Dictionaries;
 using BooksReader.Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,6 +21,7 @@ using BooksReader.Infrastructure.Configuration;
 using BooksReader.Web.Models;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
 using Newtonsoft.Json.Linq;
+using Ruteco.AspNetCore.Translate;
 
 namespace BooksReader.Web.Controllers
 {
@@ -29,12 +31,14 @@ namespace BooksReader.Web.Controllers
     {
 		private UserManager<BrUser> _userManager;
 	    private readonly IUsersService _usersService;
+        private readonly ITranslationService _translationService;
 
-		public IdentityController(UserManager<BrUser> userManager, IUsersService usersService)
+		public IdentityController(UserManager<BrUser> userManager, IUsersService usersService, ITranslationService translation)
 		{
 			_userManager = userManager;
 			_usersService = usersService;
-		}
+            _translationService = translation;
+        }
 
 		[HttpGet]
         public IActionResult Get()
@@ -49,8 +53,8 @@ namespace BooksReader.Web.Controllers
             var key = Guid.NewGuid();
             var validTill = DateTime.UtcNow.AddMinutes(5);
 
-            // cleanup
-            var keysToRemove = StaticLists.AntiforgeryKeys.Where(pair => pair.Value <= DateTime.UtcNow);
+            // cleanup, get lists 
+            var keysToRemove = StaticLists.AntiforgeryKeys.Where(pair => pair.Value <= DateTime.UtcNow).ToList();
             foreach (var keyValuePair in keysToRemove)
             {
                 StaticLists.AntiforgeryKeys.Remove(keyValuePair.Key);
@@ -61,22 +65,40 @@ namespace BooksReader.Web.Controllers
         }
 
 	    [HttpPost("registration")]
-	    public IActionResult Registration([FromBody]RegistrationRequest regModel)
+	    public async Task<IActionResult> Registration([FromBody]RegistrationRequest regModel)
 	    {
-		    var user = new BrUser() {UserName = regModel.Username };
+            if (!StaticLists.AntiforgeryKeys.ContainsKey(Guid.Parse(regModel.AntiforgeryKey)))
+            {
+                return BadRequest(MessageStrings.WrongAntiForgeryKey);
+            }
+
+            var user = new BrUser() {UserName = regModel.Username, Name =  regModel.Fullname};
 
 			if (!_userManager.Users.Any(u => u.UserName.Equals(regModel.Username)))
 		    {
-			    var task = _userManager.CreateAsync(user, regModel.Password);
-			    task.Wait(Constants.AsyncTaskWaitTime);
-			    var result = task.Result;
+                var result = await _userManager.CreateAsync(user, regModel.Password);
 			    if (!result.Succeeded)
 			    {
 				    return BadRequest(result.Errors);
 			    }
-		    }
-		    return Ok();
-	    }
+
+                var roles = new[]
+                {
+                    SiteRoles.Reader,
+                    SiteRoles.User
+                };
+
+                result = await _userManager.AddToRolesAsync(user, roles);
+                if (!result.Succeeded)
+                {
+                    return BadRequest(result.Errors);
+                }
+                return Ok();
+            }
+
+            return BadRequest(MessageStrings.UserAlreadyExists);
+
+        }
 
 		[HttpGet("me")]
 		[Authorize]

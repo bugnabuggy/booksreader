@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Ruteco.AspNetCore.Translate;
 
 namespace BooksReader.Web
 {
@@ -130,6 +131,11 @@ namespace BooksReader.Web
 			{
 				configuration.RootPath = "ClientApp/dist";
 			});
+
+
+            // Define translations directory and set up translations
+            var dictionariesLocation = System.IO.Directory.GetCurrentDirectory() + Configuration["TranslationsDictionariesLocation"];
+            services.AddTranslations(dictionariesLocation);
 
             AppConfigurator.ConfigureServices(services);
 		}

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.168
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksReader.Web", "src\BooksReader.Web\BooksReader.Web.csproj", "{676C0605-635B-4BB5-82CC-7469F0CBEFC4}"
 EndProject
@@ -18,6 +18,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksReader.Infrastructure.Tests", "tests\BooksReader.Infrastructure.Tests\BooksReader.Infrastructure.Tests.csproj", "{881A9D89-F60D-44FF-911F-3BCC1039012C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksReader.Web.Tests", "tests\BooksReader.Web.Tests\BooksReader.Web.Tests.csproj", "{8A7EE752-B593-44C6-8DA8-9A227CC449C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksReader.Utilities", "src\BooksReader.Utilities\BooksReader.Utilities.csproj", "{FA77920A-1A3B-47BB-B8D8-D57EB423882C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksReader.Dictionaries", "src\BooksReader.Dictionaries\BooksReader.Dictionaries.csproj", "{F0FA902F-3D09-4FBC-903F-34EACC8D6C9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,14 @@ Global
 		{8A7EE752-B593-44C6-8DA8-9A227CC449C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A7EE752-B593-44C6-8DA8-9A227CC449C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A7EE752-B593-44C6-8DA8-9A227CC449C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA77920A-1A3B-47BB-B8D8-D57EB423882C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA77920A-1A3B-47BB-B8D8-D57EB423882C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA77920A-1A3B-47BB-B8D8-D57EB423882C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA77920A-1A3B-47BB-B8D8-D57EB423882C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0FA902F-3D09-4FBC-903F-34EACC8D6C9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0FA902F-3D09-4FBC-903F-34EACC8D6C9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0FA902F-3D09-4FBC-903F-34EACC8D6C9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0FA902F-3D09-4FBC-903F-34EACC8D6C9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +72,8 @@ Global
 		{0C0A7CEE-5336-4E82-8B5A-CB9C4B9EBE29} = {7390E882-A02E-4E03-ABB8-4E85098CE0EE}
 		{881A9D89-F60D-44FF-911F-3BCC1039012C} = {7390E882-A02E-4E03-ABB8-4E85098CE0EE}
 		{8A7EE752-B593-44C6-8DA8-9A227CC449C7} = {7390E882-A02E-4E03-ABB8-4E85098CE0EE}
+		{FA77920A-1A3B-47BB-B8D8-D57EB423882C} = {676410E1-D2C3-454F-BBF8-79E5E662302A}
+		{F0FA902F-3D09-4FBC-903F-34EACC8D6C9F} = {676410E1-D2C3-454F-BBF8-79E5E662302A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {70867093-87D2-4495-A704-07DA9C527CAC}

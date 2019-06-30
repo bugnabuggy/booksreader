@@ -32,8 +32,9 @@ namespace BooksReader.Infrastructure.Configuration
             {
                 new IdentityRole(SiteRoles.Admin),
                 new IdentityRole(SiteRoles.User),
-	            new IdentityRole(SiteRoles.Author)
-			};
+	            new IdentityRole(SiteRoles.Author),
+                new IdentityRole(SiteRoles.Reader)
+            };
 
             var users = new Dictionary<BrUser, string>()
             {

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ForceLogoutComponent } from './force-logout.component';
-import { MOCKED_PROVIDERS } from '../../../../tests/mocks/mockedProviders';
+import { MOCKED_PROVIDERS } from '@br/tests/mocks';
 
 describe('ForceLogoutComponent', () => {
   let component: ForceLogoutComponent;

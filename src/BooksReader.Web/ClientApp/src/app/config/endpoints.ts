@@ -1,11 +1,29 @@
 import { environment } from '@br/env/environment';
 
+
+
 class Endpoints {
     static baseApiUrl = environment.baseApiUrl;
 
-    static forntend = {
-        authorization: 'authorize'
+    static areas =  {
+        user: 'user',
+        reader: 'reader',
+        author: 'author',
+        admin: 'admin'
     };
+
+    static forntend = {
+        authorization: 'authorize',
+        error: 'error',
+        user: {
+            profile: Endpoints.areas.user + '/profile'
+        },
+        reader: {
+            dashboard: Endpoints.areas.reader + '/dashboard'
+        }
+        
+    };
+    
     static api = {
         authorization: {
             login: Endpoints.baseApiUrl + 'connect/token',

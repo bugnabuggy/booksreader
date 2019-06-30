@@ -6,4 +6,6 @@ export class SiteConstants {
     static storageKeys = {
         userToken: 'userToken',
     }
+
+    static localizationDictionariesPath = './assets/i18n/';
 }

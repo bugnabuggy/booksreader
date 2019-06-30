@@ -1,27 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,  HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { share, mergeMap, map } from 'rxjs/operators';
+import { share, mergeMap, map, tap } from 'rxjs/operators';
 import { Endpoints } from '../../../config/endpoints';
 
 import { AppUser, LoginHistoryModel } from '@br/core/models';
 import { LogoutData, AuthResponse } from '../models/api-contracts';
 
-import { from } from 'rxjs';
+import { from, BehaviorSubject, Observable, Subject, of } from 'rxjs';
 
 import { SiteConstants } from '@br/config';
 
 import { flatten } from '@br/utilities/helpers';
 import { StandardFilters } from '../models/filters';
 import { StorageService } from './storage.service';
+import { UserRegistration } from '../models/api-contracts/user-registration.contract';
+import { SiteRoles } from '../enums';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SecurityService {
     isLoggedIn: boolean = true;
+    isLoggedIn$ = new BehaviorSubject<boolean>(false);
+    
     token: string;
     tokenExpirationDate: Date;
+    
     logoutData: LogoutData;
     user: AppUser = null;
 
@@ -34,29 +39,27 @@ export class SecurityService {
         if (userTokens) {
             this.setTokens(userTokens);
         }
+
+        this.isLoggedIn$.subscribe(val => {
+            this.isLoggedIn = val;
+        })
     }
 
     init() {
+
         if (this.token) {
-            this.getUserInfo()
-                .pipe(share())
-                .subscribe(() => {
-                    // this.router.navigate(['dashboard']);
+            var observable = this.getUserInfo();
+            
+            observable.subscribe((user) => {
+                    debugger;
+                    console.log(user);
                 },
                     (err) => {
                     });
-        }
-    }
 
-    canActivate(): boolean {
-        if (!this.isAuthenticated()) {
-            this.router.navigate(['authorize']);
-            this.isLoggedIn = false;
-            return false;
-        } else {
-            this.isLoggedIn = true;
-            return true;
+            return observable;
         }
+        return of(null);
     }
 
     login(login, password) {
@@ -72,7 +75,7 @@ export class SecurityService {
         const observable = this.http.post(url,
             body).pipe(
                 share(),
-                map((val: AuthResponse) => {
+                tap((val: AuthResponse) => {
                     this.setTokens(val);
                 }),
                 mergeMap(() => this.getUserInfo()),
@@ -95,7 +98,6 @@ export class SecurityService {
             body).pipe(
                 share(),
                 map((val: AuthResponse) => {
-                    debugger;
                     this.setTokens(val);
                 }),
                 mergeMap(() => this.getUserInfo()),
@@ -106,6 +108,8 @@ export class SecurityService {
 
     logout(isForce: boolean) {
         this.clearTokens();
+        this.isLoggedIn$.next(false);
+
         if (isForce) {
             this.router.navigate(['logout']);
         } else {
@@ -113,7 +117,7 @@ export class SecurityService {
         }
     }
 
-    registration(username: string, password: string) {
+    registration(model: UserRegistration) {
         const antiForgeryUrl = Endpoints.api.authorization.antiforgery;
 
         const observable = this.http.get(antiForgeryUrl)
@@ -121,10 +125,9 @@ export class SecurityService {
                 share(),
                 mergeMap((val: any) => {
                     return this.http.post(Endpoints.api.authorization.registration, {
+                        ...model,
                         antiforgeryKey: val,
-                        username,
-                        password
-                    });
+                    } as UserRegistration);
                 })
             );
 
@@ -189,11 +192,12 @@ export class SecurityService {
             return observable;
     }
 
-    getUserInfo() {
+    getUserInfo(): Observable<AppUser> {
         const url = Endpoints.api.user.info;
-        const observable = this.http.get(url).pipe(share());
+        const observable = this.http.get<AppUser>(url).pipe(share());
         observable.subscribe((val: AppUser) => {
             this.user = val;
+            this.isLoggedIn$.next(true);
         });
         return observable;
     }
@@ -207,11 +211,11 @@ export class SecurityService {
     }
 
     get isAdmin(): boolean {
-        return this.isInRole('Admin');
+        return this.isInRole(SiteRoles.admin);
     }
 
     get isAuthor(): boolean {
-        return this.isInRole('Author');
+        return this.isInRole(SiteRoles.author);
     }
 
 

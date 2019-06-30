@@ -43,7 +43,6 @@ describe('SecurityService', () => {
 
   it('should ask for user info on initialization', () => {
     const service: SecurityService = TestBed.get(SecurityService);
-    debugger;
     service.init();
 
     httpTestingController = TestBed.get(HttpTestingController);
