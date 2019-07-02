@@ -13,10 +13,12 @@ class Endpoints {
     };
 
     static forntend = {
+        main: 'main',
         authorization: 'authorize',
         error: 'error',
         user: {
-            profile: Endpoints.areas.user + '/profile'
+            profile: 'profile', 
+            profileUrl: Endpoints.areas.user + '/profile'
         },
         reader: {
             dashboard: Endpoints.areas.reader + '/dashboard'

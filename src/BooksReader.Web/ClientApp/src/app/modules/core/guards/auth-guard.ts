@@ -20,7 +20,6 @@ import { share } from 'rxjs/operators';
 })
 export class AuthGuard implements CanActivate, CanLoad {
 
-
   constructor(
     public security: SecurityService,
     public router: Router
@@ -29,6 +28,7 @@ export class AuthGuard implements CanActivate, CanLoad {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     debugger;
     const guard = this.security.isLoggedIn$.pipe(share());
+    
     guard.subscribe((val) => {
       if (!val) {
         this.router.navigate([Endpoints.forntend.authorization]);

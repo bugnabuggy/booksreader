@@ -8,6 +8,7 @@ import {
 
 import { RegistrationModel } from '@br/core/models';
 import { UserRegistration } from '@br/core/models/api-contracts/user-registration.contract';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-registration-component',
@@ -24,9 +25,9 @@ export class RegistrationComponent implements OnInit {
 
      errMessage = '';
      serverMessage = '';
+     requestInProgress = false;
 
     constructor(
-        private security: SecurityService,
         private userSvc: UserService,
         private notificatins: NotificationService
     ) {
@@ -50,17 +51,22 @@ export class RegistrationComponent implements OnInit {
             fullname: this.model.fullname,
             password: this.model.password,
         } as UserRegistration;
-
+        
+        this.requestInProgress = true;
         this.userSvc.registration(model)
+        .pipe(finalize(()=>{
+            this.requestInProgress = false;
+        }))
         .subscribe(val => {
 
         }, err => {
-            debugger;
             if(err.status == 400) {
                 this.serverMessage = err.error;
                 return;
             }
             this.notificatins.showError(err.message);
+
+            this.serverMessage = 'ERROR_CREATING_ACCOUNT';
         });
     }
 }

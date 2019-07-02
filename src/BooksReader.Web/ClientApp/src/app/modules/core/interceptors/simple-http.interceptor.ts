@@ -26,7 +26,7 @@ export class SimpleHttpInterceptor implements HttpInterceptor {
     if (this.securitySvc.token) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.securitySvc.getToken()}`
+          Authorization: `Bearer ${this.securitySvc.token}`
         }
       });
     }

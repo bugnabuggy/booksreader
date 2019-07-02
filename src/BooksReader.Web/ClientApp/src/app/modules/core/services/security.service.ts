@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,  HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { share, mergeMap, map, tap } from 'rxjs/operators';
+import { share, mergeMap, map, tap, finalize } from 'rxjs/operators';
 import { Endpoints } from '../../../config/endpoints';
 
 import { AppUser, LoginHistoryModel } from '@br/core/models';
 import { LogoutData, AuthResponse } from '../models/api-contracts';
 
-import { from, BehaviorSubject, Observable, Subject, of } from 'rxjs';
+import { from, BehaviorSubject, Observable, Subject, of, Observer } from 'rxjs';
 
 import { SiteConstants } from '@br/config';
 
@@ -21,46 +21,95 @@ import { SiteRoles } from '../enums';
     providedIn: 'root'
 })
 export class SecurityService {
-    isLoggedIn: boolean = true;
-    isLoggedIn$ = new BehaviorSubject<boolean>(false);
-    
-    token: string;
+
+    private isLoggedIn: boolean = true;
+    isLoggedIn$: Observable<boolean>;
+
+    // Show whether all actions to determin whether user logged in or not have been done
+    private isInitialized: boolean = false;
+    private access_token: string = null;
     tokenExpirationDate: Date;
-    
+
     logoutData: LogoutData;
-    user: AppUser = null;
+    user$ = new BehaviorSubject<AppUser>(null);
 
     constructor(
         public router: Router,
         public http: HttpClient,
-        private storage: StorageService 
+        private storage: StorageService
     ) {
         const userTokens = JSON.parse(storage.getItem(SiteConstants.storageKeys.userToken));
         if (userTokens) {
             this.setTokens(userTokens);
         }
 
-        this.isLoggedIn$.subscribe(val => {
-            this.isLoggedIn = val;
+        this.isLoggedIn$ = Observable.create((observer: Observer<boolean>) => {
+            if(this.isInitialized){
+                observer.next(this.isLoggedIn);
+                observer.complete();
+                return this.isLoggedIn;
+            }
+            
+            //otherwise start initialization process 
+            this.isInitialized = true;
+
+            if(this.access_token){
+                this.getUserInfo()
+                    .pipe(finalize(()=>{
+                        observer.complete();
+                    }))
+                    .subscribe(val=>{
+                    this.isLoggedIn = true;
+                    observer.next(this.isLoggedIn);
+                },
+                err => {
+                    if(err.status == 401) {
+                        this.isLoggedIn = false;
+                        observer.next(this.isLoggedIn);
+                    }
+                    // else probably retry or do some kind of disconected app
+                    
+                })
+                return this.isLoggedIn;
+            }
+            
+            observer.next(false);
+            observer.complete();
         })
     }
 
     init() {
-
-        if (this.token) {
+        if (this.access_token) {
             var observable = this.getUserInfo();
-            
+
             observable.subscribe((user) => {
-                    debugger;
-                    console.log(user);
-                },
-                    (err) => {
-                    });
+                debugger;
+                console.log(user);
+            },
+                (err) => {
+                });
 
             return observable;
         }
         return of(null);
     }
+
+    loginRequest(body: FormData): Observable<any> {
+        const url = Endpoints.api.authorization.login;
+
+        const observable = this.http.post<AuthResponse>(url, body)
+            .pipe(
+                share(),
+                tap((val: AuthResponse) => {
+                    this.setTokens(val);
+                }),
+                mergeMap(() => this.getUserInfo()),
+                mergeMap(() => this.addLoginHistory())
+            );
+
+        return observable;
+    }
+
 
     login(login, password) {
         const body = new FormData();
@@ -70,23 +119,10 @@ export class SecurityService {
         body.append('username', login);
         body.append('password', password);
 
-        const url = Endpoints.api.authorization.login;
-
-        const observable = this.http.post(url,
-            body).pipe(
-                share(),
-                tap((val: AuthResponse) => {
-                    this.setTokens(val);
-                }),
-                mergeMap(() => this.getUserInfo()),
-                mergeMap(() => this.addLoginHistory()));
-
-        return observable;
+        return this.loginRequest(body);
     }
 
     externalLogin(type: string, access_token) {
-        const url = Endpoints.api.authorization.login;
-
         const body = new FormData();
         body.append('client_id', 'mvc');
         body.append('client_secret', 'secret');
@@ -94,21 +130,11 @@ export class SecurityService {
         body.append('provider', type);
         body.append('external_token', access_token);
 
-        const observable = this.http.post(url,
-            body).pipe(
-                share(),
-                map((val: AuthResponse) => {
-                    this.setTokens(val);
-                }),
-                mergeMap(() => this.getUserInfo()),
-                mergeMap(() => this.addLoginHistory()));
-
-        return observable;
+        return this.loginRequest(body);
     }
 
     logout(isForce: boolean) {
         this.clearTokens();
-        this.isLoggedIn$.next(false);
 
         if (isForce) {
             this.router.navigate(['logout']);
@@ -134,7 +160,7 @@ export class SecurityService {
         return observable;
     }
 
-    sendLoggingData(loginHistory: LoginHistoryModel ) {
+    sendLoggingData(loginHistory: LoginHistoryModel) {
         const url = Endpoints.api.user.loginHistory;
         return this.http.post(url, loginHistory).pipe(share());
     }
@@ -150,14 +176,14 @@ export class SecurityService {
         const promise = new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition((val) => {
                 loginHistory.coordinates = flatten(val.coords);
-                if ( timeoutId > 0) {
+                if (timeoutId > 0) {
                     clearTimeout(timeoutId);
                     this.sendLoggingData(loginHistory)
-                    .subscribe( resp => {
-                        resolve(resp);
-                    }, (err) => {
-                        reject(err);
-                    });
+                        .subscribe(resp => {
+                            resolve(resp);
+                        }, (err) => {
+                            reject(err);
+                        });
                 }
             });
 
@@ -165,46 +191,49 @@ export class SecurityService {
                 clearTimeout(timeoutId);
                 timeoutId = 0;
                 this.sendLoggingData(loginHistory)
-                .subscribe( resp => {
-                    resolve(resp);
-                }, (err) => {
-                    reject(err);
-                });
+                    .subscribe(resp => {
+                        resolve(resp);
+                    }, (err) => {
+                        reject(err);
+                    });
             }, SiteConstants.Short_timeout);
         });
 
         // this will be bug ↓ because link to an object would change
         return from(promise);
     }
-    
+
     getLogHistory(filters?: StandardFilters) {
         filters.isDesc = typeof filters.isDesc === 'undefined' ? null : filters.isDesc;
-        const  params = filters
+        const params = filters
             ? new HttpParams()
                 .set('OrderByField', filters.orderByField || '')
                 .set('IsDesc', <string><any>filters.isDesc)
                 .set('PageSize', <string><any>filters.pageSize || '')
                 .set('PageNumber', <string><any>filters.pageNumber || '')
             : null;
-            const url = Endpoints.api.user.loginHistory;
-            const observable = this.http.get(url,
-                { params }).pipe(share());
-            return observable;
+        const url = Endpoints.api.user.loginHistory;
+        const observable = this.http.get(url,
+            { params }).pipe(share());
+        return observable;
     }
 
     getUserInfo(): Observable<AppUser> {
         const url = Endpoints.api.user.info;
         const observable = this.http.get<AppUser>(url).pipe(share());
+        
         observable.subscribe((val: AppUser) => {
-            this.user = val;
-            this.isLoggedIn$.next(true);
+            this.user$.next(val);
+            this.isLoggedIn = true;
+            this.isInitialized = true;
         });
         return observable;
     }
 
     isInRole(role: string) {
         try {
-            return this.user.roles.findIndex(x => x === role) > -1;
+            let user =  this.user$.getValue();
+            return user.roles.findIndex(x => x === role) > -1;
         } catch (exp) {
             return false;
         }
@@ -220,7 +249,7 @@ export class SecurityService {
 
 
     setTokens(authResponse: AuthResponse) {
-        this.token = authResponse.access_token;
+        this.access_token = authResponse.access_token;
 
         if (authResponse.tokenExpirationDate) {
             this.tokenExpirationDate = authResponse.tokenExpirationDate;
@@ -235,18 +264,19 @@ export class SecurityService {
     }
 
     clearTokens() {
-        this.token = null;
-        this.user = null;
-
+        this.access_token = null;
         this.tokenExpirationDate = null;
+        this.isLoggedIn = false;
+        this.user$.next(null);
+
         this.storage.removeItem(SiteConstants.storageKeys.userToken);
     }
 
-    getToken(): string {
-        return this.token;
+    get token():string {
+        return this.access_token;
     }
 
     isAuthenticated() {
-        return !!this.token;
+        return this.isLoggedIn;
     }
 }

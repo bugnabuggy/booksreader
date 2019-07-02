@@ -27,19 +27,16 @@ export class LoginComponent implements OnInit {
 
 
     constructor(
-        private security: SecurityService,
         private authorization: UserService,
         private notifications: NotificationService,
         public socialSvc: SocialLoginService,
         private fb: FormBuilder
     ) {
-        this.security.isLoggedIn = false;
     }
 
     ngOnInit() {
         this.socialSvc.init();
         this.socialSvc.user$.subscribe(user => {
-
         });
     }
 

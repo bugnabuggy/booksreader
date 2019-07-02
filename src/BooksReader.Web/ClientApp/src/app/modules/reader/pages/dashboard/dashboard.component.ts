@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
 
 
   sendMsg() {
-    this.userHub.checkStats(this.security.user.name);
+    this.userHub.checkStats(this.security.user$.getValue().name);
   }
 
   pageChanged(event) {

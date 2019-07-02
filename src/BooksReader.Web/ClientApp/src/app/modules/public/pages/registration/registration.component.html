@@ -40,9 +40,9 @@
         {{errMessage}}
       </mat-error>
       <mat-error *ngIf="serverMessage" class='mb-3'>
-          {{errMessage}}
+          {{serverMessage}}
       </mat-error>
-      <button [disabled]="!loginForm.form.valid || errMessage || !model.agree" mat-raised-button
+      <button [disabled]="!loginForm.form.valid || errMessage || !model.agree || requestInProgress" mat-raised-button
         class="mat-raised-btn w-50" color="primary">Register</button>
       <a class="mt-3 d-block" routerLink="/authorize">Authorize</a>
     </div>
