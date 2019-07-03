@@ -217,6 +217,7 @@
   <ItemGroup>
     <Compile Include="BookService.Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecurityService.Tests.cs" />
     <Compile Include="UsersService.Tests.cs" />
   </ItemGroup>
   <ItemGroup>

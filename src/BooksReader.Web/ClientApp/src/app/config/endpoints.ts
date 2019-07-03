@@ -18,10 +18,11 @@ class Endpoints {
         error: 'error',
         user: {
             profile: 'profile', 
-            profileUrl: Endpoints.areas.user + '/profile'
+            profileUrl: Endpoints.areas.user + '/profile',
+            forceLogout: 'logout',
         },
         reader: {
-            dashboard: Endpoints.areas.reader + '/dashboard'
+            dashboardUrl: Endpoints.areas.reader + '/dashboard'
         }
         
     };
@@ -31,7 +32,8 @@ class Endpoints {
             login: Endpoints.baseApiUrl + 'connect/token',
             logout: Endpoints.baseApiUrl + 'connect/revocation',
             registration: Endpoints.baseApiUrl + 'api/identity/registration',
-            antiforgery: Endpoints.baseApiUrl + 'api/identity/antiforgery'
+            antiforgery: Endpoints.baseApiUrl + 'api/identity/antiforgery',
+            changePassword: Endpoints.baseApiUrl + 'api/identity/change-password',
         },
         user: {
             info: Endpoints.baseApiUrl + 'api/identity/me',

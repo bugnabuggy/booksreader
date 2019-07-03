@@ -7,14 +7,14 @@ import { share } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class SocialLoginService {
-  user$ = new BehaviorSubject<SocialUser>(null);
+  socialUser$ = new BehaviorSubject<SocialUser>(null);
 
   constructor(private authService: AuthService) {
   }
 
   init() {
     this.authService.authState.subscribe((user) => {
-      this.user$.next(user);
+      this.socialUser$.next(user);
     });
   }
 

@@ -1,4 +1,6 @@
-﻿namespace BooksReader.Web.Models
+﻿using BooksReader.Web.Models;
+
+namespace BooksReader.Core.Models.Requests
 {
 	public class LoginHistoryRequest
 	{

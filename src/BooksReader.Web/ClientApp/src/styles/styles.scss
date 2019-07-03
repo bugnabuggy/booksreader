@@ -11,6 +11,7 @@ html, body{
     display: flex;    
 }
  
+// pages components
 app-root,
 app-login, 
 app-registration-component, 
@@ -19,7 +20,8 @@ app-dashboard,
 app-book-edit,
 app-admin-dashboard,
 app-author-dashboard,
-app-book-market {
+app-book-market,
+app-profile{
     flex: 1;
     display: flex;
 }

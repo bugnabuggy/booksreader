@@ -26,21 +26,22 @@ export class AuthGuard implements CanActivate, CanLoad {
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    debugger;
     const guard = this.security.isLoggedIn$.pipe(share());
     
     guard.subscribe((val) => {
       if (!val) {
         this.router.navigate([Endpoints.forntend.authorization]);
       }
-    }, err => {
+      return val;
+    }, 
+    err => {
         this.router.navigate([Endpoints.forntend.error]);
     });
+
     return guard;
   }
 
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
-    debugger;
     return this.canActivate(null, null);
   }
 }

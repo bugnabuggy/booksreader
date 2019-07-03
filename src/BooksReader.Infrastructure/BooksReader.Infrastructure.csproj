@@ -302,6 +302,10 @@
     <Compile Include="Migrations\20190201053900_login_history.designer.cs">
       <DependentUpon>20190201053900_login_history.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190703085227_Avatar.cs" />
+    <Compile Include="Migrations\20190703085227_Avatar.designer.cs">
+      <DependentUpon>20190703085227_Avatar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PersistedGrantDb\20190122111603_PersistedGrantDbMigration.cs" />
     <Compile Include="Migrations\PersistedGrantDb\20190122111603_PersistedGrantDbMigration.Designer.cs">
       <DependentUpon>20190122111603_PersistedGrantDbMigration.cs</DependentUpon>

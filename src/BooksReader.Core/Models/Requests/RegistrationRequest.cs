@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BooksReader.Web.Models
+﻿namespace BooksReader.Core.Models.Requests
 {
 	public class RegistrationRequest
 	{

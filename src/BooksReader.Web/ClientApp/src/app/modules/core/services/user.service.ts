@@ -1,4 +1,4 @@
-import { share, finalize, flatMap } from 'rxjs/operators';
+import { share, finalize, flatMap, mergeMap } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
 import { SecurityService } from './security.service';
@@ -29,20 +29,40 @@ export class UserService {
     }
 
     init() {
-        this.securitySvc.init();
+        let observabe = of(null).pipe(
+            flatMap(() => this.securitySvc.init()),
+            flatMap( (val) => {
+                // if we have initialized user, start signalR
+                if(val) {
+                    return this.userHub.init()
+                }
+                return of(null);
+            }),
+            share()
+        );
+
+        observabe.subscribe(val => {
+
+        })
+
+        return observabe;
     }
 
     logIn(login: string, password: string, goToProfile?: boolean) {
         const observable = this.securitySvc.login(login, password);
-
         observable
             .subscribe(data => {
+                // start real time communication with server
+                this.userHub.init();
 
                 // navigate user depend on role to different pages
                 if (goToProfile) {
                     this.router.navigateByUrl(Endpoints.forntend.user.profileUrl);
                     return;
                 }
+
+                this.router.navigateByUrl(Endpoints.forntend.reader.dashboardUrl);
+
             }, err => { // error
                 console.error(err);
             });
@@ -62,13 +82,13 @@ export class UserService {
     }
 
     registration(model: UserRegistration) {
-        const observable = this.securitySvc.registration(model);
-
-        observable.pipe(
+        let observable = this.securitySvc.registration(model).pipe(
             flatMap(val => {
                 return this.logIn(model.username, model.password, true);
-            }))
-            .subscribe(data => {
+            }),
+            share());
+
+        observable.subscribe(data => {
                 // this.router.navigate(['authorize']);
             }, err => { // error
                 console.error(err);
@@ -79,5 +99,9 @@ export class UserService {
 
     changeLanguage(lang: Language) {
         this.translate.use(lang.code);
+    }
+
+    updateProfile() {
+
     }
 }

@@ -3,6 +3,7 @@ import { HubConnectionBuilder, HubConnection, HubConnectionState } from '@aspnet
 import { SecurityService } from '@br/core/services/security.service';
 import { LogoutData } from '@br/core/models';
 import { environment } from '@br/env/environment';
+import { from, of } from 'rxjs';
 
 
 @Injectable({
@@ -25,24 +26,29 @@ export class UserHubService {
     });
 
     this.connection.on('Logout', (data: LogoutData) => {
+      debugger
       this.logOut(data);
     });
   }
 
   logOut(data: LogoutData) {
     console.warn('LOGOUT User!!!');
-    this.security.logoutData = data;
-    this.security.logout(true);
+    this.security.logout(data);
     this.connection.stop();
   }
 
   init() {
     if (this.connection.state !== HubConnectionState.Connected) {
-      this.connection.start().then(val => {
+      
+      const promise =  this.connection.start();
+      promise.then(val => {
         console.log(val);
       });
+
+      return from(promise);
     }
 
+    return of(null);
   }
 
   stop() {

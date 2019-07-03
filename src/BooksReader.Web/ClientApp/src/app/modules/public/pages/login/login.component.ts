@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.socialSvc.init();
-        this.socialSvc.user$.subscribe(user => {
+        this.socialSvc.socialUser$.subscribe(user => {
         });
     }
 
@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
             .subscribe((data) => {
 
             }, (err) => {
-                debugger;
                 this.errorMessage = err.error.error_description;
                 if (err.status === 400) {
                     this.notifications.showError(`Invalid username or password`);
@@ -57,7 +56,6 @@ export class LoginComponent implements OnInit {
     socialLogin() {
         this.socialSvc.signInWithFB().subscribe(user => {
             this.loggedInWithFacebook = true;
-            debugger;
             this.authorization.externalLogIn('Facebook', user.authToken)
             .subscribe(val => {
                 console.log(val);

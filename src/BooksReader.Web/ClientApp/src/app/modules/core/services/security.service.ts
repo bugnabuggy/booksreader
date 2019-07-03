@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { share, mergeMap, map, tap, finalize } from 'rxjs/operators';
 import { Endpoints } from '../../../config/endpoints';
 
-import { AppUser, LoginHistoryModel } from '@br/core/models';
+import { AppUser, LoginHistoryModel, ChangePasswordModel } from '@br/core/models';
 import { LogoutData, AuthResponse } from '../models/api-contracts';
 
-import { from, BehaviorSubject, Observable, Subject, of, Observer } from 'rxjs';
+import { from, BehaviorSubject, Observable, Subject, of, Observer, Subscription, timer } from 'rxjs';
 
 import { SiteConstants } from '@br/config';
 
@@ -22,7 +22,8 @@ import { SiteRoles } from '../enums';
 })
 export class SecurityService {
 
-    private isLoggedIn: boolean = true;
+    private isLoggedIn: boolean = false;
+    private initRequest$: Observable<any>;
     isLoggedIn$: Observable<boolean>;
 
     // Show whether all actions to determin whether user logged in or not have been done
@@ -44,53 +45,69 @@ export class SecurityService {
         }
 
         this.isLoggedIn$ = Observable.create((observer: Observer<boolean>) => {
-            if(this.isInitialized){
+            if (this.isInitialized) {
                 observer.next(this.isLoggedIn);
                 observer.complete();
-                return this.isLoggedIn;
+                return;
             }
-            
-            //otherwise start initialization process 
-            this.isInitialized = true;
 
-            if(this.access_token){
-                this.getUserInfo()
-                    .pipe(finalize(()=>{
-                        observer.complete();
-                    }))
-                    .subscribe(val=>{
-                    this.isLoggedIn = true;
-                    observer.next(this.isLoggedIn);
-                },
-                err => {
-                    if(err.status == 401) {
-                        this.isLoggedIn = false;
-                        observer.next(this.isLoggedIn);
-                    }
-                    // else probably retry or do some kind of disconected app
-                    
-                })
-                return this.isLoggedIn;
+            // otherwise start initialization process 
+            this.isInitialized = true;
+            let observable = this.initRequest$;
+            if(!this.initRequest$) {
+                observable = this.init();
             }
+
+            observable
+                .pipe(finalize(()=>{
+                    observer.next(this.isLoggedIn);
+                    observer.complete();
+                }))
+                .subscribe();
             
-            observer.next(false);
-            observer.complete();
+            // if (this.access_token) {
+            //     this.getUserInfo()
+            //         .pipe(finalize(() => {
+            //             observer.complete();
+            //         }))
+            //         .subscribe(val => {
+            //             this.isLoggedIn = true;
+            //             observer.next(this.isLoggedIn);
+            //         },
+            //             err => {
+            //                 if (err.status == 401) {
+            //                     this.isLoggedIn = false;
+            //                     observer.next(this.isLoggedIn);
+            //                 }
+            //                 // else probably retry or do some kind of disconected app
+            //             })
+            //     return;
+            // }
+
+            // observer.next(false);
+            // observer.complete();
         })
     }
 
     init() {
         if (this.access_token) {
-            var observable = this.getUserInfo();
+            this.initRequest$ = this.getUserInfo();
 
-            observable.subscribe((user) => {
-                debugger;
-                console.log(user);
+            this.initRequest$.subscribe((user) => {
+                this.isLoggedIn = true;    
+                this.isInitialized = true;
             },
-                (err) => {
-                });
+            (err) => {
+                if (err.status == 401) {
+                    this.isLoggedIn = false;
+                }
+                // else probably retry or do some kind of disconected app    
+            });
 
-            return observable;
+            return this.initRequest$;
         }
+
+        this.isLoggedIn = false;
         return of(null);
     }
 
@@ -99,12 +116,16 @@ export class SecurityService {
 
         const observable = this.http.post<AuthResponse>(url, body)
             .pipe(
-                share(),
                 tap((val: AuthResponse) => {
                     this.setTokens(val);
                 }),
-                mergeMap(() => this.getUserInfo()),
-                mergeMap(() => this.addLoginHistory())
+                mergeMap(() => {
+                    return this.init();
+                }),
+                mergeMap(() => {
+                    return this.addLoginHistory();
+                }),
+                share(),
             );
 
         return observable;
@@ -133,28 +154,28 @@ export class SecurityService {
         return this.loginRequest(body);
     }
 
-    logout(isForce: boolean) {
+    logout(logoutData: LogoutData) {
         this.clearTokens();
-
-        if (isForce) {
-            this.router.navigate(['logout']);
+        debugger;
+        if (logoutData) {
+            this.logoutData = logoutData;
+            this.router.navigateByUrl(Endpoints.forntend.user.forceLogout);
         } else {
-            this.router.navigate(['authorize']);
+            this.router.navigateByUrl(Endpoints.forntend.authorization);
         }
     }
 
     registration(model: UserRegistration) {
         const antiForgeryUrl = Endpoints.api.authorization.antiforgery;
-
         const observable = this.http.get(antiForgeryUrl)
             .pipe(
-                share(),
                 mergeMap((val: any) => {
                     return this.http.post(Endpoints.api.authorization.registration, {
                         ...model,
                         antiforgeryKey: val,
                     } as UserRegistration);
-                })
+                }),
+                share()
             );
 
         return observable;
@@ -171,34 +192,35 @@ export class SecurityService {
             screen: flatten(window.screen),
         } as LoginHistoryModel;
 
-        let timeoutId;
+        let timeoutId: Subscription;
 
         const promise = new Promise((resolve, reject) => {
+            
             navigator.geolocation.getCurrentPosition((val) => {
                 loginHistory.coordinates = flatten(val.coords);
-                if (timeoutId > 0) {
-                    clearTimeout(timeoutId);
-                    this.sendLoggingData(loginHistory)
-                        .subscribe(resp => {
-                            resolve(resp);
-                        }, (err) => {
-                            reject(err);
-                        });
+                if (timeoutId) {
+                    timeoutId.unsubscribe();
+                    timeoutId = null;
                 }
-            });
-
-            timeoutId = setTimeout(() => {
-                clearTimeout(timeoutId);
-                timeoutId = 0;
                 this.sendLoggingData(loginHistory)
                     .subscribe(resp => {
                         resolve(resp);
                     }, (err) => {
                         reject(err);
                     });
-            }, SiteConstants.Short_timeout);
-        });
+            });
 
+            timeoutId = timer(SiteConstants.Short_timeout).subscribe(() => {
+                this.sendLoggingData(loginHistory)
+                    .subscribe(resp => {
+                        resolve(resp);
+                        timeoutId.unsubscribe();
+                        timeoutId = null;
+                    }, (err) => {
+                        reject(err);
+                    });
+            });
+        });
         // this will be bug ↓ because link to an object would change
         return from(promise);
     }
@@ -221,18 +243,17 @@ export class SecurityService {
     getUserInfo(): Observable<AppUser> {
         const url = Endpoints.api.user.info;
         const observable = this.http.get<AppUser>(url).pipe(share());
-        
+
         observable.subscribe((val: AppUser) => {
             this.user$.next(val);
-            this.isLoggedIn = true;
-            this.isInitialized = true;
         });
+
         return observable;
     }
 
     isInRole(role: string) {
         try {
-            let user =  this.user$.getValue();
+            let user = this.user$.getValue();
             return user.roles.findIndex(x => x === role) > -1;
         } catch (exp) {
             return false;
@@ -272,11 +293,16 @@ export class SecurityService {
         this.storage.removeItem(SiteConstants.storageKeys.userToken);
     }
 
-    get token():string {
+    get token(): string {
         return this.access_token;
     }
 
     isAuthenticated() {
         return this.isLoggedIn;
+    }
+
+    changePassword(model: ChangePasswordModel):Observable<any> {
+        const url = Endpoints.api.authorization.changePassword;
+        return this.http.post(url, model).pipe(share());
     }
 }

@@ -11,7 +11,7 @@ import {
 const routes: Routes = [
   { path: 'authorize', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
-  { path: 'forceLogout', component: ForceLogoutComponent }
+  { path: 'logout', component: ForceLogoutComponent }
 ];
 
 @NgModule({

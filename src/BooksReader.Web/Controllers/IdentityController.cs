@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Models;
 using BooksReader.Core.Models.DTO;
+using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Services;
 using BooksReader.Dictionaries;
 using BooksReader.Infrastructure.Models;
@@ -106,10 +108,12 @@ namespace BooksReader.Web.Controllers
 		{
 			var user = await _userManager.GetUserAsync(User);
 
-			return Ok(new {
+			return Ok(new AppUserDto(){
 				Username = user.UserName,
                 Name = user.Name,
-				user.Id,
+                Avatar = user.Avatar,
+                Email = user.Email,
+				Id = user.Id,
 				Roles = await _userManager.GetRolesAsync(user)
 			});
 
@@ -152,6 +156,30 @@ namespace BooksReader.Web.Controllers
 		    return Ok();
 	    }
 
+        [HttpPost("change-password")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordRequest changePassword)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var result = await _userManager.ChangePasswordAsync(user, changePassword.OldPassword, changePassword.NewPassword);
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Errors.Select(x => x.Code));
+            }
+            
+        }
 
-	}
+        [HttpPost("reset-password")]
+        [Authorize]
+        public async Task<IActionResult> ResetPassword([FromBody]ResetPasswordRequest resetPassword)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            return StatusCode(423, MessageStrings.NotImplemented);
+        }
+    }
 }
