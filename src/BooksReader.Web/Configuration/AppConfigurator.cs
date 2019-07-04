@@ -17,6 +17,7 @@ namespace BooksReader.Web.Configuration
     {
         public static void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<ISecurityService, SecurityService>();
             services.AddTransient<IUsersService, UsersService>();
 	        services.AddTransient<IRepository<LoginHistory>, DbRepository<LoginHistory>>();
 			services.AddTransient<IRepository<Book>, DbRepository<Book>>();

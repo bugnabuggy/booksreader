@@ -37,6 +37,7 @@ class Endpoints {
         },
         user: {
             info: Endpoints.baseApiUrl + 'api/identity/me',
+            profile: Endpoints.baseApiUrl + 'api/user/profile',
             loginHistory: Endpoints.baseApiUrl + 'api/identity/login-history',
         },
         reader: {

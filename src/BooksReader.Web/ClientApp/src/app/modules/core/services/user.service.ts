@@ -5,10 +5,11 @@ import { SecurityService } from './security.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { UserHubService } from '@br/communications/hubs';
-import { AppUser, Language } from '../models';
+import { AppUser, Language, UserProfileRequest } from '../models';
 import { TranslateService } from '@ngx-translate/core';
 import { UserRegistration } from '../models/api-contracts/user-registration.contract';
 import { Endpoints } from '@br/config';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +18,7 @@ export class UserService {
     constructor(
         private securitySvc: SecurityService,
         private userHub: UserHubService,
+        private http: HttpClient,
         public router: Router,
         public translate: TranslateService
     ) { }
@@ -101,7 +103,9 @@ export class UserService {
         this.translate.use(lang.code);
     }
 
-    updateProfile() {
-
+    updateProfile(profile: AppUser) {
+        const url = Endpoints.api.user.profile;
+        const observable = this.http.put<AppUser>(url, profile).pipe(share());
+        return observable;
     }
 }

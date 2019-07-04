@@ -1,5 +1,5 @@
 <div class="flex-1 d-flex justify-content-center align-items-center">
-  <form class='col-12 col-sm-10 col-lg-8 col-xl-6' (ngSubmit)="submit()" [formGroup]="profileForm">
+  <form class='col-12 col-sm-10 col-lg-8 col-xl-6' (ngSubmit)="updateProfile()" [formGroup]="profileForm">
     <!-- <div>
       AAA
       <div class='d-block d-sm-none' >xs</div>
@@ -50,7 +50,6 @@
     </dl>
     <div class='row my-4'>
       <div class='col-sm-4'>
-        {{profileForm.value | json}} 
       </div>
       <div class='col '>
         <div class='d-flex justify-content-between'>

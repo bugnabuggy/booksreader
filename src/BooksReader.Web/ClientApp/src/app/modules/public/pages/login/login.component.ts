@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
 
 
     constructor(
-        private authorization: UserService,
+        private userSvc: UserService,
         private notifications: NotificationService,
         public socialSvc: SocialLoginService,
         private fb: FormBuilder
@@ -42,11 +42,12 @@ export class LoginComponent implements OnInit {
 
     login() {
         const loginModel = this.loginForm.value as LoginModel;
-        this.authorization.logIn(loginModel.username, loginModel.password)
+        this.userSvc.logIn(loginModel.username, loginModel.password)
             .subscribe((data) => {
 
             }, (err) => {
-                this.errorMessage = err.error.error_description;
+                debugger;
+                this.errorMessage = err.error.error_description || err.name;
                 if (err.status === 400) {
                     this.notifications.showError(`Invalid username or password`);
                 }
@@ -56,7 +57,7 @@ export class LoginComponent implements OnInit {
     socialLogin() {
         this.socialSvc.signInWithFB().subscribe(user => {
             this.loggedInWithFacebook = true;
-            this.authorization.externalLogIn('Facebook', user.authToken)
+            this.userSvc.externalLogIn('Facebook', user.authToken)
             .subscribe(val => {
                 console.log(val);
                 // redirect or ask for protected endpoint

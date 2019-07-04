@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '@br/core/services';
+import { UserService, NotificationService } from '@br/core/services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangePasswordDialogComponent } from '../../components/';
+import { AppUser } from '@br/core/models';
+import { finalize } from 'rxjs/operators';
+import { StringConstants } from '@br/config';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +20,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     public userSvc: UserService,
     private fb: FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private notifications: NotificationService
   ) { 
   }
 
@@ -34,11 +38,19 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  submit() {
+  updateProfile() {
     this.isUiBlocked = true;
     console.log(this.profileForm.value)
-    this.userSvc.updateProfile()
-
+    this.userSvc.updateProfile(this.profileForm.value as AppUser)
+      .pipe(finalize(()=>{
+        this.isUiBlocked = false;
+      }))
+      .subscribe(()=>{
+        this.notifications.showSuccess(StringConstants.profileUpdated);
+      }, err => {
+        debugger;
+        this.notifications.showError(err.name);
+      })
   }
 
   changePass(e: Event){
