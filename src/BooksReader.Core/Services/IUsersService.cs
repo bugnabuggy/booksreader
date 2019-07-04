@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Models;
 using BooksReader.Core.Models.DTO;
+using BooksReader.Core.Models.Requests;
 
 namespace BooksReader.Core.Services
 {
@@ -18,5 +19,8 @@ namespace BooksReader.Core.Services
 	    Task<OperationResult> ToggleUserRole(string username, string role);
 	    Task<LoginHistoryResult> AddLoginHistory(LoginHistory logHistory, string userId);
 	    IQueryable<LoginHistoryResult> GetLoginHistory(StandardFiltersDto filters, string userId, out int totalItems);
+
+
+        Task<OperationResult<AppUserDto>> UpdateUser(UserProfileRequest data);
     }
 }

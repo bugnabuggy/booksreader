@@ -5,8 +5,10 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
+using BooksReader.Core.Exceptions;
 using BooksReader.Core.Models;
 using BooksReader.Core.Models.DTO;
+using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Services;
 using BooksReader.Infrastructure.DataContext;
 using BooksReader.Infrastructure.Repositories;
@@ -172,5 +174,39 @@ namespace BooksReader.Infrastructure.Services
 			});
 
 	    }
-	}
+
+        public async Task<OperationResult<AppUserDto>> UpdateUser(UserProfileRequest data)
+        {
+            var result = new OperationResult<AppUserDto>();
+
+            var user = await _userManager.FindByNameAsync(data.Username);
+            if (user == null)
+            {
+                throw new UserNotExistException(data.Username);
+            }
+
+            //TODO: consider to use mappers
+            user.Name = data.Name;
+            user.Avatar = data.Avatar;
+            user.Email = data.Email;
+
+
+            var identityResult =  await _userManager.UpdateAsync(user);
+            result.Success = identityResult.Succeeded;
+            result.Messages = identityResult.Errors.Select(x => x.Code).ToList();
+
+            //TODO: consider to use mappers
+            result.Data = new AppUserDto()
+            {
+                Name =  user.Name,
+                Username = user.UserName,
+                Avatar =  user.Avatar,
+                Id =  user.Id,
+                Email = user.Email,
+                Roles =  await _userManager.GetRolesAsync(user)
+            };
+
+            return result;
+        }
+    }
 }

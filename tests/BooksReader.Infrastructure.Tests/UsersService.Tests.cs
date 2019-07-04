@@ -5,12 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Models.DTO;
+using BooksReader.Core.Models.Requests;
+using BooksReader.Core.Services;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
 using BooksReader.Infrastructure.Repositories;
 using BooksReader.Infrastructure.Services;
 using BooksReader.TestData.Helpers;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
@@ -124,7 +127,34 @@ namespace BooksReader.Infrastructure.Tests
 
 			Assert.AreEqual(repository.Data.Count(), count + 1);
 	    }
-	}
+
+        [Test]
+        public async Task Should_update_profile()
+        {
+            var context = services.GetService<BrDbContext>();
+            
+            var user = context.Users.AsNoTracking().FirstOrDefault() ?? new BrUser();
+            var userSvc =  services.GetService<IUsersService>();
+
+            var request = new UserProfileRequest()
+            {
+                Username = user.UserName,
+                Avatar = $"Changed {user.Avatar}",
+                Name = $"Changed {user.Name}",
+                Email = $"Changed {user.Email}"
+            };
+
+            var result = await userSvc.UpdateUser(request);
+            Assert.IsTrue(result.Success);
+
+            user = context.Users.AsNoTracking().FirstOrDefault();
+
+            Assert.AreEqual(user.Name, request.Name);
+            Assert.AreEqual(user.Avatar, request.Avatar);
+            Assert.AreEqual(user.Email, request.Email);
+        }
+
+    }
 
 	
 }

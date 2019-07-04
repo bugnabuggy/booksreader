@@ -23,6 +23,18 @@ namespace BooksReader.Infrastructure.Services
 			_userManager = userManager;
 		}
 
+        public bool IsInRole(Guid userId, string role)
+        {
+            var user = _userManager.FindByIdAsync(userId.ToString()).Result;
+            var roles = _userManager.GetRolesAsync(user).Result;
+            return roles.Contains(role);
+        }
+
+        /// <summary>
+        /// Check if user is admin
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
 		public bool HasAccess(Guid userId)
 		{
 			try
@@ -38,6 +50,12 @@ namespace BooksReader.Infrastructure.Services
 
 		}
 
+        /// <summary>
+        /// Check if user is the owner of the item
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
 		public bool HasAccess(Guid userId, IOwned item)
 		{
 			var result = item.OwnerId.Equals(userId);
