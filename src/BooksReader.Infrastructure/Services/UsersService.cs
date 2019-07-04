@@ -9,7 +9,6 @@ using BooksReader.Core.Models;
 using BooksReader.Core.Models.DTO;
 using BooksReader.Core.Services;
 using BooksReader.Infrastructure.DataContext;
-using BooksReader.Infrastructure.Models;
 using BooksReader.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 

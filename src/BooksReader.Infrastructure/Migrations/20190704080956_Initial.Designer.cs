@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace BooksReader.Web.Migrations
+namespace BooksReader.Infrastructure.Migrations
 {
     [DbContext(typeof(BrDbContext))]
-    [Migration("20190129061216_books")]
-    partial class books
+    [Migration("20190704080956_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,9 +26,7 @@ namespace BooksReader.Web.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AuthorName");
-
-                    b.Property<Guid>("Autor");
+                    b.Property<string>("Author");
 
                     b.Property<DateTime>("Created");
 
@@ -65,12 +63,14 @@ namespace BooksReader.Web.Migrations
                     b.ToTable("BookChapters");
                 });
 
-            modelBuilder.Entity("BooksReader.Infrastructure.Models.BrUser", b =>
+            modelBuilder.Entity("BooksReader.Core.Entities.BrUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("Avatar");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -84,7 +84,8 @@ namespace BooksReader.Web.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(250);
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
@@ -116,6 +117,28 @@ namespace BooksReader.Web.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.LoginHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Browser");
+
+                    b.Property<DateTime>("DateTime");
+
+                    b.Property<string>("Geolocation");
+
+                    b.Property<string>("IpAddress");
+
+                    b.Property<string>("Screen");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LoginHistory");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -238,7 +261,7 @@ namespace BooksReader.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("BooksReader.Infrastructure.Models.BrUser")
+                    b.HasOne("BooksReader.Core.Entities.BrUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -246,7 +269,7 @@ namespace BooksReader.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("BooksReader.Infrastructure.Models.BrUser")
+                    b.HasOne("BooksReader.Core.Entities.BrUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -259,7 +282,7 @@ namespace BooksReader.Web.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BooksReader.Infrastructure.Models.BrUser")
+                    b.HasOne("BooksReader.Core.Entities.BrUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -267,7 +290,7 @@ namespace BooksReader.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("BooksReader.Infrastructure.Models.BrUser")
+                    b.HasOne("BooksReader.Core.Entities.BrUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

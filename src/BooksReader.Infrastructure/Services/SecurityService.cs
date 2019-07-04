@@ -4,10 +4,10 @@ using System.Linq;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
+using BooksReader.Core.Entities;
 using BooksReader.Core.Models;
 using BooksReader.Core.Services;
 using BooksReader.Infrastructure.Configuration;
-using BooksReader.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace BooksReader.Infrastructure.Services

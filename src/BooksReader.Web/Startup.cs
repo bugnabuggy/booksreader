@@ -1,8 +1,8 @@
 using System.Reflection;
 using System.Threading.Tasks;
+using BooksReader.Core.Entities;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
-using BooksReader.Infrastructure.Models;
 using BooksReader.Web.Configuration;
 using BooksReader.Web.Helpers;
 using BooksReader.Web.Hubs;
@@ -81,7 +81,7 @@ namespace BooksReader.Web
 				{
 					options.ConfigureDbContext = builder =>
 						builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-							sql => sql.MigrationsAssembly(typeof(BrUser).GetTypeInfo().Assembly.GetName().Name));
+							sql => sql.MigrationsAssembly(typeof(BrDbContext).GetTypeInfo().Assembly.GetName().Name));
 
 					// this enables automatic token cleanup. this is optional.
 					options.EnableTokenCleanup = true;

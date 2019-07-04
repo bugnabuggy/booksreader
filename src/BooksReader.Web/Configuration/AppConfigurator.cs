@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Services;
-using BooksReader.Infrastructure.Models;
+using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.Repositories;
 using BooksReader.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
@@ -12,8 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-
-namespace BooksReader.Infrastructure.Configuration
+namespace BooksReader.Web.Configuration
 {
     public class AppConfigurator
     {

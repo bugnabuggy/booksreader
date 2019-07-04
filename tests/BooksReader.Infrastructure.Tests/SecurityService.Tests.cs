@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Services;
 using BooksReader.Infrastructure.DataContext;
-using BooksReader.Infrastructure.Models;
 using BooksReader.Infrastructure.Repositories;
 using BooksReader.Infrastructure.Services;
 using BooksReader.TestData.Helpers;

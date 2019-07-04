@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BooksReader.Web.Migrations.PersistedGrantDb
+namespace BooksReader.Infrastructure.Migrations.PersistedGrantDb
 {
-    public partial class PersistedGrantDbMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

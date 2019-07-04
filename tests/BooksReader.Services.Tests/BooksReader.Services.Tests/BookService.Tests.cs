@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Exceptions;
-using BooksReader.Infrastructure.Models;
 using BooksReader.Infrastructure.Repositories;
 using BooksReader.Infrastructure.Services;
 using BooksReader.TestData.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
-using Microsoft.AspNetCore.Identity;
 
-namespace BooksReader.Infrastructure.Tests
+namespace BooksReader.Services.Tests
 {
 	[TestFixture()]
 	public class BookServiceTests

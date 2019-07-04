@@ -5,12 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Exceptions;
-using BooksReader.Core.Models;
 using BooksReader.Core.Services;
-using BooksReader.Infrastructure.Models;
 using BooksReader.Infrastructure.Repositories;
-using IdentityServer4.Extensions;
-using Microsoft.EntityFrameworkCore;
 
 namespace BooksReader.Infrastructure.Services
 {
@@ -30,7 +26,7 @@ namespace BooksReader.Infrastructure.Services
 
 		public Book Add(Book item)
 		{
-			if (item.Title.IsNullOrEmpty())
+			if (string.IsNullOrEmpty(item.Title))
 			{
 				throw new BrBadDataException("Title can't be empty");
 			}
@@ -41,7 +37,7 @@ namespace BooksReader.Infrastructure.Services
 
 		public Book Edit(Book item)
 		{
-			if (item.Title.IsNullOrEmpty())
+			if (string.IsNullOrEmpty(item.Title))
 			{
 				throw new BrBadDataException("Title can't be empty");
 			}

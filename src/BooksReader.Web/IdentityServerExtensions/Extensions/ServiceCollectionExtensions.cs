@@ -1,5 +1,5 @@
 ﻿using System.Net.Http;
-using BooksReader.Infrastructure.Models;
+using BooksReader.Core.Entities;
 using BooksReader.Web.IdentityServerExtensions.ExtensionGrant;
 using BooksReader.Web.IdentityServerExtensions.Interfaces;
 using BooksReader.Web.IdentityServerExtensions.Interfaces.Processors;

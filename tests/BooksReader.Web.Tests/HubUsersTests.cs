@@ -2,7 +2,7 @@
 using System.Dynamic;
 using System.Threading;
 using System.Threading.Tasks;
-using BooksReader.Infrastructure.Models;
+using BooksReader.Core.Entities;
 using BooksReader.TestData.Helpers;
 using BooksReader.Web.Hubs;
 using Microsoft.AspNetCore.Identity;

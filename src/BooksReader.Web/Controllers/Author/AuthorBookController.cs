@@ -7,7 +7,6 @@ using BooksReader.Core.Exceptions;
 using BooksReader.Core.Models;
 using BooksReader.Core.Services;
 using BooksReader.Infrastructure.Configuration;
-using BooksReader.Infrastructure.Models;
 using BooksReader.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

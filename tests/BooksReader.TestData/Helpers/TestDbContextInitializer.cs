@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using BooksReader.Core.Entities;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
-using BooksReader.Infrastructure.Models;
 using BooksReader.Infrastructure.Repositories;
+using BooksReader.Web.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 

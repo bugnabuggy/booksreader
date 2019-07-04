@@ -52,6 +52,7 @@
     <ProjectReference Include="..\BooksReader.Core\BooksReader.Core.csproj" />
     <ProjectReference Include="..\BooksReader.Dictionaries\BooksReader.Dictionaries.csproj" />
     <ProjectReference Include="..\BooksReader.Infrastructure\BooksReader.Infrastructure.csproj" />
+    <ProjectReference Include="..\BooksReader.Services\BooksReader.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

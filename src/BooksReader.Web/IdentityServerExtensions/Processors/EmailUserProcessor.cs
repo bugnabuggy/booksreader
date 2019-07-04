@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BooksReader.Infrastructure.Models;
+using BooksReader.Core.Entities;
 using BooksReader.Web.IdentityServerExtensions.Interfaces.Processors;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;

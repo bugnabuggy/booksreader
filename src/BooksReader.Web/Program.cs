@@ -1,6 +1,7 @@
 using System;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
+using BooksReader.Web.Configuration;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;

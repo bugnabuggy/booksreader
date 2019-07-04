@@ -7,7 +7,6 @@ using BooksReader.Core.Entities;
 using BooksReader.Core.Models.DTO;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
-using BooksReader.Infrastructure.Models;
 using BooksReader.Infrastructure.Repositories;
 using BooksReader.Infrastructure.Services;
 using BooksReader.TestData.Helpers;
@@ -48,7 +47,7 @@ namespace BooksReader.Infrastructure.Tests
 
             Assert.AreEqual(4, result.Count, "Users count not than expected");
             var roles = result.FirstOrDefault().Roles;
-            Assert.IsTrue(roles.Count() == 3);
+            Assert.IsTrue(roles.Count() == 4);
 
             roles = result[1].Roles;
             Assert.IsTrue(roles.Count() == 0);
