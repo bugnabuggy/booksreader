@@ -10,6 +10,7 @@ using BooksReader.Core.Models;
 using BooksReader.Core.Models.DTO;
 using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Services;
+using BooksReader.Dictionaries;
 using BooksReader.Infrastructure.DataContext;
 using BooksReader.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -175,7 +176,7 @@ namespace BooksReader.Infrastructure.Services
 
 	    }
 
-        public async Task<OperationResult<AppUserDto>> UpdateUser(UserProfileRequest data)
+        public async Task<OperationResult<AppUserDto>> Update(UserProfileRequest data)
         {
             var result = new OperationResult<AppUserDto>();
 
@@ -204,6 +205,36 @@ namespace BooksReader.Infrastructure.Services
                 Id =  user.Id,
                 Email = user.Email,
                 Roles =  await _userManager.GetRolesAsync(user)
+            };
+
+            return result;
+        }
+
+        public async Task<OperationResult<AppUserDto>> Delete(string username)
+        {
+            var result = new OperationResult<AppUserDto>();
+            var user = await _userManager.FindByNameAsync(username);
+
+            if (user == null)
+            {
+                result.Success = false;
+                result.Messages = new []{ MessageStrings.UserDoesNotExist };
+                return result;
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var identityResult = await _userManager.DeleteAsync(user);
+
+            result.Success = identityResult.Succeeded;
+            result.Messages = identityResult.Errors.Select(x => x.Code).ToList();
+            result.Data = new AppUserDto()
+            {
+                Name = user.Name,
+                Avatar = user.Avatar,
+                Email = user.Email,
+                Username = user.UserName,
+                Id = user.Id,
+                Roles = roles
             };
 
             return result;

@@ -107,6 +107,11 @@ namespace BooksReader.Web.Controllers
 		{
 			var user = await _userManager.GetUserAsync(User);
 
+            if (user == null)
+            {
+                return NotFound(MessageStrings.UserDoesNotExistOrDeleted);
+            }
+
 			return Ok(new AppUserDto(){
 				Username = user.UserName,
                 Name = user.Name,

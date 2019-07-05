@@ -3,13 +3,15 @@ import { share, finalize, flatMap, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { SecurityService } from './security.service';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, BehaviorSubject } from 'rxjs';
 import { UserHubService } from '@br/communications/hubs';
 import { AppUser, Language, UserProfileRequest } from '../models';
 import { TranslateService } from '@ngx-translate/core';
 import { UserRegistration } from '../models/api-contracts/user-registration.contract';
 import { Endpoints } from '@br/config';
 import { HttpClient } from '@angular/common/http';
+import { MenuSections } from '@br/config/menu-sections';
+import { SiteRoles } from '../enums';
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +25,8 @@ export class UserService {
         public translate: TranslateService
     ) { }
 
-
+    menuSections$ = new BehaviorSubject<any>([]);
+    
     get user() { return this.securitySvc.user$.getValue(); }
 
     get isLoggedIn() {
@@ -33,12 +36,16 @@ export class UserService {
     init() {
         let observabe = of(null).pipe(
             flatMap(() => this.securitySvc.init()),
-            flatMap( (val) => {
-                // if we have initialized user, start signalR
-                if(val) {
+            flatMap( (user: AppUser) => {
+                // if we have initialized user, bootstrap the ui 
+                if(user) {
+                    this.initMenu(user);
+
+                    // start signalR
                     return this.userHub.init()
                 }
                 return of(null);
+                
             }),
             share()
         );
@@ -50,11 +57,25 @@ export class UserService {
         return observabe;
     }
 
+    initMenu(user){
+        // init menu
+        let menuSections = [];
+        user.roles.forEach(x => {
+            if(MenuSections[x])
+            {
+                menuSections.push(MenuSections[x]);
+            }
+        });
+        this.menuSections$.next(menuSections);
+
+    }
+
     logIn(login: string, password: string, goToProfile?: boolean) {
         const observable = this.securitySvc.login(login, password);
         observable
             .subscribe(data => {
                 // start real time communication with server
+                this.initMenu(this.user);
                 this.userHub.init();
 
                 // navigate user depend on role to different pages
@@ -63,7 +84,19 @@ export class UserService {
                     return;
                 }
 
-                this.router.navigateByUrl(Endpoints.forntend.reader.dashboardUrl);
+                // order by role priorities
+                let redirectDictionary = {
+                    [SiteRoles.admin]: Endpoints.forntend.admin.dashboardUrl,
+                    [SiteRoles.author]: Endpoints.forntend.author.dashboardUrl,
+                    [SiteRoles.reader]: Endpoints.forntend.admin.dashboardUrl,
+                };
+
+                for(let item in this.user.roles){
+                    if(redirectDictionary[item]){
+                        this.router.navigateByUrl(redirectDictionary[item]);
+                        break;
+                    };
+                }
 
             }, err => { // error
                 console.error(err);

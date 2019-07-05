@@ -16,12 +16,8 @@ app-root,
 app-login, 
 app-registration-component, 
 app-force-logout,
-app-dashboard,
-app-book-edit,
-app-admin-dashboard,
-app-author-dashboard,
-app-book-market,
-app-profile{
+app-profile,
+app-all-users-page{
     flex: 1;
     display: flex;
 }
@@ -47,7 +43,7 @@ app-profile{
     min-height: 300px;
 }
 
-// .size-input-authorization{
-//     width: 65%;
-//     margin-bottom: 10px;
-// }
+.mat-menu-item.active {
+    background: #3f51b5;
+    color: white;
+}

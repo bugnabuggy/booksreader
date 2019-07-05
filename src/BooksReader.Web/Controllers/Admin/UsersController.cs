@@ -84,9 +84,16 @@ namespace BooksReader.Web.Controllers.Admin
         }
 
         // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{username}")]
+        public async Task<IActionResult> Delete(string username)
         {
+            var result = await this._usersService.Delete(username);
+            if (result.Success)
+            {
+                return  Ok(result);
+            }
+
+            return BadRequest(result.Messages);
         }
     }
 }

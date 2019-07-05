@@ -64,28 +64,6 @@ export class SecurityService {
                     observer.complete();
                 }))
                 .subscribe();
-            
-            // if (this.access_token) {
-            //     this.getUserInfo()
-            //         .pipe(finalize(() => {
-            //             observer.complete();
-            //         }))
-            //         .subscribe(val => {
-            //             this.isLoggedIn = true;
-            //             observer.next(this.isLoggedIn);
-            //         },
-            //             err => {
-            //                 if (err.status == 401) {
-            //                     this.isLoggedIn = false;
-            //                     observer.next(this.isLoggedIn);
-            //                 }
-            //                 // else probably retry or do some kind of disconected app
-            //             })
-            //     return;
-            // }
-
-            // observer.next(false);
-            // observer.complete();
         })
     }
 

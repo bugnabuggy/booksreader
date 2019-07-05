@@ -7,7 +7,7 @@ using BooksReader.Core.Entities;
 
 namespace BooksReader.TestData
 {
-	class BooksList
+	public class TestBooks
 	{
 		public static IEnumerable<Book> GetBooks()
 		{

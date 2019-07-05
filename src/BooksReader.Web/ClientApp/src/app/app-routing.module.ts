@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import {
-  BookEditComponent
-} from './pages';
 import { AuthGuard } from '@br/core/guards/auth-guard';
 import { MainComponent } from '@br/public/pages';
 import { Endpoints } from './config';

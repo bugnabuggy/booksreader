@@ -8,5 +8,7 @@ namespace BooksReader.Dictionaries
         public static string UserAlreadyExists = "USER_ALREADY_EXISTS";
         public static string NotImplemented = "NOT_IMPLEMENTED";
         public static string DoNotHavePermissions = "YOU_DO_NOT_HAVE_PERMISSIONS";
+        public static string UserDoesNotExist = "USER_DOES_NOT_EXITS";
+        public static string UserDoesNotExistOrDeleted = "USER_DOES_NOT_EXITS_OR_DELETED";
     }
 }

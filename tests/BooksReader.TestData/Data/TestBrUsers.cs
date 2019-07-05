@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using BooksReader.Core.Entities;
 
-namespace BooksReader.TestData
+namespace BooksReader.TestData.Data
 {
-    class UserForInitialization
+    public class UserForInitialization
     {
 		public string Id { get; set; }
 		public string Username { get; set; }
@@ -14,9 +11,9 @@ namespace BooksReader.TestData
         public IEnumerable<string> Roles { get; set; }
     }
 
-    class BrUsersList
+    public class TestBrUsers
     {
-        public static IEnumerable<UserForInitialization> GetUsers()
+        public static IEnumerable<UserForInitialization> GetUsersInfo()
         {
             var list = new List<UserForInitialization>
             {
@@ -36,6 +33,7 @@ namespace BooksReader.TestData
                 },
                 new UserForInitialization()
                 {
+                    Id =  "00000000-0000-0000-0000-000000000003",
                     Username = "test",
                     Password = "321",
                     Roles = new List<string>() {"User"}
@@ -43,6 +41,16 @@ namespace BooksReader.TestData
             };
 
             return list;
+        }
+
+        public static BrUser GetUser()
+        {
+            return new BrUser()
+            {
+                Id = "00000000-0000-0000-0000-000000000003",
+                Name = "Test",
+                UserName = "test"
+            };
         }
     }
 }

@@ -7,6 +7,7 @@ using BooksReader.Core.Entities;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
 using BooksReader.Infrastructure.Repositories;
+using BooksReader.TestData.Data;
 using BooksReader.Web.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,7 +33,7 @@ namespace BooksReader.TestData.Helpers
 
         private static async Task AddUsers(UserManager<BrUser> manager)
         {
-            var users = BrUsersList.GetUsers();
+            var users = TestBrUsers.GetUsersInfo();
 
             foreach (var user in users)
             {
@@ -49,7 +50,7 @@ namespace BooksReader.TestData.Helpers
 
 	    private static async Task AddBooks(IRepository<Book> booksRepo)
 	    {
-		   await booksRepo.AddAsync(BooksList.GetBooks());
+		   await booksRepo.AddAsync(TestBooks.GetBooks());
 	    }
     }
 }

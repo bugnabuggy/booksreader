@@ -22,7 +22,18 @@ class Endpoints {
             forceLogout: 'logout',
         },
         reader: {
+            profileUrl: Endpoints.areas.reader + '/profile',
             dashboardUrl: Endpoints.areas.reader + '/dashboard'
+        },
+        admin: {
+            dashboard: 'dashboard',
+            dashboardUrl: Endpoints.areas.admin + '/dashboard',
+            allUsers: 'users',
+            allUsersUrl: Endpoints.areas.admin + '/users'
+        },
+        author: {
+            dashboard: 'dashboard',
+            dashboardUrl: Endpoints.areas.author + '/dashboard',
         }
         
     };
@@ -46,6 +57,7 @@ class Endpoints {
         users: {
             all: Endpoints.baseApiUrl + 'api/admin/users',
             userRole: Endpoints.baseApiUrl + 'api/admin/users/{username}/{role}',
+            delete: Endpoints.baseApiUrl + 'api/admin/users/{username}',
         },
         author: {
             book: Endpoints.baseApiUrl + 'api/author/book/{id}',

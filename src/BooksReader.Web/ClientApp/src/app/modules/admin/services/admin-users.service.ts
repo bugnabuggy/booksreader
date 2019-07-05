@@ -6,8 +6,7 @@ import { Endpoints } from '@br/config';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminUsersService {
-
+export class AdminUsersService {  
   constructor(
     private http: HttpClient
   ) { }
@@ -37,5 +36,13 @@ export class AdminUsersService {
     url = url.replace('{role}', role);
 
     return this.http.delete(url).pipe(share());
+  }
+
+  delete(username: string) {
+    let url = Endpoints.api.users.delete
+      .replace("{username}", username);
+
+    const observable = this.http.delete(url).pipe(share());
+    return observable;
   }
 }

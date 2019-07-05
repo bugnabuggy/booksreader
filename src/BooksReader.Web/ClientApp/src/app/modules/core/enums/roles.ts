@@ -1,5 +1,6 @@
 export enum SiteRoles {
     admin = "Admin",
     author = "Author",
-    reader = "Reader"    
+    reader = "Reader",
+    user = "User"
 }

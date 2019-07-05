@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AdminUsersService } from '../admin/admin-users.service';
-import { MOCKED_PROVIDERS } from '../../../tests/mocks/mockedProviders';
+import { AdminUsersService } from './admin-users.service';
+import { MOCKED_PROVIDERS } from '@br/tests/mocks';
 
 describe('AdminUsersService', () => {
   beforeEach(() => TestBed.configureTestingModule({

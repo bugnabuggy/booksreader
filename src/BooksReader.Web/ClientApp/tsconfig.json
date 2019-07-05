@@ -29,6 +29,7 @@
       "@br/public/*": ["src/app/modules/public/*"],
       "@br/integrations/*": ["src/app/modules/integrations/*"],
       "@br/utilities/*": ["src/app/utilities/*"],
+      "@br/admin/*": ["src/app/modules/admin/*"],
       "@br/tests/*": ["src/tests/*"]
     }
   }

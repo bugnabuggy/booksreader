@@ -21,6 +21,7 @@ namespace BooksReader.Core.Services
 	    IQueryable<LoginHistoryResult> GetLoginHistory(StandardFiltersDto filters, string userId, out int totalItems);
 
 
-        Task<OperationResult<AppUserDto>> UpdateUser(UserProfileRequest data);
+        Task<OperationResult<AppUserDto>> Update(UserProfileRequest data);
+        Task<OperationResult<AppUserDto>> Delete(string username);
     }
 }

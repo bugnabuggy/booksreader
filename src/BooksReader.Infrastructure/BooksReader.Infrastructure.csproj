@@ -303,6 +303,10 @@
       <Project>{cbd39f73-2de1-4aae-a86d-13392bf5f1c3}</Project>
       <Name>BooksReader.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BooksReader.Dictionaries\BooksReader.Dictionaries.csproj">
+      <Project>{f0fa902f-3d09-4fbc-903f-34eacc8d6c9f}</Project>
+      <Name>BooksReader.Dictionaries</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

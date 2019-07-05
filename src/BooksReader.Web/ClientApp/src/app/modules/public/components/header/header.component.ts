@@ -18,6 +18,9 @@ export class HeaderComponent implements OnInit {
   language = new FormControl(this.languages[1]);
   langSub: Subscription;
 
+  menuSections = [] ;
+
+
   constructor(
     public security: SecurityService,
     public userSvc: UserService
@@ -26,9 +29,11 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.langSub = this.language.valueChanges.subscribe((val: Language) => {
       this.userSvc.changeLanguage(val);
-      
     });
 
+    this.userSvc.menuSections$.subscribe(val=> {
+      this.menuSections = val;
+    });
   }
 
 

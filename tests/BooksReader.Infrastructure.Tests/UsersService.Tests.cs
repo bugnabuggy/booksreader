@@ -11,6 +11,7 @@ using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
 using BooksReader.Infrastructure.Repositories;
 using BooksReader.Infrastructure.Services;
+using BooksReader.TestData.Data;
 using BooksReader.TestData.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -144,7 +145,7 @@ namespace BooksReader.Infrastructure.Tests
                 Email = $"Changed {user.Email}"
             };
 
-            var result = await userSvc.UpdateUser(request);
+            var result = await userSvc.Update(request);
             Assert.IsTrue(result.Success);
 
             user = context.Users.AsNoTracking().FirstOrDefault();
@@ -154,7 +155,20 @@ namespace BooksReader.Infrastructure.Tests
             Assert.AreEqual(user.Email, request.Email);
         }
 
-    }
 
-	
+        [Test]
+        public async Task Should_delete_user()
+        {
+            var context = services.GetService<BrDbContext>();
+            var userSvc = services.GetService<IUsersService>();
+            var user = TestBrUsers.GetUser();
+
+            var result = await userSvc.Delete(user.UserName);
+            Assert.IsTrue(result.Success);
+
+            
+            var dbuser = context.Users.AsNoTracking().FirstOrDefault(x=>x.UserName.Equals(user.UserName));
+            Assert.IsNull(dbuser);
+        }
+    }
 }

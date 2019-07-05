@@ -41,7 +41,7 @@ namespace BooksReader.Web.Controllers.User
 
             if (await _userManager.IsInRoleAsync(user, SiteRoles.Admin) || user.UserName.Equals(profile.Username))
             {
-                var result = await _usersService.UpdateUser(profile);
+                var result = await _usersService.Update(profile);
                 if (result.Success)
                 {
                     return Ok(result.Data);
