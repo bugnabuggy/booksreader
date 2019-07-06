@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService, NotificationService } from '@br/core/services';
+import { UserService, NotificationService, SecurityService } from '@br/core/services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangePasswordDialogComponent } from '../../components/';
 import { AppUser } from '@br/core/models';
 import { finalize } from 'rxjs/operators';
-import { StringConstants } from '@br/config';
+import { StringConstants, Endpoints } from '@br/config';
 
 @Component({
   selector: 'app-profile',
@@ -13,12 +13,13 @@ import { StringConstants } from '@br/config';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  
+  Endpoints = Endpoints;
   profileForm: FormGroup;
   isUiBlocked = false;
 
   constructor(
     public userSvc: UserService,
+    public securitySvc: SecurityService,
     private fb: FormBuilder,
     public dialog: MatDialog,
     private notifications: NotificationService

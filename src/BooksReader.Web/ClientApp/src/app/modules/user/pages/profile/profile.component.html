@@ -59,7 +59,7 @@
             <button (click)="changePass($event)" mat-raised-button color="accent">Change password</button>
         </div>
         <div class="my-3">
-          <button (click)="becomeAnAuthor($event)" mat-raised-button color="primary">Becaome an Author</button>
+          <button *ngIf="!securitySvc.isAuthor" [routerLink]="Endpoints.forntend.user.becomeAnAuthorUrl" (click)="becomeAnAuthor($event)" mat-raised-button color="primary">Becaome an Author</button>
         </div>
       </div>
     </div>

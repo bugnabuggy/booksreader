@@ -18,8 +18,10 @@ class Endpoints {
         error: 'error',
         user: {
             profile: 'profile', 
-            profileUrl: Endpoints.areas.user + '/profile',
+            profileUrl: '/' + Endpoints.areas.user + '/profile',
             forceLogout: 'logout',
+            becomeAnAuthor: 'become-an-author',
+            becomeAnAuthorUrl: '/' + Endpoints.areas.user + '/become-an-author'
         },
         reader: {
             profileUrl: Endpoints.areas.reader + '/profile',
@@ -27,13 +29,13 @@ class Endpoints {
         },
         admin: {
             dashboard: 'dashboard',
-            dashboardUrl: Endpoints.areas.admin + '/dashboard',
+            dashboardUrl: '/' + Endpoints.areas.admin + '/dashboard',
             allUsers: 'users',
-            allUsersUrl: Endpoints.areas.admin + '/users'
+            allUsersUrl: '/' + Endpoints.areas.admin + '/users'
         },
         author: {
             dashboard: 'dashboard',
-            dashboardUrl: Endpoints.areas.author + '/dashboard',
+            dashboardUrl: '/' + Endpoints.areas.author + '/dashboard',
         }
         
     };
