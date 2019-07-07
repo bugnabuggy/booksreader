@@ -5,9 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@br/material/material.module';
 
 import { TranslateModule } from '@ngx-translate/core';
+import { BooksListComponent } from './components/books-list/books-list.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [BooksListComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -19,8 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    
-
+    BooksListComponent
   ]
 })
 export class SharedModule { }

@@ -34,6 +34,8 @@ class Endpoints {
             allUsersUrl: '/' + Endpoints.areas.admin + '/users'
         },
         author: {
+            profile: 'profile',
+            profileUrl: '/' + Endpoints.areas.author + '/profile',
             dashboard: 'dashboard',
             dashboardUrl: '/' + Endpoints.areas.author + '/dashboard',
         }
@@ -52,6 +54,7 @@ class Endpoints {
             info: Endpoints.baseApiUrl + 'api/identity/me',
             profile: Endpoints.baseApiUrl + 'api/user/profile',
             loginHistory: Endpoints.baseApiUrl + 'api/identity/login-history',
+            becomeAnAuthor: Endpoints.baseApiUrl + 'api/user/author'
         },
         reader: {
             books: Endpoints.baseApiUrl + 'api/books',

@@ -12,6 +12,7 @@ import { Endpoints } from '@br/config';
 import { HttpClient } from '@angular/common/http';
 import { MenuSections } from '@br/config/menu-sections';
 import { SiteRoles } from '../enums';
+import { AuthorData } from '../models/api-contracts/requests/author-data.request';
 
 @Injectable({
     providedIn: 'root'
@@ -70,6 +71,13 @@ export class UserService {
 
     }
 
+    refresh() {
+        this.securitySvc.getUserInfo().subscribe(user => {
+            debugger;
+            this.initMenu(user);
+        })
+    }
+
     logIn(login: string, password: string, goToProfile?: boolean) {
         const observable = this.securitySvc.login(login, password);
         observable
@@ -90,10 +98,10 @@ export class UserService {
                     [SiteRoles.author]: Endpoints.forntend.author.dashboardUrl,
                     [SiteRoles.reader]: Endpoints.forntend.admin.dashboardUrl,
                 };
-
+                
                 for(let item in this.user.roles){
-                    if(redirectDictionary[item]){
-                        this.router.navigateByUrl(redirectDictionary[item]);
+                    if(redirectDictionary[this.user.roles[item]]){
+                        this.router.navigateByUrl(redirectDictionary[this.user.roles[item]]);
                         break;
                     };
                 }
@@ -140,5 +148,11 @@ export class UserService {
         const url = Endpoints.api.user.profile;
         const observable = this.http.put<AppUser>(url, profile).pipe(share());
         return observable;
+    }
+
+    authorRequest(authorData: AuthorData) {
+        const url = Endpoints.api.user.becomeAnAuthor;
+        const observabe = this.http.post(url, authorData).pipe(share());
+        return observabe;
     }
 }

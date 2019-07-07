@@ -15,7 +15,8 @@ export class MenuSections {
     
     static [SiteRoles.author] =  
     [
-
+        {text: 'Author profile', url: Endpoints.forntend.author.profileUrl },
+        {text: 'Author Dashboard', url: Endpoints.forntend.author.dashboardUrl },
     ]
 
     static [SiteRoles.admin] =  

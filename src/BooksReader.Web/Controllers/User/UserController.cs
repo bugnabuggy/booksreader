@@ -53,6 +53,17 @@ namespace BooksReader.Web.Controllers.User
             return StatusCode((int)HttpStatusCode.Forbidden, MessageStrings.DoNotHavePermissions);
         }
 
-        
+        [HttpPost("author")]
+        public async Task<ActionResult> Author([FromBody]AuthorRequest data)
+        {
+            var result = await this._usersService.AddUserRole(user.UserName, SiteRoles.Author);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result.Messages);
+        }
     }
 }

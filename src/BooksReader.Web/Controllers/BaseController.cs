@@ -17,6 +17,5 @@ namespace BooksReader.Web.Controllers
         {
             _translationService = translationService;
         }
-        
     }
 }

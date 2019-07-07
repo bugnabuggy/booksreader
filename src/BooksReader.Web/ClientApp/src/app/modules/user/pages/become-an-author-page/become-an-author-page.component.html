@@ -1,5 +1,5 @@
 <div class="flex-1 d-flex justify-content-center align-items-center">
-  <form class='col-12 col-sm-10 col-lg-8 col-xl-6 m-auto'>
+  <form class='col-12 col-sm-10 col-lg-8 col-xl-6 m-auto' (ngSubmit)='becomeAnAuthor()'>
       <mat-card class="example-card">
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
@@ -14,7 +14,7 @@
             </p>
           </mat-card-content>
           <mat-card-actions>
-            <button  mat-flat-button color="primary" class='text-uppercase'>Become an author</button>
+            <button  mat-flat-button color="primary" class='text-uppercase' >Become an author</button>
             <button mat-button>SHARE</button>
           </mat-card-actions>
         </mat-card>

@@ -4,6 +4,7 @@ using BooksReader.Core.Entities;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
 using BooksReader.Web.Configuration;
+using BooksReader.Web.Filters;
 using BooksReader.Web.Helpers;
 using BooksReader.Web.Hubs;
 using BooksReader.Web.IdentityServerExtensions.Extensions;
@@ -48,7 +49,8 @@ namespace BooksReader.Web
 			services.AddDbContext<BrDbContext>(options =>
 				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-			services.AddMvcCore()
+			services.AddMvcCore(
+                    options => { options.Filters.Add(typeof(UserActionFilterAttribute)); })
 				.AddFormatterMappings()
 				.AddCacheTagHelper()
 				.AddJsonFormatters()
