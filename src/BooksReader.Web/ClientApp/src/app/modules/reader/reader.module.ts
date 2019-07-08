@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ReaderRoutingModule } from './reader-routing.module';
-import { DashboardComponent } from './pages';
+import { ReaderDashboardComponent } from './pages';
+import { ReaderProfileComponent } from './pages/reader-profile/reader-profile.component';
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    ReaderDashboardComponent,
+    ReaderProfileComponent
   ],
   imports: [
     CommonModule,

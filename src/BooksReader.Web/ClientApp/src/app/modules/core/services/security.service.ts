@@ -39,7 +39,8 @@ export class SecurityService {
         public http: HttpClient,
         private storage: StorageService
     ) {
-        const userTokens = JSON.parse(storage.getItem(SiteConstants.storageKeys.userToken));
+        const tokens = storage.getItem(SiteConstants.storageKeys.userToken) || null;
+        const userTokens = JSON.parse(tokens);
         if (userTokens) {
             this.setTokens(userTokens);
         }

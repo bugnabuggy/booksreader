@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardComponent } from './dashboard.component';
+import { ReaderDashboardComponent } from './reader-dashboard.component';
 import { MOCKED_PROVIDERS } from '@br/tests/mocks/mockedProviders';
 
 describe('dashboardComponent', () => {
-  let component: DashboardComponent;
-  let fixture: ComponentFixture<DashboardComponent>;
+  let component: ReaderDashboardComponent;
+  let fixture: ComponentFixture<ReaderDashboardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardComponent ],
+      declarations: [ ReaderDashboardComponent ],
       providers: MOCKED_PROVIDERS
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardComponent);
+    fixture = TestBed.createComponent(ReaderDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

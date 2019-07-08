@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '@br/core/guards/auth-guard';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ReaderDashboardComponent } from './pages';
+import { Endpoints } from '@br/config';
 
 const routes: Routes = [
-  { path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard]}
+  { path:Endpoints.forntend.reader.dashboard, component: ReaderDashboardComponent, canActivate:[AuthGuard]},
+  { path: Endpoints.forntend.reader.profile, component: ReaderDashboardComponent, canActivate:[AuthGuard]}
 ];
 
 @NgModule({

@@ -70,7 +70,7 @@ describe('UserService', () => {
     const reqUt = httpTestingController.expectOne(Endpoints.api.authorization.login);
     expect(reqRg.request.method).toEqual('POST');
     reqUt.flush({} as AuthResponse);
-
+    debugger;
     const reqUi = httpTestingController.expectOne(Endpoints.api.user.info);
     expect(reqAf.request.method).toEqual('GET');
     reqUi.flush({} as AppUser);

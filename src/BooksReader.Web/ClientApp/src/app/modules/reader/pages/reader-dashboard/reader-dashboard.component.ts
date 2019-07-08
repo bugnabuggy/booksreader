@@ -9,9 +9,9 @@ import { SiteConstants } from '@br/config';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
+  templateUrl: './reader-dashboard.component.html',
 })
-export class DashboardComponent implements OnInit {
+export class ReaderDashboardComponent implements OnInit {
   // loginHistory: LoginHistory[];
   // displayedColumns: string[] = ['dateTime', 'ipAddress', 'browser', 'geolocation'];
   // currentFilters: StandardFilters = { pageSize: 10, pageNumber: 0, isDesc: true, orderByField: 'dateTime' };

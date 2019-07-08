@@ -24,8 +24,10 @@ class Endpoints {
             becomeAnAuthorUrl: '/' + Endpoints.areas.user + '/become-an-author'
         },
         reader: {
-            profileUrl: Endpoints.areas.reader + '/profile',
-            dashboardUrl: Endpoints.areas.reader + '/dashboard'
+            profile: 'profile',
+            profileUrl: '/' +  Endpoints.areas.reader + '/profile',
+            dashboard: 'dashboard',
+            dashboardUrl: '/' +  Endpoints.areas.reader + '/dashboard'
         },
         admin: {
             dashboard: 'dashboard',

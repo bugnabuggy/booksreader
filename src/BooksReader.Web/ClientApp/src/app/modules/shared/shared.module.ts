@@ -6,6 +6,7 @@ import { MaterialModule } from '@br/material/material.module';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { BooksListComponent } from './components/books-list/books-list.component';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 @NgModule({
   declarations: [BooksListComponent],
@@ -20,7 +21,7 @@ import { BooksListComponent } from './components/books-list/books-list.component
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    BooksListComponent
+    BooksListComponent,    
   ]
 })
 export class SharedModule { }
