@@ -84,9 +84,11 @@ export class UserService {
             .subscribe(data => {
                 // start real time communication with server
                 this.initMenu(this.user);
+                
                 this.userHub.init();
 
                 // navigate user depend on role to different pages
+                
                 if (goToProfile) {
                     this.router.navigateByUrl(Endpoints.forntend.user.profileUrl);
                     return;

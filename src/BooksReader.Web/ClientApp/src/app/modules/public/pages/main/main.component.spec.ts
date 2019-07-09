@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CoreModule } from '@br/core/core.module';
+import { MockStorageService } from '@br/tests/mocks';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -17,6 +18,9 @@ describe('MainComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         TranslateModule.forRoot()        
+      ],
+      providers: [
+        { provide: Storage, useValue: new MockStorageService() }
       ],
       declarations: [ MainComponent ]
     })

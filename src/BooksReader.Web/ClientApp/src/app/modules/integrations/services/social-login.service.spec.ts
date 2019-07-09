@@ -1,14 +1,21 @@
 import { TestBed } from '@angular/core/testing';
 
 import { SocialLoginService } from './social-login.service';
-import { SocialLoginModule } from 'angularx-social-login';
+import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { CoreModule } from '@br/core/core.module';
+import { provideConfig } from '../utilities';
 
 describe('SocialLoginService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       CoreModule,
-      SocialLoginModule
+      SocialLoginModule,
+    ],
+    providers:[
+      {
+        provide: AuthServiceConfig,
+        useFactory: provideConfig
+      },
     ]
   }));
 

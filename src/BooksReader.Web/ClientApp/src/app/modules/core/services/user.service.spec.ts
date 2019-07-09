@@ -11,6 +11,7 @@ import { Endpoints } from '@br/config';
 import { AuthResponse, AppUser } from '../models';
 import { timer } from 'rxjs';
 import { Router } from '@angular/router';
+import { authMockResponse, appUser } from '@br/tests/mocks/responses';
 
 let router = {
   navigate: jasmine.createSpy('navigate'),
@@ -66,14 +67,14 @@ describe('UserService', () => {
     const reqRg = httpTestingController.expectOne(Endpoints.api.authorization.registration);
     expect(reqRg.request.method).toEqual('POST');
     reqRg.flush(null);
-
+    
     const reqUt = httpTestingController.expectOne(Endpoints.api.authorization.login);
     expect(reqRg.request.method).toEqual('POST');
-    reqUt.flush({} as AuthResponse);
-    debugger;
+    reqUt.flush(authMockResponse);
+    
     const reqUi = httpTestingController.expectOne(Endpoints.api.user.info);
     expect(reqAf.request.method).toEqual('GET');
-    reqUi.flush({} as AppUser);
+    reqUi.flush(appUser);
 
     var timeout = timer(10).subscribe(()=>{
       timeout.unsubscribe();

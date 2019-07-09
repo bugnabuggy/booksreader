@@ -6,6 +6,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CoreModule } from '@br/core/core.module';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AllUsersPageComponent', () => {
   let component: AllUsersPageComponent;
@@ -14,11 +16,12 @@ describe('AllUsersPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports:[
+        NoopAnimationsModule,
         MaterialModule,
-        CoreModule,
         RouterTestingModule,
         HttpClientTestingModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        SimpleNotificationsModule.forRoot()
       ],
       declarations: [ AllUsersPageComponent ]
     })
