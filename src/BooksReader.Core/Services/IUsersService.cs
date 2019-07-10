@@ -17,8 +17,8 @@ namespace BooksReader.Core.Services
         Task<OperationResult> AddUserRole(string username, string role);
         Task<OperationResult> RemoveUserRole(string username, string role);
 	    Task<OperationResult> ToggleUserRole(string username, string role);
-	    Task<LoginHistoryResult> AddLoginHistory(LoginHistory logHistory, string userId);
-	    IQueryable<LoginHistoryResult> GetLoginHistory(StandardFiltersDto filters, string userId, out int totalItems);
+	    Task<LoginHistoryResult> AddLoginHistory(LoginHistory logHistory, Guid userId);
+	    IQueryable<LoginHistoryResult> GetLoginHistory(StandardFiltersDto filters, Guid userId, out int totalItems);
 
 
         Task<OperationResult<AppUserDto>> Update(UserProfileRequest data);

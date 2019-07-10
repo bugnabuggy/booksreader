@@ -19,7 +19,7 @@ namespace BooksReader.Infrastructure.Repositories
         {
             _ctx = ctx;
             _table = _ctx.Set<T>();
-            Data = _table;
+            Data = _table.AsNoTracking();
         }
 
         public T Update(T entity)

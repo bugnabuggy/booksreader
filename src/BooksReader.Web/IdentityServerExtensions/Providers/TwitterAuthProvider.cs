@@ -12,7 +12,7 @@ using Newtonsoft.Json.Linq;
 
 namespace BooksReader.Web.IdentityServerExtensions.Providers
 {
-    public class TwitterAuthProvider<TUser> : ITwitterAuthProvider where TUser:IdentityUser,new()
+    public class TwitterAuthProvider<TUser> : ITwitterAuthProvider where TUser:IdentityUser<Guid> ,new()
     {        
         private readonly IProviderRepository _providerRepository;
         private readonly HttpClient _httpClient;

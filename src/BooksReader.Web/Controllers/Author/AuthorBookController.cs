@@ -37,7 +37,7 @@ namespace BooksReader.Web.Controllers.Author
         {
 		    var user = await _userManager.GetUserAsync(User);
 
-			var books = _booksService.Get(user.Id).ToList();
+			var books = _booksService.Get(user.Id.ToString()).ToList();
 
 	        return new WebResult<IEnumerable<Book>>
 			{ 
@@ -70,7 +70,7 @@ namespace BooksReader.Web.Controllers.Author
 					Title = model.Title,
 					Author = model.Author,
 					Created = DateTime.Now,
-					OwnerId = Guid.Parse(user.Id)
+					OwnerId = user.Id
 		        });
 		        return new OperationResult<Book>()
 		        {

@@ -117,7 +117,7 @@ namespace BooksReader.Web.Controllers
                 Name = user.Name,
                 Avatar = user.Avatar,
                 Email = user.Email,
-				Id = user.Id,
+				Id = user.Id.ToString(),
 				Roles = await _userManager.GetRolesAsync(user)
 			});
 

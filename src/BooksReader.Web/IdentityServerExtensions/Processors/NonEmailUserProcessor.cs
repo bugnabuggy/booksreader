@@ -45,9 +45,9 @@ namespace BooksReader.Web.IdentityServerExtensions.Processors
                 }
                 else
                 {
-                     existingUser = await _userManager.FindByIdAsync(existingUser.Id);
+                     existingUser = await _userManager.FindByIdAsync(existingUser.Id.ToString());
                     var userClaims = await _userManager.GetClaimsAsync(existingUser);
-                    return new GrantValidationResult(existingUser.Id, provider, userClaims, provider, null);
+                    return new GrantValidationResult(existingUser.Id.ToString(), provider, userClaims, provider, null);
                 }
 
             }
@@ -59,7 +59,7 @@ namespace BooksReader.Web.IdentityServerExtensions.Processors
                 {                   
                     await _userManager.AddLoginAsync(newUser, new UserLoginInfo(provider, userExternalId, provider));
                     var userClaims = await _userManager.GetClaimsAsync(newUser);
-                    return new GrantValidationResult(newUser.Id, provider, userClaims, provider, null);
+                    return new GrantValidationResult(newUser.Id.ToString(), provider, userClaims, provider, null);
                 }
                 return new GrantValidationResult(TokenRequestErrors.InvalidRequest, "user could not be created, please try again");
             }

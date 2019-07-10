@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Services;
+using BooksReader.Core.Services.Author;
 using BooksReader.Dictionaries;
 using BooksReader.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Authentication;
@@ -23,22 +24,21 @@ namespace BooksReader.Web.Controllers.User
     [Authorize]
     public class UserController : BaseUserController
     {
-        private readonly ISecurityService _security;
+        private readonly IAuthorProfileService  _authorProfileSvc;
+
 
         public UserController(
             UserManager<BrUser> userManager,
+            IAuthorProfileService authorProfileSvc,
             IUsersService usersService,
-            ISecurityService security,
             ITranslationService translationService) : base(userManager, usersService, translationService)
         {
-            _security = security;
+            _authorProfileSvc = authorProfileSvc;
         }
 
         [HttpPut("profile")]
         public async Task<IActionResult> UpdateProfile([FromBody] UserProfileRequest profile)
         {
-            var user = await _userManager.GetUserAsync(User);
-
             if (await _userManager.IsInRoleAsync(user, SiteRoles.Admin) || user.UserName.Equals(profile.Username))
             {
                 var result = await _usersService.Update(profile);
@@ -56,14 +56,16 @@ namespace BooksReader.Web.Controllers.User
         [HttpPost("author")]
         public async Task<ActionResult> Author([FromBody]AuthorRequest data)
         {
-            var result = await this._usersService.AddUserRole(user.UserName, SiteRoles.Author);
 
-            if (result.Success)
+            var roleResult = await this._usersService.AddUserRole(user.UserName, SiteRoles.Author);
+            var authorProfileResult = await this._authorProfileSvc.CreateAuthorProfile(user);
+
+            if (roleResult.Success && authorProfileResult.Success)
             {
-                return Ok(result);
+                return Ok(authorProfileResult.Data);
             }
 
-            return BadRequest(result.Messages);
+            return BadRequest();
         }
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BooksReader.Infrastructure.Migrations
 {
     [DbContext(typeof(BrDbContext))]
-    [Migration("20190704080956_Initial")]
+    [Migration("20190710114710_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,30 @@ namespace BooksReader.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("BooksReader.Core.Entities.AuthorProfile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AuthorName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(3000);
+
+                    b.Property<Guid>("PersonalPageId");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonalPageId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AuthorProfiles");
+                });
 
             modelBuilder.Entity("BooksReader.Core.Entities.Book", b =>
                 {
@@ -65,7 +89,7 @@ namespace BooksReader.Infrastructure.Migrations
 
             modelBuilder.Entity("BooksReader.Core.Entities.BrUser", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
@@ -79,6 +103,9 @@ namespace BooksReader.Infrastructure.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("Language")
+                        .HasMaxLength(20);
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -134,16 +161,80 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<string>("Screen");
 
-                    b.Property<string>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
                     b.ToTable("LoginHistory");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("BooksReader.Core.Entities.PersonalPage", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Content");
+
+                    b.Property<string>("Domain")
+                        .HasMaxLength(256);
+
+                    b.Property<int>("PageType");
+
+                    b.Property<Guid>("SeoInfoId");
+
+                    b.Property<string>("UrlPath")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SeoInfoId");
+
+                    b.ToTable("PersonalPages");
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.SeoInfo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("MetaAuthor")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("MetaCopyright")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("MetaDescription")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("MetaKeywords")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("MetaTitle")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("OgDescription")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("OgImage")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("OgTitle")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("OgType")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("OgUrl")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SeoInfos");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
+                {
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
@@ -165,7 +256,7 @@ namespace BooksReader.Infrastructure.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -175,8 +266,7 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired();
+                    b.Property<Guid>("RoleId");
 
                     b.HasKey("Id");
 
@@ -185,7 +275,7 @@ namespace BooksReader.Infrastructure.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -195,8 +285,7 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -205,7 +294,7 @@ namespace BooksReader.Infrastructure.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -213,8 +302,7 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -223,11 +311,11 @@ namespace BooksReader.Infrastructure.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<Guid>("UserId");
 
-                    b.Property<string>("RoleId");
+                    b.Property<Guid>("RoleId");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -236,9 +324,9 @@ namespace BooksReader.Infrastructure.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.Property<string>("LoginProvider");
 
@@ -251,15 +339,36 @@ namespace BooksReader.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("BooksReader.Core.Entities.AuthorProfile", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("BooksReader.Core.Entities.PersonalPage", "PersonalPage")
+                        .WithMany()
+                        .HasForeignKey("PersonalPageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BooksReader.Core.Entities.BrUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.PersonalPage", b =>
+                {
+                    b.HasOne("BooksReader.Core.Entities.SeoInfo", "SeoInfo")
+                        .WithMany()
+                        .HasForeignKey("SeoInfoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("BooksReader.Core.Entities.BrUser")
                         .WithMany()
@@ -267,7 +376,7 @@ namespace BooksReader.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("BooksReader.Core.Entities.BrUser")
                         .WithMany()
@@ -275,9 +384,9 @@ namespace BooksReader.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -288,7 +397,7 @@ namespace BooksReader.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("BooksReader.Core.Entities.BrUser")
                         .WithMany()

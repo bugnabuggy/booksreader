@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BooksReader.Core.Entities;
 
 namespace BooksReader.TestData.Data
@@ -47,7 +48,7 @@ namespace BooksReader.TestData.Data
         {
             return new BrUser()
             {
-                Id = "00000000-0000-0000-0000-000000000003",
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000003"),
                 Name = "Test",
                 UserName = "test"
             };

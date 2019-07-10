@@ -124,7 +124,7 @@ namespace BooksReader.Infrastructure.Tests
 
 		    };
 
-		    var result = await userSvc.AddLoginHistory(history, Guid.Empty.ToString());
+		    var result = await userSvc.AddLoginHistory(history, Guid.Empty);
 
 			Assert.AreEqual(repository.Data.Count(), count + 1);
 	    }

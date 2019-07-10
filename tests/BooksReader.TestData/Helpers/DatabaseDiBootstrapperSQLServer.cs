@@ -63,7 +63,7 @@ namespace BooksReader.TestData.Helpers
             var services = new ServiceCollection();
             services.AddDbContext<BrDbContext>(options => options.UseSqlServer(HardcoddedConfig.ConnectionString));
 
-            services.AddIdentity<BrUser, IdentityRole>(opt =>
+            services.AddIdentity<BrUser, IdentityRole<Guid>>(opt =>
                 {
                     opt.Password.RequireDigit = false;
                     opt.Password.RequireLowercase = false;
@@ -75,8 +75,10 @@ namespace BooksReader.TestData.Helpers
 
             AppConfigurator.ConfigureServices(services);
 
-            services.AddSingleton<IConfiguration>(c => new Mock<IConfiguration>().Object);
-            services.AddSingleton<IConfigurationRoot>(c => new Mock<IConfigurationRoot>().Object);
+            var configMock = TestDbContextInitializer.GetConfigurationMock();
+
+            services.AddSingleton<IConfigurationRoot>(c => configMock.Object);
+            services.AddSingleton<IConfiguration>(c => configMock.Object);
 
             var serviceProvider = services.BuildServiceProvider();
 

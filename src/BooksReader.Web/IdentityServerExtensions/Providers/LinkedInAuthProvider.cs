@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net.Http;
 using BooksReader.Web.IdentityServerExtensions.Entities;
 using BooksReader.Web.IdentityServerExtensions.Helpers;
@@ -9,18 +10,18 @@ using Newtonsoft.Json.Linq;
 
 namespace BooksReader.Web.IdentityServerExtensions.Providers
 {
-    public class LinkedInAuthProvider<TUser> : ILinkedInAuthProvider where TUser : IdentityUser, new()
+    public class LinkedInAuthProvider<TUser> : ILinkedInAuthProvider where TUser : IdentityUser<Guid>, new()
     {
-      
+
         private readonly IProviderRepository _providerRepository;
         private readonly HttpClient _httpClient;
         public LinkedInAuthProvider(
-         
+
              IProviderRepository providerRepository,
              HttpClient httpClient
              )
         {
-       
+
             _providerRepository = providerRepository;
             _httpClient = httpClient;
         }

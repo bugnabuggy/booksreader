@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BooksReader.Web.IdentityServerExtensions.ExtensionGrant
 {
-    public class ExternalAuthenticationGrant<TUser> : IExtensionGrantValidator where TUser : IdentityUser, new()
+    public class ExternalAuthenticationGrant<TUser> : IExtensionGrantValidator where TUser : IdentityUser<Guid>, new()
     {
         private readonly UserManager<TUser> _userManager;      
         private readonly IProviderRepository _providerRepository;
@@ -102,9 +102,9 @@ namespace BooksReader.Web.IdentityServerExtensions.ExtensionGrant
                 var user = await _userManager.FindByLoginAsync(provider, externalId);
                 if(null != user)
                 {
-                    user = await _userManager.FindByIdAsync(user.Id);
+                    user = await _userManager.FindByIdAsync(user.Id.ToString());
                     var userClaims = await _userManager.GetClaimsAsync(user);
-                    context.Result = new GrantValidationResult(user.Id, provider, userClaims, provider, null);
+                    context.Result = new GrantValidationResult(user.Id.ToString(), provider, userClaims, provider, null);
                     return;
                 }
             }

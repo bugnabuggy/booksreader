@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
@@ -59,7 +60,7 @@ namespace BooksReader.Web
 				{
 				});
 
-			services.AddIdentity<BrUser, IdentityRole>(opts =>
+			services.AddIdentity<BrUser, IdentityRole<Guid>>(opts =>
 				{
 					opts.Password = new PasswordOptions()
 					{
@@ -73,7 +74,11 @@ namespace BooksReader.Web
 				.AddEntityFrameworkStores<BrDbContext>()
 				.AddDefaultTokenProviders();
 
-			services.AddIdentityServer()
+			services.AddIdentityServer(
+                    opt=>
+                    {
+                        opt.Authentication.CookieAuthenticationScheme = "dummy";
+                    })
 				.AddDeveloperSigningCredential()
 				.AddInMemoryApiResources(IdServerConfig.GetApiResources())
                 .AddInMemoryIdentityResources(IdServerConfig.GetIdentityResources())

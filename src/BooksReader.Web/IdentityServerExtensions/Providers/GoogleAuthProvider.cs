@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using BooksReader.Web.IdentityServerExtensions.Entities;
@@ -10,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace BooksReader.Web.IdentityServerExtensions.Providers
 {
-    public class GoogleAuthProvider<TUser> : IGoogleAuthProvider where TUser:IdentityUser,new()
+    public class GoogleAuthProvider<TUser> : IGoogleAuthProvider where TUser:IdentityUser<Guid> ,new()
     {
         
         private readonly IProviderRepository _providerRepository;

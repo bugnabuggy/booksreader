@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Services;
+using BooksReader.Core.Services.Author;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.Repositories;
 using BooksReader.Infrastructure.Services;
+using BooksReader.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,22 +19,29 @@ namespace BooksReader.Web.Configuration
     {
         public static void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IRepository<LoginHistory>, DbRepository<LoginHistory>>();
+            services.AddTransient<IRepository<Book>, DbRepository<Book>>();
+            services.AddTransient<IRepository<BrUser>, DbRepository<BrUser>>();
+            services.AddTransient<IRepository<SeoInfo>, DbRepository<SeoInfo>>();
+            services.AddTransient<IRepository<PersonalPage>, DbRepository<PersonalPage>>();
+            services.AddTransient<IRepository<AuthorProfile>, DbRepository<AuthorProfile>>();
+            
+
             services.AddTransient<ISecurityService, SecurityService>();
             services.AddTransient<IUsersService, UsersService>();
-	        services.AddTransient<IRepository<LoginHistory>, DbRepository<LoginHistory>>();
-			services.AddTransient<IRepository<Book>, DbRepository<Book>>();
-	        services.AddTransient<IRepository<BrUser>, DbRepository<BrUser>>();
-			services.AddTransient<IBooksService, BooksService>();
+            services.AddTransient<IAuthorProfileService, AuthorProfileService>();
+
+            services.AddTransient<IBooksService, BooksService>();
 		}
 
         public static void InitRolesAndUsers(IServiceProvider services)
         {
-            var roles = new List<IdentityRole>
+            var roles = new List<IdentityRole<Guid>>
             {
-                new IdentityRole(SiteRoles.Admin),
-                new IdentityRole(SiteRoles.User),
-	            new IdentityRole(SiteRoles.Author),
-                new IdentityRole(SiteRoles.Reader)
+                new IdentityRole<Guid>(SiteRoles.Admin),
+                new IdentityRole<Guid>(SiteRoles.User),
+	            new IdentityRole<Guid>(SiteRoles.Author),
+                new IdentityRole<Guid>(SiteRoles.Reader)
             };
 
             var users = new Dictionary<BrUser, string>()
@@ -40,7 +49,7 @@ namespace BooksReader.Web.Configuration
                 {new BrUser(){ UserName = "admin", Name = "admin"}, "123"},
             };
 
-            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
             var userManager = services.GetRequiredService<UserManager<BrUser>>();
             var logger = services.GetRequiredService<ILoggerFactory>().CreateLogger("AppConfigurator");
             var config = services.GetRequiredService<IConfigurationRoot>();

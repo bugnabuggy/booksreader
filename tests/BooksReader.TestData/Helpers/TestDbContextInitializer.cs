@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
-using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
 using BooksReader.Infrastructure.Repositories;
 using BooksReader.TestData.Data;
 using BooksReader.Web.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Moq;
 
 namespace BooksReader.TestData.Helpers
 {
@@ -19,6 +20,15 @@ namespace BooksReader.TestData.Helpers
 
         private Random _random = new Random();
 
+        public static Mock<IConfigurationRoot> GetConfigurationMock()
+        {
+            var mock = new Mock<IConfigurationRoot>();
+
+
+
+            return mock;
+        }
+
         public async Task SeedData(IServiceProvider services)
         {
             AppConfigurator.InitRolesAndUsers(services);
@@ -26,8 +36,11 @@ namespace BooksReader.TestData.Helpers
             var context = services.GetService<BrDbContext>();
             var userManager = services.GetService<UserManager<BrUser>>();
 			var booksRepo = services.GetService<IRepository<Book>>();
+            var authorProfilesRepo = services.GetService<IRepository<AuthorProfile>>();
+
 
 			await AddUsers(userManager);
+            await AddAuthorProfiles(authorProfilesRepo);
 	        await AddBooks(booksRepo);
         }
 
@@ -39,13 +52,18 @@ namespace BooksReader.TestData.Helpers
             {
                 var brUser = new BrUser()
                 {
-					Id = user.Id,
+					Id = Guid.Parse(user.Id),
                     Name = user.Username,
                     UserName = user.Username
                 };
                 await manager.CreateAsync(brUser, user.Password);
                 await manager.AddToRolesAsync(brUser, user.Roles);
             }
+        }
+
+        private static async Task AddAuthorProfiles(IRepository<AuthorProfile> repo)
+        {
+            await repo.AddAsync(TestAuthors.GetAuthorProfiles());
         }
 
 	    private static async Task AddBooks(IRepository<Book> booksRepo)

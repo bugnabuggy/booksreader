@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using BooksReader.Core.Entities;
 using BooksReader.Web.IdentityServerExtensions.ExtensionGrant;
 using BooksReader.Web.IdentityServerExtensions.Interfaces;
@@ -30,7 +31,7 @@ namespace BooksReader.Web.IdentityServerExtensions.Extensions
             return services;
         }
 
-        public static IServiceCollection AddIdentityServerExtensionsProviders<TUser>(this IServiceCollection services) where TUser: IdentityUser,new()
+        public static IServiceCollection AddIdentityServerExtensionsProviders<TUser>(this IServiceCollection services) where TUser: IdentityUser<Guid> ,new()
         {
             services.AddTransient<IFacebookAuthProvider, FacebookAuthProvider<TUser>>();
             services.AddTransient<ITwitterAuthProvider, TwitterAuthProvider<TUser>>();

@@ -43,7 +43,7 @@ namespace BooksReader.Web.IdentityServerExtensions.Processors
             {                
                 await _userManager.AddLoginAsync(newUser, new UserLoginInfo(provider, userExternalId, provider));
                 var userClaims = _userManager.GetClaimsAsync(newUser).Result;
-                return new GrantValidationResult(newUser.Id, provider, userClaims, provider, null);
+                return new GrantValidationResult(newUser.Id.ToString(), provider, userClaims, provider, null);
             }
             return new GrantValidationResult(TokenRequestErrors.InvalidRequest, "could not create user , please try again.");
         }

@@ -50,7 +50,7 @@ namespace BooksReader.Infrastructure.Services
 
 		private IQueryable<Book> JoinWithOwner(IQueryable<Book> bookQuery)
 		{
-			return bookQuery.Join(this._userRepo.Data, x => x.OwnerId.ToString(), y => y.Id, (x, y) =>
+			return bookQuery.Join(this._userRepo.Data, x => x.OwnerId, y => y.Id, (x, y) =>
 					new Book()
 					{
 						Id = x.Id,

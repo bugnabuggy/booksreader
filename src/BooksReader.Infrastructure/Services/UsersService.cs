@@ -32,7 +32,7 @@ namespace BooksReader.Infrastructure.Services
 
 		private readonly BrDbContext _ctx;
         private readonly UserManager<BrUser> _userManager;
-	    private readonly IRepository<LoginHistory> _logHistory;
+	    private readonly IRepository<LoginHistory> _loginHistory;
 
         public UsersService(
             BrDbContext ctx,
@@ -41,7 +41,7 @@ namespace BooksReader.Infrastructure.Services
             )
         {
             _ctx = ctx;
-	        _logHistory = logHistory;
+	        _loginHistory = logHistory;
             _userManager = userManager;
         }
 
@@ -119,9 +119,9 @@ namespace BooksReader.Infrastructure.Services
             };
         }
 
-	    public async Task<LoginHistoryResult> AddLoginHistory(LoginHistory logHistory, string userId)
+	    public async Task<LoginHistoryResult> AddLoginHistory(LoginHistory logHistory, Guid userId)
 	    {
-			var result = await this._logHistory.AddAsync(new LoginHistory
+			var result = await this._loginHistory.AddAsync(new LoginHistory
 		    {
 			    Id = Guid.NewGuid(),
 				DateTime = logHistory.DateTime,
@@ -142,9 +142,9 @@ namespace BooksReader.Infrastructure.Services
 
 	    }
 
-	    public IQueryable<LoginHistoryResult> GetLoginHistory(StandardFiltersDto filters, string userId, out int totalItems)
+	    public IQueryable<LoginHistoryResult> GetLoginHistory(StandardFiltersDto filters, Guid userId, out int totalItems)
 		{
-			IQueryable<LoginHistory> data = _logHistory.Data;
+			IQueryable<LoginHistory> data = _loginHistory.Data;
 
 			filters.PageNumber = filters.PageNumber ?? 0;
 
@@ -202,7 +202,7 @@ namespace BooksReader.Infrastructure.Services
                 Name =  user.Name,
                 Username = user.UserName,
                 Avatar =  user.Avatar,
-                Id =  user.Id,
+                Id =  user.Id.ToString(),
                 Email = user.Email,
                 Roles =  await _userManager.GetRolesAsync(user)
             };
@@ -233,7 +233,7 @@ namespace BooksReader.Infrastructure.Services
                 Avatar = user.Avatar,
                 Email = user.Email,
                 Username = user.UserName,
-                Id = user.Id,
+                Id = user.Id.ToString(),
                 Roles = roles
             };
 

@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace BooksReader.Web.IdentityServerExtensions.Providers
 {
-    public class FacebookAuthProvider<TUser> : IFacebookAuthProvider where TUser:IdentityUser , new()
+    public class FacebookAuthProvider<TUser> : IFacebookAuthProvider where TUser:IdentityUser<Guid> , new()
     {
  
         private readonly IProviderRepository _providerRepository;
