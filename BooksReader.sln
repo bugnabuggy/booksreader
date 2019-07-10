@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksReader.Dictionaries", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksReader.Services", "src\BooksReader.Services\BooksReader.Services.csproj", "{5A2A4211-3709-4306-B6CC-161ACF61F438}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksReader.Services.Tests", "tests\BooksReader.Services.Tests\BooksReader.Services.Tests\BooksReader.Services.Tests.csproj", "{DDA6F8C0-677A-4558-B5F9-EFDDEDE217B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksReader.Services.Tests", "tests\BooksReader.Services.Tests\BooksReader.Services.Tests.csproj", "{DDA6F8C0-677A-4558-B5F9-EFDDEDE217B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
