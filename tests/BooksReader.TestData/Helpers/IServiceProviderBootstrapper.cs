@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BooksReader.TestData.Helpers
 {
-    interface IServiceProviderBootstrapper
+    public interface IServiceProviderBootstrapper
     {
         BrDbContext GetDataContext();
 

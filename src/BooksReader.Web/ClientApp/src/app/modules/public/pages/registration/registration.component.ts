@@ -2,12 +2,11 @@ import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import {
     UserService,
-    SecurityService,
     NotificationService,
 } from '@br/core/services';
 
 import { RegistrationModel } from '@br/core/models';
-import { UserRegistration } from '@br/core/models/api-contracts/user-registration.contract';
+import { UserRegistration } from '@br/core/models/api-contracts/user-registration.dto';
 import { finalize } from 'rxjs/operators';
 
 @Component({

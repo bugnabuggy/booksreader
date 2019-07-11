@@ -22,11 +22,11 @@ namespace BooksReader.Services.Tests
         private IRepository<PersonalPage> _personalPagesRepo;
         private IServiceProvider _provider;
         
-
         [SetUp]
         public async Task SetUp()
         {
             _provider = await new DatabaseDiBootstrapperInMemory().GetServiceProviderWithSeedDB();
+            //_provider = await new DatabaseDiBootstrapperSQLServer().GetServiceProviderWithSeedDB();
             _authProfSvc = _provider.GetRequiredService<IAuthorProfileService>();
             _authProfRepo = _provider.GetRequiredService<IRepository<AuthorProfile>>();
             _personalPagesRepo = _provider.GetRequiredService<IRepository<PersonalPage>>();
@@ -49,12 +49,17 @@ namespace BooksReader.Services.Tests
         public void Should_Edit_AuthorProfile_And_Create_Personal_Page_If_It_Was_Empty()
         {
             var authorProfileRequest = TestAuthors.GetAuthorProfileEditRequest();
-            var author = _authProfRepo.Data.FirstOrDefault(x => x.Id.Equals(authorProfileRequest.ProfileId));
+            var author = _authProfRepo.Get(x => x.Id.Equals(authorProfileRequest.Id))
+                .FirstOrDefault();
+            // does not work properly → 
+            // // var author = _authProfRepo.Data.FirstOrDefault(x => x.Id.Equals(authorProfileRequest.ProfileId));
+
             var personalPagesCount = _personalPagesRepo.Data.Count();
 
             var result = _authProfSvc.EditAuthorProfile(authorProfileRequest);
 
-            Assert.AreNotEqual(author.AuthorName, result.AuthorName);
+            Assert.IsTrue(result.Success);
+            Assert.AreNotEqual(author.AuthorName, result.Data.AuthorName);
             Assert.AreEqual(personalPagesCount + 1, _personalPagesRepo.Data.Count());
 
         }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
-using BooksReader.Core.Models.Requests;
+using BooksReader.Core.Models.DTO;
 
 namespace BooksReader.TestData.Data
 {
@@ -17,7 +17,7 @@ namespace BooksReader.TestData.Data
                 new AuthorProfile()
                 {
                     Id = Guid.Parse("10000000-0000-0000-0000-000000000000"),
-                    UserId = Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                    UserId = Guid.Parse("00000000-0000-0000-0000-00000000000A"),
                     AuthorName = "Empty Author Pseudonym",
                     Description = "Test empty author"
                 },
@@ -43,11 +43,11 @@ namespace BooksReader.TestData.Data
             };
         }
 
-        public static AuthorProfileRequest GetAuthorProfileEditRequest()
+        public static AuthorProfileDto GetAuthorProfileEditRequest()
         {
-            return new AuthorProfileRequest
+            return new AuthorProfileDto
             {
-                ProfileId = Guid.Parse("10000000-0000-0000-0000-000000000001"),
+                Id = Guid.Parse("10000000-0000-0000-0000-000000000001"),
                 AuthorName = "Tony 2",
                 Description = "Edited Tony's author page",
                 DomainName = "localhost:4200",

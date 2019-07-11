@@ -4,8 +4,8 @@ using System.Text;
 
 namespace BooksReader.Core.Exceptions
 {
-	public class BrBadDataException : Exception
-	{
+	public class BrBadDataException : BaseBrException
+    {
 		public BrBadDataException()
 		{
 		}

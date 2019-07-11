@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { share, mergeMap, map, tap, finalize } from 'rxjs/operators';
-import { Endpoints } from '../../../config/endpoints';
+
 
 import { AppUser, LoginHistoryModel, ChangePasswordModel } from '@br/core/models';
 import { LogoutData, AuthResponse } from '../models/api-contracts';
 
 import { from, BehaviorSubject, Observable, Subject, of, Observer, Subscription, timer } from 'rxjs';
 
-import { SiteConstants } from '@br/config';
+import { SiteConstants, Endpoints } from '@br/config';
 
 import { flatten } from '@br/utilities/helpers';
 import { StandardFilters } from '../models/filters';
 import { StorageService } from './storage.service';
-import { UserRegistration } from '../models/api-contracts/user-registration.contract';
+import { UserRegistration } from '../models/api-contracts/user-registration.dto';
 import { SiteRoles } from '../enums';
 
 @Injectable({

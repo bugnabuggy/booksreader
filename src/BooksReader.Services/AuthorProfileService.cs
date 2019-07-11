@@ -7,9 +7,11 @@ using BooksReader.Core.Entities;
 using BooksReader.Core.Enums;
 using BooksReader.Core.Exceptions;
 using BooksReader.Core.Models;
-using BooksReader.Core.Models.Requests;
+using BooksReader.Core.Models.DTO;
 using BooksReader.Core.Services.Author;
+using BooksReader.Dictionaries;
 using BooksReader.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace BooksReader.Services
 {
@@ -27,7 +29,7 @@ namespace BooksReader.Services
 
         public async Task<OperationResult<AuthorProfile>> CreateAuthorProfile(BrUser user)
         {
-            var profile = _authorProfileRepo.Data
+            var profile = _authorProfileRepo.Data.AsNoTracking()
                 .FirstOrDefault(x => x.User.UserName.Equals(user.UserName));
 
             if (profile != null)
@@ -55,21 +57,39 @@ namespace BooksReader.Services
 
         public AuthorProfile GetAuthorProfile(BrUser user)
         {
-            var authorProfile = _authorProfileRepo.Data.FirstOrDefault(x => x.UserId.Equals(user.Id));
+            var authorProfile = _authorProfileRepo
+                .Data
+                .Include(x => x.PersonalPage)
+                .FirstOrDefault(x => x.UserId.Equals(user.Id));
+                
             return authorProfile;
         }
 
-        public AuthorProfile EditAuthorProfile(AuthorProfileRequest profile)
+        public OperationResult<AuthorProfile> EditAuthorProfile(AuthorProfileDto profile)
         {
-            var existing = _authorProfileRepo.Data.FirstOrDefault(x => x.Id.Equals(profile.ProfileId));
+            var result = new OperationResult<AuthorProfile>()
+            {
+                Messages =  new List<string>(),
+                Data = new AuthorProfile()
+                {
+                    Id = profile.Id?? Guid.Empty,
+                    AuthorName = profile.AuthorName,
+                    Description = profile.Description,
+                }
+            };
+
+            var existing = _authorProfileRepo.Data.FirstOrDefault(x => x.Id.Equals(profile.Id));
 
             if (existing == null)
             {
-                throw new NotFoundException<AuthorProfile>(new AuthorProfile()
-                {
-                    Id = profile.ProfileId,
-                    AuthorName = profile.AuthorName
-                });
+                result.Messages.Add(MessageStrings.AuthorNotFound);
+                goto end;
+            }
+
+            if (string.IsNullOrWhiteSpace(profile.AuthorName))
+            {
+                result.Messages.Add(MessageStrings.CantBeEmpty);
+                goto end;
             }
 
             var personalPage = _personalPagesRepo.Data.FirstOrDefault(x => x.Id.Equals(existing.PersonalPageId));
@@ -104,8 +124,13 @@ namespace BooksReader.Services
             existing.PersonalPageId = personalPage?.Id;
 
             _authorProfileRepo.Update(existing);
-            
-            return existing;
+
+            result.Success = true;
+            result.Data = existing;
+
+            end:
+
+            return result;
         }
 
         public Task<OperationResult<AuthorProfile>> DeleteAuthorProfile(AuthorProfile profile)

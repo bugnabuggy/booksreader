@@ -1,11 +1,13 @@
 export * from './requests';
 
-export * from './auth-response.contract';
-export * from './logout-data.contract';
-export * from './user.contract';
 export * from './web-result';
 export * from './operation-result';
-export * from './book-edit-request';
-export * from './book.contract';
-export * from './login-history.contract';
-export * from './book-chapter.contract';
+export * from './auth-response.dto';
+export * from './logout-data.dto';
+export * from './app-user.dto';
+export * from './book-edit-dto';
+export * from './book.dto';
+export * from './login-history.dto';
+export * from './book-chapter.dto';
+export * from './user-registration.dto';
+export*  from './author-profile.dto';

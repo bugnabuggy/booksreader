@@ -11,5 +11,6 @@ namespace BooksReader.Dictionaries
         public static string UserDoesNotExist = "USER_DOES_NOT_EXITS";
         public static string UserDoesNotExistOrDeleted = "USER_DOES_NOT_EXITS_OR_DELETED";
         public static string AuthorNotFound = "REQUESTED_AUTHOR_NOT_FOUND";
+        public static string CantBeEmpty = "VALUE_CANT_BE_EMPTY";
     }
 }

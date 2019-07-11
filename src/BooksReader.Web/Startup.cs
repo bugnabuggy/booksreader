@@ -77,7 +77,6 @@ namespace BooksReader.Web
 			services.AddIdentityServer(
                     opt=>
                     {
-                        opt.Authentication.CookieAuthenticationScheme = "dummy";
                     })
 				.AddDeveloperSigningCredential()
 				.AddInMemoryApiResources(IdServerConfig.GetApiResources())

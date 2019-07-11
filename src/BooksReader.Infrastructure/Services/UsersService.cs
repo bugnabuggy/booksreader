@@ -119,7 +119,7 @@ namespace BooksReader.Infrastructure.Services
             };
         }
 
-	    public async Task<LoginHistoryResult> AddLoginHistory(LoginHistory logHistory, Guid userId)
+	    public async Task<LoginHistory> AddLoginHistory(LoginHistory logHistory, Guid userId)
 	    {
 			var result = await this._loginHistory.AddAsync(new LoginHistory
 		    {
@@ -131,18 +131,12 @@ namespace BooksReader.Infrastructure.Services
 				Geolocation = logHistory.Geolocation
 			});
 
-		    return new LoginHistoryResult()
-		    {
-			    DateTime =  result.DateTime,
-				Browser = result.Browser,
-				IpAddress = result.IpAddress,
-				Geolocation = result.Geolocation,
-				Screen = result.Screen
-		    };
+            return result;
 
-	    }
 
-	    public IQueryable<LoginHistoryResult> GetLoginHistory(StandardFiltersDto filters, Guid userId, out int totalItems)
+        }
+
+	    public IQueryable<LoginHistory> GetLoginHistory(StandardFiltersDto filters, Guid userId, out int totalItems)
 		{
 			IQueryable<LoginHistory> data = _loginHistory.Data;
 
@@ -165,16 +159,9 @@ namespace BooksReader.Infrastructure.Services
 				            * (int)filters.PageSize)
 					.Take((int)filters.PageSize);
 
-			return data.Select(u => new LoginHistoryResult()
-			{
-				DateTime = u.DateTime,
-				IpAddress = u.IpAddress,
-				Browser = u.Browser,
-				Screen = u.Screen,
-				Geolocation = u.Geolocation
-			});
+            return data;
 
-	    }
+        }
 
         public async Task<OperationResult<AppUserDto>> Update(UserProfileRequest data)
         {

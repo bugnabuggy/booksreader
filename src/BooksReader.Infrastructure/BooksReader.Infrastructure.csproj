@@ -281,9 +281,9 @@
     <Compile Include="Configuration\Constants.cs" />
     <Compile Include="Configuration\SiteRoles.cs" />
     <Compile Include="DataContext\BrDbContext.cs" />
-    <Compile Include="Migrations\20190710114710_Initial.cs" />
-    <Compile Include="Migrations\20190710114710_Initial.designer.cs">
-      <DependentUpon>20190710114710_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\20190711082057_initial.cs" />
+    <Compile Include="Migrations\20190711082057_initial.designer.cs">
+      <DependentUpon>20190711082057_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\BrDbContextModelSnapshot.cs" />
     <Compile Include="Migrations\PersistedGrantDb\20190704084525_Initial.cs" />

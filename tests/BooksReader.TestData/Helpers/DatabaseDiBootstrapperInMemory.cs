@@ -17,10 +17,17 @@ namespace BooksReader.TestData.Helpers
 {
     public class DatabaseDiBootstrapperInMemory : IServiceProviderBootstrapper
     {
+        public string DbName { get; }
+
+        public DatabaseDiBootstrapperInMemory(string dbName = "TestInMemory")
+        {
+            DbName = dbName;
+        }
+
         public BrDbContext GetDataContext()
         {
             var optionsBuilder = new DbContextOptionsBuilder<BrDbContext>();
-            optionsBuilder.UseInMemoryDatabase("TestInMemory");
+            optionsBuilder.UseInMemoryDatabase(DbName);
             var ctx = new BrDbContext(optionsBuilder.Options);
             return ctx;
         }
@@ -30,7 +37,7 @@ namespace BooksReader.TestData.Helpers
             var services = new ServiceCollection();
             services.AddLogging();
             services.AddEntityFrameworkInMemoryDatabase()
-                .AddDbContext<BrDbContext>(options => options.UseInMemoryDatabase("Test"));
+                .AddDbContext<BrDbContext>(options => options.UseInMemoryDatabase(DbName));
 
             services.AddIdentity<BrUser, IdentityRole<Guid>>(opt =>
                 {
@@ -57,8 +64,19 @@ namespace BooksReader.TestData.Helpers
         public async Task<ServiceProvider> GetServiceProviderWithSeedDB()
         {
             var provider = GetServiceProvider();
+            var context = provider.GetRequiredService<BrDbContext>();
+            context.ChangeTracker.LazyLoadingEnabled = false;
+            context.ChangeTracker.AutoDetectChangesEnabled = false;
+
             var dbSeed = new TestDbContextInitializer();
             await dbSeed.SeedData(provider);
+
+            context.ChangeTracker.AcceptAllChanges();
+            var entities = context.ChangeTracker.Entries().ToList();
+            foreach (var entityEntry in entities)
+            {
+                entityEntry.State = EntityState.Detached;
+            }
 
             return provider;
         }

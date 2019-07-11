@@ -22,9 +22,9 @@ namespace BooksReader.Core.Entities
 
         /* Navigation properties */
         [ForeignKey("UserId")]
-        public BrUser User { get; set; }
+        public virtual BrUser User { get; set; }
 
         [ForeignKey("PersonalPageId")]
-        public PersonalPage PersonalPage { get; set; }
+        public virtual PersonalPage PersonalPage { get; set; }
     }
 }

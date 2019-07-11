@@ -1,3 +1,29 @@
-<p>
-  author-profile-page works!
-</p>
+<div class="flex-1 p-3">
+  <h2>Author profile page</h2>
+  <form (ngSubmit)="save()" [formGroup]="profileForm" >
+    {{profileForm.erorrs | json}}
+    <div *ngIf="profileForm.erorrs || errors.length > 0" class="alert alert-danger" role="alert">
+      ERRORROS
+    </div>
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Author name" required formControlName="authorName" >
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <textarea  rows="3" matInput placeholder="Description" formControlName="description"></textarea>
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Custom domain" formControlName="domainName" >
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Url path" formControlName="urlPath" >
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <textarea  rows="6" matInput placeholder="Page html content" formControlName="pageContent"></textarea>
+    </mat-form-field>
+    <div class='p-2'></div>
+    <button 
+    [disabled]="isUiBlocked && profileForm.valid"
+    mat-raised-button 
+    color="primary">Save</button>
+  </form>
+</div>

@@ -5,14 +5,13 @@ import { SecurityService } from './security.service';
 import { Router } from '@angular/router';
 import { of, BehaviorSubject } from 'rxjs';
 import { UserHubService } from '@br/communications/hubs';
-import { AppUser, Language, UserProfileRequest } from '../models';
+import { AppUser, Language, UserRegistration } from '../models';
 import { TranslateService } from '@ngx-translate/core';
-import { UserRegistration } from '../models/api-contracts/user-registration.contract';
 import { Endpoints } from '@br/config';
 import { HttpClient } from '@angular/common/http';
 import { MenuSections } from '@br/config/menu-sections';
 import { SiteRoles } from '../enums';
-import { AuthorData } from '../models/api-contracts/requests/author-data.request';
+import { AuthorProfile } from '../models/api-contracts/author-profile.dto';
 
 @Injectable({
     providedIn: 'root'
@@ -152,7 +151,7 @@ export class UserService {
         return observable;
     }
 
-    authorRequest(authorData: AuthorData) {
+    authorRequest(authorData: AuthorProfile) {
         const url = Endpoints.api.user.becomeAnAuthor;
         const observabe = this.http.post(url, authorData).pipe(share());
         return observabe;

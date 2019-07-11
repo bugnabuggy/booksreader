@@ -26,14 +26,14 @@ namespace BooksReader.Infrastructure.Tests
         private ServiceProvider services;
 
 
-        [OneTimeSetUp]
+        [SetUp]
         public async Task Start()
         {
             services = await new DatabaseDiBootstrapperInMemory().GetServiceProviderWithSeedDB();
             // services = await new DatabaseDiBootstrapperSQLServer().GetServiceProviderWithSeedDB();
         }
 
-        [OneTimeTearDown]
+        [TearDown]
         public void Stop()
         {
 

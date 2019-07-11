@@ -30,7 +30,7 @@ namespace BooksReader.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(3000);
 
-                    b.Property<Guid>("PersonalPageId");
+                    b.Property<Guid?>("PersonalPageId");
 
                     b.Property<Guid>("UserId");
 
@@ -178,7 +178,7 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<int>("PageType");
 
-                    b.Property<Guid>("SeoInfoId");
+                    b.Property<Guid?>("SeoInfoId");
 
                     b.Property<string>("UrlPath")
                         .HasMaxLength(256);
@@ -341,8 +341,7 @@ namespace BooksReader.Infrastructure.Migrations
                 {
                     b.HasOne("BooksReader.Core.Entities.PersonalPage", "PersonalPage")
                         .WithMany()
-                        .HasForeignKey("PersonalPageId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PersonalPageId");
 
                     b.HasOne("BooksReader.Core.Entities.BrUser", "User")
                         .WithMany()
@@ -354,8 +353,7 @@ namespace BooksReader.Infrastructure.Migrations
                 {
                     b.HasOne("BooksReader.Core.Entities.SeoInfo", "SeoInfo")
                         .WithMany()
-                        .HasForeignKey("SeoInfoId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SeoInfoId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

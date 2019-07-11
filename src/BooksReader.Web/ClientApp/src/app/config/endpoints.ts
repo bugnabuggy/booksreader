@@ -67,6 +67,7 @@ class Endpoints {
             delete: Endpoints.baseApiUrl + 'api/admin/users/{username}',
         },
         author: {
+            profile: Endpoints.baseApiUrl + 'api/author/profile',
             book: Endpoints.baseApiUrl + 'api/author/book/{id}',
             chapter: Endpoints.baseApiUrl + 'api/author/book/{bookId}/chapter/{id}',
         },

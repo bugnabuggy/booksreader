@@ -125,13 +125,13 @@ namespace BooksReader.Web.Controllers
 
 		[HttpGet("login-history")]
 		[Authorize]
-		public async Task<WebResult<IEnumerable<LoginHistoryResult>>> GetLogHistory(StandardFiltersDto filters)
+		public async Task<WebResult<IEnumerable<LoginHistory>>> GetLogHistory(StandardFiltersDto filters)
 	    {
 		    var user = await _userManager.GetUserAsync(User);
 		    var logHistory = this._usersService.GetLoginHistory(filters, user.Id, out int totalItems);
 		    //logHistory.Sort((log1, log2) => log2.DateTime.CompareTo(log1.DateTime));
 
-		    return new WebResult<IEnumerable<LoginHistoryResult>>()
+		    return new WebResult<IEnumerable<LoginHistory>>()
 		    {
 				Data = logHistory,
 				Total = totalItems,

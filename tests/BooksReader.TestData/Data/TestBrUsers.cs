@@ -20,7 +20,7 @@ namespace BooksReader.TestData.Data
             {
                 new UserForInitialization()
                 {
-	                Id =  "00000000-0000-0000-0000-000000000000",
+	                Id =  "00000000-0000-0000-0000-00000000000A",
 					Username = "empty",
                     Password = "123",
                     Roles = new List<string>(){}

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService, NotificationService } from '@br/core/services';
-import { AuthorData } from '@br/core/models/api-contracts/requests/author-data.request';
+import { AuthorProfile } from '@br/core/models';
+
+
 
 @Component({
   selector: 'app-become-an-author-page',
@@ -8,7 +10,7 @@ import { AuthorData } from '@br/core/models/api-contracts/requests/author-data.r
   styleUrls: ['./become-an-author-page.component.scss']
 })
 export class BecomeAnAuthorPageComponent implements OnInit {
-  authorData: AuthorData;
+  authorData: AuthorProfile;
 
 
   constructor(
@@ -20,7 +22,7 @@ export class BecomeAnAuthorPageComponent implements OnInit {
   }
 
   becomeAnAuthor(){
-    this.authorData = {};
+    this.authorData = { } as AuthorProfile;
 
     this.userSvc.authorRequest(this.authorData)
     .subscribe(val => {

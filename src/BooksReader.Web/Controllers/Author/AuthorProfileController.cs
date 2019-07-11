@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
+using BooksReader.Core.Exceptions;
+using BooksReader.Core.Models.DTO;
+using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Services;
 using BooksReader.Core.Services.Author;
 using BooksReader.Dictionaries;
@@ -36,7 +39,15 @@ namespace BooksReader.Web.Controllers.Author
             var result = _authorProfileSvc.GetAuthorProfile(user);
             if (result != null)
             {
-                return Ok(result);
+                return Ok(new AuthorProfileDto()
+                {
+                    Id = result.Id,
+                    AuthorName = result.AuthorName,
+                    Description = result.Description,
+                    DomainName = result.PersonalPage?.Domain,
+                    UrlPath = result.PersonalPage?.UrlPath,
+                    PageContent = result.PersonalPage?.Content
+                });
             }
 
             var lang = string.IsNullOrEmpty(user.Language) ? Constants.DefaultLanguage : user.Language;
@@ -44,11 +55,21 @@ namespace BooksReader.Web.Controllers.Author
         }
 
         [HttpPut("{username}")]
-        public Task<ActionResult> UpdateAuthorProfile(string username)
+        public async Task<ActionResult> UpdateAuthorProfile(string username, [FromBody] AuthorProfileDto dto)
         {
+            if (!user.UserName.Equals(username) || await _userManager.IsInRoleAsync(user, SiteRoles.Admin))
+            {
+                return Forbid(MessageStrings.DoNotHavePermissions);
+            }
 
+            var result = _authorProfileSvc.EditAuthorProfile(dto);
 
-            return null;
+            if (!result.Success)
+            {
+                return BadRequest(result); 
+            }
+
+            return Ok(result);
         }
     }
 }

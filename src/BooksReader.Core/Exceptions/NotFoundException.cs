@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BooksReader.Core.Exceptions
 {
-    public class NotFoundException<T>: Exception
+    public class NotFoundException<T>: BaseBrException
     {
         public T Item { get;}
         public NotFoundException(T item, string message = ""):base(message)

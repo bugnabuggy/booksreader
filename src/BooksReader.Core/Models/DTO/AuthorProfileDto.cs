@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace BooksReader.Core.Models.Requests
+namespace BooksReader.Core.Models.DTO
 {
-    public class AuthorProfileRequest
+    public class AuthorProfileDto
     {
-        public Guid ProfileId { get; set; }
+        public Guid? Id { get; set; }
         public string AuthorName { get; set; }
         public string Description { get; set; }
         public string DomainName { get; set; }

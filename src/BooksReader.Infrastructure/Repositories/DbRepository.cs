@@ -48,7 +48,7 @@ namespace BooksReader.Infrastructure.Repositories
            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
            string includeProperties = "")
         {
-            IQueryable<T> query = this.Data;
+            IQueryable<T> query = this.Data.AsNoTracking();
 
             if (filter != null)
             {
@@ -95,14 +95,15 @@ namespace BooksReader.Infrastructure.Repositories
         public async Task<T> AddAsync(T item)
         {
             await _table.AddAsync(item);
-            _ctx.SaveChanges();
+            await _ctx.SaveChangesAsync();
             return item;
         }
 
         public async Task<IEnumerable<T>> AddAsync(IEnumerable<T> items)
         {
             await _table.AddRangeAsync(items);
-            _ctx.SaveChanges();
+            await _ctx.SaveChangesAsync(true);
+            
             return items;
         }
 
@@ -111,7 +112,7 @@ namespace BooksReader.Infrastructure.Repositories
                 Func<IQueryable<T>, IOrderedQueryable<T>> orderBy,
                 string includeProperties)
         {
-            IQueryable<T> query = this.Data;
+            IQueryable<T> query = this.Data.AsNoTracking();
 
             if (filter != null)
             {

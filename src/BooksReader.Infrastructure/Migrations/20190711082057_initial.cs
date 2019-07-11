@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BooksReader.Infrastructure.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -236,7 +236,7 @@ namespace BooksReader.Infrastructure.Migrations
                     Domain = table.Column<string>(maxLength: 256, nullable: true),
                     UrlPath = table.Column<string>(maxLength: 256, nullable: true),
                     Content = table.Column<string>(nullable: true),
-                    SeoInfoId = table.Column<Guid>(nullable: false)
+                    SeoInfoId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -246,7 +246,7 @@ namespace BooksReader.Infrastructure.Migrations
                         column: x => x.SeoInfoId,
                         principalTable: "SeoInfos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -257,7 +257,7 @@ namespace BooksReader.Infrastructure.Migrations
                     UserId = table.Column<Guid>(nullable: false),
                     AuthorName = table.Column<string>(maxLength: 256, nullable: true),
                     Description = table.Column<string>(maxLength: 3000, nullable: true),
-                    PersonalPageId = table.Column<Guid>(nullable: false)
+                    PersonalPageId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -267,7 +267,7 @@ namespace BooksReader.Infrastructure.Migrations
                         column: x => x.PersonalPageId,
                         principalTable: "PersonalPages",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AuthorProfiles_AspNetUsers_UserId",
                         column: x => x.UserId,

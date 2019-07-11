@@ -93,8 +93,24 @@ namespace BooksReader.TestData.Helpers
                 if (!_isDataSeeded)
                 {
                     _isDataSeeded = true;
+
+
+                    // Dont want seed data being tracked
+                    var context = provider.GetRequiredService<BrDbContext>();
+                    context.ChangeTracker.LazyLoadingEnabled = false;
+                    context.ChangeTracker.AutoDetectChangesEnabled = false;
+
+
                     var dbSeed = new TestDbContextInitializer();
                     dbSeed.SeedData(provider).Wait(HardcoddedConfig.AsyncOperationWaitTime);
+
+                    // Clear and detach all inserted objects 
+                    context.ChangeTracker.AcceptAllChanges();
+                    var entities = context.ChangeTracker.Entries().ToList();
+                    foreach (var entityEntry in entities)
+                    {
+                        entityEntry.State = EntityState.Detached;
+                    }
                 }
             }
             return provider;

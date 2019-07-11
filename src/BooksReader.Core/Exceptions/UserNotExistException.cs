@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BooksReader.Core.Exceptions
 {
-    public  class UserNotExistException : Exception
+    public  class UserNotExistException : BaseBrException
     {
         public string Username { get; }
 

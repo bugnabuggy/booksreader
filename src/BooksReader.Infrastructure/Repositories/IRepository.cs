@@ -16,8 +16,8 @@ namespace BooksReader.Infrastructure.Repositories
         T Delete(T item);
 
         IEnumerable<T> Get(Expression<Func<T, bool>> filter,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy,
-            string includeProperties);
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            string includeProperties = "");
 
         IEnumerable<T> Add(IEnumerable<T> items);
         IEnumerable<T> Update(IEnumerable<T> items);
