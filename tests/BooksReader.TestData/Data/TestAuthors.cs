@@ -27,7 +27,8 @@ namespace BooksReader.TestData.Data
                     Id = Guid.Parse("10000000-0000-0000-0000-000000000001"),
                     UserId = Guid.Parse("00000000-0000-0000-0000-000000000001"),
                     AuthorName = "Tony",
-                    Description = "Tony's author page"
+                    Description = "Tony's author page",
+                    PersonalPageId = Guid.Parse("20000000-0000-0000-0000-000000000001"),
                 }
             };
         }

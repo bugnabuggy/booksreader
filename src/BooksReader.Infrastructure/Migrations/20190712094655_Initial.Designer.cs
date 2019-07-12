@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BooksReader.Infrastructure.Migrations
 {
     [DbContext(typeof(BrDbContext))]
-    [Migration("20190711082057_initial")]
-    partial class initial
+    [Migration("20190712094655_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -181,6 +181,8 @@ namespace BooksReader.Infrastructure.Migrations
                     b.Property<int>("PageType");
 
                     b.Property<Guid?>("SeoInfoId");
+
+                    b.Property<Guid?>("SubjectId");
 
                     b.Property<string>("UrlPath")
                         .HasMaxLength(256);

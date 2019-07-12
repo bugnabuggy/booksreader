@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BooksReader.Infrastructure.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -233,6 +233,7 @@ namespace BooksReader.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     PageType = table.Column<int>(nullable: false),
+                    SubjectId = table.Column<Guid>(nullable: true),
                     Domain = table.Column<string>(maxLength: 256, nullable: true),
                     UrlPath = table.Column<string>(maxLength: 256, nullable: true),
                     Content = table.Column<string>(nullable: true),

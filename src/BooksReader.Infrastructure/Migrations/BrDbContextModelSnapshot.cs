@@ -180,6 +180,8 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<Guid?>("SeoInfoId");
 
+                    b.Property<Guid?>("SubjectId");
+
                     b.Property<string>("UrlPath")
                         .HasMaxLength(256);
 

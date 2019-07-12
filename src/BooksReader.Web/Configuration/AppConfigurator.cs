@@ -30,6 +30,7 @@ namespace BooksReader.Web.Configuration
             services.AddTransient<ISecurityService, SecurityService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IAuthorProfileService, AuthorProfileService>();
+            services.AddTransient<IPublicService, PublicService>();
 
             services.AddTransient<IBooksService, BooksService>();
 		}

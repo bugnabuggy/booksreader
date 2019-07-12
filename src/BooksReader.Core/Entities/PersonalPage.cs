@@ -14,6 +14,8 @@ namespace BooksReader.Core.Entities
 
         public PersonalPageType PageType { get; set; }
 
+        public Guid? SubjectId { get; set; }
+
         [MaxLength(256)]
         public string Domain { get; set; }
 

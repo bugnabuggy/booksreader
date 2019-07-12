@@ -58,6 +58,15 @@ namespace BooksReader.Web.Controllers.User
         {
 
             var roleResult = await this._usersService.AddUserRole(user.UserName, SiteRoles.Author);
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
             var authorProfileResult = await this._authorProfileSvc.CreateAuthorProfile(user);
 
             if (roleResult.Success && authorProfileResult.Success)

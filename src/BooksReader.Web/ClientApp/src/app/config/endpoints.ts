@@ -72,6 +72,9 @@ class Endpoints {
             chapter: Endpoints.baseApiUrl + 'api/author/book/{bookId}/chapter/{id}',
         },
         admin: {
+        },
+        public: {
+            pageInfo: Endpoints.baseApiUrl + 'api/public',
         }
     };
 }

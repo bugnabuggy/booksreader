@@ -37,9 +37,10 @@ namespace BooksReader.TestData.Helpers
             var userManager = services.GetService<UserManager<BrUser>>();
 			var booksRepo = services.GetService<IRepository<Book>>();
             var authorProfilesRepo = services.GetService<IRepository<AuthorProfile>>();
+            var personalPagesRepo = services.GetService<IRepository<PersonalPage>>();
 
-
-			await AddUsers(userManager);
+            await AddUsers(userManager);
+            await AddPersonalPages(personalPagesRepo);
             await AddAuthorProfiles(authorProfilesRepo);
 	        await AddBooks(booksRepo);
         }
@@ -70,5 +71,10 @@ namespace BooksReader.TestData.Helpers
 	    {
 		   await booksRepo.AddAsync(TestBooks.GetBooks());
 	    }
+
+        private static async Task AddPersonalPages(IRepository<PersonalPage> pagesRepo)
+        {
+            await pagesRepo.AddAsync(TestPersonalPages.GetPersonalPages());
+        }
     }
 }

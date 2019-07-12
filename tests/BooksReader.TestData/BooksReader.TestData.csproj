@@ -230,6 +230,7 @@
     <Compile Include="Data\TestAuthors.cs" />
     <Compile Include="Data\TestBooks.cs" />
     <Compile Include="Data\TestBrUsers.cs" />
+    <Compile Include="Data\TestPersonalPages.cs" />
     <Compile Include="Helpers\DatabaseDiBootstrapperInMemory.cs" />
     <Compile Include="Helpers\DatabaseDiBootstrapperSQLServer.cs" />
     <Compile Include="Helpers\HardcoddedConfig.cs" />

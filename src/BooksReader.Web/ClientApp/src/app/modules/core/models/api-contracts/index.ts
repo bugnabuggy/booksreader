@@ -10,4 +10,5 @@ export * from './book.dto';
 export * from './login-history.dto';
 export * from './book-chapter.dto';
 export * from './user-registration.dto';
-export*  from './author-profile.dto';
+export * from './author-profile.dto';
+export * from './public-page-info.dto';

@@ -29,12 +29,19 @@ namespace BooksReader.Services
 
         public async Task<OperationResult<AuthorProfile>> CreateAuthorProfile(BrUser user)
         {
+            var result = new OperationResult<AuthorProfile>()
+            {
+                Messages = new List<string>()
+            };
+
             var profile = _authorProfileRepo.Data.AsNoTracking()
                 .FirstOrDefault(x => x.User.UserName.Equals(user.UserName));
 
             if (profile != null)
             {
-                throw new ItemAlreadyExistsException<AuthorProfile>(profile);
+                result.Data = profile;
+                result.Messages.Add(MessageStrings.AuthorAlreadyExists);
+                return result;
             }
 
             profile = new AuthorProfile()
@@ -45,7 +52,7 @@ namespace BooksReader.Services
 
             var authorProfile = await _authorProfileRepo.AddAsync(profile);
 
-            var result = new OperationResult<AuthorProfile>()
+            result = new OperationResult<AuthorProfile>()
             {
                 Success = authorProfile != null,
                 Messages = new List<string>(),
@@ -104,7 +111,8 @@ namespace BooksReader.Services
                     Content = profile.PageContent,
                     Domain = profile.DomainName,
                     UrlPath = profile.UrlPath,
-                    PageType = PersonalPageType.AuthorPage
+                    PageType = PersonalPageType.AuthorPage,
+                    SubjectId = profile.Id
                 };
 
                 personalPage = personalPage.Id == Guid.Empty 
@@ -119,6 +127,8 @@ namespace BooksReader.Services
                 }
             }
 
+            // update the author profile
+            // TODO: consider replace with Automapper
             existing.Description = profile.Description;
             existing.AuthorName = profile.AuthorName;
             existing.PersonalPageId = personalPage?.Id;

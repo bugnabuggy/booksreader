@@ -61,6 +61,7 @@
     <Compile Include="AuthorProfileService.Tests.cs" />
     <Compile Include="BookService.Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublicService.Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\BooksReader.Core\BooksReader.Core.csproj">

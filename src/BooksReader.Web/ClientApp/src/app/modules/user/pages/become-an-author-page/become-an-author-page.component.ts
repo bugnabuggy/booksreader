@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService, NotificationService } from '@br/core/services';
 import { AuthorProfile } from '@br/core/models';
+import { Router } from '@angular/router';
+import { Endpoints } from '@br/config';
 
 
 
@@ -15,7 +17,8 @@ export class BecomeAnAuthorPageComponent implements OnInit {
 
   constructor(
     public userSvc: UserService,
-    public notifications: NotificationService
+    public notifications: NotificationService,
+    public router: Router
   ) { }
 
   ngOnInit() {
@@ -26,9 +29,8 @@ export class BecomeAnAuthorPageComponent implements OnInit {
 
     this.userSvc.authorRequest(this.authorData)
     .subscribe(val => {
-      debugger;
         this.userSvc.refresh();
-      // redirect to author dashboard
+        this.router.navigateByUrl(Endpoints.forntend.author.profileUrl);
     }, err => {
       debugger;
       this.notifications.showError(err.error || err.message);
