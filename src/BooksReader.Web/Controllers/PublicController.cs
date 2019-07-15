@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Services;
+using BooksReader.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Ruteco.AspNetCore.Translate;
@@ -24,8 +25,17 @@ namespace BooksReader.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetMainPage([FromHeader]PublicPageInfoRequest request)
+        public ActionResult GetMainPage(
+            [FromHeader] string domain,
+            [FromHeader] string urlPath,
+            [FromHeader] string promoCode)
         {
+            var request = new PublicPageInfoRequest()
+            {
+                UrlPath = urlPath,
+                Domain = domain,
+                PromoCode = promoCode
+            };
             var info = _publicSvc.GetInfo(request);
             return Ok(info);
         }

@@ -99,6 +99,22 @@ namespace BooksReader.Services
                 goto end;
             }
 
+            if (!string.IsNullOrWhiteSpace(profile.DomainName))
+            {
+                var pageWithDomain = _personalPagesRepo.Data.FirstOrDefault(x =>
+                    string.Equals(profile.DomainName,
+                                    x.Domain,
+                                    StringComparison.InvariantCultureIgnoreCase)
+                    && existing.PersonalPageId != x.Id);
+
+                if (pageWithDomain != null)
+                {
+                    result.Messages.Add(MessageStrings.DomainAlreadyInUse);
+                    goto end;
+                };
+            }
+
+
             var personalPage = _personalPagesRepo.Data.FirstOrDefault(x => x.Id.Equals(existing.PersonalPageId));
 
             // add or update personal page if domain name is not empty

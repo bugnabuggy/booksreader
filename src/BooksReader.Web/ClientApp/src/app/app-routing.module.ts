@@ -8,7 +8,7 @@ import { Endpoints } from './config';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'main', pathMatch: 'full' },
+  // { path: '', redirectTo: 'main', pathMatch: 'full' },
   { path: 'main', component: MainComponent },
   
   {    path: Endpoints.areas.user, canLoad: [AuthGuard], loadChildren: './modules/user/user.module#UserModule'  },

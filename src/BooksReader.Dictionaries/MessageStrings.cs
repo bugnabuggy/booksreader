@@ -13,5 +13,6 @@ namespace BooksReader.Dictionaries
         public static string AuthorNotFound = "REQUESTED_AUTHOR_NOT_FOUND";
         public static string CantBeEmpty = "VALUE_CANT_BE_EMPTY";
         public static string AuthorAlreadyExists = "AUTHOR_ALREADY_EXISTS";
+        public static string DomainAlreadyInUse = "DOMAIN_ALREADY_USED_BY_ANOTHER_AUTHOR";
     }
 }

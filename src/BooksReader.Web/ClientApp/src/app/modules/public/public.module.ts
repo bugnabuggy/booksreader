@@ -7,6 +7,9 @@ import { SharedModule } from '@br/shared/shared.module';
 import { HeaderComponent } from './components/header/header.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MainComponent } from './pages/main/main.component';
+import { LoginButtonComponent } from './components/login-button/login-button.component';
+import { BuyButtonComponent } from './components/buy-button/buy-button.component';
+import { MaterialModule } from '@br/material/material.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +20,8 @@ import { MainComponent } from './pages/main/main.component';
     MainComponent,
     ForceLogoutComponent,
     LandingPageComponent,
+    LoginButtonComponent,
+    BuyButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -26,10 +31,13 @@ import { MainComponent } from './pages/main/main.component';
   ],
   exports:[
     HeaderComponent,
+    LoginButtonComponent,
+    BuyButtonComponent,
 
     LoginComponent,
     RegistrationComponent,
     ForceLogoutComponent,
+    
   ]
 })
 export class PublicModule { }

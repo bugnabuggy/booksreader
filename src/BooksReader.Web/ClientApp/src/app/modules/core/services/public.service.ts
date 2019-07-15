@@ -12,22 +12,25 @@ import { Location } from '@angular/common';
 export class PublicService {
 
   constructor(
-    public http: HttpClient,
+    private http: HttpClient,
   ) { }
 
-  getPageInfo(): Observable<PublicPageInfo> {
+  getPageInfo(): Observable<PublicPageInfo> {    
     const url = Endpoints.api.public.pageInfo;
     const request  = {
       domain: location.host,
       urlPath: location.pathname
     } as PublicPageInfoRequest;
 
-    let params  = new HttpParams();
-    params.append('domain', request.domain);
-    params.append('urlPath', request.urlPath);
-    params.append('promoCode', request.promoCode);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'domain': request.domain,
+        'urlPath': request.urlPath,
+        'promoCode': request.promoCode || ''
+      })
+    }
 
-    const observabel = this.http.get<PublicPageInfo>(url, { params }).pipe(share());
+    const observabel = this.http.get<PublicPageInfo>(url, httpOptions).pipe(share());
 
     return observabel;
   }

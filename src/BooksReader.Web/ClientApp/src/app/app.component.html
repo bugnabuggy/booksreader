@@ -7,3 +7,13 @@
 
   <simple-notifications></simple-notifications>
 </div>
+
+<ng-template #publicContent></ng-template>
+
+<!-- <div class='flex-1'
+   *ngIf='publicPageInfo'
+  [innerHtml]='publicPageInfo.content'>
+ </div> -->
+
+ <ng-container *ngIf='publicPageInfo' [ngTemplateOutlet]="publicContent">
+ </ng-container>
