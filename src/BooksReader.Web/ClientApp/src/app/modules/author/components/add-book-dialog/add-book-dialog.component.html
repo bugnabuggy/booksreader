@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Enter new book name</h1>
+  <form autocomplete="off" (ngSubmit)="add()">
+    <mat-form-field class='col'>
+      <input matInput type="text" placeholder="Book name" [ngModel]='bookName'>
+        <mat-error *ngIf="">
+        Please enter Book name
+      </mat-error>
+    </mat-form-field>
+    <div mat-dialog-actions>
+      <button type="reset" mat-raised-button (click)="close()">Cancel</button>
+      <button mat-raised-button color="primary">Ok</button>
+    </div>
+  </form>
+  
+

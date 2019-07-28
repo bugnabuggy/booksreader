@@ -31,26 +31,27 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((event: RouterEvent) => {
 
       if(event instanceof NavigationEnd){
-        if(event.url == '/' && this.publicPageInfo && this.userSvc.isUiVisible$.getValue()) {
-          this.userSvc.isUiVisible$.next(false); 
+        if(event.url == '/' && this.publicPageInfo && this.userSvc.isUiVisible) {
+          this.userSvc.hideUi(); 
 
           // show client content again
           this.changeDetector.detectChanges();   
           this.pageRenderingSvc.compileTemplate(this.publicPageInfo.content, this.publicContent);
         }
       }
-    })
+    });
 
     this.userSvc.init()
     .subscribe(val=>{
       this.publicSvc.getPageInfo().subscribe(val => {
         // TODO: think how to show control UI components to be able to navigate to management pages
-        if(!val){
+        this.publicPageInfo = val || null;
+        if(!val) {
           this.userSvc.showUi();
           this.router.navigate([Endpoints.forntend.main]);
         } else {
-          this.publicPageInfo = val;
-          this.pageRenderingSvc.compileTemplate(val.content, this.publicContent);
+          if( !this.userSvc.isUiVisible )
+            this.pageRenderingSvc.compileTemplate(val.content, this.publicContent);
         }
       }, err => {
         console.error(err);

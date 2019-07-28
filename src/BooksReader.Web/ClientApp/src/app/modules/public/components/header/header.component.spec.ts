@@ -8,6 +8,7 @@ import { SharedModule } from '@br/shared/shared.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MockStorageService } from '@br/tests/mocks';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TestModule } from '@br/tests/test.module';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -16,11 +17,8 @@ describe('HeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports:[
-        NoopAnimationsModule,
+        TestModule,
         SharedModule,
-        RouterTestingModule,
-        HttpClientTestingModule,
-        MaterialModule,
         TranslateModule.forRoot()
       ],
       providers:[

@@ -3,16 +3,17 @@ import { share, finalize, flatMap, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { SecurityService } from './security.service';
 import { Router } from '@angular/router';
-import { of, BehaviorSubject } from 'rxjs';
+import { of, BehaviorSubject, Observable } from 'rxjs';
 import { UserHubService } from '@br/communications/hubs';
 import { AppUser, Language, UserRegistration } from '../models';
 import { TranslateService } from '@ngx-translate/core';
-import { Endpoints } from '@br/config';
+import { Endpoints, SiteConstants } from '@br/config';
 import { HttpClient } from '@angular/common/http';
 import { MenuSections } from '@br/config/menu-sections';
 import { SiteRoles } from '../enums';
 import { AuthorProfile } from '../models/api-contracts/author-profile.dto';
 import { NotificationService } from './notification.service';
+import { StorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -24,15 +25,26 @@ export class UserService {
         private http: HttpClient,
         public router: Router,
         public notifications: NotificationService,
-        public translate: TranslateService
-    ) { }
+        public translate: TranslateService,
+        private storage: StorageService
+    ) { 
+        let isUiVisible = storage.getItem(SiteConstants.storageKeys.uiIsShown);
+        if(isUiVisible){
+            this._isUiVisible.next(JSON.parse(isUiVisible));
+        }
+    }
 
     menuSections$ = new BehaviorSubject<any>([]);
     
     private readonly _isUiVisible = new BehaviorSubject<boolean>(false);
     
+
+    get isUiVisible () {
+        return this._isUiVisible.getValue();
+    }
+
     get isUiVisible$ () {
-        return this._isUiVisible;
+        return this._isUiVisible as Observable<boolean>;
     }
 
     get user() { return this.securitySvc.user$.getValue(); }
@@ -170,13 +182,14 @@ export class UserService {
 
     toggleUi(isVisible: boolean) {
         this._isUiVisible.next(isVisible);
+        this.storage.setItem(SiteConstants.storageKeys.uiIsShown, JSON.stringify(isVisible));
     }
 
     showUi() {
-        this._isUiVisible.next(true);
+        this.toggleUi(true);
     }
 
     hideUi() {
-        this._isUiVisible.next(false);
+        this.toggleUi(false);
     }
 }

@@ -6,14 +6,22 @@ import { AuthorDashboardPageComponent } from './pages/author-dashboard-page/auth
 import { AuthorProfilePageComponent } from './pages/author-profile-page/author-profile-page.component';
 import { SharedModule } from '@br/shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { AddBookDialogComponent } from './components/add-book-dialog/add-book-dialog.component';
 
 @NgModule({
-  declarations: [AuthorDashboardPageComponent, AuthorProfilePageComponent],
+  declarations: [
+    AuthorDashboardPageComponent,
+    AuthorProfilePageComponent,
+    AddBookDialogComponent],
   imports: [
     CommonModule,
     AuthorRoutingModule,
     SharedModule,
     TranslateModule.forChild()
+  ],
+  entryComponents:[
+    AddBookDialogComponent
   ]
+
 })
 export class AuthorModule { }

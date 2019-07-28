@@ -9,7 +9,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MainComponent } from './pages/main/main.component';
 import { LoginButtonComponent } from './components/login-button/login-button.component';
 import { BuyButtonComponent } from './components/buy-button/buy-button.component';
-import { MaterialModule } from '@br/material/material.module';
 
 @NgModule({
   declarations: [

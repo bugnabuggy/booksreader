@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginButtonComponent } from './login-button.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MockStorageService } from '@br/tests/mocks';
+import { TestModule } from '@br/tests/test.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginButtonComponent', () => {
   let component: LoginButtonComponent;
@@ -8,7 +13,11 @@ describe('LoginButtonComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginButtonComponent ]
+      declarations: [ LoginButtonComponent ],
+      imports:[
+        TestModule,
+        TranslateModule.forRoot()
+      ],
     })
     .compileComponents();
   }));

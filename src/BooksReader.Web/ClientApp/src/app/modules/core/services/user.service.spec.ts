@@ -7,10 +7,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from './user.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { UserRegistration } from '../models/api-contracts/user-registration.dto';
-import { Endpoints } from '@br/config';
+import { Endpoints, SiteConstants } from '@br/config';
 import { timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { authMockResponse, appUser } from '@br/tests/mocks/responses';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 let router = {
   navigate: jasmine.createSpy('navigate'),
@@ -22,6 +23,7 @@ describe('UserService', () => {
     imports: [
       NoopAnimationsModule,
       TranslateModule.forRoot(),
+      SimpleNotificationsModule.forRoot(),
       RouterTestingModule,
       HttpClientTestingModule
     ],
@@ -29,7 +31,9 @@ describe('UserService', () => {
     providers: [
       {
         provide: Storage,
-        useValue: new MockStorageService()
+        useValue: new MockStorageService({
+          [SiteConstants.storageKeys.uiIsShown]: 'true'
+        })
       },
       { provide: Router, useValue: router }
     ]
@@ -40,6 +44,7 @@ describe('UserService', () => {
     expect(service).toBeTruthy();
   });
 
+  
   it('should send five requests on registration and login and naviaget to profile', (done) => {
     const service: UserService = TestBed.get(UserService);
 
