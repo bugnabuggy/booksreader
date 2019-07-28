@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ChangeDetectorRef } from '@angular/core';
 import { SecurityService, UserService } from '@br/core/services';
 import { PublicService } from '@br/core/services/public.service';
 import { PublicPageInfo } from '@br/core/models';
 import { PageRenderingService } from '@br/public/services';
+import { Router, ActivatedRoute, NavigationEnd, RouterEvent } from '@angular/router';
+import { Endpoints } from './config';
 
 
 @Component({
@@ -11,7 +13,6 @@ import { PageRenderingService } from '@br/public/services';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  showRoutedContent = false;
   publicPageInfo : PublicPageInfo;
   
   @ViewChild('publicContent', {read : ViewContainerRef, static: false}) 
@@ -20,24 +21,40 @@ export class AppComponent implements OnInit {
   constructor(
     public userSvc: UserService,
     public publicSvc: PublicService,
-    public pageRenderingSvc:  PageRenderingService
+    public pageRenderingSvc:  PageRenderingService,
+    public router: Router,
+    private changeDetector : ChangeDetectorRef
   ) {}
 
   ngOnInit() {
+
+    this.router.events.subscribe((event: RouterEvent) => {
+
+      if(event instanceof NavigationEnd){
+        if(event.url == '/' && this.publicPageInfo && this.userSvc.isUiVisible$.getValue()) {
+          this.userSvc.isUiVisible$.next(false); 
+
+          // show client content again
+          this.changeDetector.detectChanges();   
+          this.pageRenderingSvc.compileTemplate(this.publicPageInfo.content, this.publicContent);
+        }
+      }
+    })
+
     this.userSvc.init()
     .subscribe(val=>{
       this.publicSvc.getPageInfo().subscribe(val => {
-        debugger;
         // TODO: think how to show control UI components to be able to navigate to management pages
         if(!val){
-          this.showRoutedContent = true;
+          this.userSvc.showUi();
+          this.router.navigate([Endpoints.forntend.main]);
         } else {
           this.publicPageInfo = val;
           this.pageRenderingSvc.compileTemplate(val.content, this.publicContent);
         }
       }, err => {
         console.error(err);
-        this.showRoutedContent = true;
+        this.userSvc.showUi();
       });
     });    
   }

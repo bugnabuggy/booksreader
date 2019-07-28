@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { MenuSections } from '@br/config/menu-sections';
 import { SiteRoles } from '../enums';
 import { AuthorProfile } from '../models/api-contracts/author-profile.dto';
+import { NotificationService } from './notification.service';
 
 @Injectable({
     providedIn: 'root'
@@ -22,11 +23,18 @@ export class UserService {
         private userHub: UserHubService,
         private http: HttpClient,
         public router: Router,
+        public notifications: NotificationService,
         public translate: TranslateService
     ) { }
 
     menuSections$ = new BehaviorSubject<any>([]);
     
+    private readonly _isUiVisible = new BehaviorSubject<boolean>(false);
+    
+    get isUiVisible$ () {
+        return this._isUiVisible;
+    }
+
     get user() { return this.securitySvc.user$.getValue(); }
 
     get isLoggedIn() {
@@ -52,6 +60,9 @@ export class UserService {
 
         observabe.subscribe(val => {
 
+        }, err=>{
+            debugger;
+            this.notifications.showError(err.value);
         })
 
         return observabe;
@@ -155,5 +166,17 @@ export class UserService {
         const url = Endpoints.api.user.becomeAnAuthor;
         const observabe = this.http.post(url, authorData).pipe(share());
         return observabe;
+    }
+
+    toggleUi(isVisible: boolean) {
+        this._isUiVisible.next(isVisible);
+    }
+
+    showUi() {
+        this._isUiVisible.next(true);
+    }
+
+    hideUi() {
+        this._isUiVisible.next(false);
     }
 }

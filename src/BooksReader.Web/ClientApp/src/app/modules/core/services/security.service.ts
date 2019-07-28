@@ -77,8 +77,12 @@ export class SecurityService {
                 this.isInitialized = true;
             },
             (err) => {
-                if (err.status == 401) {
+                if (err.status == 401 )  {
                     this.isLoggedIn = false;
+                }
+
+                if(err.status == 404) {
+                    this.clearTokens();
                 }
                 // else probably retry or do some kind of disconected app    
             });

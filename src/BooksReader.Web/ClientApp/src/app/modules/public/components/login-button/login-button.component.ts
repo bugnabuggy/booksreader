@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Endpoints } from '@br/config';
+import { UserService } from '@br/core/services';
 
 @Component({
   selector: 'app-login-button',
@@ -7,14 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginButtonComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private userSvc: UserService
+
+    ) { }
 
   ngOnInit() {
   }
 
   login(){
-    debugger;
-    alert('Go to login!');
+    this.router.navigateByUrl(Endpoints.forntend.authorization);
+    this.userSvc.showUi();
   }
 
 }

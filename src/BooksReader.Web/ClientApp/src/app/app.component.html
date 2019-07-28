@@ -1,4 +1,4 @@
-<div *ngIf='showRoutedContent' class='d-flex flex-column w-100'>
+<div *ngIf='userSvc.isUiVisible$.getValue()' class='d-flex flex-column w-100'>
   <app-header></app-header>
   
   <div  class="d-flex flex-1 min-h-400">
@@ -8,12 +8,15 @@
   <simple-notifications></simple-notifications>
 </div>
 
-<ng-template #publicContent></ng-template>
-
 <!-- <div class='flex-1'
    *ngIf='publicPageInfo'
   [innerHtml]='publicPageInfo.content'>
- </div> -->
-
- <ng-container *ngIf='publicPageInfo' [ngTemplateOutlet]="publicContent">
- </ng-container>
+ </div> --> 
+ 
+ <div *ngIf='!userSvc.isUiVisible$.getValue()' >
+  <ng-template  #publicContent></ng-template>
+ 
+  <ng-container  [ngTemplateOutlet]="publicContent">
+  </ng-container>
+</div>
+ 
