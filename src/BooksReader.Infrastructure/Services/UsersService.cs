@@ -19,20 +19,20 @@ namespace BooksReader.Infrastructure.Services
 {
     public class UsersService : IUsersService
     {
-	    private Dictionary<string, Expression<Func<LoginHistory, object>>> orderBys = new Dictionary<string, Expression<Func<LoginHistory, object>>>()
-	    {
-		    {"dateTime", x => x.DateTime},
-		    {"browser", x=>x.Browser},
-		    {"geolocation", x=>x.Geolocation},
-		    {"ipAddress", x=>x.IpAddress},
-		    {"Screen", x=>x.Screen},
-		    {"Id", x=>x.Id},
-		    {"userId", x=>x.UserId}
-		};
+        private Dictionary<string, Expression<Func<LoginHistory, object>>> orderBys = new Dictionary<string, Expression<Func<LoginHistory, object>>>()
+        {
+            {"dateTime", x => x.DateTime},
+            {"browser", x=>x.Browser},
+            {"geolocation", x=>x.Geolocation},
+            {"ipAddress", x=>x.IpAddress},
+            {"Screen", x=>x.Screen},
+            {"Id", x=>x.Id},
+            {"userId", x=>x.UserId}
+        };
 
-		private readonly BrDbContext _ctx;
+        private readonly BrDbContext _ctx;
         private readonly UserManager<BrUser> _userManager;
-	    private readonly IRepository<LoginHistory> _loginHistory;
+        private readonly IRepository<LoginHistory> _loginHistory;
 
         public UsersService(
             BrDbContext ctx,
@@ -41,7 +41,7 @@ namespace BooksReader.Infrastructure.Services
             )
         {
             _ctx = ctx;
-	        _loginHistory = logHistory;
+            _loginHistory = logHistory;
             _userManager = userManager;
         }
 
@@ -69,23 +69,23 @@ namespace BooksReader.Infrastructure.Services
         {
             var user = await _userManager.FindByNameAsync(username);
             IdentityResult result = IdentityResult.Success;
-            
-            if (! await _userManager.IsInRoleAsync(user, role))
+
+            if (!await _userManager.IsInRoleAsync(user, role))
             {
                 result = await _userManager.AddToRoleAsync(user, role);
             }
-            
+
             return new OperationResult()
             {
                 Success = result.Succeeded,
-                Messages =  result.Errors.Select(x=>x.Description).ToList()
+                Messages = result.Errors.Select(x => x.Description).ToList()
             };
         }
 
         public async Task<OperationResult> RemoveUserRole(string username, string role)
         {
             var user = await _userManager.FindByNameAsync(username);
-            IdentityResult result =  IdentityResult.Success;
+            IdentityResult result = IdentityResult.Success;
 
             if (await _userManager.IsInRoleAsync(user, role))
             {
@@ -119,45 +119,51 @@ namespace BooksReader.Infrastructure.Services
             };
         }
 
-	    public async Task<LoginHistory> AddLoginHistory(LoginHistory logHistory, Guid userId)
-	    {
-			var result = await this._loginHistory.AddAsync(new LoginHistory
-		    {
-			    Id = Guid.NewGuid(),
-				DateTime = logHistory.DateTime,
-				IpAddress = logHistory.IpAddress,
-				Browser = logHistory.Browser,
-				UserId = userId,
-				Geolocation = logHistory.Geolocation
-			});
+        public async Task<LoginHistory> AddLoginHistory(LoginHistory logHistory, Guid userId)
+        {
+            var result = await this._loginHistory.AddAsync(new LoginHistory
+            {
+                Id = Guid.NewGuid(),
+                DateTime = logHistory.DateTime,
+                IpAddress = logHistory.IpAddress,
+                Browser = logHistory.Browser,
+                UserId = userId,
+                Geolocation = logHistory.Geolocation
+            });
 
             return result;
 
 
         }
 
-	    public IQueryable<LoginHistory> GetLoginHistory(StandardFiltersDto filters, Guid userId, out int totalItems)
-		{
-			IQueryable<LoginHistory> data = _loginHistory.Data;
+        public IQueryable<LoginHistory> GetLoginHistory(StandardFiltersDto filters, Guid userId, out int totalItems)
+        {
+            IQueryable<LoginHistory> data = _loginHistory.Data;
 
-			filters.PageNumber = filters.PageNumber ?? 0;
+            filters.PageNumber = filters.PageNumber ?? 0;
 
-			totalItems = data.Count();
+            totalItems = data.Count();
 
-			if (!string.IsNullOrWhiteSpace(filters.OrderByField) && orderBys.ContainsKey(filters.OrderByField))
-			{
-				var orderExp = orderBys[filters.OrderByField];
+            if (!string.IsNullOrWhiteSpace(filters.OrderByField)
+                && orderBys.ContainsKey(filters.OrderByField))
+            {
+                var orderExp = orderBys[filters.OrderByField];
 
-				data = filters.IsDesc
-					? data.OrderByDescending(orderExp)
-					: data.OrderBy(orderExp);
-			}
+                if (filters.IsDesc.HasValue)
+                {
+                    data = filters.IsDesc.Value
+                        ? data.OrderByDescending(orderExp)
+                        : data.OrderBy(orderExp);
+                }
 
-			data = filters.PageSize == null
-				? data
-				: data.Skip((int)(filters.PageNumber)
-				            * (int)filters.PageSize)
-					.Take((int)filters.PageSize);
+
+            }
+
+            data = filters.PageSize == null
+                ? data
+                : data.Skip((int)(filters.PageNumber)
+                            * (int)filters.PageSize)
+                    .Take((int)filters.PageSize);
 
             return data;
 
@@ -179,19 +185,19 @@ namespace BooksReader.Infrastructure.Services
             user.Email = data.Email;
 
 
-            var identityResult =  await _userManager.UpdateAsync(user);
+            var identityResult = await _userManager.UpdateAsync(user);
             result.Success = identityResult.Succeeded;
             result.Messages = identityResult.Errors.Select(x => x.Code).ToList();
 
             //TODO: consider to use mappers
             result.Data = new AppUserDto()
             {
-                Name =  user.Name,
+                Name = user.Name,
                 Username = user.UserName,
-                Avatar =  user.Avatar,
-                Id =  user.Id.ToString(),
+                Avatar = user.Avatar,
+                Id = user.Id.ToString(),
                 Email = user.Email,
-                Roles =  await _userManager.GetRolesAsync(user)
+                Roles = await _userManager.GetRolesAsync(user)
             };
 
             return result;
@@ -205,7 +211,7 @@ namespace BooksReader.Infrastructure.Services
             if (user == null)
             {
                 result.Success = false;
-                result.Messages = new []{ MessageStrings.UserDoesNotExist };
+                result.Messages = new[] { MessageStrings.UserDoesNotExist };
                 return result;
             }
 

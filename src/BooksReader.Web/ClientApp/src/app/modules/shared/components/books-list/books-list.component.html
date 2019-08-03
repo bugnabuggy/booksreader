@@ -1,3 +1,13 @@
-<p>
-  books-list works!
-</p>
+<ng-container [ngSwitch]='type'>
+  <ul class='br-books-list' *ngSwitchCase='BookRenderingType.author'>
+    <app-books-list-author-item *ngFor='let book of books' [book]='book' (select)='selected($event)'>
+
+    </app-books-list-author-item>
+  </ul>
+
+  <ul class='br-books-list' **ngSwitchDefault>
+      <app-books-list-item *ngFor='let book of books' [book]='book' (select)='selected($event)'>
+  
+      </app-books-list-item>
+    </ul>
+</ng-container>

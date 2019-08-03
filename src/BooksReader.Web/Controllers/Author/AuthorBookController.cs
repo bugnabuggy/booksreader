@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Exceptions;
 using BooksReader.Core.Models;
+using BooksReader.Core.Models.Requests.Filters;
 using BooksReader.Core.Services;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Web.Models;
@@ -31,9 +32,10 @@ namespace BooksReader.Web.Controllers.Author
 		    _userManager = userManager;
 	    }
 
+
         // GET: api/Book
         [HttpGet]
-        public async Task<WebResult<IEnumerable<Book>>> Get()
+        public async Task<WebResult<IEnumerable<Book>>> Get([FromQuery]AuthorBookFiltersRequest filters)
         {
 		    var user = await _userManager.GetUserAsync(User);
 

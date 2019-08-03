@@ -8,6 +8,6 @@ namespace BooksReader.Core.Models.DTO
     public interface IOrderingFilter
     {
         string OrderByField { get; set; }
-        bool IsDesc { get; set; }
+        bool? IsDesc { get; set; }
     }
 }

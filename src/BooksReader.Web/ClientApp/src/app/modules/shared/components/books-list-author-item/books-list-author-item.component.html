@@ -1,0 +1,11 @@
+<li class='br-books-list-item'>
+  <h3 class='br-books-list-item-title' >{{book.title}}</h3>
+  <div class="flex-1">
+    <img src="" alt="">
+  </div>
+  <div>
+    <button (click)="fastEdit()" mat-icon-button color="accent"><mat-icon>border_color</mat-icon></button>
+    <button (click)="edit()" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+    <button (click)="delete()" mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
+  </div>
+</li>

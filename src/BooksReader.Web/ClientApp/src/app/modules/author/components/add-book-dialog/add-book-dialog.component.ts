@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Book } from '@br/core/models';
 
 @Component({
   selector: 'app-add-book-dialog',
@@ -12,10 +13,11 @@ export class AddBookDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AddBookDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: Book
   ) { }
 
   ngOnInit() {
+    this.bookName = this.data.title;
   }
 
   close() {

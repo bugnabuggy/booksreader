@@ -10,7 +10,10 @@
         </button>
       </h2>
     <div>
-      <app-books-list>
+      <app-books-list 
+        [books] ='books'
+        [type] = 'bookRenderingType'
+        (select) ='selected($event)'>
         
       </app-books-list>
     </div>

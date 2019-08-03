@@ -1,0 +1,24 @@
+
+@import "./parameters.scss";
+
+.br-books-list {
+    background: yellow;
+    list-style: none;
+    display: block;
+    padding: $padding-standard;
+    
+
+
+    .br-books-list-item {
+        overflow: hidden;
+        border: 1px solid palevioletred;   
+        width: 250px;
+        height: 350px;
+        
+        display: inline-flex;
+        flex-direction: column;
+        margin: $margin-standard;
+    }
+
+    clear: both;
+}

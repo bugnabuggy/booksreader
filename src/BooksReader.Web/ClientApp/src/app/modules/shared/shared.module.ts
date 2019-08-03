@@ -7,9 +7,11 @@ import { MaterialModule } from '@br/material/material.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { BooksListComponent } from './components/books-list/books-list.component';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { BooksListItemComponent } from './components/books-list-item/books-list-item.component';
+import { BooksListAuthorItemComponent } from './components/books-list-author-item/books-list-author-item.component';
 
 @NgModule({
-  declarations: [BooksListComponent],
+  declarations: [BooksListComponent, BooksListItemComponent, BooksListAuthorItemComponent],
   imports: [
     CommonModule,
     FormsModule,
