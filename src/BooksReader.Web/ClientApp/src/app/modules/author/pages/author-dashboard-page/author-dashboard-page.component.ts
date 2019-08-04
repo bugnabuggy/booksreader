@@ -98,7 +98,12 @@ export class AuthorDashboardPageComponent implements OnInit {
   }
 
   delete(book: Book) {
-
+    this.bookEditingSvc.delete(book.id)
+    .subscribe(val=>{
+      this.books = this.books.filter(x=>x.id != book.id);
+      this.notifications.showSuccess(StringConstants.books.deleted)
+      debugger;
+    })
   }
 
 }

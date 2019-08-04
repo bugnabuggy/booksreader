@@ -8,6 +8,7 @@ export class StringConstants {
 
     static books = {
         added: 'BOOK_ADDED',
-        edited: 'BOOK_EDTED'
+        edited: 'BOOK_EDTED',
+        deleted: 'BOOK_DELETED'
     }
 }

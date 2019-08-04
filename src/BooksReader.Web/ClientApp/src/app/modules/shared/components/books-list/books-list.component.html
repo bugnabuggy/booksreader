@@ -1,7 +1,7 @@
-<ng-container [ngSwitch]='type'>
+<ng-container *ngIf='books.length > 0' [ngSwitch]='type'>
+
   <ul class='br-books-list' *ngSwitchCase='BookRenderingType.author'>
     <app-books-list-author-item *ngFor='let book of books' [book]='book' (select)='selected($event)'>
-
     </app-books-list-author-item>
   </ul>
 
@@ -10,4 +10,8 @@
   
       </app-books-list-item>
     </ul>
+</ng-container>
+
+<ng-container *ngIf='books.length == 0'>
+    <app-books-list-no-content ></app-books-list-no-content>
 </ng-container>

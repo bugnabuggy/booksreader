@@ -1,14 +1,18 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { Endpoints } from '@br/config';
 import { 
     AuthorDashboardPageComponent,
-    AuthorProfilePageComponent 
+    AuthorProfilePageComponent, 
+    AuthorContainerComponent
   } from './pages';
 
 const routes: Routes = [
-  { path:Endpoints.forntend.author.dashboard, component: AuthorDashboardPageComponent },
-  { path:Endpoints.forntend.author.profile, component: AuthorProfilePageComponent }
+  { path: '' , component: AuthorContainerComponent, children: [
+    { path:Endpoints.forntend.author.dashboard, component: AuthorDashboardPageComponent },
+    { path:Endpoints.forntend.author.profile, component: AuthorProfilePageComponent } 
+  ]},
+  
 ];
 
 @NgModule({
