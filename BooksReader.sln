@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksReader.Services", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksReader.Services.Tests", "tests\BooksReader.Services.Tests\BooksReader.Services.Tests.csproj", "{DDA6F8C0-677A-4558-B5F9-EFDDEDE217B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksReader.Validators", "src\BooksReader.Validators\BooksReader.Validators.csproj", "{C99E6D7A-C84A-4EC9-A06E-E8BE350515F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{DDA6F8C0-677A-4558-B5F9-EFDDEDE217B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDA6F8C0-677A-4558-B5F9-EFDDEDE217B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDA6F8C0-677A-4558-B5F9-EFDDEDE217B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C99E6D7A-C84A-4EC9-A06E-E8BE350515F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C99E6D7A-C84A-4EC9-A06E-E8BE350515F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C99E6D7A-C84A-4EC9-A06E-E8BE350515F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C99E6D7A-C84A-4EC9-A06E-E8BE350515F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +94,7 @@ Global
 		{F0FA902F-3D09-4FBC-903F-34EACC8D6C9F} = {676410E1-D2C3-454F-BBF8-79E5E662302A}
 		{5A2A4211-3709-4306-B6CC-161ACF61F438} = {676410E1-D2C3-454F-BBF8-79E5E662302A}
 		{DDA6F8C0-677A-4558-B5F9-EFDDEDE217B2} = {7390E882-A02E-4E03-ABB8-4E85098CE0EE}
+		{C99E6D7A-C84A-4EC9-A06E-E8BE350515F8} = {676410E1-D2C3-454F-BBF8-79E5E662302A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {70867093-87D2-4495-A704-07DA9C527CAC}

@@ -24,5 +24,28 @@ namespace BooksReader.Infrastructure.DataContext
 	    public DbSet<Book> Books { get; set; }
 	    public DbSet<BookChapter> BookChapters { get; set; }
 	    public DbSet<LoginHistory> LoginHistory { get; set; }
-	}
+
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Book>()
+                .HasIndex(x => x.Title);
+            builder.Entity<Book>()
+                .HasIndex(x => x.Author);
+            builder.Entity<Book>()
+                .HasIndex(x => x.Created);
+            builder.Entity<Book>()
+                .HasIndex(x => x.Published);
+
+            builder.Entity<AuthorProfile>()
+                .HasIndex(x => x.AuthorName);
+
+            builder.Entity<PersonalPage>()
+                .HasIndex(x => x.Domain);
+            builder.Entity<PersonalPage>()
+                .HasIndex(x => x.SubjectId);
+        }
+    }
 }

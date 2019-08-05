@@ -1,5 +1,8 @@
 <header class='border-bottom p-2' ngclass="{'text-center': security.isAuthenticated()}">
-  <a routerLink="/" class="text-dark"><h1 class='d-inline-block'  >{{'BooksReader' | translate}}</h1></a>
+  <a routerLink="/" class="text-dark">
+    <h1 class='d-sm-inline-block d-none'  >{{'BooksReader' | translate}}</h1>
+    <h1 class='d-inline-block d-sm-none'  >{{'BR' | translate}}</h1>
+  </a>
   
   <nav class='float-right pr-4' *ngIf="security.isAuthenticated()">
     <button class='' mat-button [matMenuTriggerFor]="menu"><i class='material-icons f-44'>menu</i></button>
@@ -20,5 +23,4 @@
           </mat-select>
         </mat-form-field>
   </div>
-
 </header>

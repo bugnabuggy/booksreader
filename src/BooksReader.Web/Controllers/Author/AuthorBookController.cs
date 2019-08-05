@@ -7,7 +7,10 @@ using BooksReader.Core.Exceptions;
 using BooksReader.Core.Models;
 using BooksReader.Core.Models.Requests.Filters;
 using BooksReader.Core.Services;
+using BooksReader.Dictionaries;
 using BooksReader.Infrastructure.Configuration;
+using BooksReader.Infrastructure.Repositories;
+using BooksReader.Validators.FilterAttributes;
 using BooksReader.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -23,14 +26,17 @@ namespace BooksReader.Web.Controllers.Author
     {
 	    private readonly IBooksService _booksService;
 	    private readonly UserManager<BrUser> _userManager;
+        private readonly ISecurityService _security;
 
-		public AuthorBookController(
+        public AuthorBookController(
 			IBooksService booksService, 
+            ISecurityService security,
 			UserManager<BrUser> userManager)
 	    {
 		    _booksService = booksService;
 		    _userManager = userManager;
-	    }
+            _security = security;
+        }
 
 
         // GET: api/Book
@@ -93,54 +99,63 @@ namespace BooksReader.Web.Controllers.Author
         }
 
         [HttpPut("{id}")]
-        public OperationResult Put([FromBody] BookEditRequest model)
+        public async Task<IActionResult> Put([FromBody] BookEditRequest model)
         {
 	        try
-	        {
-		        var book = _booksService.Edit(new Book()
+            {
+                var book = _booksService.Get(model.Id);
+                var user = await _userManager.GetUserAsync(User);
+
+                if (!_security.HasAccess(user.Id, book))
+                {
+                    return Forbid(MessageStrings.DoNotHavePermissions);
+                }
+
+		        book = _booksService.Edit(new Book()
 		        {
 			        Id = model.Id,
 			        Title = model.Title,
 			        Author = model.Author
 		        });
-		        return new OperationResult<Book>()
+		        return Ok(new OperationResult<Book>()
 		        {
 			        Data = book,
 			        Success = true,
-		        };
+		        });
 			}
 	        catch (Exception exp)
 	        {
-		        Response.StatusCode = StatusCodes.Status500InternalServerError;
-				return new OperationResult<BookEditRequest>()
+				return StatusCode(StatusCodes.Status500InternalServerError, new OperationResult<BookEditRequest>()
 				{
 					Data = model,
 					Success = false,
 					Messages = new List<string>() { exp.Message }
-				};
+				});
 			}
         }
 
         [HttpDelete("{bookId}")]
-        public OperationResult Delete(string bookId)
+        [HasAccess(typeof(Getter<Book>) ,"bookId")]
+        public async Task<IActionResult> Delete(Guid bookId)
         {
-	        try
+            var book = _booksService.Get(bookId);
+
+            try
 	        {
-		        var book = _booksService.Delete(bookId);
-		        return new OperationResult<Book>()
+		        book = _booksService.Delete(bookId);
+		        return Ok(new OperationResult<Book>()
 		        {
 			        Data = book,
 			        Success = true,
-		        };
+		        });
 	        }
 	        catch (Exception exp)
 	        {
-		        Response.StatusCode = StatusCodes.Status500InternalServerError;
-				return new OperationResult()
+				return StatusCode(StatusCodes.Status500InternalServerError, new OperationResult()
 		        {
 			        Success = false,
 			        Messages = new List<string>() { exp.Message }
-		        };
+		        });
 	        }
 		}
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using BooksReader.Core.Models;
 
@@ -10,8 +11,12 @@ namespace BooksReader.Core.Entities
 		public Guid Id { get; set; }
 		public Guid OwnerId { get; set; }
 
+        [MaxLength(1000)]
 		public string Title { get; set; }
-		public string Author { get; set; }
+        [MaxLength(1000)]
+        public string Author { get; set; }
+
+        public string Picture { get; set; }
 
 		public DateTime Created { get; set; }
 		public DateTime Published { get; set; }

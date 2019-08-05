@@ -3,9 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddBookDialogComponent } from '../../components';
 import { BookEditingService, NotificationService } from '@br/core/services';
 import { Book, OperationResult, AuthorBookFilters } from '@br/core/models';
-import { StringConstants } from '@br/config';
+import { StringConstants, Endpoints } from '@br/config';
 import { BookRenderingType, BookSelectionType } from '@br/core/enums';
 import { BookSelection } from '@br/core/models/site/events';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-author-dashboard-page',
@@ -25,7 +26,8 @@ export class AuthorDashboardPageComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private bookEditingSvc: BookEditingService,
-    private notifications: NotificationService
+    private notifications: NotificationService,
+    private router: Router
   ) {
     this.actions[BookSelectionType.select] = this.rename;
     this.actions[BookSelectionType.edit] = this.edit;
@@ -94,7 +96,8 @@ export class AuthorDashboardPageComponent implements OnInit {
   }
 
   edit(book: Book) {
-
+    debugger;
+    this.router.navigateByUrl(Endpoints.forntend.author.bookUrl.replace(':id', book.id));
   }
 
   delete(book: Book) {

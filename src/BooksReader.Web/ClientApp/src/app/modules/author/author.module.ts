@@ -8,13 +8,15 @@ import { SharedModule } from '@br/shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AddBookDialogComponent } from './components/add-book-dialog/add-book-dialog.component';
 import { AuthorContainerComponent } from './pages/author-container/author-container.component';
+import { BookEditingPageComponent } from './pages/book-editing-page/book-editing-page.component';
 
 @NgModule({
   declarations: [
     AuthorDashboardPageComponent,
     AuthorProfilePageComponent,
     AddBookDialogComponent,
-    AuthorContainerComponent],
+    AuthorContainerComponent,
+    BookEditingPageComponent],
   imports: [
     CommonModule,
     AuthorRoutingModule,

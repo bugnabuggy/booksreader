@@ -30,7 +30,7 @@ namespace BooksReader.Infrastructure.Services
 			throw new NotImplementedException();
 		}
 
-		public T Delete(string id)
+		public T Delete(Guid id)
 		{
 			throw new NotImplementedException();
 		}

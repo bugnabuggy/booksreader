@@ -13,7 +13,7 @@ namespace BooksReader.Core.Services
 		T Edit(T item);
 		IQueryable<T> Get();
 		T Get(Guid id);
-		T Delete(string id);
+		T Delete(Guid id);
 
 		Task<T> AddAsync(T item);
 		Task<T> EditAsync(T item);

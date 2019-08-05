@@ -2,7 +2,6 @@
 @import "./parameters.scss";
 
 .br-books-list {
-    background: yellow;
     list-style: none;
     display: block;
     padding: $padding-standard;
@@ -18,6 +17,17 @@
         display: inline-flex;
         flex-direction: column;
         margin: $margin-standard;
+
+        h4 {
+            display: block;
+            max-height: 50%;
+            text-overflow: ellipsis;
+            overflow-y: scroll;
+        }
+
+        img {
+            height: 100%;
+        }
     }
 
     clear: both;

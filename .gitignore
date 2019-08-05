@@ -329,3 +329,8 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 /src/BooksReader.Web/appsettings.Development.secret.json
+src/BooksReader.Web/appsettings.Development.json
+
+**/appsettings.development.json
+**/appsettings.staging.json
+**/appsettings.production.json

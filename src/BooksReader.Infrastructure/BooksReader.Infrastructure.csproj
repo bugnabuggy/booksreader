@@ -285,6 +285,10 @@
     <Compile Include="Migrations\20190712094655_Initial.designer.cs">
       <DependentUpon>20190712094655_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190805104317_PictureForBookAndConstraints.cs" />
+    <Compile Include="Migrations\20190805104317_PictureForBookAndConstraints.designer.cs">
+      <DependentUpon>20190805104317_PictureForBookAndConstraints.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\BrDbContextModelSnapshot.cs" />
     <Compile Include="Migrations\PersistedGrantDb\20190704084525_Initial.cs" />
     <Compile Include="Migrations\PersistedGrantDb\20190704084525_Initial.designer.cs">

@@ -1,7 +1,9 @@
-<li class='br-books-list-item'>
-  <h3 class='br-books-list-item-title' >{{book.title}}</h3>
-  <div class="flex-1">
-    <img class='img-fluid' src="https://angular.io/assets/images/logos/angular/shield-large.svg" alt="">
+<li class='br-books-list-item p-1'>
+  <h4 >{{book.title}}</h4>
+  <div class="flex-1 d-flex justify-content-center align-items-center">
+    <img 
+      *ngIf="book.picture"
+     class='' [src]="book.picture" alt="">
   </div>
   <div>
     <button (click)="fastEdit()" mat-icon-button color="accent"><mat-icon>border_color</mat-icon></button>

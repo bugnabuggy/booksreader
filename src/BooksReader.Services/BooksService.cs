@@ -81,9 +81,9 @@ namespace BooksReader.Infrastructure.Services
 			return JoinWithOwner(_bookRepo.Data.Where(x => x.Id == id)).FirstOrDefault();
 		}
 
-		public Book Delete(string id)
+		public Book Delete(Guid id)
 		{
-			var item = this.Get(Guid.Parse(id));
+			var item = this.Get(id);
 			var book = _bookRepo.Delete(item);
 			return book;
 		}

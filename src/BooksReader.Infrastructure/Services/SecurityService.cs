@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,8 +41,7 @@ namespace BooksReader.Infrastructure.Services
 			try
 			{
 				var user = _userManager.FindByIdAsync(userId.ToString()).Result;
-				var roles = _userManager.GetRolesAsync(user).Result;
-				return roles.Contains(SiteRoles.Admin);
+				return _userManager.IsInRoleAsync(user,SiteRoles.Admin).Result;
 			}
 			catch (Exception exp)
 			{
@@ -68,7 +68,29 @@ namespace BooksReader.Infrastructure.Services
 			return isAdmin;
 		}
 
-		public bool HasAccess(Guid userId, SecurityAction action)
+        public bool HasAccess(ClaimsPrincipal principal, IOwned item)
+        {
+            try
+            {
+                var user = _userManager.GetUserAsync(principal).Result;
+                var result = item.OwnerId.Equals(user.Id);
+                if (result)
+                {
+                    return true;
+                }
+
+                var isAdmin = _userManager.IsInRoleAsync(user, SiteRoles.Admin).Result;
+                return isAdmin;
+            }
+            catch (Exception exp)
+            {
+                return false;
+            }
+            
+
+        }
+
+        public bool HasAccess(Guid userId, SecurityAction action)
 		{
 			throw new NotImplementedException();
 		}

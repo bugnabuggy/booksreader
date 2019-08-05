@@ -40,6 +40,8 @@ class Endpoints {
             profileUrl: '/' + Endpoints.areas.author + '/profile',
             dashboard: 'dashboard',
             dashboardUrl: '/' + Endpoints.areas.author + '/dashboard',
+            book: 'book/:id',
+            bookUrl: '/' + Endpoints.areas.author + '/book/:id',
         }
         
     };

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net471</TargetFramework>
@@ -54,6 +54,7 @@
     <ProjectReference Include="..\BooksReader.Dictionaries\BooksReader.Dictionaries.csproj" />
     <ProjectReference Include="..\BooksReader.Infrastructure\BooksReader.Infrastructure.csproj" />
     <ProjectReference Include="..\BooksReader.Services\BooksReader.Services.csproj" />
+    <ProjectReference Include="..\BooksReader.Validators\BooksReader.Validators.csproj" />
   </ItemGroup>
 
   <ItemGroup>
