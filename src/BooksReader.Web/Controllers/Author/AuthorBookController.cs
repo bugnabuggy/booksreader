@@ -135,7 +135,7 @@ namespace BooksReader.Web.Controllers.Author
         }
 
         [HttpDelete("{bookId}")]
-        [HasAccess(typeof(Getter<Book>) ,"bookId")]
+        [Validate(typeof(Getter<Book>) ,"bookId")]
         public async Task<IActionResult> Delete(Guid bookId)
         {
             var book = _booksService.Get(bookId);

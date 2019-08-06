@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Exceptions;
+using BooksReader.Core.Infrastructure;
 using BooksReader.Infrastructure.Repositories;
 using BooksReader.Infrastructure.Services;
 using BooksReader.TestData.Helpers;

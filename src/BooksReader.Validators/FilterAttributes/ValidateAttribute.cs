@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BooksReader.Core.Infrastructure;
 using BooksReader.Core.Models;
 using BooksReader.Core.Services;
 using BooksReader.Infrastructure.DataContext;
@@ -35,20 +36,44 @@ namespace BooksReader.Validators.FilterAttributes
         }
     }
 
+    public interface IValidatable : IOwned, IIdentified
+    {
+    }
+
+    public interface IBrValidator<IValidatable>
+    {
+        IActionResult Validate(IValidatable item, Guid id);
+    }
+
+    public class ItemExistsValidator<IValidatable> : IBrValidator<IValidatable> 
+    {
+        public IActionResult Validate(IValidatable item, Guid id)
+        {
+
+            var result = item == null
+                ? new NotFoundObjectResult(id)
+                 : null;
+
+            return result;
+        }
+    }
+
 
     /// <summary>
     /// Wanna make your life little bit complicated :) ?
     /// no problem ↓
     /// </summary>
-    public class HasAccessAttribute: ActionFilterAttribute
+    public class ValidateAttribute: ActionFilterAttribute
     {
         private readonly string _fieldId;
         private readonly Type _type;
+        private readonly IEnumerable<Type> _validators;
 
-        public HasAccessAttribute(Type type, string fieldId = "id")
+        public ValidateAttribute(Type getter, IEnumerable<Type> validators, string fieldId = "id")
         {
             _fieldId = fieldId;
-            _type = type;
+            _type = getter;
+            _validators = validators;
         }
 
         public override void OnActionExecuting(ActionExecutingContext ctx)
@@ -61,14 +86,17 @@ namespace BooksReader.Validators.FilterAttributes
 
             var security = services.GetRequiredService<ISecurityService>();
 
-            var item = getter.Get(id, services) as IOwned;
+            var item = getter.Get(id, services) as IValidatable;
 
-
-            // TODO: replace 'if's' with validators array
-            if (item == null)
+            foreach (var type in _validators)
             {
-                ctx.Result = new NotFoundObjectResult(id);
-                return;
+                var validator = Activator.CreateInstance(type) as IBrValidator<IValidatable>;
+                var result = validator.Validate(item, id);
+                if (result != null)
+                {
+                    ctx.Result = result;
+                    return;
+                }
             }
 
             if(!security.HasAccess(ctx.HttpContext.User, item))

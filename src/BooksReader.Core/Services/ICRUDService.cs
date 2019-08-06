@@ -16,9 +16,7 @@ namespace BooksReader.Core.Services
 		T Delete(Guid id);
 
 		Task<T> AddAsync(T item);
-		Task<T> EditAsync(T item);
-		Task<IQueryable<T>> GetAsync();
+		Task<IEnumerable<T>> GetAsync();
 		Task<T> GetAsync(Guid id);
-		Task<T> DeleteAsync(T item);
 	}
 }

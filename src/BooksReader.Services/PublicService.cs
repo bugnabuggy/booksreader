@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Enums;
+using BooksReader.Core.Infrastructure;
 using BooksReader.Core.Models.DTO;
 using BooksReader.Core.Models.Requests;
 using BooksReader.Infrastructure.Repositories;

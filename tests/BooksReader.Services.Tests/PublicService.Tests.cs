@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Enums;
+using BooksReader.Core.Infrastructure;
 using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Services;
 using BooksReader.Core.Services.Author;

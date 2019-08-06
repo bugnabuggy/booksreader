@@ -5,8 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Exceptions;
+using BooksReader.Core.Infrastructure;
 using BooksReader.Core.Services;
 using BooksReader.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Extensions.Internal;
 
 namespace BooksReader.Infrastructure.Services
 {
@@ -97,30 +100,16 @@ namespace BooksReader.Infrastructure.Services
             return book;
         }
 
-		public Task<Book> EditAsync(Book item)
-		{
-            if (string.IsNullOrEmpty(item.Title))
-            {
-                throw new BrBadDataException("Title can't be empty");
-            }
-
-            var book = _bookRepo.Update(item);
-            return book;
+		public async Task<IEnumerable<Book>> GetAsync()
+        {
+            var books = _bookRepo.Data;
+            return await JoinWithOwner(books).ToListAsync();
         }
 
-		public Task<IQueryable<Book>> GetAsync()
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<Book> GetAsync(Guid iid)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<Book> DeleteAsync(Book item)
-		{
-			throw new NotImplementedException();
-		}
-	}
+		public Task<Book> GetAsync(Guid id)
+        {
+            var book = _bookRepo.Data.Where(x => x.Id.Equals(id));
+            return JoinWithOwner(book).FirstOrDefaultAsync();
+        }
+    }
 }

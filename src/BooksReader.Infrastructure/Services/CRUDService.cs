@@ -3,61 +3,65 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BooksReader.Core.Infrastructure;
 using BooksReader.Core.Models;
 using BooksReader.Core.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace BooksReader.Infrastructure.Services
 {
 	public class CRUDService<T> : ICRUDService<T> where T: IIdentified
-	{
-		public T Add(T item)
-		{
-			throw new NotImplementedException();
-		}
+    {
+        private readonly IRepository<T> _repo;
+        public CRUDService(IRepository<T> repo)
+        {
+            _repo = repo;
+        }
 
-		public T Edit(T item)
-		{
-			throw new NotImplementedException();
-		}
+		public virtual T Add(T item)
+        {
+            var result = _repo.Add(item);
+            return result;
+        }
 
-		public IQueryable<T> Get()
-		{
-			throw new NotImplementedException();
-		}
+		public virtual T Edit(T item)
+        {
+            var result = _repo.Update(item);
+            return result;
+        }
 
-		public T Get(Guid iid)
-		{
-			throw new NotImplementedException();
-		}
+		public virtual IQueryable<T> Get()
+        {
+            return _repo.Data;
+        }
 
-		public T Delete(Guid id)
-		{
-			throw new NotImplementedException();
-		}
+		public virtual T Get(Guid id)
+        {
+            return _repo.Data.FirstOrDefault(x => x.Id.Equals(id));
+        }
 
-		public Task<T> AddAsync(T item)
-		{
-			throw new NotImplementedException();
-		}
+		public virtual T Delete(Guid id)
+        {
+            var item = _repo.Data.FirstOrDefault(x => x.Id.Equals(id));
+            var result = _repo.Delete(item);
+            return result;
+        }
 
-		public Task<T> EditAsync(T item)
-		{
-			throw new NotImplementedException();
-		}
+		public virtual Task<T> AddAsync(T item)
+        {
+            return _repo.AddAsync(item);
+        }
 
-		public Task<IQueryable<T>> GetAsync()
-		{
-			throw new NotImplementedException();
-		}
 
-		public Task<T> GetAsync(Guid iid)
-		{
-			throw new NotImplementedException();
-		}
+		public virtual Task<IEnumerable<T>> GetAsync()
+        {
+            return _repo.GetAsync(x=>true, null, null);
+        }
 
-		public Task<T> DeleteAsync(T item)
-		{
-			throw new NotImplementedException();
-		}
+		public virtual Task<T> GetAsync(Guid id)
+        {
+            return _repo.Data.FirstOrDefaultAsync(x => x.Id.Equals(id));
+        }
+		
 	}
 }
