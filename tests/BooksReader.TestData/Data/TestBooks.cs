@@ -15,7 +15,7 @@ namespace BooksReader.TestData
 			{
 				new Book()
 				{
-					OwnerId = Guid.Parse("00000000-0000-0000-0000-000000000000"),
+					OwnerId = Guid.Parse("00000000-0000-0000-0000-00000000000A"),
 					Id = Guid.Empty,
 					Author = "William Shakespeare",
 					Title = "Romeo and Juliet"

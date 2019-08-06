@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Book } from '@br/core/models';
+import { BookEditingService } from '@br/core/services';
 
 @Component({
   selector: 'app-book-editing-page',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BookEditingPageComponent implements OnInit {
 
-  constructor() { }
+  book: Book;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router, 
+    private bookEditingSvc: BookEditingService
+  ) { }
 
   ngOnInit() {
+    this.book = this. 
   }
 
 }

@@ -95,14 +95,14 @@ namespace BooksReader.Infrastructure.Repositories
         public async Task<T> AddAsync(T item)
         {
             await _table.AddAsync(item);
-            await _ctx.SaveChangesAsync();
+            _ctx.SaveChanges();
             return item;
         }
 
         public async Task<IEnumerable<T>> AddAsync(IEnumerable<T> items)
         {
             await _table.AddRangeAsync(items);
-            await _ctx.SaveChangesAsync(true);
+            _ctx.SaveChanges(true);
             
             return items;
         }

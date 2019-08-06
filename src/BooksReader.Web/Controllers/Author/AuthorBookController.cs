@@ -45,7 +45,7 @@ namespace BooksReader.Web.Controllers.Author
         {
 		    var user = await _userManager.GetUserAsync(User);
 
-			var books = _booksService.Get(user.Id.ToString()).ToList();
+			var books = _booksService.GetByOwnerId(user.Id).ToList();
 
 	        return new WebResult<IEnumerable<Book>>
 			{ 
@@ -158,5 +158,15 @@ namespace BooksReader.Web.Controllers.Author
 		        });
 	        }
 		}
+
+        [HttpGet("{id:guid}/edit")]
+        public OperationResult<Book> GetBookEditDto(Guid id)
+        {
+            var book = _booksService.Get(id);
+            return new OperationResult<Book>()
+            {
+                Data = book
+            };
+        }
     }
 }

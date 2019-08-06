@@ -68,9 +68,10 @@ namespace BooksReader.Services.Tests
 		[Test]
 		public void Should_Get_owned_books()
 		{
-			var books = bookService.Get(Guid.Empty.ToString());
+			var books = bookService.GetByOwnerId(Guid.Parse("00000000-0000-0000-0000-00000000000A"));
+            var count = books.Count();
 
-			Assert.AreEqual(books.Count(), 1);
+			Assert.AreEqual(count, 1);
 		}
 
 		[Test]
@@ -84,11 +85,12 @@ namespace BooksReader.Services.Tests
 				Author = "Test"
 			};
 
-			var result = bookService.Edit(book);
-			var bookInrepo = bookRepo.Data.FirstOrDefault(b => b.Id.Equals(book.Id));
+            var bookInRepo = bookRepo.Data.FirstOrDefault(b => b.Id.Equals(book.Id));
+            var result = bookService.Edit(book);
+            var bookInRepoAfter = bookRepo.Data.FirstOrDefault(b => b.Id.Equals(book.Id));
 
-
-			Assert.AreEqual(book.Title, bookInrepo.Title);
+            Assert.AreNotEqual(book.Title, bookInRepo.Title);
+            Assert.AreEqual(book.Title, bookInRepoAfter.Title);
 		}
 
 		[Test]
@@ -96,7 +98,7 @@ namespace BooksReader.Services.Tests
 		{
 			var booksCount = bookRepo.Data.Count();
 
-			var result = bookService.Delete("2325a096-1edc-4015-986b-111111111111");
+			var result = bookService.Delete(Guid.Parse("2325a096-1edc-4015-986b-111111111111"));
 
 			Assert.AreEqual(booksCount - 1, bookRepo.Data.Count());
 

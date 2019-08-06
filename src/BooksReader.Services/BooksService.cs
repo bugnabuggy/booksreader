@@ -41,10 +41,8 @@ namespace BooksReader.Infrastructure.Services
 			{
 				throw new BrBadDataException("Title can't be empty");
 			}
-			Book newBook = this.Get(item.Id);
-			newBook.Title = item.Title;
-			newBook.Author = item.Author;
-			var book = _bookRepo.Update(newBook);
+			
+			var book = _bookRepo.Update(item);
 			return book;
 		}
 
@@ -71,9 +69,9 @@ namespace BooksReader.Infrastructure.Services
 				
 		}
 
-		public IQueryable<Book> Get(string userId)
+		public IQueryable<Book> GetByOwnerId(Guid ownerId)
 		{
-			return JoinWithOwner(_bookRepo.Data.Where(x => x.OwnerId.ToString() == userId));
+			return JoinWithOwner(_bookRepo.Data.Where(x => x.OwnerId.Equals(ownerId)));
 		}
 
 		public Book Get(Guid id)
@@ -88,15 +86,27 @@ namespace BooksReader.Infrastructure.Services
 			return book;
 		}
 
-		public Task<Book> AddAsync(Book item)
+		public async  Task<Book> AddAsync(Book item)
 		{
-			throw new NotImplementedException();
-		}
+            if (string.IsNullOrEmpty(item.Title))
+            {
+                throw new BrBadDataException("Title can't be empty");
+            }
+
+            var book = await _bookRepo.AddAsync(item);
+            return book;
+        }
 
 		public Task<Book> EditAsync(Book item)
 		{
-			throw new NotImplementedException();
-		}
+            if (string.IsNullOrEmpty(item.Title))
+            {
+                throw new BrBadDataException("Title can't be empty");
+            }
+
+            var book = _bookRepo.Update(item);
+            return book;
+        }
 
 		public Task<IQueryable<Book>> GetAsync()
 		{

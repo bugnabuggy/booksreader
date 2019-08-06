@@ -9,7 +9,7 @@ namespace BooksReader.Core.Services
 {
 	public interface IBooksService : ICRUDService<Book>
 	{
-		IQueryable<Book> Get(string user);
+        IQueryable<Book> GetByOwnerId(Guid ownerId);
 
-	}
+    }
 }
