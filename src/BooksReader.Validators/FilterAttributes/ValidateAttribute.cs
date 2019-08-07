@@ -2,10 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
+using BooksReader.Core.Entities;
 using BooksReader.Core.Infrastructure;
 using BooksReader.Core.Models;
 using BooksReader.Core.Services;
+using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
 using BooksReader.Infrastructure.Repositories;
 using BooksReader.Validators.FilterAttributes;
@@ -22,9 +25,10 @@ namespace BooksReader.Validators.FilterAttributes
         object Get(Guid id, IServiceProvider provider);
     }
 
-    public class Getter <T> : IGetter where T: IIdentified {
-      
-    public Getter()
+    public class Getter<T> : IGetter where T : IIdentified
+    {
+
+        public Getter()
         {
         }
 
@@ -36,26 +40,41 @@ namespace BooksReader.Validators.FilterAttributes
         }
     }
 
-    public interface IValidatable : IOwned, IIdentified
+    public interface IBrValidator
     {
+        IActionResult Validate(object item, Guid? id, ClaimsPrincipal user = null);
+        IServiceProvider ServiceProvider { get; set; }
     }
 
-    public interface IBrValidator<IValidatable>
+    public class ItemExistsValidator : IBrValidator
     {
-        IActionResult Validate(IValidatable item, Guid id);
-    }
-
-    public class ItemExistsValidator<IValidatable> : IBrValidator<IValidatable> 
-    {
-        public IActionResult Validate(IValidatable item, Guid id)
+        public IActionResult Validate(object item, Guid? id, ClaimsPrincipal user = null)
         {
-
             var result = item == null
                 ? new NotFoundObjectResult(id)
                  : null;
 
             return result;
         }
+
+        public IServiceProvider ServiceProvider { get; set; }
+    }
+
+    public class OwnerOrAdministratorValidator : IBrValidator
+    {
+        public IActionResult Validate(object item, Guid? id, ClaimsPrincipal user = null)
+        {
+            var security = ServiceProvider.GetRequiredService<ISecurityService>();
+            var hasAccess = security.HasAccess(user, item as IOwned);
+
+            var result = hasAccess
+                         ? null
+                         : new ForbidResult();
+
+            return result;
+        }
+
+        public IServiceProvider ServiceProvider { get; set; }
     }
 
 
@@ -63,13 +82,13 @@ namespace BooksReader.Validators.FilterAttributes
     /// Wanna make your life little bit complicated :) ?
     /// no problem ↓
     /// </summary>
-    public class ValidateAttribute: ActionFilterAttribute
+    public class ValidateAttribute : ActionFilterAttribute
     {
         private readonly string _fieldId;
         private readonly Type _type;
-        private readonly IEnumerable<Type> _validators;
+        private readonly IEnumerable<Type> _validators; // where type is IBrValidator<IValidatable>
 
-        public ValidateAttribute(Type getter, IEnumerable<Type> validators, string fieldId = "id")
+        public ValidateAttribute(Type getter, Type[] validators, string fieldId = "id")
         {
             _fieldId = fieldId;
             _type = getter;
@@ -84,25 +103,19 @@ namespace BooksReader.Validators.FilterAttributes
             var getter = Activator.CreateInstance(_type) as IGetter;
             var services = ctx.HttpContext.RequestServices;
 
-            var security = services.GetRequiredService<ISecurityService>();
-
-            var item = getter.Get(id, services) as IValidatable;
+            var item = getter.Get(id, services);
 
             foreach (var type in _validators)
             {
-                var validator = Activator.CreateInstance(type) as IBrValidator<IValidatable>;
-                var result = validator.Validate(item, id);
+                var validator = Activator.CreateInstance(type) as IBrValidator;
+                validator.ServiceProvider = services;
+
+                var result = validator.Validate(item, id, ctx.HttpContext.User);
                 if (result != null)
                 {
                     ctx.Result = result;
                     return;
                 }
-            }
-
-            if(!security.HasAccess(ctx.HttpContext.User, item))
-            {
-                ctx.Result = new ForbidResult();
-                return;
             }
         }
     }

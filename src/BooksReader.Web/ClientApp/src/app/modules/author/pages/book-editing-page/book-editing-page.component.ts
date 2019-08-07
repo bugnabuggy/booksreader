@@ -19,7 +19,7 @@ export class BookEditingPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.book = this. 
+    
   }
 
 }
