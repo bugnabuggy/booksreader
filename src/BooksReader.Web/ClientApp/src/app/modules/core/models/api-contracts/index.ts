@@ -12,3 +12,4 @@ export * from './book-chapter.dto';
 export * from './user-registration.dto';
 export * from './author-profile.dto';
 export * from './public-page-info.dto';
+export * from './book-edit-info';

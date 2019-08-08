@@ -8,7 +8,7 @@ namespace BooksReader.Core.Models.DTO.Author
     public class BookEditDto
     {
         public Book Book { get; set; }
-        public PublicPageInfo PublicPageInfo { get; set; }
+        public PersonalPage BookPage{ get; set; }
         public IEnumerable<BookChapter> BookChapters { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 <div class="flex-1 p-3">
   <h2>Author profile page</h2>
   <form (ngSubmit)="save()" [formGroup]="profileForm" >
-    {{profileForm.erorrs | json}}
     <div *ngIf="profileForm.erorrs || errors.length > 0" class="alert alert-danger" role="alert">
       ERRORROS
     </div>

@@ -40,8 +40,8 @@ class Endpoints {
             profileUrl: '/' + Endpoints.areas.author + '/profile',
             dashboard: 'dashboard',
             dashboardUrl: '/' + Endpoints.areas.author + '/dashboard',
-            book: 'book/:id',
-            bookUrl: '/' + Endpoints.areas.author + '/book/:id',
+            book: 'book/:id/:tab',
+            bookUrl: '/' + Endpoints.areas.author + '/book/:id/:tab',
         }
         
     };
@@ -71,6 +71,7 @@ class Endpoints {
         author: {
             profile: Endpoints.baseApiUrl + 'api/author/profile',
             book: Endpoints.baseApiUrl + 'api/author/book/{id}',
+            bookFullEditInfo: Endpoints.baseApiUrl + 'api/author/book/{id}/edit',
             chapter: Endpoints.baseApiUrl + 'api/author/book/{bookId}/chapter/{id}',
         },
         admin: {

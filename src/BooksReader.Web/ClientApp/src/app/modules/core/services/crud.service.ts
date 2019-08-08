@@ -12,8 +12,8 @@ import { IIdentifiable } from '../models/site/generics';
 })
 export class CrudService<T extends IIdentifiable> implements ICrudService<T> {
   constructor(
-    private http: HttpClient,
-    private baseUrl: string
+    protected http: HttpClient,
+    protected baseUrl: string
   ) { 
   }
 

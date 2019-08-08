@@ -26,7 +26,8 @@ namespace BooksReader.Web.Configuration
             services.AddTransient<IRepository<SeoInfo>, DbRepository<SeoInfo>>();
             services.AddTransient<IRepository<PersonalPage>, DbRepository<PersonalPage>>();
             services.AddTransient<IRepository<AuthorProfile>, DbRepository<AuthorProfile>>();
-
+            services.AddTransient<IRepository<BookChapter>, DbRepository<BookChapter>>();
+            
 
             services.AddTransient<ISecurityService, SecurityService>();
             services.AddTransient<IUsersService, UsersService>();

@@ -88,7 +88,6 @@ export class AuthorDashboardPageComponent implements OnInit {
         book.title = result;
         this.bookEditingSvc.update(book)
           .subscribe((val: OperationResult<Book>) => {
-            debugger;
             this.notifications.showSuccess(StringConstants.books.edited)
           });
       }
@@ -96,8 +95,9 @@ export class AuthorDashboardPageComponent implements OnInit {
   }
 
   edit(book: Book) {
-    debugger;
-    this.router.navigateByUrl(Endpoints.forntend.author.bookUrl.replace(':id', book.id));
+    this.router.navigateByUrl(Endpoints.forntend.author.bookUrl
+      .replace(':id', book.id)
+      .replace(':tab',''));
   }
 
   delete(book: Book) {

@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
+using BooksReader.Core.Enums;
 using BooksReader.Core.Exceptions;
+using BooksReader.Core.Infrastructure;
 using BooksReader.Core.Models;
+using BooksReader.Core.Models.DTO;
+using BooksReader.Core.Models.DTO.Author;
 using BooksReader.Core.Models.Requests.Filters;
 using BooksReader.Core.Services;
 using BooksReader.Dictionaries;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.Repositories;
+using BooksReader.Validators;
 using BooksReader.Validators.FilterAttributes;
+using BooksReader.Validators.Getters;
 using BooksReader.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -25,17 +31,23 @@ namespace BooksReader.Web.Controllers.Author
     public class AuthorBookController : ControllerBase
     {
         private readonly IBooksService _booksService;
+        private readonly IRepository<PersonalPage> _personalPagesRepo;
+        private readonly IRepository<BookChapter> _bookChaptersRepo;
         private readonly UserManager<BrUser> _userManager;
         private readonly ISecurityService _security;
 
         public AuthorBookController(
             IBooksService booksService,
+            IRepository<PersonalPage> personalPagesRepo,
+            IRepository<BookChapter> bookChaptersRepo,
             ISecurityService security,
             UserManager<BrUser> userManager)
         {
             _booksService = booksService;
             _userManager = userManager;
             _security = security;
+            _personalPagesRepo = personalPagesRepo;
+            _bookChaptersRepo = bookChaptersRepo;
         }
 
 
@@ -111,12 +123,11 @@ namespace BooksReader.Web.Controllers.Author
                     return Forbid(MessageStrings.DoNotHavePermissions);
                 }
 
-                book = _booksService.Edit(new Book()
-                {
-                    Id = model.Id,
-                    Title = model.Title,
-                    Author = model.Author
-                });
+                // quick update
+                book.Author = model.Author;
+                book.Title = model.Title;
+
+                book = _booksService.Edit(book);
                 return Ok(new OperationResult<Book>()
                 {
                     Data = book,
@@ -163,13 +174,35 @@ namespace BooksReader.Web.Controllers.Author
             }
         }
 
-        [HttpGet("{id:guid}/edit")]
-        public OperationResult<Book> GetBookEditDto(Guid id)
-        {
-            var book = _booksService.Get(id);
-            return new OperationResult<Book>()
+        [HttpGet("{bookId:guid}/edit")]
+        [Validate(typeof(Getter<Book>),
+            new Type[]
             {
-                Data = book
+                typeof(ItemExistsValidator),
+                typeof(OwnerOrAdministratorValidator)
+            },
+            "bookId")]
+        public OperationResult<BookEditDto> GetBookEditDto(Guid bookId)
+        {
+            var book = _booksService.Get(bookId);
+
+            var bookChapters = _bookChaptersRepo.Data.Where(x => x.BookId.Equals(bookId));
+
+            var personalPage = _personalPagesRepo.Data.FirstOrDefault(x =>
+                x.PageType == PersonalPageType.BookPage 
+                && x.SubjectId.Equals(bookId));
+                
+            var data = new BookEditDto()
+            {
+                Book = book,
+                BookPage = personalPage,
+                BookChapters = bookChapters
+            };
+
+            return new OperationResult<BookEditDto>()
+            {
+                Data = data,
+                Success = true,
             };
         }
     }

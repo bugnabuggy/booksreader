@@ -9,6 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AddBookDialogComponent } from './components/add-book-dialog/add-book-dialog.component';
 import { AuthorContainerComponent } from './pages/author-container/author-container.component';
 import { BookEditingPageComponent } from './pages/book-editing-page/book-editing-page.component';
+import { BookInfoEditComponent } from './components/book-info-edit/book-info-edit.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { BookEditingPageComponent } from './pages/book-editing-page/book-editing
     AuthorProfilePageComponent,
     AddBookDialogComponent,
     AuthorContainerComponent,
-    BookEditingPageComponent],
+    BookEditingPageComponent,
+    BookInfoEditComponent],
   imports: [
     CommonModule,
     AuthorRoutingModule,

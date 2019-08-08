@@ -1,0 +1,9 @@
+<div class="flex-1 p-3">
+  <form (ngSubmit)="save()" [formGroup]="bookForm">
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Book title" required formControlName="title">
+    </mat-form-field>
+
+    <button [disabled]="isUiBlocked && bookForm.valid" mat-raised-button color="primary">Save</button>
+  </form>
+</div>
