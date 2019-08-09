@@ -16,10 +16,16 @@ namespace BooksReader.Core.Entities
         [MaxLength(1000)]
         public string Author { get; set; }
 
+        [MaxLength(3000)]
+        public string Description { get; set; }
+
+        public bool IsPublished { get; set; }
+
+
         public string Picture { get; set; }
 
 		public DateTime Created { get; set; }
-		public DateTime Published { get; set; }
+		public DateTime? Published { get; set; }
 
 		// non database properties
 		public string OwnerName;

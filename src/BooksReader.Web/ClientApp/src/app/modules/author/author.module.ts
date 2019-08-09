@@ -10,6 +10,9 @@ import { AddBookDialogComponent } from './components/add-book-dialog/add-book-di
 import { AuthorContainerComponent } from './pages/author-container/author-container.component';
 import { BookEditingPageComponent } from './pages/book-editing-page/book-editing-page.component';
 import { BookInfoEditComponent } from './components/book-info-edit/book-info-edit.component';
+import { BookContentEditorComponent } from './components/book-content-editor/book-content-editor.component';
+import { BookChaptersEditorComponent } from './components/book-chapters-editor/book-chapters-editor.component';
+import { BookChapterInfoEditorComponent } from './components/book-chapter-info-editor/book-chapter-info-editor.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { BookInfoEditComponent } from './components/book-info-edit/book-info-edi
     AddBookDialogComponent,
     AuthorContainerComponent,
     BookEditingPageComponent,
-    BookInfoEditComponent],
+    BookInfoEditComponent,
+    BookContentEditorComponent,
+    BookChaptersEditorComponent,
+    BookChapterInfoEditorComponent],
   imports: [
     CommonModule,
     AuthorRoutingModule,

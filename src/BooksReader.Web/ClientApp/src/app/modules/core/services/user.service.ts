@@ -73,7 +73,6 @@ export class UserService {
         observabe.subscribe(val => {
 
         }, err=>{
-            debugger;
             this.notifications.showError(err.value);
         })
 
@@ -95,7 +94,6 @@ export class UserService {
 
     refresh() {
         this.securitySvc.getUserInfo().subscribe(user => {
-            debugger;
             this.initMenu(user);
         })
     }

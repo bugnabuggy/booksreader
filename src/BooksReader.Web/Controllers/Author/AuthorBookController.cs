@@ -89,9 +89,10 @@ namespace BooksReader.Web.Controllers.Author
                     Id = Guid.NewGuid(),
                     Title = model.Title,
                     Author = model.Author,
-                    Created = DateTime.Now,
+                    Created = DateTime.UtcNow,
                     OwnerId = user.Id
                 });
+
                 return new OperationResult<Book>()
                 {
                     Data = book,

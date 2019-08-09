@@ -42,8 +42,8 @@ export class BookEditingPageComponent implements OnInit {
           console.log(y);
           if (y.success) {
             this.book = y.data.book;
-            this.chapters = y.data.chapters;
-            this.bookPage = y.data.bookPage;
+            this.chapters = y.data.chapters || [];
+            this.bookPage = y.data.bookPage || {} as PersonalPage;
           }
         }, err => {
           this.notifications.showError(err.message || StringConstants.errors.anyError);
