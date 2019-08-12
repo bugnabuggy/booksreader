@@ -11,4 +11,10 @@ export class StringConstants {
         edited: 'BOOK_EDTED',
         deleted: 'BOOK_DELETED'
     }
+
+    static chapters = {
+        added: 'CHAPTER_ADDED',
+        edited: 'CHAPTER_EDTED',
+        deleted: 'CHAPTER_DELETED'
+    }
 }

@@ -13,6 +13,8 @@ import { BookInfoEditComponent } from './components/book-info-edit/book-info-edi
 import { BookContentEditorComponent } from './components/book-content-editor/book-content-editor.component';
 import { BookChaptersEditorComponent } from './components/book-chapters-editor/book-chapters-editor.component';
 import { BookChapterInfoEditorComponent } from './components/book-chapter-info-editor/book-chapter-info-editor.component';
+import { BookContentInnerEditorComponent } from './components/book-content-inner-editor/book-content-inner-editor.component';
+import { AddStringDialogComponent } from './components/add-string-dialog/add-string-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { BookChapterInfoEditorComponent } from './components/book-chapter-info-e
     BookInfoEditComponent,
     BookContentEditorComponent,
     BookChaptersEditorComponent,
-    BookChapterInfoEditorComponent],
+    BookChapterInfoEditorComponent,
+    BookContentInnerEditorComponent,
+    AddStringDialogComponent],
   imports: [
     CommonModule,
     AuthorRoutingModule,
@@ -32,7 +36,8 @@ import { BookChapterInfoEditorComponent } from './components/book-chapter-info-e
     TranslateModule.forChild()
   ],
   entryComponents:[
-    AddBookDialogComponent
+    AddBookDialogComponent,
+    AddStringDialogComponent
   ]
 
 })

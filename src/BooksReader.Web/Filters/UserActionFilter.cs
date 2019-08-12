@@ -18,7 +18,7 @@ namespace BooksReader.Web.Filters
 
             if (controller != null)
             {
-                await controller.SetUser();
+                await controller.GetUser();
             }
             var result = await next();
         }

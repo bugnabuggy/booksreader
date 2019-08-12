@@ -1,17 +1,32 @@
-<mat-drawer-container class="example-container" autosize>
-    <mat-drawer #drawer class="example-sidenav" mode="side">
-      <p>Auto-resizing sidenav</p>
-      <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-      <button (click)="showFiller = !showFiller" mat-raised-button>
-        Toggle extra text
-      </button>
+<mat-drawer-container class="flex-1" autosize>
+    <mat-drawer 
+      #drawer 
+      position='end'
+      class="d-flex"
+      [opened]='sidebarIsOpened'
+      [mode]="sidebarMode">
+      <app-book-chapters-editor 
+        [chapters]="chapters"
+        [bookId]="book?.id"
+        class='br-chapters-sidenav'>
+
+      </app-book-chapters-editor>
     </mat-drawer>
   
-    <div class="example-sidenav-content">
-      <button type="button" mat-button (click)="drawer.toggle()">
-        Toggle sidenav
-      </button>
+    <div class="d-flex flex-1 flex-column">
+      <div class="p-2">
+          <button type="button" 
+          class='br-toggle-button'
+          mat-raised-button color="primary" (click)="drawer.toggle()">
+          Toggle chapters panel
+        </button>
+      </div>
+
+      <app-book-content-inner-editor
+        class="d-flex flex-1 bg-info"
+      >
+
+      </app-book-content-inner-editor>
     </div>
-  
   </mat-drawer-container>
   

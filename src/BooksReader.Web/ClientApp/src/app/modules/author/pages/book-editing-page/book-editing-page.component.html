@@ -1,17 +1,17 @@
 <div class='d-flex flex-1 flex-column'>
   <h2 class='m-1'>Editing [{{book?.title}}]</h2>
-  <mat-tab-group class='flex-1' [selectedIndex]='tabIndex' (selectedIndexChange)='changeTab($event)'>
+  <mat-tab-group 
+  class='flex-1 br-book-content-edit' 
+  [selectedIndex]='tabIndex' 
+  (selectedIndexChange)='changeTab($event)'>
     <mat-tab 
       label="{{'Book editing'}}">
-      <div class="bg-info flex-1">
-        A
           <app-book-content-editor 
+          class='d-flex flex-1'
           [book]='book' 
           [chapters]='chapters' 
           >
           </app-book-content-editor>
-      </div>
-
     </mat-tab>
 
     <mat-tab label="{{'Book properties'}}">

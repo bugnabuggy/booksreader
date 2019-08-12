@@ -11,6 +11,7 @@ using Ruteco.AspNetCore.Translate;
 
 namespace BooksReader.Web.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
     public class PublicController : BaseController
     {

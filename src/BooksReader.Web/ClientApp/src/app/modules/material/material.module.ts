@@ -34,6 +34,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { CdkTableModule } from '@angular/cdk/table';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 const MATERIAL_DESIGN = [
     MatAutocompleteModule,
@@ -68,7 +69,8 @@ const MATERIAL_DESIGN = [
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    CdkTableModule
+    CdkTableModule,
+    DragDropModule
 ];
 
 

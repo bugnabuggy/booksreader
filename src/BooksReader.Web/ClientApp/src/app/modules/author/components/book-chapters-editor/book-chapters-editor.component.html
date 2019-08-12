@@ -1,3 +1,27 @@
-<p>
-  book-chapters-editor works!
-</p>
+<div class="d-flex flex-1 flex-column justify-content-between">
+  <div>
+    <h2 class="w-100">
+      Chapters 
+      <button
+         class="float-right"
+         mat-icon-button aria-label="Add Chapter"
+         (click)='add()'>
+        <mat-icon>add_circle_outline</mat-icon>
+      </button>
+    </h2>
+    <ul class='list-group' cdkDropList (cdkDropListDropped)="drop($event)">
+        <li class='list-group-item' *ngFor="let chapter of chapters" cdkDrag>
+            <mat-icon mat-list-icon>unfold_more</mat-icon> {{chapter.title}}
+        </li>
+    </ul>
+  </div>
+
+  <form [formGroup]="chapterForm">
+      <!-- <mat-form-field class="w-100">
+          <input matInput type="" placeholder="Book title" required formControlName="title">
+        </mat-form-field> -->
+
+        <button [disabled]="isUiBlocked || !chapterForm.valid" mat-raised-button color="primary">Save</button>
+  </form>
+</div>
+

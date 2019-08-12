@@ -35,6 +35,7 @@ namespace BooksReader.Web.Configuration
             services.AddTransient<IPublicService, PublicService>();
 
             services.AddTransient<IBooksService, BooksService>();
+            services.AddTransient<IBookChapterService, BookChapterService>();
         }
 
         public static void InitRolesAndUsers(IServiceProvider services)

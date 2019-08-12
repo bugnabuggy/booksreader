@@ -24,6 +24,7 @@ namespace BooksReader.Web.Controllers.Author
     public class AuthorProfileController : BaseUserController
     {
         private readonly IAuthorProfileService _authorProfileSvc;
+
         public AuthorProfileController(
             IAuthorProfileService authorProfileSvc,
             IUsersService usersService,

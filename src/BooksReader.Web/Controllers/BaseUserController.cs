@@ -30,7 +30,7 @@ namespace BooksReader.Web.Controllers
             _usersService = usersService;
         }
 
-        public async Task SetUser()
+        public async Task GetUser()
         {
             user = await _userManager.GetUserAsync(User);
         }

@@ -2,32 +2,50 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BooksReader.Core.Entities;
+using BooksReader.Core.Models;
+using BooksReader.Core.Models.Requests;
+using BooksReader.Core.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Ruteco.AspNetCore.Translate;
 
 namespace BooksReader.Web.Controllers.Author
 {
     [Route("api/author/book/{bookId}/chapter")]
     [ApiController]
-    public class BookChapterController : ControllerBase
+    public class BookChapterController : BaseUserController
     {
+        private readonly IBookChapterService _bookChapterService;
+
+        public BookChapterController(
+            IBookChapterService bookChapterService,
+            IUsersService usersService,
+            ITranslationService translations,
+            UserManager<BrUser> userManager
+            ) : base(userManager, usersService, translations)
+        {
+            _bookChapterService = bookChapterService;
+        }
         
         [HttpGet]
-        public IEnumerable<string> Get(string bookId)
+        public IEnumerable<BookChapter> GetByBook([FromRoute]Guid bookId)
         {
-
-            return new string[] { bookId, "value1", "value2" };
+            return _bookChapterService.GetByBook(bookId);
         }
 
         [HttpGet("{id}")]
-        public string Get(int id)
+        public BookChapter Get(Guid id)
         {
-            return "value";
+            return _bookChapterService.Get(id);
         }
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IOperationResult<BookChapter> Post([FromRoute] Guid bookId, [FromBody] BookChapterRequest item)
         {
+            var result = _bookChapterService.AddOrUpdate(bookId, item);
+            return result;
         }
 
         [HttpPut("{id}")]
@@ -36,8 +54,10 @@ namespace BooksReader.Web.Controllers.Author
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IOperationResult<BookChapter> Delete(Guid id)
         {
+            var result = _bookChapterService.Delete(id);
+            return result;
         }
     }
 }

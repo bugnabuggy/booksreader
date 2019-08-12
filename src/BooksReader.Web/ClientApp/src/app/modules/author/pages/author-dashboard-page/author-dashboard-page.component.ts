@@ -72,7 +72,6 @@ export class AuthorDashboardPageComponent implements OnInit {
             this.notifications.showSuccess(StringConstants.books.added)
           });
       }
-
     });
   }
 

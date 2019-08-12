@@ -22,6 +22,6 @@ namespace BooksReader.Core.Models
 
     public class WebResult<T> : WebResult
     {
-        public T Data { get; set; }
+        public new T Data { get; set; }
     }
 }

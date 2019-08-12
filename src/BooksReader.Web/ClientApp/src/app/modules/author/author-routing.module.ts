@@ -13,7 +13,7 @@ const routes: Routes = [
     { path:Endpoints.forntend.author.dashboard, component: AuthorDashboardPageComponent },
     { path:Endpoints.forntend.author.profile, component: AuthorProfilePageComponent },
     { path:Endpoints.forntend.author.book, component: BookEditingPageComponent },
-    { path:Endpoints.forntend.author.book.replace(':tab',''), component: BookEditingPageComponent } 
+    { path:Endpoints.forntend.author.book.replace('/:tab',''), component: BookEditingPageComponent } 
   ]},
   
 ];

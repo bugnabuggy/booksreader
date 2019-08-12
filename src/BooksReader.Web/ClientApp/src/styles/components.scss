@@ -5,8 +5,6 @@
     list-style: none;
     display: block;
     padding: $padding-standard;
-    
-
 
     .br-books-list-item {
         overflow: hidden;
@@ -31,4 +29,27 @@
     }
 
     clear: both;
+}
+
+.br-book-content-edit{
+    .mat-tab-body-wrapper{
+        display: flex;
+        flex: 1;
+
+
+
+        .mat-tab-body-content, 
+        .mat-drawer-content, 
+        .mat-drawer-inner-container{
+            display: flex;
+            flex: 1;
+        }
+    }
+}
+
+.br-chapters-sidenav {
+    width: 320px;
+    display: flex;
+    background: pink;
+
 }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BooksReader.Infrastructure.Services
 {
-	public class CRUDService<T> : ICRUDService<T> where T: IIdentified
+	public class CRUDService<T> : ICRUDOperatonService<T> where T: IIdentified
     {
         private readonly IRepository<T> _repo;
         public CRUDService(IRepository<T> repo)
@@ -18,38 +18,58 @@ namespace BooksReader.Infrastructure.Services
             _repo = repo;
         }
 
-		public virtual T Add(T item)
-        {
-            var result = _repo.Add(item);
-            return result;
-        }
-
-		public virtual T Edit(T item)
-        {
-            var result = _repo.Update(item);
-            return result;
-        }
-
-		public virtual IQueryable<T> Get()
+        public virtual IQueryable<T> Get()
         {
             return _repo.Data;
         }
 
-		public virtual T Get(Guid id)
+        public virtual T Get(Guid id)
         {
             return _repo.Data.FirstOrDefault(x => x.Id.Equals(id));
         }
 
-		public virtual T Delete(Guid id)
+        public virtual IOperationResult<T> Add(T item)
         {
-            var item = _repo.Data.FirstOrDefault(x => x.Id.Equals(id));
-            var result = _repo.Delete(item);
-            return result;
+            var data = _repo.Add(item);
+
+            return new OperationResult<T>()
+            {
+                Data = data,
+                Success = true
+            };
         }
 
-		public virtual Task<T> AddAsync(T item)
+		public virtual IOperationResult<T> Edit(T item)
         {
-            return _repo.AddAsync(item);
+            var data = _repo.Update(item);
+
+            return new OperationResult<T>()
+            {
+                Data = data,
+                Success = true
+            };
+        }
+
+		public virtual IOperationResult<T> Delete(Guid id)
+        {
+            var item = _repo.Data.FirstOrDefault(x => x.Id.Equals(id));
+            var data = _repo.Delete(item);
+
+            return new OperationResult<T>()
+            {
+                Data =  data,
+                Success =  true
+            };
+        }
+
+		public virtual async Task<IOperationResult<T>> AddAsync(T item)
+        {
+            var data = await _repo.AddAsync(item);
+            return new OperationResult<T>()
+            {
+                Data = data,
+                Success = true
+            };
         }
 
 
