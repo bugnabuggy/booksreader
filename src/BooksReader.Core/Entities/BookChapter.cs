@@ -19,6 +19,7 @@ namespace BooksReader.Core.Entities
         [MaxLength(3000)]
         public string Description { get; set; }
 
+        public uint Version { get; set; }
         public string Content { get; set; }
 		public DateTime Created { get; set; }
 

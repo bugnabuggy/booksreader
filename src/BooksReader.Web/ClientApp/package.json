@@ -28,6 +28,7 @@
     "@nguniversal/module-map-ngfactory-loader": "^8.0.0-rc.0",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
+    "@tinymce/tinymce-angular": "^3.2.0",
     "angular2-notifications": "^2.0.0",
     "angularx-social-login": "^1.2.7",
     "aspnet-prerendering": "^3.0.1",

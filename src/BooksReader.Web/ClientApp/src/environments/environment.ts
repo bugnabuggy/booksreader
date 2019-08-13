@@ -6,5 +6,6 @@
 export const environment = {
   baseApiUrl: 'http://localhost:5000/',
   production: false,
-  facebookAppId: '277711532267100'
+  facebookAppId: '277711532267100',
+  tinyMCEApiKey:''
 };

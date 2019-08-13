@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { EditorModule } from '@tinymce/tinymce-angular';
+
+
 
 import { AuthorRoutingModule } from './author-routing.module';
 import { AuthorDashboardPageComponent } from './pages/author-dashboard-page/author-dashboard-page.component';
@@ -33,7 +36,8 @@ import { AddStringDialogComponent } from './components/add-string-dialog/add-str
     CommonModule,
     AuthorRoutingModule,
     SharedModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    EditorModule 
   ],
   entryComponents:[
     AddBookDialogComponent,

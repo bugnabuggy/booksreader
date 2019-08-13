@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
   baseApiUrl: 'http://localhost:5000/',
-  facebookAppId: ''
+  facebookAppId: '',
+  tinyMCEApiKey: ''
 };

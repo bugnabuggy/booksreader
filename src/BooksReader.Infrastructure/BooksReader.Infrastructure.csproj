@@ -297,6 +297,10 @@
     <Compile Include="Migrations\20190812120938_ChaptersChanges.designer.cs">
       <DependentUpon>20190812120938_ChaptersChanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190813105114_ChaptersHistoryTable.cs" />
+    <Compile Include="Migrations\20190813105114_ChaptersHistoryTable.designer.cs">
+      <DependentUpon>20190813105114_ChaptersHistoryTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\BrDbContextModelSnapshot.cs" />
     <Compile Include="Migrations\PersistedGrantDb\20190704084525_Initial.cs" />
     <Compile Include="Migrations\PersistedGrantDb\20190704084525_Initial.designer.cs">

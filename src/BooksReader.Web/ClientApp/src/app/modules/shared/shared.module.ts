@@ -10,9 +10,16 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { BooksListItemComponent } from './components/books-list-item/books-list-item.component';
 import { BooksListAuthorItemComponent } from './components/books-list-author-item/books-list-author-item.component';
 import { BooksListNoContentComponent } from './components/books-list-no-content/books-list-no-content.component';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
-  declarations: [BooksListComponent, BooksListItemComponent, BooksListAuthorItemComponent, BooksListNoContentComponent],
+  declarations: [
+    BooksListComponent,
+    BooksListItemComponent, 
+    BooksListAuthorItemComponent, 
+    BooksListNoContentComponent, 
+    ConfirmationDialogComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -25,6 +32,9 @@ import { BooksListNoContentComponent } from './components/books-list-no-content/
     ReactiveFormsModule,
     MaterialModule,
     BooksListComponent,    
+  ],
+  entryComponents:[
+    ConfirmationDialogComponent
   ]
 })
 export class SharedModule { }

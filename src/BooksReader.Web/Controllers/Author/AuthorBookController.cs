@@ -197,7 +197,7 @@ namespace BooksReader.Web.Controllers.Author
             {
                 Book = book,
                 BookPage = personalPage,
-                Chapters = bookChapters
+                Chapters = bookChapters.OrderBy(x=>x.Number)
             };
 
             return new OperationResult<BookEditDto>()

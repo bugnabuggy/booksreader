@@ -1,5 +1,6 @@
 export interface BookChapterRequest {
     id: string;
     title: string;
-    description: string;
+    description?: string;
+    isPublished?: boolean;
 }

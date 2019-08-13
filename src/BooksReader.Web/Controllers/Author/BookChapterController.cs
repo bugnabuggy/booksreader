@@ -41,10 +41,23 @@ namespace BooksReader.Web.Controllers.Author
             return _bookChapterService.Get(id);
         }
 
+        /// <summary>
+        /// Creation or quick update of book chapter
+        /// </summary>
+        /// <param name="bookId"></param>
+        /// <param name="item">request with basic chapter data</param>
+        /// <returns></returns>
         [HttpPost]
         public IOperationResult<BookChapter> Post([FromRoute] Guid bookId, [FromBody] BookChapterRequest item)
         {
             var result = _bookChapterService.AddOrUpdate(bookId, item);
+            return result;
+        }
+
+        [HttpPost("reorder")]
+        public IOperationResult<IEnumerable<BookChapterReorderRequest>> Post([FromRoute] Guid bookId, [FromBody] IEnumerable<BookChapterReorderRequest> order)
+        {
+            var result = _bookChapterService.Reorder(bookId, order);
             return result;
         }
 

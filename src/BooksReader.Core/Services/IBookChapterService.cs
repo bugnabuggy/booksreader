@@ -11,7 +11,7 @@ namespace BooksReader.Core.Services
     public interface IBookChapterService : ICRUDOperatonService<BookChapter>
     {
         IQueryable<BookChapter> GetByBook(Guid bookId);
-
         IOperationResult<BookChapter> AddOrUpdate(Guid bookId, BookChapterRequest chapterInfo);
+        IOperationResult<IEnumerable<BookChapterReorderRequest>> Reorder(Guid bookId, IEnumerable<BookChapterReorderRequest> order);
     }
 }

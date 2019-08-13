@@ -23,7 +23,10 @@ namespace BooksReader.Infrastructure.DataContext
         public DbSet<AuthorProfile> AuthorProfiles { get; set; }
 	    public DbSet<Book> Books { get; set; }
 	    public DbSet<BookChapter> BookChapters { get; set; }
-	    public DbSet<LoginHistory> LoginHistory { get; set; }
+        public DbSet<BookChapterHistory> BookChaptersHistory { get; set; }
+        public DbSet<LoginHistory> LoginHistory { get; set; }
+        
+
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -35,9 +38,28 @@ namespace BooksReader.Infrastructure.DataContext
             builder.Entity<Book>()
                 .HasIndex(x => x.Author);
             builder.Entity<Book>()
+                .HasIndex(x => x.OwnerId);
+            builder.Entity<Book>()
                 .HasIndex(x => x.Created);
             builder.Entity<Book>()
                 .HasIndex(x => x.Published);
+
+            builder.Entity<BookChapter>()
+                .HasIndex(x => x.Created);
+            builder.Entity<BookChapter>()
+                .HasIndex(x => x.OwnerId);
+            builder.Entity<BookChapter>()
+                .HasIndex(x => x.Title);
+            builder.Entity<BookChapter>()
+                .HasIndex(x => x.Version);
+            builder.Entity<BookChapter>()
+                .HasIndex(x => x.Number);
+
+            builder.Entity<BookChapterHistory>()
+                .HasIndex(x => x.Date);
+            builder.Entity<BookChapterHistory>()
+                .HasIndex(x => x.OwnerId);
+                
 
             builder.Entity<AuthorProfile>()
                 .HasIndex(x => x.AuthorName);

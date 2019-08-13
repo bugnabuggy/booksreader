@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BookChapterEditingService } from '@br/core/services';
+import { BookChapter } from '@br/core/models';
 
 @Component({
   selector: 'app-book-content-inner-editor',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BookContentInnerEditorComponent implements OnInit {
 
-  constructor() { }
+  bookChapter: BookChapter = null;
+
+  constructor(
+    private chapterEditingSvc: BookChapterEditingService   
+  ) { }
 
   ngOnInit() {
+    this.chapterEditingSvc.activeChapter.subscribe((chapter: BookChapter)=>{
+      this.bookChapter = chapter;
+    })
   }
 
 }

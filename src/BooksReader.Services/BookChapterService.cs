@@ -120,10 +120,38 @@ namespace BooksReader.Services
             return result;
         }
 
-        public IOperationResult<BookChapter> Edit(Guid bookId, BookChapterRequest chapterInfo)
+        public IOperationResult<IEnumerable<BookChapterReorderRequest>> Reorder(Guid bookId, IEnumerable<BookChapterReorderRequest> order)
         {
-            throw new NotImplementedException();
+            var result = new OperationResult<IEnumerable<BookChapterReorderRequest>>(true);
+            var data = new List<BookChapterReorderRequest>();
+
+            var chapters = _chaptersRepo.Data.Where(x => x.BookId.Equals(bookId)).ToList();
+
+            foreach (var chapterOrder in order)
+            {
+                var chapter = chapters.FirstOrDefault(x => x.Id.Equals(chapterOrder.Id));
+                if (chapter != null)
+                {
+                    chapter.Number = chapterOrder.Number;
+                }
+                else
+                {
+                    data.Add(chapterOrder);
+                }
+            }
+
+            // save changes
+            _chaptersRepo.Update(chapters);
+
+            if (data.Any())
+            {
+                result.Success = false;
+                result.Messages.Add(MessageStrings.BookChapterMessages.SomeChaptersNotFoundDuringReorder);
+            }
+
+            return result;
         }
+
 
         public IOperationResult<BookChapter> Add(BookChapter item)
         {
