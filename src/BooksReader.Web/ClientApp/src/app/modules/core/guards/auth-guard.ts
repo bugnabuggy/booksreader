@@ -29,6 +29,7 @@ export class AuthGuard implements CanActivate, CanLoad {
     const guard = this.security.isLoggedIn$.pipe(share());
     
     guard.subscribe((val) => {
+      debugger;
       if (!val) {
         this.router.navigate([Endpoints.forntend.authorization]);
       }

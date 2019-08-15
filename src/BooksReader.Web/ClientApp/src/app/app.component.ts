@@ -46,7 +46,9 @@ export class AppComponent implements OnInit {
       this.publicSvc.getPageInfo().subscribe(val => {
         // TODO: think how to show control UI components to be able to navigate to management pages
         this.publicPageInfo = val || null;
-        if(!val) {
+        
+        let isloggedIn = this.userSvc.isLoggedIn;
+        if(!val && !isloggedIn) {
           this.userSvc.showUi();
           this.router.navigate([Endpoints.forntend.main]);
         } else {

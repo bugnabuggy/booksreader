@@ -77,6 +77,12 @@ namespace BooksReader.Web
 			services.AddIdentityServer(
                     opt=>
                     {
+                        var isParsed = bool.TryParse(Configuration["Security:UseIssuerInsteadOfURL"], out bool useIssuer);
+                        if (isParsed && useIssuer)
+                        {
+                            opt.IssuerUri = Configuration["Security:IssuerName"];
+                        }
+                        
                     })
 				.AddDeveloperSigningCredential()
 				.AddInMemoryApiResources(IdServerConfig.GetApiResources())
@@ -105,19 +111,26 @@ namespace BooksReader.Web
 					o.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
 					o.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
 					o.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                    
 				})
                 .AddFacebook(facebookOptions =>
                 {
                     facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                     facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
                 })
-                .AddIdentityServerAuthentication(options =>
-				{
-
-					options.Authority = Configuration["ServerUrl"];
-					options.RequireHttpsMetadata = false;
+                .AddIdentityServerAuthentication( options =>
+                {
+                    var isParsed = bool.TryParse(Configuration["Security:UseIssuerInsteadOfURL"], out bool useIssuer);
+                    if (isParsed && useIssuer)
+                    {
+                        options.ClaimsIssuer = Configuration["Security:IssuerName"];
+                    }
+                    
+                    options.Authority = Configuration["Security:ServerUrl"];
+                    options.RequireHttpsMetadata = false;
 				    options.TokenRetriever = CustomTokenRetriever.FromHeaderAndQueryString;
                     
+
                     options.ApiName = IdServerConfig.ApiName;
 				});
 

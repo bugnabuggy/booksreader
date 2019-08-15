@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { BookChapter } from '@br/core/models';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-book-chapter-info-editor',
@@ -7,7 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BookChapterInfoEditorComponent implements OnInit {
 
-  constructor() { }
+  @Input()chapter: BookChapter;
+  @Output()delete = new EventEmitter<BookChapter>();
+  @Output()edit = new EventEmitter<BookChapter>();
+
+  chapterForm: FormGroup;
+
+  constructor(private fb: FormBuilder) { 
+    this.chapterForm = this.fb.group({
+    });
+  }
 
   ngOnInit() {
   }

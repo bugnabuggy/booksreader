@@ -47,10 +47,11 @@ export class LoginComponent implements OnInit {
 
             }, (err) => {
                 debugger;
-                this.errorMessage = err.error.error_description || err.name;
+                this.errorMessage = err.error && err.error.error_description || err.name;
                 if (err.status === 400) {
                     this.notifications.showError(`Invalid username or password`);
                 }
+                
             });
     }
 

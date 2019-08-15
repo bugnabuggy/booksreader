@@ -72,13 +72,13 @@ namespace BooksReader.Web.Configuration
                     userManager.AddToRolesAsync(user.Key, roles.Select(x => x.Name)).Wait(Constants.AsyncTaskWaitTime);
                 }
 
-            bool.TryParse(config["ResetAdminPassword"], out var resetPassword);
+            bool.TryParse(config["Security:ResetAdminPassword"], out var resetPassword);
 
             if (resetPassword)
             {
                 var admin = userManager.FindByNameAsync("admin").Result;
                 var token = userManager.GeneratePasswordResetTokenAsync(admin).Result;
-                var result = userManager.ResetPasswordAsync(admin, token, config["NewPassword"] ?? "Pasword@123")
+                var result = userManager.ResetPasswordAsync(admin, token, config["Security:NewPassword"] ?? "Pasword@123")
                     .Result;
             }
         }

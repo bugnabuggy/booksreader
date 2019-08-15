@@ -12,6 +12,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class BookChapterEditingService  {
   readonly activeChapter = new BehaviorSubject<BookChapter>(null);
+  
 
   constructor(
     private http: HttpClient

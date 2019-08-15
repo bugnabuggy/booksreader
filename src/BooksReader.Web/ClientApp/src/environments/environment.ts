@@ -4,8 +4,8 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  baseApiUrl: 'http://localhost:5000/',
+  baseApiUrl: 'http://developer3:5000/',
   production: false,
   facebookAppId: '277711532267100',
-  tinyMCEApiKey:''
+  tinyMCEApiKey:'rn8afmd09o68emfvblb3yifrdm28g4tfaar7dj1je3z9p0fk'
 };

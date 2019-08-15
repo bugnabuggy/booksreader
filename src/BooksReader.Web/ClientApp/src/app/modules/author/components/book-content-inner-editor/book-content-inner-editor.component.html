@@ -1,3 +1,7 @@
 <div class="flex-1 d-flex">
-  <editor apiKey="test" class='flex-1'> </editor>
+  <editor 
+  (onChange)="change($event)"
+  [apiKey]="tinyMCEApiKey"
+  [init]="initConfig"
+    class='flex-1'> </editor>
 </div>

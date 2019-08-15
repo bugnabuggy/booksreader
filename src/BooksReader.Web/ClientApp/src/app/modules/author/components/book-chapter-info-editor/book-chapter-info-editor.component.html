@@ -1,3 +1,20 @@
-<p>
-  book-chapter-info-editor works!
-</p>
+<mat-card class='m-2 mat-elevation-z4' >
+  <mat-card-header>
+    <mat-card-title>{{chapter.title}}</mat-card-title>
+    <div>
+      <button mat-icon-button (click)="edit.emit(chapter)" color="accent" aria-label="Example icon-button with a heart icon">
+        <mat-icon mat-list-icon class='br-vert-midddle'>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="delete.emit(chapter)" aria-label="Example icon-button with a heart icon">
+        <mat-icon mat-list-icon class='br-vert-midddle'>delete</mat-icon>
+      </button>
+    </div>
+  </mat-card-header>
+
+  <form [formGroup]="chapterForm" class="w-100 ">
+    <div>Version: {{chapter.version}}</div>
+    <mat-slide-toggle>Is published</mat-slide-toggle>
+    <div></div>
+    <button [disabled]="isUiBlocked || !chapterForm.valid" mat-raised-button color="primary">Save</button>
+  </form>
+</mat-card>

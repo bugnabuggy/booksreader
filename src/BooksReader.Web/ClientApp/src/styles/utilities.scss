@@ -1,4 +1,5 @@
 @import './parameters.scss';
+@import '~@angular/material/theming';
 
 .f-48 {
     font-size: 48px;
@@ -26,4 +27,13 @@
 
 .br-vert-midddle{
     vertical-align: middle;
+}
+
+
+.mat-list-item-selected {
+    background-color: map-get($mat-indigo, 500) ;
+    
+    .mat-list-item-content {
+        color: white
+    } 
 }
