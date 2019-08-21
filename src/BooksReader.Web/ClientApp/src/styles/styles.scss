@@ -24,7 +24,8 @@ app-author-profile-page,
 app-author-dashboard-page,
 app-author-container,
 app-book-editing-page,
-app-book-chapters-editor {
+app-book-chapters-editor,
+app-book-info-edit {
     flex: 1;
     display: flex;
 }
@@ -63,4 +64,23 @@ app-book-chapters-editor {
 .tox.tox-silver-sink.tox-tinymce-aux {
     width: 0;
     height: 0;
+}
+
+
+ol { 
+    counter-reset: item 
+}
+
+ol li { 
+    display: block 
+}
+
+ol li:before { 
+    content: counters(item, ".") ". ";
+    counter-increment: item 
+}
+
+ol[style*="list-style-type: lower-alpha;"] li:before { 
+    content: counters(item, ".", lower-alpha) ". ";
+    counter-increment: item 
 }

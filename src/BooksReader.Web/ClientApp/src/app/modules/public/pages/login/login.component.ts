@@ -9,6 +9,8 @@ import {
 import { SocialLoginService } from '@br/integrations/services';
 import { LoginModel } from '@br/core/models';
 
+import { finalize } from 'rxjs/operators';
+
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -16,7 +18,7 @@ import { LoginModel } from '@br/core/models';
 })
 export class LoginComponent implements OnInit {
     
-
+    uiIsBlocked = false;
     errorMessage = '';
     loggedInWithFacebook = false;
 
@@ -42,9 +44,12 @@ export class LoginComponent implements OnInit {
 
     login() {
         const loginModel = this.loginForm.value as LoginModel;
+        this.uiIsBlocked = true;
         this.userSvc.logIn(loginModel.username, loginModel.password)
+            .pipe(finalize(()=>{
+                this.uiIsBlocked = false;
+            }))
             .subscribe((data) => {
-
             }, (err) => {
                 debugger;
                 this.errorMessage = err.error && err.error.error_description || err.name;

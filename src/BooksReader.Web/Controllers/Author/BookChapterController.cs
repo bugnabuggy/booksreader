@@ -6,6 +6,9 @@ using BooksReader.Core.Entities;
 using BooksReader.Core.Models;
 using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Services;
+using BooksReader.Validators;
+using BooksReader.Validators.FilterAttributes;
+using BooksReader.Validators.Getters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -62,8 +65,25 @@ namespace BooksReader.Web.Controllers.Author
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [Validate(
+            typeof (Getter<BookChapter>),
+            new Type[]
+            {
+                typeof(ItemExistsValidator),
+                typeof(OwnerOrAdministratorValidator)
+            },
+            "id"
+            )]
+        public IActionResult Put([FromRoute] Guid bookId, [FromRoute] Guid id, [FromBody] BookChapter chapter)
         {
+            var result = this._bookChapterService.EditContent(bookId, chapter);
+            if (result.Success) 
+                return Ok(result);
+            else
+            {
+                return BadRequest(result);
+            }
+
         }
 
         [HttpDelete("{id}")]

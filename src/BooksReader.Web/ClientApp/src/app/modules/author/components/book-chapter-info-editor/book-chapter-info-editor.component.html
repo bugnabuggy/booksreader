@@ -11,9 +11,13 @@
     </div>
   </mat-card-header>
 
-  <form [formGroup]="chapterForm" class="w-100 ">
-    <div>Version: {{chapter.version}}</div>
-    <mat-slide-toggle>Is published</mat-slide-toggle>
+  <form [formGroup]="chapterForm" (ngSubmit)="save()" class="w-100 ">
+    <div>
+        Version: {{chapter.version}}
+    </div>
+    <div class="my-2">
+        <mat-slide-toggle formControlName="isPublished">Is published</mat-slide-toggle>
+    </div>
     <div></div>
     <button [disabled]="isUiBlocked || !chapterForm.valid" mat-raised-button color="primary">Save</button>
   </form>

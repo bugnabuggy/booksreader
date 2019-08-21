@@ -28,12 +28,6 @@ namespace BooksReader.Web.Tests
              
 
 		[Test]
-		public void ShouldPassTest()
-		{
-			Assert.IsTrue(true);
-		}
-
-		[Test]
 		public void ShouldRemoveConnection()
 		{
             bool sendCalled = false;

@@ -22,6 +22,7 @@ namespace BooksReader.Core.Entities
         public uint Version { get; set; }
         public string Content { get; set; }
 		public DateTime Created { get; set; }
+        public bool IsPublished { get; set; }
 
         [ForeignKey("BookId")]
         public Book Book { get; set; }

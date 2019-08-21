@@ -135,6 +135,8 @@ export class BookChaptersEditorComponent implements OnInit, OnChanges{
     }, err => {
       this.notificationsSvc.showError(err.data || err.response || err.message);
     });
+
+    this.bookChapterEditingSvc.activeChapter.next(this.chapters[event.currentIndex]);
   }
 
   select(chapter) {

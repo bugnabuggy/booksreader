@@ -1,11 +1,15 @@
-<header class='border-bottom p-2' ngclass="{'text-center': security.isAuthenticated}">
-  <a routerLink="/" class="text-dark">
+<header class='border-bottom row m-0' ngclass="{'text-center': security.isAuthenticated}">
+  <a routerLink="/" class="text-dark col ">
     <h1 class='d-sm-inline-block d-none'  >{{'BooksReader' | translate}}</h1>
     <h1 class='d-inline-block d-sm-none'  >{{'BR' | translate}}</h1>
   </a>
-  
-  <nav class='float-right pr-4' *ngIf="security.isAuthenticated">
-    <button class='' mat-button [matMenuTriggerFor]="menu"><i class='material-icons f-44'>menu</i></button>
+  <nav class='col-auto' >
+    <mat-form-field class='br-small-control'>
+      <mat-select [formControl]="language">
+        <mat-option *ngFor="let lang of languages" [value]="lang">{{lang.code}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button *ngIf="security.isAuthenticated"  mat-button [matMenuTriggerFor]="menu"><i class='material-icons f-44'>menu</i></button>
     <mat-menu #menu="matMenu">
       <!-- Here will be dynamically loaded sectiopns for user roles -->
       <div *ngFor="let section of menuSections">
@@ -16,11 +20,7 @@
     </mat-menu>
   </nav>
 
-  <div class='float-right'>
-      <mat-form-field class='br-small-control'>
-          <mat-select [formControl]="language">
-            <mat-option *ngFor="let lang of languages" [value]="lang">{{lang.code}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+  <div class=''>
+      
   </div>
 </header>

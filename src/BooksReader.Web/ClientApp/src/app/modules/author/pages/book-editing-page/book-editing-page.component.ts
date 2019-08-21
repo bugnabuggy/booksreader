@@ -18,7 +18,7 @@ export class BookEditingPageComponent implements OnInit {
 
   tabIndex:number = 0;
 
-  tabs = ['edit', 'props'];
+  tabs = ['edit', 'props', 'preview'];
 
 
   constructor(

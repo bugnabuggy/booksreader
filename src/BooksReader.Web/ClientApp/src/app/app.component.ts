@@ -26,8 +26,9 @@ export class AppComponent implements OnInit {
     private changeDetector : ChangeDetectorRef
   ) {}
 
-  ngOnInit() {
 
+// TODO: refactor this after reconsidering possible application states
+  ngOnInit() {
     this.router.events.subscribe((event: RouterEvent) => {
 
       if(event instanceof NavigationEnd){
@@ -48,12 +49,16 @@ export class AppComponent implements OnInit {
         this.publicPageInfo = val || null;
         
         let isloggedIn = this.userSvc.isLoggedIn;
+        //debugger;
+        const isUrlMatch = this.router.url === (val && (val.path || '/'));
         if(!val && !isloggedIn) {
-          this.userSvc.showUi();
           this.router.navigate([Endpoints.forntend.main]);
         } else {
-          if( !this.userSvc.isUiVisible )
+          if(isUrlMatch) {
+            this.userSvc.hideUi();  
             this.pageRenderingSvc.compileTemplate(val.content, this.publicContent);
+          }
+          this.userSvc.showUi();
         }
       }, err => {
         console.error(err);

@@ -18,6 +18,7 @@ import { BookChaptersEditorComponent } from './components/book-chapters-editor/b
 import { BookChapterInfoEditorComponent } from './components/book-chapter-info-editor/book-chapter-info-editor.component';
 import { BookContentInnerEditorComponent } from './components/book-content-inner-editor/book-content-inner-editor.component';
 import { AddStringDialogComponent } from './components/add-string-dialog/add-string-dialog.component';
+import { BookReaderPreviewComponent } from './components/book-reader-preview/book-reader-preview.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AddStringDialogComponent } from './components/add-string-dialog/add-str
     BookChaptersEditorComponent,
     BookChapterInfoEditorComponent,
     BookContentInnerEditorComponent,
-    AddStringDialogComponent],
+    AddStringDialogComponent,
+    BookReaderPreviewComponent],
   imports: [
     CommonModule,
     AuthorRoutingModule,

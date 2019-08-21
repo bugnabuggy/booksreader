@@ -5,5 +5,6 @@ export interface BookChapter {
     title: string;
     content: string;
     number: number;
+    isPublished: boolean;
     created: Date;
 }

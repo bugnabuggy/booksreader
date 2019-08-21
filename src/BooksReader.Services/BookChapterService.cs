@@ -86,13 +86,18 @@ namespace BooksReader.Services
         {
             IOperationResult<BookChapter> result = new OperationResult<BookChapter>();
 
-            var bookChapter = new BookChapter()
-            {
-                Id = chapterInfo.Id ?? Guid.Empty,
-                Title =  chapterInfo.Title,
-                Description = chapterInfo.Description,
-                BookId = bookId
-            };
+            var bookChapter = _chaptersRepo.Data.FirstOrDefault(x => x.Id.Equals(chapterInfo.Id));
+
+            // if there is a existing chapter use it to update 
+            bookChapter = bookChapter != null
+                    ? bookChapter
+                    : new BookChapter()
+                    {
+                        Id = chapterInfo.Id ?? Guid.Empty,
+                        Title =  chapterInfo.Title,
+                        Description = chapterInfo.Description,
+                        BookId = bookId,
+                    };
 
             var validations = Validate(bookChapter).ToList();
 
@@ -120,6 +125,7 @@ namespace BooksReader.Services
             return result;
         }
 
+     
         public IOperationResult<IEnumerable<BookChapterReorderRequest>> Reorder(Guid bookId, IEnumerable<BookChapterReorderRequest> order)
         {
             var result = new OperationResult<IEnumerable<BookChapterReorderRequest>>(true);
@@ -180,6 +186,7 @@ namespace BooksReader.Services
 
         public IOperationResult<BookChapter> Edit(BookChapter item)
         {
+
             var result = new OperationResult<BookChapter>()
             {
                 Data = item
@@ -201,6 +208,26 @@ namespace BooksReader.Services
 
             return result;
         }
+
+        public IOperationResult<BookChapter> EditContent(Guid bookId, BookChapter chapterInfo)
+        {
+            var result = new OperationResult<BookChapter>(chapterInfo);
+
+            try
+            {
+                var existinChapter = _chaptersRepo.Data.FirstOrDefault(x => x.Id.Equals(chapterInfo.Id));
+                chapterInfo.Version = ++existinChapter.Version;
+                _chaptersRepo.Update(chapterInfo);
+                result.Success = true;
+            }
+            catch (Exception exp)
+            {
+                result.Messages.Add(exp.Message);
+            }
+
+            return result;
+        }
+
 
         public IOperationResult<BookChapter> Delete(Guid id)
         {

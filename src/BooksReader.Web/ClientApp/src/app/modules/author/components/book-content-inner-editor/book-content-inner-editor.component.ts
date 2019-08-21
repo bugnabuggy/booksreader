@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { BookChapterEditingService } from '@br/core/services';
 import { BookChapter } from '@br/core/models';
 import { environment } from '@br/env/environment';
-import { FormControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-book-content-inner-editor',
@@ -11,22 +11,24 @@ import { FormControl } from '@angular/forms';
 })
 export class BookContentInnerEditorComponent implements OnInit {
 
+  @Input() isActive: boolean;
+
   bookChapter: BookChapter = null;
-  tinyMCEApiKey = environment.tinyMCEApiKey;
+  tinyMCEApiKey = '';//environment.tinyMCEApiKey;
 
   initConfig = {
     height: '100%',
-    plugins: 'link image imagetools paste media',
+    plugins: 'link lists image imagetools paste media advlist',
     image_uploadtab: true,
-    
+    // toolbar: 'undo redo | bold italic | bullist numlist outdent indent',
+    toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table | fontsizeselect",
+
     automatic_uploads: true,
     images_upload_url: 'some',
     image_title: true,
     paste_data_images: true,
     file_picker_types: 'image',
-    // file_picker_callback: (cb,value,meta) => {
-    //   cb('');
-    // },
+    
     images_upload_handler: (blobInfo, success, failure)=>{
       success(`data:${blobInfo.blob().type};base64,${blobInfo.base64()}`);
     }
@@ -40,6 +42,7 @@ export class BookContentInnerEditorComponent implements OnInit {
   ngOnInit() {
     this.chapterEditingSvc.activeChapter.subscribe((chapter: BookChapter)=>{
       this.bookChapter = chapter;
+      
     })
   }
 
