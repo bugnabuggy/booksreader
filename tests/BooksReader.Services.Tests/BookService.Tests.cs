@@ -4,8 +4,12 @@ using System.Threading.Tasks;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Exceptions;
 using BooksReader.Core.Infrastructure;
+using BooksReader.Core.Models;
+using BooksReader.Core.Services;
 using BooksReader.Infrastructure.Repositories;
 using BooksReader.Infrastructure.Services;
+using BooksReader.TestData;
+using BooksReader.TestData.Data;
 using BooksReader.TestData.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -18,7 +22,13 @@ namespace BooksReader.Services.Tests
 		private ServiceProvider services;
 		private IRepository<Book> bookRepo;
 		private IRepository<BrUser> usersRepo;
-		private BooksService bookService;
+        private IRepository<PersonalPage> pagesRepo;
+        private IRepository<BookPrice> pricesRepo;
+        private IRepository<BookChapter> chaptersRepo;
+
+        private IPersonalPageService personalPageService;
+        private IBooksService bookService;
+        
 
 		[OneTimeSetUp]
 		public async Task Start()
@@ -27,7 +37,19 @@ namespace BooksReader.Services.Tests
 			// services = await new DatabaseDiBootstrapperSQLServer().GetServiceProviderWithSeedDB();
 			bookRepo = services.GetService<IRepository<Book>>();
 			usersRepo = services.GetService<IRepository<BrUser>>();
-			bookService = new BooksService(bookRepo, usersRepo);			
+            pagesRepo = services.GetService<IRepository<PersonalPage>>();
+            pricesRepo = services.GetService<IRepository<BookPrice>>();
+            chaptersRepo = services.GetService<IRepository<BookChapter>>();
+
+            personalPageService = new PersonalPageService(pagesRepo);
+
+
+            bookService = new BooksService(bookRepo,
+                usersRepo,
+                pagesRepo,
+                chaptersRepo,
+                personalPageService
+                );			
 		}
 
 		[OneTimeTearDown]
@@ -99,10 +121,37 @@ namespace BooksReader.Services.Tests
 		{
 			var booksCount = bookRepo.Data.Count();
 
-			var result = bookService.Delete(Guid.Parse("2325a096-1edc-4015-986b-111111111111"));
+			var result = bookService.Delete(Guid.Parse("2325a096-1edc-4015-986b-111111111112"));
 
 			Assert.AreEqual(booksCount - 1, bookRepo.Data.Count());
 
 		}
-	}
+
+
+        [Test]
+        public void Should_get_full_book_info()
+        {
+            var id = Guid.Parse("B0000000-0000-0000-0000-000000000001");
+            var result = bookService.GetFull(id);
+
+            Assert.IsTrue(result.Success);
+            Assert.AreEqual(result.Data.Chapters.Count(), 3 );
+            Assert.IsNotNull(result.Data.Book);
+            // no personal page for this book
+            Assert.IsNull(result.Data.BookPage);
+        }
+
+        [Test]
+        public void Should_update_full_book_info()
+        {
+            var bookInfo = new BookEditInfo()
+            {
+                Book =  TestBooks.GetBook(),
+                // Chapters = TestBookChapters.GetChapters()
+            };
+
+            var result = bookService.SaveFull(bookInfo);
+            
+        }
+    }
 }

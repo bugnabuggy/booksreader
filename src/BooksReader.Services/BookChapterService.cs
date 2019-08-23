@@ -11,6 +11,7 @@ using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Services;
 using BooksReader.Dictionaries;
 using Microsoft.EntityFrameworkCore;
+using MessageStrings = BooksReader.Dictionaries.Messages.MessageStrings;
 
 namespace BooksReader.Services
 {

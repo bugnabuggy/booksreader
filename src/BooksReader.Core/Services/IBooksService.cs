@@ -11,5 +11,7 @@ namespace BooksReader.Core.Services
 	{
         IQueryable<Book> GetByOwnerId(Guid ownerId);
 
+        IOperationResult<BookEditInfo> GetFull(Guid id);
+        IOperationResult<BookEditInfo> SaveFull(BookEditInfo bookInfo);
     }
 }

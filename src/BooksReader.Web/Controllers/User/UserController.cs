@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Ruteco.AspNetCore.Translate;
+using MessageStrings = BooksReader.Dictionaries.Messages.MessageStrings;
 
 namespace BooksReader.Web.Controllers.User
 {
@@ -25,21 +26,22 @@ namespace BooksReader.Web.Controllers.User
     public class UserController : BaseUserController
     {
         private readonly IAuthorProfileService  _authorProfileSvc;
-
+        private readonly IUsersService _usersService;
 
         public UserController(
             UserManager<BrUser> userManager,
             IAuthorProfileService authorProfileSvc,
             IUsersService usersService,
-            ITranslationService translationService) : base(userManager, usersService, translationService)
+            ITranslationService translationService) : base(userManager)
         {
             _authorProfileSvc = authorProfileSvc;
+            _usersService = usersService;
         }
 
         [HttpPut("profile")]
         public async Task<IActionResult> UpdateProfile([FromBody] UserProfileRequest profile)
         {
-            if (await _userManager.IsInRoleAsync(user, SiteRoles.Admin) || user.UserName.Equals(profile.Username))
+            if (await _userManager.IsInRoleAsync(BrUser, SiteRoles.Admin) || BrUser.UserName.Equals(profile.Username))
             {
                 var result = await _usersService.Update(profile);
                 if (result.Success)
@@ -57,7 +59,7 @@ namespace BooksReader.Web.Controllers.User
         public async Task<ActionResult> Author([FromBody]AuthorRequest data)
         {
 
-            var roleResult = await this._usersService.AddUserRole(user.UserName, SiteRoles.Author);
+            var roleResult = await this._usersService.AddUserRole(BrUser.UserName, SiteRoles.Author);
             try
             {
 
@@ -67,7 +69,7 @@ namespace BooksReader.Web.Controllers.User
                 Console.WriteLine(e);
                 throw;
             }
-            var authorProfileResult = await this._authorProfileSvc.CreateAuthorProfile(user);
+            var authorProfileResult = await this._authorProfileSvc.CreateAuthorProfile(BrUser);
 
             if (roleResult.Success && authorProfileResult.Success)
             {

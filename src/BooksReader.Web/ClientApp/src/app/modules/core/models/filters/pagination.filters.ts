@@ -1,5 +1,4 @@
-
-export class PaginationFilter {
+export interface PaginationFilter {
     pageNumber?: number ;
     pageSize?: number;
 }

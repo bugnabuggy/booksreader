@@ -24,10 +24,8 @@ namespace BooksReader.Web.Controllers.Author
 
         public BookChapterController(
             IBookChapterService bookChapterService,
-            IUsersService usersService,
-            ITranslationService translations,
             UserManager<BrUser> userManager
-            ) : base(userManager, usersService, translations)
+            ) : base(userManager)
         {
             _bookChapterService = bookChapterService;
         }

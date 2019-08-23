@@ -85,7 +85,7 @@ namespace BooksReader.TestData.Helpers
             return serviceProvider;
         }
 
-        public async Task<ServiceProvider> GetServiceProviderWithSeedDB()
+        public Task<ServiceProvider> GetServiceProviderWithSeedDB()
         {
             var provider = GetServiceProvider();
             lock (_contextLock)
@@ -113,7 +113,7 @@ namespace BooksReader.TestData.Helpers
                     }
                 }
             }
-            return provider;
+            return Task.FromResult(provider);
         }
     }
 }

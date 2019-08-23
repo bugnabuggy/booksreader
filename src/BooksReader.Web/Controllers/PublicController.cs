@@ -13,14 +13,13 @@ namespace BooksReader.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PublicController : BaseController
+    public class PublicController : ControllerBase
     {
         private readonly IPublicService _publicSvc;
 
         public PublicController(
-            ITranslationService translations,
             IPublicService publicSvc
-            ) : base(translations)
+            )
         {
             _publicSvc = publicSvc;
         }

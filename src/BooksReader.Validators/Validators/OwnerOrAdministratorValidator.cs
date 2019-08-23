@@ -5,6 +5,7 @@ using BooksReader.Core.Services;
 using BooksReader.Dictionaries;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using MessageStrings = BooksReader.Dictionaries.Messages.MessageStrings;
 
 namespace BooksReader.Validators
 {

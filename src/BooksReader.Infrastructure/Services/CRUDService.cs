@@ -12,25 +12,26 @@ namespace BooksReader.Infrastructure.Services
 {
 	public class CRUDService<T> : ICRUDOperatonService<T> where T: IIdentified
     {
-        private readonly IRepository<T> _repo;
-        public CRUDService(IRepository<T> repo)
+        protected readonly IRepository<T> Repository;
+
+        public CRUDService(IRepository<T> repository)
         {
-            _repo = repo;
+            this.Repository = repository;
         }
 
         public virtual IQueryable<T> Get()
         {
-            return _repo.Data;
+            return Repository.Data;
         }
 
         public virtual T Get(Guid id)
         {
-            return _repo.Data.FirstOrDefault(x => x.Id.Equals(id));
+            return Repository.Data.FirstOrDefault(x => x.Id.Equals(id));
         }
 
         public virtual IOperationResult<T> Add(T item)
         {
-            var data = _repo.Add(item);
+            var data = Repository.Add(item);
 
             return new OperationResult<T>()
             {
@@ -41,7 +42,7 @@ namespace BooksReader.Infrastructure.Services
 
 		public virtual IOperationResult<T> Edit(T item)
         {
-            var data = _repo.Update(item);
+            var data = Repository.Update(item);
 
             return new OperationResult<T>()
             {
@@ -52,8 +53,8 @@ namespace BooksReader.Infrastructure.Services
 
 		public virtual IOperationResult<T> Delete(Guid id)
         {
-            var item = _repo.Data.FirstOrDefault(x => x.Id.Equals(id));
-            var data = _repo.Delete(item);
+            var item = Repository.Data.FirstOrDefault(x => x.Id.Equals(id));
+            var data = Repository.Delete(item);
 
             return new OperationResult<T>()
             {
@@ -64,7 +65,7 @@ namespace BooksReader.Infrastructure.Services
 
 		public virtual async Task<IOperationResult<T>> AddAsync(T item)
         {
-            var data = await _repo.AddAsync(item);
+            var data = await Repository.AddAsync(item);
             return new OperationResult<T>()
             {
                 Data = data,
@@ -75,12 +76,12 @@ namespace BooksReader.Infrastructure.Services
 
 		public virtual Task<IEnumerable<T>> GetAsync()
         {
-            return _repo.GetAsync(x=>true, null, null);
+            return Repository.GetAsync(x=>true, null, null);
         }
 
 		public virtual Task<T> GetAsync(Guid id)
         {
-            return _repo.Data.FirstOrDefaultAsync(x => x.Id.Equals(id));
+            return Repository.Data.FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
 		
 	}

@@ -25,8 +25,6 @@ namespace BooksReader.TestData.Helpers
         {
             var mock = new Mock<IConfigurationRoot>();
 
-
-
             return mock;
         }
 
@@ -39,11 +37,13 @@ namespace BooksReader.TestData.Helpers
 			var booksRepo = services.GetService<IRepository<Book>>();
             var authorProfilesRepo = services.GetService<IRepository<AuthorProfile>>();
             var personalPagesRepo = services.GetService<IRepository<PersonalPage>>();
+            var chaptersRepo = services.GetService<IRepository<BookChapter>>();
 
             await AddUsers(userManager);
             await AddPersonalPages(personalPagesRepo);
             await AddAuthorProfiles(authorProfilesRepo);
 	        await AddBooks(booksRepo);
+            await AddBookChapters(chaptersRepo);
         }
 
         private static async Task AddUsers(UserManager<BrUser> manager)
@@ -76,6 +76,11 @@ namespace BooksReader.TestData.Helpers
         private static async Task AddPersonalPages(IRepository<PersonalPage> pagesRepo)
         {
             await pagesRepo.AddAsync(TestPersonalPages.GetPersonalPages());
+        }
+
+        private static async Task AddBookChapters(IRepository<BookChapter> chaptersRepo)
+        {
+            await chaptersRepo.AddAsync(TestBookChapters.GetChapters());
         }
     }
 }

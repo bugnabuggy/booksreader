@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BooksReader.Dictionaries
+﻿namespace BooksReader.Dictionaries.Messages
 {
     public partial class MessageStrings
     {

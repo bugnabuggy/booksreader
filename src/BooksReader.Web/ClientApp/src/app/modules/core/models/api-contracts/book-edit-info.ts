@@ -1,9 +1,11 @@
-import { Book } from './book.dto';
-import { BookChapter } from './book-chapter.dto';
+import { Book } from './entities/book';
+import { BookChapter } from './entities/book-chapter';
 import { PersonalPage } from './entities';
+import { BookPrice } from './entities/book-price';
 
 export interface BookEditInfo {
     book: Book;
-    chapters: BookChapter[];
     bookPage: PersonalPage;
+    chapters: BookChapter[];
+    prices: BookPrice[];
 }

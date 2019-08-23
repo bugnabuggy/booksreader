@@ -50,12 +50,14 @@ namespace BooksReader.Infrastructure.Tests
 
             var result = userSvc.GetUsersWithRoles().ToList();
 
-            Assert.AreEqual(4, result.Count, "Users count not than expected");
-            var roles = result.FirstOrDefault().Roles;
-            Assert.IsTrue(roles.Count() == 4);
+            Assert.Greater(result.Count, 4, "Users count not than expected");
 
-            roles = result[1].Roles;
-            Assert.IsTrue(roles.Count() == 0);
+            var adminRoles = result.FirstOrDefault().Roles;
+
+            Assert.IsTrue(adminRoles.Count() == 4);
+
+            adminRoles = result[1].Roles;
+            Assert.IsTrue(adminRoles.Count() == 0);
         }
 
         [Test]
@@ -162,7 +164,7 @@ namespace BooksReader.Infrastructure.Tests
         {
             var context = services.GetService<BrDbContext>();
             var userSvc = services.GetService<IUsersService>();
-            var user = TestBrUsers.GetUser();
+            var user = TestBrUsers.GetUserToDelete();
 
             var result = await userSvc.Delete(user.UserName);
             Assert.IsTrue(result.Success);

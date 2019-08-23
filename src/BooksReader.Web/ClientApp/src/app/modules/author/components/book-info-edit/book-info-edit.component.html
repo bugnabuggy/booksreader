@@ -1,5 +1,5 @@
 <div class="flex-1 p-3">
-  <form (ngSubmit)="save()" [formGroup]="bookForm">      
+  <form (ngSubmit)="save()" class="col-12 col-sm-10 col-lg-8 col-xl-6 m-auto" [formGroup]="bookForm">
     <mat-form-field class="w-100">
       <input matInput placeholder="Book title" required formControlName="title">
     </mat-form-field>
@@ -9,23 +9,36 @@
     <mat-form-field class="w-100">
       <textarea matInput rows='5' maxlength="3000" placeholder="Description" formControlName="description"></textarea>
     </mat-form-field>
-    <div class="w-100 mb-3">
-      <mat-slide-toggle formControlName="author">
-        Is published
-      </mat-slide-toggle>
-    </div>
+
+    <section>
+      <label class="font-weight-bold">Publishing info</label>
+      <div>
+        <mat-slide-toggle formControlName="isPublished">
+          Is published
+        </mat-slide-toggle>
+      </div>
+      <div>
+        <mat-slide-toggle >
+          Paid book
+        </mat-slide-toggle>
+      </div>
+      <div>
+
+      </div>
+    </section>
     <hr>
-    <div>
+    <section formGroupName="publicPage">
+      <label class='font-weight-bold'>Book page info</label>
       <mat-form-field class="w-100">
-        <input matInput placeholder="Domain"  formControlName="domain">
+        <input matInput placeholder="Domain" formControlName="domain">
       </mat-form-field>
       <mat-form-field class="w-100">
-        <input matInput placeholder="Url Path"  formControlName="urlPath">
+        <input matInput placeholder="Url Path" formControlName="urlPath">
       </mat-form-field>
       <mat-form-field class="w-100">
         <textarea matInput rows='5' placeholder="Htm page content" formControlName="content"></textarea>
       </mat-form-field>
-    </div>
+    </section>
     <button [disabled]="isUiBlocked || !bookForm.valid" mat-raised-button color="primary">Save</button>
   </form>
 </div>

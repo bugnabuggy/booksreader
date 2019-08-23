@@ -1,4 +1,4 @@
-import { IOwned, IIdentifiable } from '../site/generics';
+import { IOwned, IIdentifiable } from '../../site/generics';
 
 export interface Book extends IIdentifiable, IOwned {
     title: string;
@@ -6,8 +6,12 @@ export interface Book extends IIdentifiable, IOwned {
     description: string;
 
     isPublished: boolean;
+    isForSale: boolean;
+    
+    picture?: string;
+
     created: string;
-    published: string;
+    published?: string;
 
     ownerName?: string;
     ownerUserName?: string;

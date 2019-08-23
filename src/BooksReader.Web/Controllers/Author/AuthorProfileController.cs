@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Ruteco.AspNetCore.Translate;
+using MessageStrings = BooksReader.Dictionaries.Messages.MessageStrings;
 
 namespace BooksReader.Web.Controllers.Author
 {
@@ -24,20 +25,21 @@ namespace BooksReader.Web.Controllers.Author
     public class AuthorProfileController : BaseUserController
     {
         private readonly IAuthorProfileService _authorProfileSvc;
+        private readonly ITranslationService _translationService;
 
         public AuthorProfileController(
             IAuthorProfileService authorProfileSvc,
-            IUsersService usersService,
-            ITranslationService translations,
-            UserManager<BrUser> userManager): base(userManager, usersService, translations)
+            ITranslationService translationService,
+            UserManager<BrUser> userManager): base(userManager)
         {
             _authorProfileSvc = authorProfileSvc;
+            _translationService = translationService;
         }
 
         [HttpGet]
         public ActionResult Get()
         {
-            var result = _authorProfileSvc.GetAuthorProfile(user);
+            var result = _authorProfileSvc.GetAuthorProfile(BrUser);
             if (result != null)
             {
                 return Ok(new AuthorProfileDto()
@@ -51,16 +53,21 @@ namespace BooksReader.Web.Controllers.Author
                 });
             }
 
-            var lang = string.IsNullOrEmpty(user.Language) ? Constants.DefaultLanguage : user.Language;
+            var lang = string.IsNullOrEmpty(BrUser.Language) 
+                ? Constants.DefaultLanguage 
+                : BrUser.Language;
             return NotFound(_translationService.Get(lang, MessageStrings.AuthorNotFound));
         }
 
         [HttpPut("{username}")]
         public async Task<ActionResult> UpdateAuthorProfile(string username, [FromBody] AuthorProfileDto dto)
         {
-            if (!user.UserName.Equals(username) || await _userManager.IsInRoleAsync(user, SiteRoles.Admin))
+            if (!BrUser.UserName.Equals(username) || await _userManager.IsInRoleAsync(BrUser, SiteRoles.Admin))
             {
-                return Forbid(MessageStrings.DoNotHavePermissions);
+                var lang = string.IsNullOrEmpty(BrUser.Language)
+                    ? Constants.DefaultLanguage
+                    : BrUser.Language;
+                return Forbid(_translationService.Get(lang ,MessageStrings.DoNotHavePermissions));
             }
 
             var result = _authorProfileSvc.EditAuthorProfile(dto);

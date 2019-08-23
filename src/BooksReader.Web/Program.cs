@@ -25,12 +25,14 @@ namespace BooksReader.Web
 				{
 					var db = services.GetRequiredService<BrDbContext>();
 					var idsDb = services.GetRequiredService<PersistedGrantDbContext>();
+
+                    // probably should disable automatic migrations when go to prod
 					db.Database.Migrate();
 					idsDb.Database.Migrate();
 
 					AppConfigurator.InitRolesAndUsers(services);
-
-				}
+                    AppConfigurator.InitTypesLists(services);
+                }
 				catch (Exception ex)
 				{
 					var logger = services.GetRequiredService<ILogger<Program>>();

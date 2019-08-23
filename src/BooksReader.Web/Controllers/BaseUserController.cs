@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
+using BooksReader.Core.Models;
 using BooksReader.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -14,25 +15,34 @@ using BooksReader.Web.Filters;
 namespace BooksReader.Web.Controllers
 {
     [UserActionFilter]
-    public abstract class BaseUserController : BaseController
+    public abstract class BaseUserController : ControllerBase
     {
         protected readonly UserManager<BrUser> _userManager;
-        protected readonly IUsersService _usersService;
-        protected BrUser user;
+        protected BrUser BrUser;
 
         protected BaseUserController(
-            UserManager<BrUser> userManager,
-            IUsersService usersService, 
-            ITranslationService translationService
-            ) : base(translationService)
+            UserManager<BrUser> userManager
+            ) 
         {
             _userManager = userManager;
-            _usersService = usersService;
         }
 
         public async Task GetUser()
         {
-            user = await _userManager.GetUserAsync(User);
+            BrUser = await _userManager.GetUserAsync(User);
+        }
+
+        [NonAction]
+        protected IActionResult StandartReturn<T>(IOperationResult<T> result)
+        {
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
         }
     }
 }
