@@ -16,12 +16,15 @@ namespace BooksReader.Web.Controllers
     public class PublicController : ControllerBase
     {
         private readonly IPublicService _publicSvc;
+        private readonly IListsService _listsSvc;
 
         public PublicController(
-            IPublicService publicSvc
+            IPublicService publicSvc,
+            IListsService listsSvc
             )
         {
             _publicSvc = publicSvc;
+            _listsSvc = listsSvc;
         }
 
         [HttpGet]
@@ -38,6 +41,13 @@ namespace BooksReader.Web.Controllers
             };
             var info = _publicSvc.GetInfo(request);
             return Ok(info);
+        }
+
+        [HttpGet("lists")]
+        public ActionResult GetLists()
+        {
+            var lists = _listsSvc.GetLists().ToList();
+            return Ok(lists);
         }
     }
 }

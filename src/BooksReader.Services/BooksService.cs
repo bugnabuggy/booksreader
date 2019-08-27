@@ -8,7 +8,9 @@ using BooksReader.Core.Enums;
 using BooksReader.Core.Exceptions;
 using BooksReader.Core.Infrastructure;
 using BooksReader.Core.Models;
+using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Services;
+using BooksReader.Dictionaries.Messages;
 using BooksReader.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Extensions.Internal;
@@ -19,23 +21,24 @@ namespace BooksReader.Infrastructure.Services
 	{
 		private readonly IRepository<Book> _bookRepo;
 		private readonly IRepository<BrUser> _userRepo;
-        private readonly IRepository<PersonalPage> _personalPagesRepo;
         private readonly IRepository<BookChapter> _bookChaptersRepo;
+
         private readonly IPersonalPageService _personalPageService;
+        private readonly IBookPriceService _bookPriceService;
 
         public BooksService(
 			IRepository<Book> bookRepo,
 			IRepository<BrUser> userRepo,
-            IRepository<PersonalPage> personalPagesRepo,
             IRepository<BookChapter> bookChaptersRepo,
-            IPersonalPageService personalPageService
+            IPersonalPageService personalPageService,
+            IBookPriceService bookPriceService
         )
 		{
 			_bookRepo = bookRepo;
 			_userRepo = userRepo;
-            _personalPagesRepo = personalPagesRepo;
             _bookChaptersRepo = bookChaptersRepo;
             _personalPageService = personalPageService;
+            _bookPriceService = bookPriceService;
         }
 
 		public Book Add(Book item)
@@ -129,9 +132,11 @@ namespace BooksReader.Infrastructure.Services
 
             var bookChapters = _bookChaptersRepo.Data.Where(x => x.BookId.Equals(bookId));
 
-            var personalPage = _personalPagesRepo.Data.FirstOrDefault(x =>
-                x.PageType == PersonalPageType.BookPage
-                && x.SubjectId.Equals(bookId));
+            var personalPage = _personalPageService.Get()
+                .FirstOrDefault(x =>
+                                    x.PageType == PersonalPageType.BookPage
+                                    && x.SubjectId.Equals(bookId)
+                );
 
             var data = new BookEditInfo()
             {
@@ -147,21 +152,77 @@ namespace BooksReader.Infrastructure.Services
             };
         }
 
-        public IOperationResult<BookEditInfo> SaveFull(BookEditInfo bookInfo)
+        public IOperationResult<BookEditFullRequest> SaveFull(BookEditFullRequest bookInfo)
         {
+            var result = new OperationResult<BookEditFullRequest>(bookInfo);
+
+            var validations = Validate(bookInfo).ToList();
+            if (validations.Any())
+            {
+                result.Messages = validations;
+                goto end;
+            }
+
             // edit book if present
-            var book = Edit(bookInfo.Book);
-            
+            // var book = Edit(bookInfo.Book);
+
             // edit book page if present
-            var bookPage = _personalPageService.Edit(bookInfo.BookPage);
+            //if (bookInfo.BookPage != null)
+            //{
+            //    var bookPage = _personalPageService.Edit(bookInfo.BookPage);
+            //}
 
-            // edit book prices if present
-            
+            //// edit book prices if present
+            //if (bookInfo.Prices != null)
+            //{
+            //    var prices = _bookPriceService.SetPrices(bookInfo.Prices);
+            //}
 
+            // if everything saved - success
+            result.Success = true;
 
-            return null;
+            end:
+            return result;
         }
 
+        public IEnumerable<string> Validate(Book item)
+        {
+            var validationMessages = new List<string>();
 
+            if (string.IsNullOrEmpty(item.Title))
+            {
+                validationMessages.Add("Title can't be empty");
+            }
+
+            return validationMessages;
+        }
+
+        public IEnumerable<string> Validate(BookEditFullRequest item)
+        {
+            var validationMessages = new List<string>();
+            
+            // validate book 
+            // validationMessages.AddRange(Validate(item.Book));
+
+            // validate public page
+            //if (item.BookPage != null)
+            //{
+            //    validationMessages.AddRange(_personalPageService.Validate(item.BookPage));
+            //}
+
+            // validate prices
+            //foreach (var bookPrice in item.Prices ?? new List<BookPrice>())
+            //{
+            //    validationMessages.AddRange(_bookPriceService.Validate(bookPrice));
+
+            //    if (!item.Book.Id.Equals(bookPrice.BookId))
+            //    {
+            //        validationMessages.Add(MessageStrings.BookPricesMessages.PriceBookIdIsNotForEditedBook);
+            //    }
+            //}
+
+            return validationMessages;
+
+        }
     }
 }

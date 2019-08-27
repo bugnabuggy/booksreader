@@ -21,6 +21,7 @@ namespace BooksReader.Web.Configuration
     {
         public static void ConfigureServices(IServiceCollection services)
         {
+            // repositories
             services.AddTransient<IRepository<TypesList>, DbRepository<TypesList>>();
             services.AddTransient<IRepository<TypeValue>, DbRepository<TypeValue>>();
             services.AddTransient<IRepository<LoginHistory>, DbRepository<LoginHistory>>();
@@ -30,15 +31,21 @@ namespace BooksReader.Web.Configuration
             services.AddTransient<IRepository<PersonalPage>, DbRepository<PersonalPage>>();
             services.AddTransient<IRepository<AuthorProfile>, DbRepository<AuthorProfile>>();
             services.AddTransient<IRepository<BookChapter>, DbRepository<BookChapter>>();
+            services.AddTransient<IRepository<BookPrice>, DbRepository<BookPrice>>();
             
-
+            // infrastructure services
             services.AddTransient<ISecurityService, SecurityService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IAuthorProfileService, AuthorProfileService>();
-            services.AddTransient<IPublicService, PublicService>();
 
+
+            // domain services
+            services.AddTransient<IListsService, ListsService>();
+            services.AddTransient<IPublicService, PublicService>();
+            services.AddTransient<IPersonalPageService, PersonalPageService>();
             services.AddTransient<IBooksService, BooksService>();
             services.AddTransient<IBookChapterService, BookChapterService>();
+            services.AddTransient<IBookPriceService, BookPriceService>();
         }
 
         public static void InitRolesAndUsers(IServiceProvider services)

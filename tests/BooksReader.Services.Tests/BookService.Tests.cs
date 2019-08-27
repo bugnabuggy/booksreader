@@ -28,6 +28,7 @@ namespace BooksReader.Services.Tests
 
         private IPersonalPageService personalPageService;
         private IBooksService bookService;
+        private IBookPriceService bookPriceService;
         
 
 		[OneTimeSetUp]
@@ -42,13 +43,13 @@ namespace BooksReader.Services.Tests
             chaptersRepo = services.GetService<IRepository<BookChapter>>();
 
             personalPageService = new PersonalPageService(pagesRepo);
-
+            bookPriceService = new BookPriceService(pricesRepo);
 
             bookService = new BooksService(bookRepo,
                 usersRepo,
-                pagesRepo,
                 chaptersRepo,
-                personalPageService
+                personalPageService,
+                bookPriceService
                 );			
 		}
 

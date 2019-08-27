@@ -229,6 +229,7 @@
   <ItemGroup>
     <Compile Include="Data\TestAuthors.cs" />
     <Compile Include="Data\TestBookChapters.cs" />
+    <Compile Include="Data\TestBookPrices.cs" />
     <Compile Include="Data\TestBooks.cs" />
     <Compile Include="Data\TestBrUsers.cs" />
     <Compile Include="Data\TestPersonalPages.cs" />

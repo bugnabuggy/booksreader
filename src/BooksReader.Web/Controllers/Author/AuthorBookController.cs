@@ -8,6 +8,7 @@ using BooksReader.Core.Exceptions;
 using BooksReader.Core.Infrastructure;
 using BooksReader.Core.Models;
 using BooksReader.Core.Models.DTO;
+using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Models.Requests.Filters;
 using BooksReader.Core.Services;
 using BooksReader.Dictionaries;
@@ -191,10 +192,11 @@ namespace BooksReader.Web.Controllers.Author
                 typeof(OwnerOrAdministratorValidator)
             },
             "bookId")]
-        public IActionResult PutBookEditInfo(Guid bookId, [FromBody] BookEditInfo bookInfo)
+        public IActionResult PutBookEditInfo(Guid bookId, [FromBody] BookEditFullRequest bookInfo)
         {
+            
             var result = _booksService.SaveFull(bookInfo);
-            return StandartReturn<BookEditInfo>(result);
+            return StandartReturn<BookEditFullRequest>(result);
         }
 
         

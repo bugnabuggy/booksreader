@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Ruteco.AspNetCore.Translate;
 
 namespace BooksReader.Web
@@ -54,6 +55,10 @@ namespace BooksReader.Web
                     options => { options.Filters.Add(typeof(UserActionFilterAttribute)); })
 				.AddFormatterMappings()
 				.AddCacheTagHelper()
+                .AddJsonOptions(opt=>
+                {
+                    opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                })
 				.AddJsonFormatters()
 				.AddCors()
 				.AddAuthorization(opt =>

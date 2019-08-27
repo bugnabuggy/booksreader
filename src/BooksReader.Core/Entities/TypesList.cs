@@ -15,5 +15,7 @@ namespace BooksReader.Core.Entities
 
         [MaxLength(60)]
         public string LocalizationKey { get; set; }
+
+        public virtual IEnumerable<TypeValue> Values { get; set; }
     }
 }

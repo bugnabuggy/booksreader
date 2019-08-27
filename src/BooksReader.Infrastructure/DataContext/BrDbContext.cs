@@ -36,6 +36,13 @@ namespace BooksReader.Infrastructure.DataContext
         {
             base.OnModelCreating(builder);
 
+
+            // Relations
+            builder.Entity<TypeValue>()
+                .HasOne(x=>x.Type)
+                .WithMany(x=>x.Values);
+
+
             // Indexes
             builder.Entity<Book>()
                 .HasIndex(x => x.Title);

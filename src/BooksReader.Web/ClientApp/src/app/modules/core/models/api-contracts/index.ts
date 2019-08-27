@@ -1,4 +1,5 @@
 export * from './requests';
+export * from './entities';
 
 export * from './web-result';
 export * from './operation-result';

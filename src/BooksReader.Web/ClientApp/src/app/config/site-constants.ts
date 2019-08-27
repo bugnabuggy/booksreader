@@ -9,4 +9,8 @@ export class SiteConstants {
     }
 
     static localizationDictionariesPath = './assets/i18n/';
+
+    static lists = {
+        сurrency: 'Currency'
+    }
 }

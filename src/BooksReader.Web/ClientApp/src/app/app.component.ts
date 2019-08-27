@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, ChangeDetectorRef } from '@angular/core';
-import { SecurityService, UserService } from '@br/core/services';
+import { SecurityService, UserService, ListsService } from '@br/core/services';
 import { PublicService } from '@br/core/services/public.service';
 import { PublicPageInfo } from '@br/core/models';
 import { PageRenderingService } from '@br/public/services';
@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   constructor(
     public userSvc: UserService,
     public publicSvc: PublicService,
+    public listsSvc: ListsService,
     public pageRenderingSvc:  PageRenderingService,
     public router: Router,
     private changeDetector : ChangeDetectorRef
@@ -29,6 +30,8 @@ export class AppComponent implements OnInit {
 
 // TODO: refactor this after reconsidering possible application states
   ngOnInit() {
+    this.listsSvc.init();
+    
     this.router.events.subscribe((event: RouterEvent) => {
 
       if(event instanceof NavigationEnd){
@@ -49,12 +52,15 @@ export class AppComponent implements OnInit {
         this.publicPageInfo = val || null;
         
         let isloggedIn = this.userSvc.isLoggedIn;
-        //debugger;
+        
+        // help to bind view child
+        this.changeDetector.detectChanges();
+
         const isUrlMatch = this.router.url === (val && (val.path || '/'));
         if(!val && !isloggedIn) {
           this.router.navigate([Endpoints.forntend.main]);
         } else {
-          if(isUrlMatch) {
+          if(isUrlMatch && this.publicContent) {
             this.userSvc.hideUi();  
             this.pageRenderingSvc.compileTemplate(val.content, this.publicContent);
           }
@@ -69,6 +75,5 @@ export class AppComponent implements OnInit {
 
   ngAfterViewInit(){
     console.log(this.publicContent);
-    
   }
 }
