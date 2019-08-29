@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
+using BooksReader.Core.Models.Requests;
 using BooksReader.Infrastructure.SeedData;
 
 namespace BooksReader.TestData.Data
@@ -32,6 +33,23 @@ namespace BooksReader.TestData.Data
                     CurrencyId = SeedTypeValues.GetTypeValues()[0].Id, // EUR
                     Price = 10,
                 },
+            };
+        }
+
+        public static IEnumerable<BookPricesRequest> GetNewPricesRequest()
+        {
+            return new List<BookPricesRequest>()
+            {
+                new BookPricesRequest()
+                {
+                    CurrencyId = SeedTypeValues.GetTypeValues()[0].Id, // EUR
+                    Price = 18,
+                },
+                new BookPricesRequest()
+                {
+                    CurrencyId = SeedTypeValues.GetTypeValues()[2].Id, // RUB
+                    Price = 1000,
+                }
             };
         }
     }

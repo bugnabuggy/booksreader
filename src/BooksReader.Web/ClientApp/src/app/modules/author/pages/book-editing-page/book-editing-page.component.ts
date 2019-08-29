@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Book, BookChapter } from '@br/core/models';
 import { BookEditingService, NotificationService } from '@br/core/services';
-import { PersonalPage } from '@br/core/models/api-contracts/entities';
+import { PersonalPage, BookPrice } from '@br/core/models/api-contracts/entities';
 import { Endpoints, StringConstants } from '@br/config';
 
 @Component({
@@ -14,7 +14,9 @@ export class BookEditingPageComponent implements OnInit {
 
   book: Book;
   bookPage: PersonalPage;
+  bookPrices: BookPrice[];
   chapters: BookChapter[];
+  
 
   tabIndex:number = 0;
 
@@ -44,6 +46,7 @@ export class BookEditingPageComponent implements OnInit {
             this.book = y.data.book;
             this.chapters = y.data.chapters || [];
             this.bookPage = y.data.bookPage || {} as PersonalPage;
+            this.bookPrices = y.data.prices || [];
           }
         }, err => {
           this.notifications.showError(err.message || StringConstants.errors.anyError);

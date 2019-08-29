@@ -24,7 +24,7 @@
       </div>
 
       <div *ngIf="pricesVisible" class="row" [formGroup]="bookForm.get('bookPrice')">
-
+        <input type="hidden" placeholder="Price" formControlName='id'>
         <mat-form-field class="col-6">
           <input matInput placeholder="Price" formControlName='price'>
         </mat-form-field>

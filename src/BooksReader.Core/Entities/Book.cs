@@ -30,6 +30,5 @@ namespace BooksReader.Core.Entities
 		// non database properties
 		public string OwnerName;
 		public string OwnerUserName;
-
 	}
 }

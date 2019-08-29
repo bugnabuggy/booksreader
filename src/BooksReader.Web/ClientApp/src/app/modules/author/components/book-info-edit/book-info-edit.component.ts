@@ -56,7 +56,8 @@ export class BookInfoEditComponent implements OnInit, OnChanges {
 
       bookPrice: this.fb.group({
         price: [],
-        currencyId: []
+        currencyId: [],
+        id: []
       })
     }, { validators: this.priceFilledValidator });
   }
@@ -71,6 +72,12 @@ export class BookInfoEditComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (!this.book) { return }
+
+    const bookPrice = this.bookPrices && this.bookPrices.length > 0
+      ? { price: this.bookPrices[0].price, id: this.bookPrices[0].id, currencyId: this.bookPrices[0].currencyId } 
+      : { price: '', id: '', currencyId: ''};
+    
+
     this.bookForm.patchValue({
       book: {
         title: this.book.title,
@@ -79,6 +86,7 @@ export class BookInfoEditComponent implements OnInit, OnChanges {
         isPublished: this.book.isPublished,
         isForSale: this.book.isForSale
       },
+      bookPrice: bookPrice
     });
   }
 

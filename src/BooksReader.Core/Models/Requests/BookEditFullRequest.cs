@@ -14,6 +14,7 @@ namespace BooksReader.Core.Models.Requests
 
     public class BookPricesRequest
     {
+        public Guid Id { get; set; }
         public double Price { get; set; }
         public uint CurrencyId { get; set; }
     }

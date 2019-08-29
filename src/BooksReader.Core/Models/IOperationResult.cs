@@ -8,4 +8,6 @@ namespace BooksReader.Core.Models
         bool Success { get; set; }
         IList<string> Messages { get; set; }
     }
+
+    public interface IOperationResult: IOperationResult<object> { }
 }

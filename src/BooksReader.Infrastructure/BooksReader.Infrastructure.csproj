@@ -34,14 +34,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="IdentityModel, Version=3.10.3.0, Culture=neutral, PublicKeyToken=e7877f4675df049f, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\IdentityModel.3.10.3\lib\net452\IdentityModel.dll</HintPath>
+    <Reference Include="IdentityModel, Version=3.10.10.0, Culture=neutral, PublicKeyToken=e7877f4675df049f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\IdentityModel.3.10.10\lib\net452\IdentityModel.dll</HintPath>
     </Reference>
-    <Reference Include="IdentityServer4, Version=2.3.2.0, Culture=neutral, PublicKeyToken=f294d0afe402bb2b, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\IdentityServer4.2.3.2\lib\netstandard2.0\IdentityServer4.dll</HintPath>
+    <Reference Include="IdentityServer4, Version=2.5.3.0, Culture=neutral, PublicKeyToken=f294d0afe402bb2b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\IdentityServer4.2.5.3\lib\netstandard2.0\IdentityServer4.dll</HintPath>
     </Reference>
     <Reference Include="IdentityServer4.EntityFramework, Version=2.3.2.0, Culture=neutral, PublicKeyToken=d651e08d0f0fa14b, processorArchitecture=MSIL">
       <HintPath>..\..\packages\IdentityServer4.EntityFramework.2.3.2\lib\netstandard2.0\IdentityServer4.EntityFramework.dll</HintPath>
@@ -49,8 +49,8 @@
     <Reference Include="IdentityServer4.EntityFramework.Storage, Version=2.3.1.0, Culture=neutral, PublicKeyToken=1d5576e80de1c233, processorArchitecture=MSIL">
       <HintPath>..\..\packages\IdentityServer4.EntityFramework.Storage.2.3.1\lib\netstandard2.0\IdentityServer4.EntityFramework.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="IdentityServer4.Storage, Version=2.3.1.0, Culture=neutral, PublicKeyToken=93d4430489de4ef4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\IdentityServer4.Storage.2.3.1\lib\netstandard2.0\IdentityServer4.Storage.dll</HintPath>
+    <Reference Include="IdentityServer4.Storage, Version=2.5.3.0, Culture=neutral, PublicKeyToken=93d4430489de4ef4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\IdentityServer4.Storage.2.5.3\lib\netstandard2.0\IdentityServer4.Storage.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Authentication, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNetCore.Authentication.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.dll</HintPath>
@@ -69,6 +69,9 @@
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNetCore.Authentication.OpenIdConnect.2.1.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authorization, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNetCore.Authorization.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authorization.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Cors, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNetCore.Cors.2.1.0\lib\netstandard2.0\Microsoft.AspNetCore.Cors.dll</HintPath>
@@ -153,6 +156,9 @@
     </Reference>
     <Reference Include="Microsoft.Extensions.Hosting.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.Hosting.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Http, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Http.2.1.0\lib\netstandard2.0\Microsoft.Extensions.Http.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Identity.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.Identity.Core.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Identity.Core.dll</HintPath>
@@ -278,6 +284,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\AutoMapperConfig.cs" />
     <Compile Include="Configuration\Constants.cs" />
     <Compile Include="Configuration\SiteRoles.cs" />
     <Compile Include="DataContext\BrDbContext.cs" />

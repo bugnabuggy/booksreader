@@ -194,7 +194,7 @@ namespace BooksReader.Web.Controllers.Author
             "bookId")]
         public IActionResult PutBookEditInfo(Guid bookId, [FromBody] BookEditFullRequest bookInfo)
         {
-            
+            bookInfo.Book.Id = bookId;
             var result = _booksService.SaveFull(bookInfo);
             return StandartReturn<BookEditFullRequest>(result);
         }

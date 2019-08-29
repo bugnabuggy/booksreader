@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Enums;
 using BooksReader.Core.Exceptions;
@@ -11,11 +11,9 @@ using BooksReader.Core.Models;
 using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Services;
 using BooksReader.Dictionaries.Messages;
-using BooksReader.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Extensions.Internal;
 
-namespace BooksReader.Infrastructure.Services
+namespace BooksReader.Services
 {
 	public class BooksService : IBooksService
 	{
@@ -25,13 +23,15 @@ namespace BooksReader.Infrastructure.Services
 
         private readonly IPersonalPageService _personalPageService;
         private readonly IBookPriceService _bookPriceService;
+        private readonly IMapper _mapper;
 
         public BooksService(
 			IRepository<Book> bookRepo,
 			IRepository<BrUser> userRepo,
             IRepository<BookChapter> bookChaptersRepo,
             IPersonalPageService personalPageService,
-            IBookPriceService bookPriceService
+            IBookPriceService bookPriceService,
+            IMapper mapper
         )
 		{
 			_bookRepo = bookRepo;
@@ -39,6 +39,7 @@ namespace BooksReader.Infrastructure.Services
             _bookChaptersRepo = bookChaptersRepo;
             _personalPageService = personalPageService;
             _bookPriceService = bookPriceService;
+            _mapper = mapper;
         }
 
 		public Book Add(Book item)
@@ -75,7 +76,11 @@ namespace BooksReader.Infrastructure.Services
 						Created = x.Created,
 						Published = x.Published,
 						OwnerUserName = y.UserName,
-						OwnerName = y.Name
+						OwnerName = y.Name,
+                        Description = x.Description,
+                        IsPublished = x.IsPublished,
+                        IsForSale = x.IsForSale,
+                        Picture = x.Picture
 					}
 				);
 		}
@@ -83,7 +88,6 @@ namespace BooksReader.Infrastructure.Services
 		public IQueryable<Book> Get()
 		{
 			return JoinWithOwner(_bookRepo.Data);
-				
 		}
 
 		public IQueryable<Book> GetByOwnerId(Guid ownerId)
@@ -138,11 +142,14 @@ namespace BooksReader.Infrastructure.Services
                                     && x.SubjectId.Equals(bookId)
                 );
 
+            var prices = _bookPriceService.GetByBookId(book.Id);
+
             var data = new BookEditInfo()
             {
                 Book = book,
                 BookPage = personalPage,
-                Chapters = bookChapters.OrderBy(x => x.Number)
+                Chapters = bookChapters.OrderBy(x => x.Number),
+                Prices = prices
             };
 
             return new OperationResult<BookEditInfo>()
@@ -154,32 +161,50 @@ namespace BooksReader.Infrastructure.Services
 
         public IOperationResult<BookEditFullRequest> SaveFull(BookEditFullRequest bookInfo)
         {
-            var result = new OperationResult<BookEditFullRequest>(bookInfo);
+            var result = new OperationResult<BookEditFullRequest>(bookInfo)
+            {
+                Success = true
+            };
 
-            var validations = Validate(bookInfo).ToList();
+            if (string.IsNullOrWhiteSpace(bookInfo.BookPage.Content)
+                && string.IsNullOrWhiteSpace(bookInfo.BookPage.Domain)
+                && string.IsNullOrWhiteSpace(bookInfo.BookPage.UrlPath))
+            {
+                bookInfo.BookPage = null;
+            }
+
+            var validations = new List<string>();
+            validations.AddRange(Validate(bookInfo));
             if (validations.Any())
             {
                 result.Messages = validations;
+                result.Success = false;
+                // no reason to continue saving if validations failed
                 goto end;
             }
 
-            // edit book if present
-            // var book = Edit(bookInfo.Book);
+            // save book 
+            var bookResult  = Save(bookInfo.Book);
+            result.Success = bookResult.Success;
+            validations.AddRange(result.Messages);
 
-            // edit book page if present
-            //if (bookInfo.BookPage != null)
-            //{
-            //    var bookPage = _personalPageService.Edit(bookInfo.BookPage);
-            //}
+            if (bookInfo.BookPage != null)
+            {
+                var pageResult =
+                    _personalPageService.Save(bookInfo.BookPage, bookInfo.Book.Id, PersonalPageType.BookPage);
+                result.Success = pageResult.Success;
+                validations.AddRange(pageResult.Messages);
+            }
 
-            //// edit book prices if present
-            //if (bookInfo.Prices != null)
-            //{
-            //    var prices = _bookPriceService.SetPrices(bookInfo.Prices);
-            //}
+            if (bookInfo.Prices.Any())
+            {
+                var pricesResult = _bookPriceService.SetPrices(bookInfo.Prices, bookInfo.Book.Id);
 
-            // if everything saved - success
-            result.Success = true;
+                result.Success = pricesResult.Success;
+                validations.AddRange(pricesResult.Messages);
+            }
+
+            result.Messages = validations;
 
             end:
             return result;
@@ -197,32 +222,56 @@ namespace BooksReader.Infrastructure.Services
             return validationMessages;
         }
 
+
         public IEnumerable<string> Validate(BookEditFullRequest item)
         {
             var validationMessages = new List<string>();
-            
-            // validate book 
-            // validationMessages.AddRange(Validate(item.Book));
+
+            // validate book
+            var book = _mapper.Map<Book>(item.Book);
+            validationMessages.AddRange(Validate(book));
 
             // validate public page
-            //if (item.BookPage != null)
-            //{
-            //    validationMessages.AddRange(_personalPageService.Validate(item.BookPage));
-            //}
+            if (item.BookPage != null)
+            {
+                var page = _mapper.Map<PersonalPage>(item.BookPage);
+                validationMessages.AddRange(_personalPageService.Validate(page));
+            }
 
             // validate prices
-            //foreach (var bookPrice in item.Prices ?? new List<BookPrice>())
-            //{
-            //    validationMessages.AddRange(_bookPriceService.Validate(bookPrice));
-
-            //    if (!item.Book.Id.Equals(bookPrice.BookId))
-            //    {
-            //        validationMessages.Add(MessageStrings.BookPricesMessages.PriceBookIdIsNotForEditedBook);
-            //    }
-            //}
+            foreach (var bookPriceRequest in item.Prices ?? new List<BookPricesRequest>())
+            {
+                var bookPrice = _mapper.Map<BookPrice>(bookPriceRequest);
+                validationMessages.AddRange(_bookPriceService.Validate(bookPrice));
+            }
 
             return validationMessages;
 
+        }
+
+        private IOperationResult<Book> Save(BookFormSubRequest item)
+        {
+            var result = new OperationResult<Book>();
+
+            var book = _bookRepo.Data.FirstOrDefault(x => x.Id.Equals(item.Id));
+
+            book.Title = item.Title;
+            book.Author = item.Author;
+            book.Description = item.Description;
+            book.IsForSale = item.IsForSale;
+            
+            // if book is published set current date, if unpublished leave previous publish date
+            if (!book.IsPublished && item.IsPublished)
+            {
+                book.Published = DateTime.UtcNow;
+            }
+
+            book.IsPublished = item.IsPublished;
+
+            result.Data = _bookRepo.Update(book);
+            result.Success = true;
+
+            return result;
         }
     }
 }

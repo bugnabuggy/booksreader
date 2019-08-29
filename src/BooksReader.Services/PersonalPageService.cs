@@ -5,8 +5,10 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
+using BooksReader.Core.Enums;
 using BooksReader.Core.Infrastructure;
 using BooksReader.Core.Models;
+using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Services;
 using BooksReader.Dictionaries.Messages;
 using BooksReader.Infrastructure.Services;
@@ -18,11 +20,11 @@ namespace BooksReader.Services
     {
         
 
-        private readonly IEnumerable<Expression<Func<PersonalPage, string>>> _validations =
-            new List<Expression<Func<PersonalPage, string>>>()
+        private readonly IEnumerable<Func<PersonalPage, PersonalPageService, string>> _validations =
+            new List<Func<PersonalPage, PersonalPageService, string>>()
             {
                 {
-                    x => string.IsNullOrWhiteSpace(x.Domain)
+                    (x, svc) => string.IsNullOrWhiteSpace(x.Domain)
                         ? MessageStrings.PersonalPageMessages.DomainCantBeEmpty
                         : ""
                 }
@@ -33,13 +35,22 @@ namespace BooksReader.Services
         {
         }
 
+
         public IEnumerable<string> Validate(PersonalPage page)
         {
+            var messages = new List<string>();
 
+            foreach (var validation in _validations)
+            {
+                var msg = validation.Invoke(page, this);
+                if (!string.IsNullOrWhiteSpace(msg))
+                {
+                    messages.Add(msg);
+                }
+            }
 
-            throw new NotImplementedException();
+            return messages;
         }
-
 
         public override async Task<IOperationResult<PersonalPage>> AddAsync(PersonalPage item)
         {
@@ -58,6 +69,39 @@ namespace BooksReader.Services
             return result;
         }
 
-        
+
+        public IOperationResult<PersonalPage> Save(PublicPageRequest request, Guid subjectId, PersonalPageType type)
+        {
+            var result = new OperationResult<PersonalPage>(true);
+
+            var existing = Repository.Data.Where(x => x.SubjectId.HasValue)
+                .Where(x => x.SubjectId.Equals(subjectId))
+                .FirstOrDefault(x => x.PageType == type);
+
+            if (existing == null)
+            {
+                var newPage = new PersonalPage()
+                {
+                    Content = request.Content,
+                    Domain = request.Domain,
+                    UrlPath = request.UrlPath,
+                    PageType = type,
+                    SubjectId = subjectId
+                };
+
+                Repository.Add(newPage);
+                result.Data = newPage;
+
+            }
+
+            existing.Content = request.Content;
+            existing.UrlPath = request.UrlPath;
+            existing.Domain = request.Domain;
+
+            Repository.Update(existing);
+            result.Data = existing;
+
+            return result;
+        }
     }
 }

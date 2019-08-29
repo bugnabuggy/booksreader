@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using BooksReader.Core.Entities;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
@@ -62,6 +63,8 @@ namespace BooksReader.TestData.Helpers
         {
             var services = new ServiceCollection();
             services.AddDbContext<BrDbContext>(options => options.UseSqlServer(HardcoddedConfig.ConnectionString));
+
+            services.AddAutoMapper(typeof(AutoMapperProfile));
 
             services.AddIdentity<BrUser, IdentityRole<Guid>>(opt =>
                 {

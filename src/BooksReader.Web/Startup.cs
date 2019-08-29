@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using AutoMapper;
 using BooksReader.Core.Entities;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
@@ -64,6 +65,8 @@ namespace BooksReader.Web
 				.AddAuthorization(opt =>
 				{
 				});
+
+            services.AddAutoMapper(typeof(AutoMapperProfile));
 
 			services.AddIdentity<BrUser, IdentityRole<Guid>>(opts =>
 				{
