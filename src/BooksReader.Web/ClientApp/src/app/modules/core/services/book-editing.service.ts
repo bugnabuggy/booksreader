@@ -20,4 +20,8 @@ export class BookEditingService extends CrudService<Book> {
   getFull(id: string) {
     return this.http.get<OperationResult<BookEditInfo>>(Endpoints.api.author.bookFullEditInfo.replace('{id}', id)).pipe(share());
   }
+
+  editFull(id:string, bookEditInfo: BookEditInfo) {
+    return this.http.put<OperationResult<BookEditInfo>>(Endpoints.api.author.bookFullEditInfo.replace('{id}', id), bookEditInfo).pipe(share());
+  }
 }

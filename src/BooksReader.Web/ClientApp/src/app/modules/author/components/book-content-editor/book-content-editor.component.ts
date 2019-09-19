@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Book, BookChapter } from '@br/core/models';
 import { BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import { BookChapterEditingService } from '@br/core/services';
 
 @Component({
   selector: 'app-book-content-editor',
@@ -11,13 +12,16 @@ export class BookContentEditorComponent implements OnInit {
 
   sidebarMode = 'side';
   sidebarIsOpened = true;
+  bookChapter: BookChapter = null;
 
+
+  @Input() isTabActive: boolean;
   @Input() book: Book;
   @Input() chapters: BookChapter[];
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-
+    private chapterEditingSvc: BookChapterEditingService   
     ) { }
 
   ngOnInit() {
@@ -32,5 +36,9 @@ export class BookContentEditorComponent implements OnInit {
 
       this.sidebarIsOpened = !isSmall;
     });
+
+    this.chapterEditingSvc.activeChapter.subscribe((chapter: BookChapter)=>{
+      this.bookChapter = chapter;
+    })
   }
 }

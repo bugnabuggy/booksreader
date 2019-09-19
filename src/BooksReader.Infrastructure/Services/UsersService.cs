@@ -15,6 +15,7 @@ using BooksReader.Dictionaries;
 using BooksReader.Infrastructure.DataContext;
 using BooksReader.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
+using MessageStrings = BooksReader.Dictionaries.Messages.MessageStrings;
 
 namespace BooksReader.Infrastructure.Services
 {

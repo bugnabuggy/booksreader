@@ -39,7 +39,8 @@ namespace BooksReader.Core.Services
                 return new PublicPageInfo()
                 {
                     Content = page.Content,
-                    SeoInfo = page.SeoInfo
+                    SeoInfo = page.SeoInfo,
+                    Path = page.UrlPath
                 };
             }
 
@@ -52,7 +53,8 @@ namespace BooksReader.Core.Services
             return new PublicPageInfo()
             {
                 SeoInfo = page.SeoInfo,
-                Content = page.Content
+                Content = page.Content,
+                Path = page.UrlPath
             };
         }
     }

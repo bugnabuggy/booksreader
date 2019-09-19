@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.2.2.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
     </Reference>
@@ -59,7 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorProfileService.Tests.cs" />
+    <Compile Include="BookPricesService.Tests.cs" />
     <Compile Include="BookService.Tests.cs" />
+    <Compile Include="ListsServcice.Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublicService.Tests.cs" />
   </ItemGroup>

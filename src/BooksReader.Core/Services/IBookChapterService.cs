@@ -12,6 +12,7 @@ namespace BooksReader.Core.Services
     {
         IQueryable<BookChapter> GetByBook(Guid bookId);
         IOperationResult<BookChapter> AddOrUpdate(Guid bookId, BookChapterRequest chapterInfo);
+        IOperationResult<BookChapter> EditContent(Guid bookId, BookChapter chapterInfo);
         IOperationResult<IEnumerable<BookChapterReorderRequest>> Reorder(Guid bookId, IEnumerable<BookChapterReorderRequest> order);
     }
 }

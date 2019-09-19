@@ -22,16 +22,13 @@ export class BookChaptersEditorComponent implements OnInit, OnChanges{
   @Input() bookId: string;
 
   selectedChapterIndex: number = -1; 
-  chapterForm: FormGroup;
+  
 
-  constructor(
-    private fb: FormBuilder,
+  constructor(    
     private dialog: MatDialog,
     private bookChapterEditingSvc: BookChapterEditingService,
     private notificationsSvc: NotificationService,
   ) { 
-    this.chapterForm = this.fb.group({
-    });
   }
 
   ngOnInit() {
@@ -40,6 +37,7 @@ export class BookChaptersEditorComponent implements OnInit, OnChanges{
   ngOnChanges() {
     if(this.chapters && this.chapters.length > 0) {
       this.selectedChapterIndex = 0;
+      this.bookChapterEditingSvc.activeChapter.next(this.chapters[0]);
     }
   }
 
@@ -137,10 +135,24 @@ export class BookChaptersEditorComponent implements OnInit, OnChanges{
     }, err => {
       this.notificationsSvc.showError(err.data || err.response || err.message);
     });
+
+    this.bookChapterEditingSvc.activeChapter.next(this.chapters[event.currentIndex]);
   }
 
   select(chapter) {
     this.selectedChapterIndex = this.chapters.findIndex(x=>x == chapter);
     this.bookChapterEditingSvc.activeChapter.next(chapter);
+  }
+
+  inc(){
+    this.selectedChapterIndex = this.chapters.length >= this.selectedChapterIndex + 1
+    ? 0
+    : this.selectedChapterIndex++;
+  }
+
+  dec(){
+    this.selectedChapterIndex = this.selectedChapterIndex < 1
+    ? this.chapters.length
+    : this.selectedChapterIndex--;
   }
 }

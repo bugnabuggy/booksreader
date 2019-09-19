@@ -23,6 +23,7 @@ using BooksReader.Web.Models;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
 using Newtonsoft.Json.Linq;
 using Ruteco.AspNetCore.Translate;
+using MessageStrings = BooksReader.Dictionaries.Messages.MessageStrings;
 
 namespace BooksReader.Web.Controllers
 {

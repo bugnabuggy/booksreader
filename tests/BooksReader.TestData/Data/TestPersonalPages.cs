@@ -26,10 +26,10 @@ namespace BooksReader.TestData.Data
                 new PersonalPage()
                 {
                     Id = Guid.Parse("20000000-0000-0000-0000-000000000002"),
-                    Content = "<h1>Hello world!</h1>",
+                    Content = "<h1>Story!</h1>",
                     Domain = "localhost:4200",
                     UrlPath = "story",
-                    PageType = PersonalPageType.AuthorPage,
+                    PageType = PersonalPageType.PromoPage,
                     SubjectId = Guid.Parse("10000000-0000-0000-0000-000000000001"),
                 },
             };

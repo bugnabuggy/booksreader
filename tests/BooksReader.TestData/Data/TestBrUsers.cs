@@ -38,19 +38,36 @@ namespace BooksReader.TestData.Data
                     Username = "test",
                     Password = "321",
                     Roles = new List<string>() {"User"}
+                },
+                new UserForInitialization()
+                {
+                    Id =  "00000000-0000-0000-0000-000000000004",
+                    Username = "usertodelete",
+                    Password = "321",
+                    Roles = new List<string>() {"User"}
                 }
             };
 
             return list;
         }
 
+        public static BrUser GetUserToDelete()
+        {
+            return new BrUser()
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000004"),
+                Name = "Test User to delete",
+                UserName = "usertodelete"
+            };
+        }
+
         public static BrUser GetUser()
         {
             return new BrUser()
             {
-                Id = Guid.Parse("00000000-0000-0000-0000-000000000003"),
-                Name = "Test",
-                UserName = "test"
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000002"),
+                Name = "New Test User",
+                UserName = "newuser"
             };
         }
     }

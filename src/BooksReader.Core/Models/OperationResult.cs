@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BooksReader.Core.Models
 {
-    public class OperationResult : IOperationResult<object>
+    public class OperationResult : IOperationResult
     {
         public OperationResult()
         {

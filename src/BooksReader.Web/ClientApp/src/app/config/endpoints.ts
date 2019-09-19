@@ -78,7 +78,9 @@ class Endpoints {
         },
         public: {
             pageInfo: Endpoints.baseApiUrl + 'api/public',
+            lists:  Endpoints.baseApiUrl + 'api/public/lists',
         }
+
     };
 }
 

@@ -58,6 +58,8 @@ namespace BooksReader.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(3000);
 
+                    b.Property<bool>("IsForSale");
+
                     b.Property<bool>("IsPublished");
 
                     b.Property<Guid>("OwnerId");
@@ -97,6 +99,8 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .HasMaxLength(3000);
+
+                    b.Property<bool>("IsPublished");
 
                     b.Property<long>("Number");
 
@@ -149,6 +153,30 @@ namespace BooksReader.Infrastructure.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("BookChaptersHistory");
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.BookPrice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("BookId");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<long>("CurrencyId");
+
+                    b.Property<Guid>("OwnerId");
+
+                    b.Property<double>("Price");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.ToTable("BooksPrices");
                 });
 
             modelBuilder.Entity("BooksReader.Core.Entities.BrUser", b =>
@@ -302,6 +330,87 @@ namespace BooksReader.Infrastructure.Migrations
                     b.ToTable("SeoInfos");
                 });
 
+            modelBuilder.Entity("BooksReader.Core.Entities.TypeValue", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("LocalizationKey")
+                        .HasMaxLength(60);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(120);
+
+                    b.Property<int>("TypeId");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("TypeValues");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 100L,
+                            LocalizationKey = "CURRENCY_EUR",
+                            Name = "Euro",
+                            TypeId = 1,
+                            Value = "EUR"
+                        },
+                        new
+                        {
+                            Id = 101L,
+                            LocalizationKey = "CURRENCY_USD",
+                            Name = "United Stated dollar",
+                            TypeId = 1,
+                            Value = "USD"
+                        },
+                        new
+                        {
+                            Id = 102L,
+                            LocalizationKey = "CURRENCY_RUB",
+                            Name = "Russian ruble",
+                            TypeId = 1,
+                            Value = "RUB"
+                        },
+                        new
+                        {
+                            Id = 103L,
+                            LocalizationKey = "CURRENCY_DKK",
+                            Name = "Danish krone",
+                            TypeId = 1,
+                            Value = "DKK"
+                        });
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.TypesList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("LocalizationKey")
+                        .HasMaxLength(60);
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(120);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TypesLists");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            LocalizationKey = "TYPE_CURRENCY",
+                            Name = "Currency"
+                        });
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
                 {
                     b.Property<Guid>("Id")
@@ -437,11 +546,32 @@ namespace BooksReader.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("BooksReader.Core.Entities.BookPrice", b =>
+                {
+                    b.HasOne("BooksReader.Core.Entities.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BooksReader.Core.Entities.TypeValue", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("BooksReader.Core.Entities.PersonalPage", b =>
                 {
                     b.HasOne("BooksReader.Core.Entities.SeoInfo", "SeoInfo")
                         .WithMany()
                         .HasForeignKey("SeoInfoId");
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.TypeValue", b =>
+                {
+                    b.HasOne("BooksReader.Core.Entities.TypesList", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

@@ -280,7 +280,7 @@ export class SecurityService {
         return this.access_token;
     }
 
-    isAuthenticated() {
+    get isAuthenticated() {
         return this.isLoggedIn;
     }
 

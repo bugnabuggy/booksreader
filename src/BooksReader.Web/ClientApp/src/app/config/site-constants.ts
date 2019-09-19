@@ -1,5 +1,5 @@
 export class SiteConstants {
-    static Short_timeout = 10000;
+    static Short_timeout = 5000;
     static itemsPerPage = [5, 10, 50, 100, 500, 1000, 10000];
 
 
@@ -9,4 +9,8 @@ export class SiteConstants {
     }
 
     static localizationDictionariesPath = './assets/i18n/';
+
+    static lists = {
+        сurrency: 'Currency'
+    }
 }

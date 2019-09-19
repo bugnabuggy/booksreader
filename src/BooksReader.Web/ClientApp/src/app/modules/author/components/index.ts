@@ -6,3 +6,4 @@ export * from './book-chapters-editor/book-chapters-editor.component';
 export * from './book-chapter-info-editor/book-chapter-info-editor.component';
 export * from './add-string-dialog/add-string-dialog.component';
 export * from './book-content-inner-editor/book-content-inner-editor.component';
+export * from './book-reader-preview/book-reader-preview.component';

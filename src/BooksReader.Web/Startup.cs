@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using AutoMapper;
 using BooksReader.Core.Entities;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.DataContext;
@@ -18,6 +19,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Ruteco.AspNetCore.Translate;
 
 namespace BooksReader.Web
@@ -54,11 +56,17 @@ namespace BooksReader.Web
                     options => { options.Filters.Add(typeof(UserActionFilterAttribute)); })
 				.AddFormatterMappings()
 				.AddCacheTagHelper()
+                .AddJsonOptions(opt=>
+                {
+                    opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                })
 				.AddJsonFormatters()
 				.AddCors()
 				.AddAuthorization(opt =>
 				{
 				});
+
+            services.AddAutoMapper(typeof(AutoMapperProfile));
 
 			services.AddIdentity<BrUser, IdentityRole<Guid>>(opts =>
 				{
@@ -77,6 +85,12 @@ namespace BooksReader.Web
 			services.AddIdentityServer(
                     opt=>
                     {
+                        var isParsed = bool.TryParse(Configuration["Security:UseIssuerInsteadOfURL"], out bool useIssuer);
+                        if (isParsed && useIssuer)
+                        {
+                            opt.IssuerUri = Configuration["Security:IssuerName"];
+                        }
+                        
                     })
 				.AddDeveloperSigningCredential()
 				.AddInMemoryApiResources(IdServerConfig.GetApiResources())
@@ -105,19 +119,26 @@ namespace BooksReader.Web
 					o.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
 					o.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
 					o.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                    
 				})
                 .AddFacebook(facebookOptions =>
                 {
                     facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                     facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
                 })
-                .AddIdentityServerAuthentication(options =>
-				{
-
-					options.Authority = Configuration["ServerUrl"];
-					options.RequireHttpsMetadata = false;
+                .AddIdentityServerAuthentication( options =>
+                {
+                    var isParsed = bool.TryParse(Configuration["Security:UseIssuerInsteadOfURL"], out bool useIssuer);
+                    if (isParsed && useIssuer)
+                    {
+                        options.ClaimsIssuer = Configuration["Security:IssuerName"];
+                    }
+                    
+                    options.Authority = Configuration["Security:ServerUrl"];
+                    options.RequireHttpsMetadata = false;
 				    options.TokenRetriever = CustomTokenRetriever.FromHeaderAndQueryString;
                     
+
                     options.ApiName = IdServerConfig.ApiName;
 				});
 

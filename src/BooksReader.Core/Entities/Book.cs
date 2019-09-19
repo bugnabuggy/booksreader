@@ -20,7 +20,7 @@ namespace BooksReader.Core.Entities
         public string Description { get; set; }
 
         public bool IsPublished { get; set; }
-
+        public bool IsForSale { get; set; }
 
         public string Picture { get; set; }
 
@@ -30,6 +30,5 @@ namespace BooksReader.Core.Entities
 		// non database properties
 		public string OwnerName;
 		public string OwnerUserName;
-
 	}
 }

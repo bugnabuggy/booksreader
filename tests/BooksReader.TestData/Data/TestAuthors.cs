@@ -29,6 +29,14 @@ namespace BooksReader.TestData.Data
                     AuthorName = "Tony",
                     Description = "Tony's author page",
                     PersonalPageId = Guid.Parse("20000000-0000-0000-0000-000000000001"),
+                },
+
+                new AuthorProfile()
+                {
+                    Id = Guid.Parse("10000000-0000-0000-0000-000000000002"),
+                    UserId = Guid.Parse("00000000-0000-0000-0000-000000000003"),
+                    AuthorName = "test",
+                    Description = "test author without personal page ",
                 }
             };
         }
@@ -48,10 +56,10 @@ namespace BooksReader.TestData.Data
         {
             return new AuthorProfileDto
             {
-                Id = Guid.Parse("10000000-0000-0000-0000-000000000001"),
-                AuthorName = "Tony 2",
-                Description = "Edited Tony's author page",
-                DomainName = "localhost:4200",
+                Id = Guid.Parse("10000000-0000-0000-0000-000000000002"),
+                AuthorName = "test Edit 2",
+                Description = "Edited test author page",
+                DomainName = "localhost:4201",
                 PageContent = "<h1>Hello world!</h1>"
             };
         }

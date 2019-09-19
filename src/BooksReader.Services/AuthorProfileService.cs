@@ -13,6 +13,7 @@ using BooksReader.Core.Services.Author;
 using BooksReader.Dictionaries;
 using BooksReader.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using MessageStrings = BooksReader.Dictionaries.Messages.MessageStrings;
 
 namespace BooksReader.Services
 {

@@ -1,31 +1,57 @@
 <div class="flex-1 p-3">
-  <form (ngSubmit)="save()" [formGroup]="bookForm">      
-    <mat-form-field class="w-100">
-      <input matInput placeholder="Book title" required formControlName="title">
-    </mat-form-field>
-    <mat-form-field class="w-100">
-      <input matInput placeholder="Author" required formControlName="author">
-    </mat-form-field>
-    <mat-form-field class="w-100">
-      <textarea matInput rows='5' maxlength="3000" placeholder="Description" formControlName="description"></textarea>
-    </mat-form-field>
-    <div class="w-100 mb-3">
-      <mat-slide-toggle formControlName="author">
-        Is published
-      </mat-slide-toggle>
-    </div>
-    <hr>
-    <div>
+  <form (ngSubmit)="save()" class="col-12 col-sm-10 col-lg-8 col-xl-6 m-auto" [formGroup]="bookForm">
+    <section formGroupName="book">
+      <label class="font-weight-bold">Book info</label>
       <mat-form-field class="w-100">
-        <input matInput placeholder="Domain"  formControlName="domain">
+        <input matInput placeholder="Book title" required formControlName="title">
       </mat-form-field>
       <mat-form-field class="w-100">
-        <input matInput placeholder="Url Path"  formControlName="urlPath">
+        <input matInput placeholder="Author" required formControlName="author">
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <textarea matInput rows='5' maxlength="3000" placeholder="Description" formControlName="description"></textarea>
+      </mat-form-field>
+      <label class="font-weight-bold">Publishing info</label>
+      <div>
+        <mat-slide-toggle formControlName="isPublished">
+          Is published
+        </mat-slide-toggle>
+      </div>
+      <div>
+        <mat-slide-toggle formControlName="isForSale" >
+          Paid book
+        </mat-slide-toggle>
+      </div>
+
+      <div *ngIf="pricesVisible" class="row" [formGroup]="bookForm.get('bookPrice')">
+        <input type="hidden" placeholder="Price" formControlName='id'>
+        <mat-form-field class="col-6">
+          <input matInput placeholder="Price" formControlName='price'>
+        </mat-form-field>
+        <mat-form-field class="col-6">
+            <mat-label>Currency</mat-label>
+            <mat-select formControlName='currencyId'>
+              <mat-option *ngFor="let currency of currencies" [value]="currency.id">
+                {{currency.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        
+      </div>
+    </section>
+    <hr>
+    <section formGroupName="bookPage">
+      <label class='font-weight-bold'>Book page info</label>
+      <mat-form-field class="w-100">
+        <input matInput placeholder="Domain" formControlName="domain">
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <input matInput placeholder="Url Path" formControlName="urlPath">
       </mat-form-field>
       <mat-form-field class="w-100">
         <textarea matInput rows='5' placeholder="Htm page content" formControlName="content"></textarea>
       </mat-form-field>
-    </div>
+    </section>
     <button [disabled]="isUiBlocked || !bookForm.valid" mat-raised-button color="primary">Save</button>
   </form>
 </div>

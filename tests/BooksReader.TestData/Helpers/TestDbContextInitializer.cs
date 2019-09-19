@@ -25,25 +25,29 @@ namespace BooksReader.TestData.Helpers
         {
             var mock = new Mock<IConfigurationRoot>();
 
-
-
             return mock;
         }
 
         public async Task SeedData(IServiceProvider services)
         {
             AppConfigurator.InitRolesAndUsers(services);
+            AppConfigurator.InitTypesLists(services);
 
             var context = services.GetService<BrDbContext>();
             var userManager = services.GetService<UserManager<BrUser>>();
 			var booksRepo = services.GetService<IRepository<Book>>();
             var authorProfilesRepo = services.GetService<IRepository<AuthorProfile>>();
             var personalPagesRepo = services.GetService<IRepository<PersonalPage>>();
+            var chaptersRepo = services.GetService<IRepository<BookChapter>>();
+            var pricesRepo = services.GetService<IRepository<BookPrice>>();
+
 
             await AddUsers(userManager);
             await AddPersonalPages(personalPagesRepo);
             await AddAuthorProfiles(authorProfilesRepo);
 	        await AddBooks(booksRepo);
+            await AddBookChapters(chaptersRepo);
+            await AddBookPrices(pricesRepo);
         }
 
         private static async Task AddUsers(UserManager<BrUser> manager)
@@ -76,6 +80,16 @@ namespace BooksReader.TestData.Helpers
         private static async Task AddPersonalPages(IRepository<PersonalPage> pagesRepo)
         {
             await pagesRepo.AddAsync(TestPersonalPages.GetPersonalPages());
+        }
+
+        private static async Task AddBookChapters(IRepository<BookChapter> chaptersRepo)
+        {
+            await chaptersRepo.AddAsync(TestBookChapters.GetChapters());
+        }
+
+        private static async Task AddBookPrices(IRepository<BookPrice> pricesRepo)
+        {
+            await pricesRepo.AddAsync(TestBookPrices.GetBookPrices());
         }
     }
 }

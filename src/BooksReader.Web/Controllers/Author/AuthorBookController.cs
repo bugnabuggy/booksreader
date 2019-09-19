@@ -8,7 +8,7 @@ using BooksReader.Core.Exceptions;
 using BooksReader.Core.Infrastructure;
 using BooksReader.Core.Models;
 using BooksReader.Core.Models.DTO;
-using BooksReader.Core.Models.DTO.Author;
+using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Models.Requests.Filters;
 using BooksReader.Core.Services;
 using BooksReader.Dictionaries;
@@ -22,32 +22,26 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MessageStrings = BooksReader.Dictionaries.Messages.MessageStrings;
 
 namespace BooksReader.Web.Controllers.Author
 {
     [Route("api/author/book")]
     [Authorize]
     [ApiController]
-    public class AuthorBookController : ControllerBase
+    public class AuthorBookController : BaseUserController
     {
         private readonly IBooksService _booksService;
-        private readonly IRepository<PersonalPage> _personalPagesRepo;
-        private readonly IRepository<BookChapter> _bookChaptersRepo;
-        private readonly UserManager<BrUser> _userManager;
         private readonly ISecurityService _security;
 
         public AuthorBookController(
             IBooksService booksService,
-            IRepository<PersonalPage> personalPagesRepo,
-            IRepository<BookChapter> bookChaptersRepo,
+
             ISecurityService security,
-            UserManager<BrUser> userManager)
+            UserManager<BrUser> userManager): base(userManager)
         {
             _booksService = booksService;
-            _userManager = userManager;
             _security = security;
-            _personalPagesRepo = personalPagesRepo;
-            _bookChaptersRepo = bookChaptersRepo;
         }
 
 
@@ -183,28 +177,28 @@ namespace BooksReader.Web.Controllers.Author
                 typeof(OwnerOrAdministratorValidator)
             },
             "bookId")]
-        public OperationResult<BookEditDto> GetBookEditDto(Guid bookId)
+        public IActionResult GetBookEditDto(Guid bookId)
         {
-            var book = _booksService.Get(bookId);
+            var result = _booksService.GetFull(bookId);
+            return StandartReturn(result);
 
-            var bookChapters = _bookChaptersRepo.Data.Where(x => x.BookId.Equals(bookId));
-
-            var personalPage = _personalPagesRepo.Data.FirstOrDefault(x =>
-                x.PageType == PersonalPageType.BookPage 
-                && x.SubjectId.Equals(bookId));
-                
-            var data = new BookEditDto()
-            {
-                Book = book,
-                BookPage = personalPage,
-                Chapters = bookChapters.OrderBy(x=>x.Number)
-            };
-
-            return new OperationResult<BookEditDto>()
-            {
-                Data = data,
-                Success = true,
-            };
         }
+
+        [HttpPut("{bookId:guid}/edit")]
+        [Validate(typeof(Getter<Book>),
+            new Type[]
+            {
+                typeof(ItemExistsValidator),
+                typeof(OwnerOrAdministratorValidator)
+            },
+            "bookId")]
+        public IActionResult PutBookEditInfo(Guid bookId, [FromBody] BookEditFullRequest bookInfo)
+        {
+            bookInfo.Book.Id = bookId;
+            var result = _booksService.SaveFull(bookInfo);
+            return StandartReturn<BookEditFullRequest>(result);
+        }
+
+        
     }
 }

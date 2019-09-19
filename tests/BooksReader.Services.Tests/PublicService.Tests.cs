@@ -22,8 +22,6 @@ namespace BooksReader.Services.Tests
     {
         private IServiceProvider _provider;
         private IPublicService _publicService;
-        private IRepository<PersonalPage> _pages;
-
 
         [SetUp]
         public async Task SetUp()

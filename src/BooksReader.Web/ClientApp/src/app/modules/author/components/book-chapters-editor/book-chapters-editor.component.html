@@ -6,33 +6,34 @@
     </button>
   </h2>
   <div class='flex-1 d-flex flex-column' style="overflow-y:scroll">
-    <ul class='list-group flex-1 bg-warn' cdkDropList (cdkDropListDropped)="drop($event)">
-      <li (click)="select(chapter)" [class.active]="i == selectedChapterIndex" class='list-group-item'
-        *ngFor="let chapter of chapters; index as i">
+    <!-- <mat-list  cdkDropList (cdkDropListDropped)="drop($event)">
+      <mat-list-item 
+        [class.mat-list-item-selected]="i == selectedChapterIndex"
+        *ngFor="let chapter of chapters; index as i"
+        (click)="select(chapter)">
         <mat-icon mat-list-icon class='br-vert-midddle' cdkDrag>unfold_more</mat-icon>
+        {{chapter.title}}
+      </mat-list-item>
+    </mat-list> -->
+    
+    <ul class='list-group flex-1 bg-warn' cdkDropList (cdkDropListDropped)="drop($event)">
+      <li (click)="select(chapter)"
+        (keydown.arrowup)="dec()"
+        (keydown.arrowup)="inc()"
+        (keydown.arrowleft)="dec()"
+        (keydown.arrowright)="inc()"
+       [class.selected]="i == selectedChapterIndex" class='list-group-item'
+        *ngFor="let chapter of chapters; index as i" >
+        <mat-icon cdkDrag mat-list-icon class='br-vert-midddle' >unfold_more</mat-icon>
         {{chapter.title}}
       </li>
     </ul>
   </div>
 
-  <mat-card class='m-2 mat-elevation-z4' *ngIf='selectedChapterIndex > -1'>
-    <mat-card-header>
-      <mat-card-title>{{chapters[selectedChapterIndex].title}}</mat-card-title>
-      <div>
-        <button mat-icon-button (click)="edit()" color="accent" aria-label="Example icon-button with a heart icon">
-          <mat-icon mat-list-icon class='br-vert-midddle'>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="delete()" aria-label="Example icon-button with a heart icon">
-          <mat-icon mat-list-icon class='br-vert-midddle'>delete</mat-icon>
-        </button>
-      </div>
-    </mat-card-header>
-
-    <form [formGroup]="chapterForm" class="w-100 ">
-      <div>Version: {{chapters[selectedChapterIndex].version}}</div>
-      <mat-slide-toggle>Is published</mat-slide-toggle>
-      <div></div>
-      <button [disabled]="isUiBlocked || !chapterForm.valid" mat-raised-button color="primary">Save</button>
-    </form>
-  </mat-card>
+  <app-book-chapter-info-editor 
+    *ngIf="selectedChapterIndex > -1"
+    [chapter]="chapters[selectedChapterIndex]" 
+    (delete)="delete()"
+    (edit)="edit()">
+  </app-book-chapter-info-editor>
 </div>

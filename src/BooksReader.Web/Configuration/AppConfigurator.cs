@@ -7,6 +7,7 @@ using BooksReader.Core.Services;
 using BooksReader.Core.Services.Author;
 using BooksReader.Infrastructure.Configuration;
 using BooksReader.Infrastructure.Repositories;
+using BooksReader.Infrastructure.SeedData;
 using BooksReader.Infrastructure.Services;
 using BooksReader.Services;
 using Microsoft.AspNetCore.Identity;
@@ -20,6 +21,9 @@ namespace BooksReader.Web.Configuration
     {
         public static void ConfigureServices(IServiceCollection services)
         {
+            // repositories
+            services.AddTransient<IRepository<TypesList>, DbRepository<TypesList>>();
+            services.AddTransient<IRepository<TypeValue>, DbRepository<TypeValue>>();
             services.AddTransient<IRepository<LoginHistory>, DbRepository<LoginHistory>>();
             services.AddTransient<IRepository<Book>, DbRepository<Book>>();
             services.AddTransient<IRepository<BrUser>, DbRepository<BrUser>>();
@@ -27,15 +31,21 @@ namespace BooksReader.Web.Configuration
             services.AddTransient<IRepository<PersonalPage>, DbRepository<PersonalPage>>();
             services.AddTransient<IRepository<AuthorProfile>, DbRepository<AuthorProfile>>();
             services.AddTransient<IRepository<BookChapter>, DbRepository<BookChapter>>();
+            services.AddTransient<IRepository<BookPrice>, DbRepository<BookPrice>>();
             
-
+            // infrastructure services
             services.AddTransient<ISecurityService, SecurityService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IAuthorProfileService, AuthorProfileService>();
-            services.AddTransient<IPublicService, PublicService>();
 
+
+            // domain services
+            services.AddTransient<IListsService, ListsService>();
+            services.AddTransient<IPublicService, PublicService>();
+            services.AddTransient<IPersonalPageService, PersonalPageService>();
             services.AddTransient<IBooksService, BooksService>();
             services.AddTransient<IBookChapterService, BookChapterService>();
+            services.AddTransient<IBookPriceService, BookPriceService>();
         }
 
         public static void InitRolesAndUsers(IServiceProvider services)
@@ -72,15 +82,39 @@ namespace BooksReader.Web.Configuration
                     userManager.AddToRolesAsync(user.Key, roles.Select(x => x.Name)).Wait(Constants.AsyncTaskWaitTime);
                 }
 
-            bool.TryParse(config["ResetAdminPassword"], out var resetPassword);
+            bool.TryParse(config["Security:ResetAdminPassword"], out var resetPassword);
 
             if (resetPassword)
             {
                 var admin = userManager.FindByNameAsync("admin").Result;
                 var token = userManager.GeneratePasswordResetTokenAsync(admin).Result;
-                var result = userManager.ResetPasswordAsync(admin, token, config["NewPassword"] ?? "Pasword@123")
+                var result = userManager.ResetPasswordAsync(admin, token, config["Security:NewPassword"] ?? "Pasword@123")
                     .Result;
             }
+        }
+
+        public static void InitTypesLists(IServiceProvider services)
+        {
+            var listsRepo = services.GetRequiredService<IRepository<TypesList>>();
+            var valuesRepo = services.GetRequiredService<IRepository<TypeValue>>();
+
+            // check and insert list types
+            var seedLists = SeedTypesLists.GetTypesLists();
+            var typesIntersection = listsRepo.Data.ToList()
+                .Where(x => seedLists.Any(y => y.Id.Equals(x.Id) 
+                                               && y.Name.Equals(x.Name, StringComparison.InvariantCultureIgnoreCase)));
+
+            var typesToInsert = seedLists.Where(x => typesIntersection.All(y => y.Id != x.Id));
+            listsRepo.Add(typesToInsert);
+
+            // check and insert values
+            var seedValues = SeedTypeValues.GetTypeValues();
+            var valuesIntersection = valuesRepo.Data.ToList()
+                .Where(x => seedValues.Any(y => y.Name.Equals(x.Name, StringComparison.InvariantCultureIgnoreCase)
+                                                && y.TypeId.Equals(x.TypeId)));
+
+            var valuesToInsert = seedValues.Where(x => valuesIntersection.All(y => y.Id != x.Id));
+            valuesRepo.Add(valuesToInsert);
         }
     }
 }
