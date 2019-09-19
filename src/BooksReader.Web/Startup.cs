@@ -187,7 +187,7 @@ namespace BooksReader.Web
 				app.UseExceptionHandler("/Error");
 			}
 
-			//app.UseSpaStaticFiles();
+			app.UseSpaStaticFiles();
 
 			
 			app.UseIdentityServer();
