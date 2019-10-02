@@ -37,7 +37,7 @@ export class AuthorDashboardPageComponent implements OnInit {
   ngOnInit() {
     this.bookEditingSvc.list(this.filters)
       .subscribe(val => {
-        this.books = val.data;
+         this.books = val.data;
       },
         err => {
           this.notifications.showError(err.message || StringConstants.errors.anyError);

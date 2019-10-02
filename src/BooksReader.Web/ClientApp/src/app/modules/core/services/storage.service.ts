@@ -14,9 +14,9 @@ export class StorageService implements Storage {
 
   length: number;
 
-  constructor(storage?: Storage) {
+  constructor() {
     // by default use local storage
-    this.storage = storage ? storage : localStorage;
+    this.storage =  localStorage;
   }
 
   clear(): void {

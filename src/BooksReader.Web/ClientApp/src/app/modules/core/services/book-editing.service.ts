@@ -4,6 +4,7 @@ import { CrudService } from './crud.service';
 import { Book, BookEditInfo, OperationResult } from '../models';
 import { Endpoints } from '@br/config';
 import { share } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

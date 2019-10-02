@@ -4,12 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { OperationResult, StandardFilters } from '../models';
 import { Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
-import { Endpoints } from '@br/config';
 import { IIdentifiable } from '../models/site/generics';
 
-@Injectable({
-  providedIn: 'root'
-})
 export class CrudService<T extends IIdentifiable> implements ICrudService<T> {
   constructor(
     protected http: HttpClient,

@@ -1,7 +1,7 @@
 <div class="flex-1 p-3">
   <h2>Author profile page</h2>
   <form (ngSubmit)="save()" class="col-12 col-sm-10 col-lg-8 col-xl-6 m-auto" [formGroup]="profileForm" >
-    <div *ngIf="profileForm.erorrs || errors.length > 0" class="alert alert-danger" role="alert">
+    <div *ngIf="profileForm.errors || errors.length > 0" class="alert alert-danger" role="alert">
       ERRORROS
     </div>
     <mat-form-field class="w-100">

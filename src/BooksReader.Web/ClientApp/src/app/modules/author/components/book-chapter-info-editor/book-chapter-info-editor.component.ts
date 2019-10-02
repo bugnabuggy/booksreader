@@ -14,6 +14,7 @@ export class BookChapterInfoEditorComponent implements OnInit {
   @Output()delete = new EventEmitter<BookChapter>();
   @Output()edit = new EventEmitter<BookChapter>();
 
+  isUiBlocked: boolean = false;
   chapterForm: FormGroup;
 
   constructor(

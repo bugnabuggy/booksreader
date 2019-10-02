@@ -25,6 +25,7 @@ export class RegistrationComponent implements OnInit {
      errMessage = '';
      serverMessage = '';
      requestInProgress = false;
+     indeterminate = true;
 
     constructor(
         private userSvc: UserService,
