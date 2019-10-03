@@ -1,7 +1,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "importHelpers": true,
+    "baseUrl": "./",
+    "downlevelIteration": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -9,6 +10,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "importHelpers": true,
     "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
@@ -16,21 +18,6 @@
     "lib": [
       "es2018",
       "dom"
-    ],
-    "baseUrl": "./",
-    "paths": {
-      "@br/env/*": ["src/environments/*"],
-      "@br/config": ["src/app/config"],
-      "@br/config/*": ["src/app/config/*"],
-      "@br/material/*": ["src/app/modules/material/*"],
-      "@br/shared/*": ["src/app/modules/shared/*"],
-      "@br/core/*": ["src/app/modules/core/*"],
-      "@br/communications/*": ["src/app/modules/communications/*"],
-      "@br/public/*": ["src/app/modules/public/*"],
-      "@br/integrations/*": ["src/app/modules/integrations/*"],
-      "@br/utilities/*": ["src/app/utilities/*"],
-      "@br/admin/*": ["src/app/modules/admin/*"],
-      "@br/tests/*": ["src/tests/*"]
-    }
+    ]
   }
 }
