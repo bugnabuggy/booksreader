@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\BooksReader.Web\BooksReader.Web.csproj" />
+    <ProjectReference Include="..\BooksReader.TestData\BooksReader.TestData.csproj" />
   </ItemGroup>
 
 </Project>

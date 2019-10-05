@@ -3,6 +3,7 @@ using System.Dynamic;
 using System.Threading;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
+using BooksReader.TestData.Helpers;
 using BooksReader.Web.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
@@ -28,7 +29,11 @@ namespace BooksReader.Web.Tests
 
 		[Test]
 		public async Task ShouldSendHubStatistics()
-		{
+        {
+            var conn = TestConfig.GetConfig("connection");
+            
+            Console.WriteLine($"Configuration value [{conn}]");
+
             bool sendCalled = false;
             string calledMethod = "";
             object parameter;
