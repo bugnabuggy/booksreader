@@ -1,0 +1,26 @@
+<header class='border-bottom row m-0' >
+    <a routerLink="/" class="text-dark col ">
+      <h1 class='d-sm-inline-block d-none'  >{{'BooksReader' | translate}}</h1>
+      <h1 class='d-inline-block d-sm-none'  >{{'BR' | translate}}</h1>
+    </a>
+    <nav class='col-auto' >
+      <mat-form-field class='br-small-control'>
+        <mat-select [formControl]="language">
+          <mat-option *ngFor="let lang of languages" [value]="lang">{{lang.code}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button   mat-button [matMenuTriggerFor]="menu"><i class='material-icons f-44'>menu</i></button>
+      <mat-menu #menu="matMenu">
+        <!-- Here will be dynamically loaded sectiopns for user roles -->
+        <div *ngFor="let section of menuSections">
+          <a mat-menu-item *ngFor="let link of section" [routerLink]="link.url" routerLinkActive="active" class=''>{{link.text}}</a>
+          <mat-divider></mat-divider>
+        </div>
+        <!-- <a mat-menu-item class='' (click)='userSvc.logOut()'>Logout</a> -->
+      </mat-menu>
+    </nav>
+  
+    <div class=''>
+        
+    </div>
+  </header>

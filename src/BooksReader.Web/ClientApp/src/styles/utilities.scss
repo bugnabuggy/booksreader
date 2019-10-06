@@ -1,0 +1,15 @@
+@import './parameters.scss';
+@import '~@angular/material/theming';
+
+.flex-1{
+    flex: 1;
+}
+
+.min-h-400{
+    min-height: 400px;
+    overflow: auto;
+}
+
+.br-small-control {
+    width: 50px;
+}

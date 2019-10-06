@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "./parameters.scss";
+@import "./utilities.scss";
+@import "./components.scss";
+
+html, body { height: 100%; display: flex; flex:1 }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+app-root,
+app-login, 
+app-registration-component, 
+app-force-logout,
+app-profile,
+app-all-users-page,
+app-become-an-author-page,
+app-author-profile-page,
+app-author-dashboard-page,
+app-author-container,
+app-book-editing-page,
+app-book-chapters-editor,
+app-book-info-edit {
+    flex: 1;
+    display: flex;
+}
+
