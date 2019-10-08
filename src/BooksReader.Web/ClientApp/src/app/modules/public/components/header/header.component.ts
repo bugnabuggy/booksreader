@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Languages } from '@br/config';
 import { Language } from '@br/core/models';
+import { UserService } from '@br/core/services';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,9 @@ export class HeaderComponent implements OnInit {
 
   menuSections = [] ;
 
-  constructor() { }
+  constructor(
+    public userSvc: UserService
+  ) { }
 
   ngOnInit() {
     this.langSub = this.language.valueChanges.subscribe((val: Language) => {

@@ -4,7 +4,7 @@ import { HeaderComponent } from './header.component';
 import { SharedModule } from '@br/shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { UserService } from '@br/core/services';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -13,10 +13,13 @@ describe('HeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ HeaderComponent ],
-      imports:[
+      imports: [
         SharedModule,
         TranslateModule.forRoot(),
         RouterTestingModule
+      ],
+      providers: [
+        {provide: UserService, useValue: {}}
       ]
     })
     .compileComponents();

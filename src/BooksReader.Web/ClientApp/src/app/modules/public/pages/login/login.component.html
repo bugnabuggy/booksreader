@@ -1,0 +1,39 @@
+<div class="d-flex flex-column w-100 justify-content-center align-items-center">
+    <form class="text-center" (ngSubmit)="login()" [formGroup]="loginForm">
+      <mat-error *ngIf='errorMessage'>
+        {{errorMessage}}
+      </mat-error>
+      <div class="p-2"></div>
+      <mat-form-field class="w-75">
+        <input matInput name="username" formControlName="username" placeholder="User name" class="font-weight-light">
+        <mat-error *ngIf="loginForm.controls['password'].errors?.required">
+          User name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="w-75">
+        <input matInput formControlName="password" type="password" name="password" placeholder="Password"
+          class="font-weight-light">
+        <mat-error *ngIf="loginForm.controls['password'].errors?.required">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+  
+  
+  
+      <div class='mt-2 d-flex flex-column align-items-center'>
+        <mat-spinner *ngIf='uiIsBlocked' diameter="50" class=''></mat-spinner>
+        <button *ngIf='!uiIsBlocked' [disabled]="!loginForm.valid" mat-raised-button class="mat-raised-btn w-50" color="primary">Log in</button>
+      </div>
+      <div class='d-inline-block text-right w-75  mt-3'>
+        <a routerLink="/registration">Registration</a>
+      </div>
+    </form>
+  
+    <div class="row">
+      <button *ngIf="!loggedInWithFacebook" mat-raised-button (click)="socialLogin()" class="mat-raised-btn mt-4"
+        color="primary">Log in with Facebook</button>
+      <button *ngIf="loggedInWithFacebook" mat-raised-button (click)="socialLogout()" class="mat-raised-btn mt-4"
+        color="primary">Logout Facebook</button>
+    </div>
+  </div>

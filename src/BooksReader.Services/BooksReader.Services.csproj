@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BooksReader.Core\BooksReader.Core.csproj" />
     <ProjectReference Include="..\BooksReader.Dictionaries\BooksReader.Dictionaries.csproj" />
   </ItemGroup>

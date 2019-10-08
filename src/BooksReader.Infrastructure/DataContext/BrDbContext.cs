@@ -13,7 +13,10 @@ namespace BooksReader.Infrastructure.DataContext
         public BrDbContext(DbContextOptions<BrDbContext> options)
             : base(options)
         {
+
         }
 
+        public DbSet<TypesList> TypesLists { get; set; }
+        public DbSet<TypeValue> TypeValues { get; set; }
     }
 }

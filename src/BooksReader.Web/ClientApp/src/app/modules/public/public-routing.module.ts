@@ -1,8 +1,29 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { 
+  LoginComponent,
+  RegistrationComponent, 
+  ForceLogoutComponent, 
+  MainComponent 
+  } from './pages';
+import { Endpoints } from '@br/config';
 
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: Endpoints.frontend.main, component: MainComponent },
+  { path: Endpoints.frontend.authorization, component: LoginComponent },
+  { path: Endpoints.frontend.registration, component: RegistrationComponent },
+  { path: Endpoints.frontend.user.forceLogout, component: ForceLogoutComponent },
+
+  { 
+    path: '',
+    redirectTo: Endpoints.frontend.main,
+    pathMatch: 'full'
+  },
+
+  
+
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

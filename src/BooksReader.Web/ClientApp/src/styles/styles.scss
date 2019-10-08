@@ -4,7 +4,7 @@
 @import "./utilities.scss";
 @import "./components.scss";
 
-html, body { height: 100%; display: flex; flex:1 }
+html, body { min-height: 100%;}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 app-root,
@@ -24,3 +24,8 @@ app-book-info-edit {
     display: flex;
 }
 
+
+
+.br-break-label .mat-checkbox-label {
+    white-space: initial;
+}

@@ -3,13 +3,17 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PublicModule } from '@br/public/public.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
+        HttpClientTestingModule,
         TranslateModule.forRoot(),
+        SimpleNotificationsModule.forRoot(),
         PublicModule
       ],
       declarations: [
@@ -22,12 +26,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'ClientApp'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('ClientApp');
   });
 
   it('should render header', () => {

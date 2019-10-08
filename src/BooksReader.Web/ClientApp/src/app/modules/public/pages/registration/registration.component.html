@@ -1,0 +1,56 @@
+<div class="d-flex w-100 justify-content-center align-items-center py-2">
+    <form class='text-center' (ngSubmit)="registration()" [formGroup]="regForm">
+        <h1>Registration</h1>
+        <mat-form-field class="w-75">
+            <input matInput required formControlName="username" placeholder="User name" class="font-weight-light" />
+            <mat-error *ngIf="regForm.controls['username'].errors?.required">
+                User name is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-75">
+            <input matInput required formControlName="fullname" placeholder="Full name" class="font-weight-light" />
+            <mat-error *ngIf="regForm.controls['fullname'].errors?.required">
+                Full name is required
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-75">
+            <input matInput required type="password" formControlName="password" placeholder="Password"
+                class="font-weight-light" />
+            <mat-error *ngIf="regForm.controls['password'].errors?.required">
+                Password is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="regForm.controls['password'].errors?.minlength">
+                Password length should be more than <strong> 3 symbols</strong>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-75">
+            <input matInput required type="password" formControlName="confirmation" placeholder="Repeat password"
+                class="font-weight-light">
+            <mat-error *ngIf="regForm.controls['confirmation'].errors?.required">
+                Password confirmation is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="regForm.controls['confirmation'].errors?.passwordConfirmation">
+                Password confirmation must be equal to <strong>password</strong>
+            </mat-error>
+        </mat-form-field>
+        
+
+        <div class='mb-3 text-left w-75 d-inline-block'>
+            <mat-checkbox class="br-break-label" formControlName="agree" [(indeterminate)]="indeterminate">I agree with
+                terms and conitions and privacy notice
+            </mat-checkbox>
+        </div>
+
+        <div class="text-center">
+            <mat-error *ngIf="errMessage" class='mb-3'>
+                {{errMessage}}
+            </mat-error>
+            <mat-error *ngIf="serverMessage" class='mb-3'>
+                {{serverMessage}}
+            </mat-error>
+            <button [disabled]="!regForm.valid || errMessage || !regForm.value.agree || requestInProgress"
+                mat-raised-button class="mat-raised-btn w-50" color="primary">Register</button>
+            <a class="mt-3 d-block" routerLink="/authorize">Authorize</a>
+        </div>
+    </form>
+</div>
