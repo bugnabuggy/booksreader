@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       .subscribe(val => {
 
       }, (err) => {
-
+        this.errorMessage = err.message;
       })
   }
 
