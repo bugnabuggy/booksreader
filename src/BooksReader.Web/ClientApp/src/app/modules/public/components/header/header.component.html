@@ -9,7 +9,7 @@
           <mat-option *ngFor="let lang of languages" [value]="lang">{{lang.code}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <button  *ngIf="userSvc.loggedIn" mat-button [matMenuTriggerFor]="menu"><i class='material-icons f-44'>menu</i></button>
+      <button  *ngIf="userSvc.authorized" mat-button [matMenuTriggerFor]="menu"><i class='material-icons f-44'>menu</i></button>
       <mat-menu #menu="matMenu">
         <!-- Here will be dynamically loaded sectiopns for user roles -->
         <div *ngFor="let section of menuSections">

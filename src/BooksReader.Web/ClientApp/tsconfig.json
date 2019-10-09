@@ -27,7 +27,9 @@
       "@br/material/*": ["src/app/modules/material/*"],
       "@br/utilities/*": ["src/app/utilities/*"],
       "@br/shared/*": ["src/app/modules/shared/*"],
-      "@br/core/*": ["src/app/modules/core/*"]
+      "@br/core/*": ["src/app/modules/core/*"],
+      "@br/test/*": ["src/tests/*"],
+      "@br/integrations/*": ["src/app/modules/integrations/*"]
     }
   }
 }

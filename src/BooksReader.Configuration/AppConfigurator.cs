@@ -5,7 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Infrastrcture;
+using BooksReader.Core.Services;
+using BooksReader.Infrastructure.Repositories;
 using BooksReader.Infrastructure.SeedData;
+using BooksReader.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -17,8 +20,8 @@ namespace BooksReader.Configuration
         public static void ConfigureServices(IServiceCollection services)
         {
             //// repositories
-            //services.AddTransient<IRepository<TypesList>, DbRepository<TypesList>>();
-            //services.AddTransient<IRepository<TypeValue>, DbRepository<TypeValue>>();
+            services.AddTransient<IRepository<TypesList>, DbRepository<TypesList>>();
+            services.AddTransient<IRepository<TypeValue>, DbRepository<TypeValue>>();
             //services.AddTransient<IRepository<LoginHistory>, DbRepository<LoginHistory>>();
             //services.AddTransient<IRepository<Book>, DbRepository<Book>>();
             //services.AddTransient<IRepository<BrUser>, DbRepository<BrUser>>();
@@ -35,7 +38,7 @@ namespace BooksReader.Configuration
 
 
             //// domain services
-            //services.AddTransient<IListsService, ListsService>();
+            services.AddTransient<IListsService, ListsService>();
             //services.AddTransient<IPublicService, PublicService>();
             //services.AddTransient<IPersonalPageService, PersonalPageService>();
             //services.AddTransient<IBooksService, BooksService>();

@@ -8,33 +8,126 @@ import { from, BehaviorSubject, Observable, Subject, of, Observer, Subscription,
 import { SiteConstants, Endpoints } from '@br/config';
 
 import { StorageService } from './storage.service';
-import { AppUser, AuthResponse } from '../models';
+import { AppUser, AuthResponse, RegistrationRequest } from '../models';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SecurityService {
 
+    private access_token = '';
+    private tokenExpirationDate: Date;
+    private isLoggedIn: boolean = false;
+    private isLoggedIn$: Observable<boolean>;
+
+    // Show whether all actions to determin whether user logged in or not have been done
+    private isInitialized: boolean = false;
+    private initRequest$: Observable<any>;
+
+    readonly user$ = new BehaviorSubject<AppUser>(null);
+
     constructor(
         public router: Router,
         public http: HttpClient,
         private storage: StorageService
     ) {
-      
+        const tokens = storage.getItem(SiteConstants.storageKeys.userToken) || null;
+        const userTokens = JSON.parse(tokens);
+        if (userTokens) {
+            this.setTokens(userTokens);
+        }
+
+        this.isLoggedIn$ = Observable.create((observer: Observer<boolean>) => {
+            if (this.isInitialized) {
+                observer.next(this.isLoggedIn);
+                observer.complete();
+                return;
+            }
+
+            // otherwise start initialization process 
+            let observable = this.initRequest$;
+            if(!this.initRequest$) {
+                observable = this.init();
+            }
+
+            observable
+                .pipe(finalize(() => {
+                    this.isInitialized = true;
+                    observer.next(this.isLoggedIn);
+                    observer.complete();
+                }))
+                .subscribe();
+        })
     }
 
-    loginRequest(body: FormData): Observable<any> {
+    get token(): string {
+        return this.access_token;
+    }
+
+    get isAuthorized(): boolean
+    {
+        return this.isLoggedIn;
+    }
+
+    get auth$ () {
+        return this.isLoggedIn$;
+    }
+
+    init() {
+        if (this.access_token) {
+            this.initRequest$ = this.getUserInfo();
+
+            this.initRequest$.subscribe((user) => {
+                this.isLoggedIn = true;    
+            },
+            (err) => {
+                if (err.status == 401 )  {
+                    this.isLoggedIn = false;
+                }
+
+                // in case no user found 
+                if (err.status == 404) {
+                    this.clearTokens();
+                }
+                // else probably retry or do some kind of disconected app    
+            });
+
+            return this.initRequest$;
+        }
+
+        this.isLoggedIn = false;
+        return of(null);
+    }
+
+    getUserInfo(): Observable<AppUser> {
+        const url = Endpoints.api.user.info;
+        const observable = this.http.get<AppUser>(url).pipe(share());
+
+        observable.subscribe((val: AppUser) => {
+            this.user$.next(val);
+        });
+
+        return observable;
+    }
+
+    register(model: RegistrationRequest){
+        const url = Endpoints.api.authorization.registration;
+        const observable = this.http.post(url, model).pipe(share());
+        return observable;
+    }
+
+
+    protected loginRequest(body: FormData): Observable<any> {
       const url = Endpoints.api.authorization.login;
 
       const observable = this.http.post<AuthResponse>(url, body)
           .pipe(
               tap((val: AuthResponse) => {
-                debugger;  
-                // this.setTokens(val);
+                this.setTokens(val);
               }),
-              // mergeMap(() => {
-              //     return this.init();
-              // }),
+              mergeMap(() => {
+                  return this.init();
+              }),
               // mergeMap(() => {
               //     return this.addLoginHistory();
               // }),
@@ -64,5 +157,32 @@ export class SecurityService {
         body.append('external_token', access_token);
 
         return this.loginRequest(body);
+    }
+
+    setTokens(authResponse: AuthResponse) {
+        this.access_token = authResponse.access_token;
+
+        if (authResponse.tokenExpirationDate) {
+            this.tokenExpirationDate = authResponse.tokenExpirationDate;
+        } else {
+            this.tokenExpirationDate = new Date();
+            this.tokenExpirationDate.setSeconds(authResponse.expires_in);
+            authResponse.tokenExpirationDate = this.tokenExpirationDate;
+            delete authResponse['expires_in'];
+        }
+
+        this.storage.setItem(SiteConstants.storageKeys.userToken, JSON.stringify(authResponse));
+    }
+
+    clearTokens() {
+        this.access_token = null;
+        this.tokenExpirationDate = null;
+        this.storage.removeItem(SiteConstants.storageKeys.userToken);
+    }
+
+    logout() {
+        this.clearTokens();
+        this.isLoggedIn = false;
+        
     }
 }

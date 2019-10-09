@@ -42,14 +42,14 @@
         </div>
 
         <div class="text-center">
-            <mat-error *ngIf="errMessage" class='mb-3'>
-                {{errMessage}}
-            </mat-error>
             <mat-error *ngIf="serverMessage" class='mb-3'>
-                {{serverMessage}}
+                {{serverMessage | translate}}
             </mat-error>
-            <button [disabled]="!regForm.valid || errMessage || !regForm.value.agree || requestInProgress"
-                mat-raised-button class="mat-raised-btn w-50" color="primary">Register</button>
+            <button [disabled]="!regForm.valid || !regForm.value.agree || uiIsBlocked"
+                mat-raised-button class="mat-raised-btn w-50" color="primary">
+                <mat-spinner *ngIf='uiIsBlocked' diameter="50" class=''></mat-spinner>
+                Register
+            </button>
             <a class="mt-3 d-block" routerLink="/authorize">Authorize</a>
         </div>
     </form>

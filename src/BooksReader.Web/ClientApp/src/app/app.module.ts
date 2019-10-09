@@ -8,8 +8,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { PublicModule } from './modules/public/public.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { createTranslateLoader } from '@br/utilities/translate-loader-factory';
+import { BrHttpInterceptor } from '@br/core/interceptors';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,13 @@ import { createTranslateLoader } from '@br/utilities/translate-loader-factory';
       }),
       PublicModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BrHttpInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

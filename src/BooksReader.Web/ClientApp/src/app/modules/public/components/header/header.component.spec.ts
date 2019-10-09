@@ -5,6 +5,12 @@ import { SharedModule } from '@br/shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from '@br/core/services';
+import { BehaviorSubject } from 'rxjs';
+
+let userSvc = {
+  menuSections$: new BehaviorSubject<any>([]),
+  changeLanguage: (lang)=> { } 
+} as UserService;
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -19,7 +25,7 @@ describe('HeaderComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        {provide: UserService, useValue: {}}
+        {provide: UserService, useValue: userSvc}
       ]
     })
     .compileComponents();

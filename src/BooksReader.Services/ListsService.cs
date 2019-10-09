@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BooksReader.Services
 {
-    public class ListService: IListsService
+    public class ListsService: IListsService
     {
         private readonly IRepository<TypesList> _listsRepo;
 
-        public ListService(IRepository<TypesList> listsRepo)
+        public ListsService(IRepository<TypesList> listsRepo)
         {
             _listsRepo = listsRepo;
         }

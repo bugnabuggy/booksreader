@@ -9,6 +9,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
 import { ForceLogoutComponent } from './pages/force-logout/force-logout.component';
 import { MainComponent } from './pages/main/main.component';
+import { IntegrationsModule } from '@br/integrations/integrations.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { MainComponent } from './pages/main/main.component';
     CommonModule,
     PublicRoutingModule,
     TranslateModule.forChild(),
-    SharedModule
+    SharedModule,
+    IntegrationsModule
   ],
   exports: [
     HeaderComponent

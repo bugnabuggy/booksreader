@@ -24,12 +24,11 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.langSub = this.language.valueChanges.subscribe((val: Language) => {
-      //this.userSvc.changeLanguage(val);
+      this.userSvc.changeLanguage(val);
     });
 
-    // this.userSvc.menuSections$.subscribe(val=> {
-    //   this.menuSections = val;
-    // });
+    this.userSvc.menuSections$.subscribe(val=> {
+      this.menuSections = val;
+    });
   }
-
 }

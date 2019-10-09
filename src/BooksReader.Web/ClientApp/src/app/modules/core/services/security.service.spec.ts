@@ -5,6 +5,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { StorageService } from './storage.service';
 
+
+let storageSpy = {
+  getItem: (key) => {
+    return "" ;
+  },
+} as Storage;
+
+
 describe('SecurityService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports:[
@@ -12,12 +20,11 @@ describe('SecurityService', () => {
       HttpClientTestingModule,
     ],
     providers: [
-      { provide: StorageService, useValue: { test: 1} }
+      { provide: StorageService, useValue: storageSpy }
     ]
   }));
 
   it('should be created', () => {
-    debugger;
     const service: SecurityService = TestBed.get(SecurityService);
     expect(service).toBeTruthy();
   });
