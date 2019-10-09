@@ -215,7 +215,11 @@ namespace BooksReader.Web
                         : null;
                     options.ExcludeUrls = new[] { "/sockjs-node" };
 
-                    options.SupplyData = ((context, data) => { data["cookies"] = context.Request.Cookies; });
+                    options.SupplyData = ((context, data) =>
+                    {
+                        data["cookies"] = context.Request.Cookies;
+                        data["servEnv"] = env.EnvironmentName;
+                    });
                 });
 
                 if (env.IsDevelopment())

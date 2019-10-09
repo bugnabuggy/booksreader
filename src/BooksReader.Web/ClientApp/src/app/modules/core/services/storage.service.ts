@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { CookiesStorage } from '@br/utilities/cookies-storage';
 
@@ -12,11 +12,14 @@ export class StorageService implements Storage {
 
   length: number;
 
-  constructor() {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Optional() @Inject('COOKIES') private cookies
+  ) {
     // by default use local storage
-    this.storage =  isPlatformBrowser 
+    this.storage =  isPlatformBrowser(platformId) 
     ? localStorage
-    : new CookiesStorage();
+    : new CookiesStorage(cookies);
   }
 
   clear(): void {
