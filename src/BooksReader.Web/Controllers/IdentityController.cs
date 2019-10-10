@@ -8,8 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using BooksReader.Configuration;
 using BooksReader.Core.Entities;
+using BooksReader.Core.Infrastrcture;
+using BooksReader.Core.Models;
 using BooksReader.Core.Models.DTO;
 using BooksReader.Core.Models.Requests;
+using BooksReader.Core.Services;
 using BooksReader.Dictionaries.Messages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -23,10 +26,14 @@ namespace BooksReader.Web.Controllers
     public class IdentityController : Controller
     {
 		private UserManager<BrUser> _userManager;
+        private IUsersService _usersService;
 
-		public IdentityController(UserManager<BrUser> userManager)
+		public IdentityController(
+            UserManager<BrUser> userManager,
+            IUsersService usersService)
 		{
 			_userManager = userManager;
+            _usersService = usersService;
         }
 
 		[HttpGet]
@@ -109,6 +116,57 @@ namespace BooksReader.Web.Controllers
 			});
 
 		}
+
+        [HttpGet("login-history")]
+        [Authorize]
+        public async Task<WebResult<IEnumerable<LoginHistory>>> GetLogHistory(StandardFilters filters)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var logHistory = this._usersService.GetLoginHistory(filters, user.Id, out int totalItems);
+
+            return new WebResult<IEnumerable<LoginHistory>>()
+            {
+                Data = logHistory,
+                Total = totalItems,
+                PageNumber = filters.PageNumber ?? 0,
+                PageSize = filters.PageSize ?? 0,
+            };
+        }
+
+        [HttpPost("login-history")]
+        [Authorize]
+        public async Task<IActionResult> AddLogHistory([FromBody]LoginHistoryRequest loginHistory)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            var logHistory = this._usersService.AddLoginHistory(new LoginHistory
+            {
+                DateTime = DateTime.Now,
+                IpAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
+                Browser = HttpContext.Request.Headers["User-Agent"].ToString(),
+                Screen = Newtonsoft.Json.JsonConvert.SerializeObject(loginHistory.Screen),
+                Geolocation = Newtonsoft.Json.JsonConvert.SerializeObject(loginHistory.Coordinates)
+            }, user.Id);
+
+            return Ok();
+        }
+
+        [HttpPost("change-password")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordRequest changePassword)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var result = await _userManager.ChangePasswordAsync(user, changePassword.OldPassword, changePassword.NewPassword);
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Errors.Select(x => x.Code));
+            }
+
+        }
 
     }
 }

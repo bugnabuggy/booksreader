@@ -38,9 +38,6 @@ export class RegistrationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.regForm.statusChanges.subscribe(val => {
-      console.log(this.regForm.errors);
-    })
   }
 
   registration() {

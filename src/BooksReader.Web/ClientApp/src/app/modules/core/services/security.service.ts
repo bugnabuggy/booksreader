@@ -8,7 +8,8 @@ import { from, BehaviorSubject, Observable, Subject, of, Observer, Subscription,
 import { SiteConstants, Endpoints } from '@br/config';
 
 import { StorageService } from './storage.service';
-import { AppUser, AuthResponse, RegistrationRequest } from '../models';
+import { AppUser, AuthResponse, RegistrationRequest, ChangePasswordRquest, LoginHistoryRequest } from '../models';
+import { copyObject } from '@br/utilities/copy-object';
 
 @Injectable({
     providedIn: 'root'
@@ -128,9 +129,9 @@ export class SecurityService {
               mergeMap(() => {
                   return this.init();
               }),
-              // mergeMap(() => {
-              //     return this.addLoginHistory();
-              // }),
+              mergeMap(() => {
+                  return this.addLoginHistory();
+              }),
               share(),
           );
 
@@ -159,6 +160,51 @@ export class SecurityService {
         return this.loginRequest(body);
     }
 
+    sendLoggingData(loginHistory: LoginHistoryRequest) {
+        const url = Endpoints.api.user.loginHistory;
+        return this.http.post(url, loginHistory).pipe(share());
+    }
+
+    addLoginHistory() {
+        const loginHistory = {
+            userAgent: navigator.userAgent,
+            screen: copyObject(window.screen),
+        } as LoginHistoryRequest;
+
+        let timeoutId: Subscription;
+
+        const promise = new Promise((resolve, reject) => {
+            
+            navigator.geolocation.getCurrentPosition((val) => {
+                loginHistory.coordinates = copyObject(val.coords);
+                if (timeoutId) {
+                    timeoutId.unsubscribe();
+                    timeoutId = null;
+                }
+                this.sendLoggingData(loginHistory)
+                    .subscribe(resp => {
+                        resolve(resp);
+                    }, (err) => {
+                        reject(err);
+                    });
+            });
+
+            timeoutId = timer(SiteConstants.Short_timeout).subscribe(() => {
+                this.sendLoggingData(loginHistory)
+                    .subscribe(resp => {
+                        resolve(resp);
+                        timeoutId.unsubscribe();
+                        timeoutId = null;
+                    }, (err) => {
+                        reject(err);
+                    });
+            });
+        });
+
+        // this will be bug ↓ because link to an object would change
+        return from(promise);
+    }
+
     setTokens(authResponse: AuthResponse) {
         this.access_token = authResponse.access_token;
 
@@ -184,5 +230,19 @@ export class SecurityService {
         this.clearTokens();
         this.isLoggedIn = false;
         
+    }
+
+    isInRole(role: string) {
+        try {
+            let user = this.user$.getValue();
+            return user.roles.findIndex(x => x === role) > -1;
+        } catch (exp) {
+            return false;
+        }
+    }
+
+    changePassword(model: ChangePasswordRquest): Observable<any> {
+        const url = Endpoints.api.authorization.changePassword;
+        return this.http.post(url, model).pipe(share());
     }
 }

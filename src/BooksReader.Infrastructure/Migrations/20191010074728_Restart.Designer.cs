@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BooksReader.Infrastructure.Migrations
 {
     [DbContext(typeof(BrDbContext))]
-    [Migration("20191007111751_ValueTypesAndLists")]
-    partial class ValueTypesAndLists
+    [Migration("20191010074728_Restart")]
+    partial class Restart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,26 @@ namespace BooksReader.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("BooksReader.Core.Entities.AuthorProfile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AuthorName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(3000);
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AuthorProfiles");
+                });
 
             modelBuilder.Entity("BooksReader.Core.Entities.BrUser", b =>
                 {
@@ -78,6 +98,30 @@ namespace BooksReader.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.LoginHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Browser");
+
+                    b.Property<DateTime>("DateTime");
+
+                    b.Property<string>("Geolocation");
+
+                    b.Property<string>("IpAddress");
+
+                    b.Property<string>("Screen");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("LoginHistory");
                 });
 
             modelBuilder.Entity("BooksReader.Core.Entities.TypeValue", b =>
@@ -224,6 +268,22 @@ namespace BooksReader.Infrastructure.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.AuthorProfile", b =>
+                {
+                    b.HasOne("BooksReader.Core.Entities.BrUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.LoginHistory", b =>
+                {
+                    b.HasOne("BooksReader.Core.Entities.BrUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BooksReader.Core.Entities.TypeValue", b =>

@@ -2,6 +2,6 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 export function getErrorMessage(err: HttpErrorResponse | any) {
 
-    let msg = err.data && err.data.messages || err.message;
+    let msg = err.data && err.data.messages || err.error || err.message;
     return msg;
 }

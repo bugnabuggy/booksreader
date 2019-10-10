@@ -18,9 +18,8 @@ import { BrHttpInterceptor } from '@br/core/interceptors';
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'app'}),
-    AppRoutingModule,
-    BrowserAnimationsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     SimpleNotificationsModule.forRoot(
       {
         position: ['top', 'right'],
@@ -32,6 +31,7 @@ import { BrHttpInterceptor } from '@br/core/interceptors';
           deps: [HttpClient]
         }
       }),
+      AppRoutingModule,
       PublicModule
   ],
   providers: [

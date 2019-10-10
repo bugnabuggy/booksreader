@@ -38,7 +38,6 @@ namespace BooksReader.Core.Infrastrcture
             this.Data = data;
         }
 
-
         public new T Data { get; set; }
     }
 }

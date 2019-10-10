@@ -13,10 +13,19 @@ namespace BooksReader.Infrastructure.DataContext
         public BrDbContext(DbContextOptions<BrDbContext> options)
             : base(options)
         {
-
+            
         }
 
         public DbSet<TypesList> TypesLists { get; set; }
         public DbSet<TypeValue> TypeValues { get; set; }
+
+        public DbSet<LoginHistory> LoginHistory { get; set; }
+        public DbSet<AuthorProfile> AuthorProfiles { get; set; }
+
+        
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+        }
     }
 }

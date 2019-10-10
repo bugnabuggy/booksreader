@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Models\Requests\Filters\" />
-    <Folder Include="Models\Requests\Author\" />
+    <Folder Include="Models\Requests\Admin\" />
   </ItemGroup>
 
 </Project>

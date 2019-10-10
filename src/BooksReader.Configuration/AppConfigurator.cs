@@ -8,6 +8,7 @@ using BooksReader.Core.Infrastrcture;
 using BooksReader.Core.Services;
 using BooksReader.Infrastructure.Repositories;
 using BooksReader.Infrastructure.SeedData;
+using BooksReader.Infrastructure.Services;
 using BooksReader.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -22,23 +23,22 @@ namespace BooksReader.Configuration
             //// repositories
             services.AddTransient<IRepository<TypesList>, DbRepository<TypesList>>();
             services.AddTransient<IRepository<TypeValue>, DbRepository<TypeValue>>();
-            //services.AddTransient<IRepository<LoginHistory>, DbRepository<LoginHistory>>();
+            services.AddTransient<IRepository<LoginHistory>, DbRepository<LoginHistory>>();
+            services.AddTransient<IRepository<AuthorProfile>, DbRepository<AuthorProfile>>();
             //services.AddTransient<IRepository<Book>, DbRepository<Book>>();
             //services.AddTransient<IRepository<BrUser>, DbRepository<BrUser>>();
             //services.AddTransient<IRepository<SeoInfo>, DbRepository<SeoInfo>>();
             //services.AddTransient<IRepository<PersonalPage>, DbRepository<PersonalPage>>();
-            //services.AddTransient<IRepository<AuthorProfile>, DbRepository<AuthorProfile>>();
             //services.AddTransient<IRepository<BookChapter>, DbRepository<BookChapter>>();
             //services.AddTransient<IRepository<BookPrice>, DbRepository<BookPrice>>();
 
             //// infrastructure services
             //services.AddTransient<ISecurityService, SecurityService>();
-            //services.AddTransient<IUsersService, UsersService>();
-            //services.AddTransient<IAuthorProfileService, AuthorProfileService>();
-
-
+            services.AddTransient<IUsersService, UsersService>();
+            
             //// domain services
             services.AddTransient<IListsService, ListsService>();
+            services.AddTransient<IAuthorProfileService, AuthorProfileService>();
             //services.AddTransient<IPublicService, PublicService>();
             //services.AddTransient<IPersonalPageService, PersonalPageService>();
             //services.AddTransient<IBooksService, BooksService>();

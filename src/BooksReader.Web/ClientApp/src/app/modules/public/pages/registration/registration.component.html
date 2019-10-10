@@ -46,7 +46,7 @@
                 {{serverMessage | translate}}
             </mat-error>
             <button [disabled]="!regForm.valid || !regForm.value.agree || uiIsBlocked"
-                mat-raised-button class="mat-raised-btn w-50" color="primary">
+                mat-raised-button class="mat-raised-btn w-50 d-inline-flex flex-column align-items-center" color="primary">
                 <mat-spinner *ngIf='uiIsBlocked' diameter="50" class=''></mat-spinner>
                 Register
             </button>

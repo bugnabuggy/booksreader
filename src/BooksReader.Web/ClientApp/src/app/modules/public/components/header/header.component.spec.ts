@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from '@br/core/services';
 import { BehaviorSubject } from 'rxjs';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 let userSvc = {
   menuSections$: new BehaviorSubject<any>([]),
@@ -21,11 +22,12 @@ describe('HeaderComponent', () => {
       declarations: [ HeaderComponent ],
       imports: [
         SharedModule,
+        NoopAnimationsModule,
         TranslateModule.forRoot(),
         RouterTestingModule
       ],
       providers: [
-        {provide: UserService, useValue: userSvc}
+        { provide: UserService, useValue: userSvc }
       ]
     })
     .compileComponents();

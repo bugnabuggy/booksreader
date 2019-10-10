@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PublicModule } from '@br/public/public.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -12,6 +13,7 @@ describe('AppComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
+        NoopAnimationsModule,
         TranslateModule.forRoot(),
         SimpleNotificationsModule.forRoot(),
         PublicModule

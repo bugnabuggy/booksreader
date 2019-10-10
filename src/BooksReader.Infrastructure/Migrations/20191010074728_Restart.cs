@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BooksReader.Infrastructure.Migrations
 {
-    public partial class Init : Migration
+    public partial class Restart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,6 +48,19 @@ namespace BooksReader.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TypesLists",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(maxLength: 120, nullable: true),
+                    LocalizationKey = table.Column<string>(maxLength: 60, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TypesLists", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,6 +169,70 @@ namespace BooksReader.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AuthorProfiles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    AuthorName = table.Column<string>(maxLength: 256, nullable: true),
+                    Description = table.Column<string>(maxLength: 3000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuthorProfiles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuthorProfiles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LoginHistory",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    DateTime = table.Column<DateTime>(nullable: false),
+                    IpAddress = table.Column<string>(nullable: true),
+                    Browser = table.Column<string>(nullable: true),
+                    Screen = table.Column<string>(nullable: true),
+                    Geolocation = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LoginHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LoginHistory_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TypeValues",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false),
+                    Name = table.Column<string>(maxLength: 120, nullable: false),
+                    LocalizationKey = table.Column<string>(maxLength: 60, nullable: true),
+                    Value = table.Column<string>(nullable: true),
+                    TypeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TypeValues", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TypeValues_TypesLists_TypeId",
+                        column: x => x.TypeId,
+                        principalTable: "TypesLists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -194,6 +271,21 @@ namespace BooksReader.Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuthorProfiles_UserId",
+                table: "AuthorProfiles",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoginHistory_UserId",
+                table: "LoginHistory",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TypeValues_TypeId",
+                table: "TypeValues",
+                column: "TypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -214,10 +306,22 @@ namespace BooksReader.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AuthorProfiles");
+
+            migrationBuilder.DropTable(
+                name: "LoginHistory");
+
+            migrationBuilder.DropTable(
+                name: "TypeValues");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "TypesLists");
         }
     }
 }

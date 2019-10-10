@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { share, flatMap } from 'rxjs/operators';
 import { NotificationService } from './notification.service';
-import { AppUser, RegistrationRequest, Language } from '../models';
+import { AppUser, RegistrationRequest, Language, AuthorRequest } from '../models';
 import { SecurityService } from './security.service';
 import { MenuSections } from '@br/config/menu-sections';
 import { SiteRoles } from '../enums';
 import { Endpoints } from '@br/config';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -20,13 +21,14 @@ export class UserService {
   constructor(
     private notifications: NotificationService,
     private securitySvc: SecurityService,
+    private http: HttpClient,
     public router: Router,
     public translate: TranslateService,
   ) { }
 
   get user() { return this.securitySvc.user$.getValue(); }
-  
-  get authorized () {
+
+  get authorized() {
     return this.securitySvc.isAuthorized;
   }
 
@@ -95,7 +97,7 @@ export class UserService {
           [SiteRoles.author]: Endpoints.frontend.author.dashboardUrl,
           [SiteRoles.reader]: Endpoints.frontend.reader.dashboardUrl,
         };
-        
+
         for (let item in this.user.roles) {
           if (redirectDictionary[this.user.roles[item]]) {
             this.router.navigateByUrl(redirectDictionary[this.user.roles[item]]);
@@ -142,5 +144,23 @@ export class UserService {
     this.translate.use(lang.code);
   }
 
-  
+  updateProfile(profile: AppUser) {
+    const url = Endpoints.api.user.profile;
+    const observable = this.http.put<AppUser>(url, profile).pipe(share());
+    return observable;
+  }
+
+  authorRequest(authorData: AuthorRequest) {
+    const url = Endpoints.api.user.becomeAnAuthor;
+    const observabe = this.http.post(url, authorData).pipe(share());
+    return observabe;
+  }
+
+  get isAuthor() {
+    return this.securitySvc.isInRole(SiteRoles.author)
+  }
+
+  get isAdmin() {
+    return this.securitySvc.isInRole(SiteRoles.admin)
+  }
 }
