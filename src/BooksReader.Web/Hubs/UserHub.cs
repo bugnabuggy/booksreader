@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace BooksReader.Web.Hubs
 {
-	[Authorize]
+	[Authorize()]
 	public class UserHub : Hub
 	{
 		private readonly UserManager<BrUser> _userManager;

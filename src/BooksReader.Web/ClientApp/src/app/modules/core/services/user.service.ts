@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { share, flatMap } from 'rxjs/operators';
 import { NotificationService } from './notification.service';
-import { AppUser, RegistrationRequest, Language, AuthorRequest } from '../models';
+import { AppUser, RegistrationRequest, Language, AuthorRequest, LogoutData } from '../models';
 import { SecurityService } from './security.service';
 import { MenuSections } from '@br/config/menu-sections';
 import { SiteRoles } from '../enums';
@@ -10,6 +10,7 @@ import { Endpoints } from '@br/config';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
+import { UserHubService } from '../../communications/hubs/user-hub.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ import { HttpClient } from '@angular/common/http';
 export class UserService {
 
   menuSections$ = new BehaviorSubject<any>([]);
+  logoutData: LogoutData = null;
 
   constructor(
     private notifications: NotificationService,
@@ -24,6 +26,7 @@ export class UserService {
     private http: HttpClient,
     public router: Router,
     public translate: TranslateService,
+    private userHub: UserHubService
   ) { }
 
   get user() { return this.securitySvc.user$.getValue(); }
@@ -38,10 +41,7 @@ export class UserService {
       flatMap((user: AppUser) => {
         // if we have initialized user, bootstrap the ui 
         if (user) {
-          this.initMenu(user);
-
-          // start signalR
-          // return this.userHub.init()
+          this.bootstrap(user);
         }
         return of(null);
 
@@ -56,6 +56,12 @@ export class UserService {
     })
 
     return observabe;
+  }
+
+  private bootstrap(user: AppUser) {
+    this.initMenu(user);
+    // start signalR
+    return this.userHub.init(this.logOut.bind(this))
   }
 
   initMenu(user) {
@@ -79,13 +85,10 @@ export class UserService {
     const observable = this.securitySvc.login(login, password);
     observable
       .subscribe(data => {
-        // start real time communication with server
-        this.initMenu(this.user);
-
-        // this.userHub.init();
+        // set up infrastructure
+        this.bootstrap(this.user);
 
         // navigate user depend on role to different pages
-
         if (goToProfile) {
           this.router.navigateByUrl(Endpoints.frontend.user.profileUrl);
           return;
@@ -117,11 +120,20 @@ export class UserService {
     return observable;
   }
 
-  logOut() {
-    // this.userHub.stop();
+  logOut(logoutData?: LogoutData) {
+    debugger;
+    this.userHub.stop();
     this.securitySvc.logout();
     this.menuSections$.next([]);
-    this.router.navigate([Endpoints.frontend.main]);
+
+    if(logoutData) {
+      this.logoutData =  logoutData;
+      this.router.navigateByUrl(Endpoints.frontend.user.forceLogoutUrl);
+    }
+    else {
+      this.router.navigate([Endpoints.frontend.main]);
+    }
+    
   }
 
   registration(model: RegistrationRequest) {

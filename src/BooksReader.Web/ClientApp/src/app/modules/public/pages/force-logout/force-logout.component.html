@@ -1,1 +1,13 @@
-<p>force-logout works!</p>
+<div class="d-flex w-100 justify-content-center align-items-center">
+    <div class="border mw-75 text-center p-2 rounded">
+        <h1>Logout</h1>
+        <h3 class="m-4">You've been log out because logged in on another device</h3>
+        <dl *ngIf="userSvc.logoutData">
+            <dt>Ip address</dt>
+            <dd>{{userSvc.logoutData.ip}}</dd>
+            <dt>User agent</dt>
+            <dd>{{userSvc.logoutData.browser}}</dd>
+        </dl>
+        <button mat-raised-button color="primary" routerLink="/authorize">Go to login</button>
+    </div>
+</div>

@@ -8,7 +8,7 @@ import { from, BehaviorSubject, Observable, Subject, of, Observer, Subscription,
 import { SiteConstants, Endpoints } from '@br/config';
 
 import { StorageService } from './storage.service';
-import { AppUser, AuthResponse, RegistrationRequest, ChangePasswordRquest, LoginHistoryRequest } from '../models';
+import { AppUser, AuthResponse, RegistrationRequest, ChangePasswordRquest, LoginHistoryRequest, LogoutData } from '../models';
 import { copyObject } from '@br/utilities/copy-object';
 
 @Injectable({
@@ -229,7 +229,6 @@ export class SecurityService {
     logout() {
         this.clearTokens();
         this.isLoggedIn = false;
-        
     }
 
     isInRole(role: string) {

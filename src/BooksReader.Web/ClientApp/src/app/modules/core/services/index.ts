@@ -3,3 +3,4 @@ export * from './user.service';
 export * from './security.service';
 export * from './storage.service';
 export * from './notification.service';
+export * from './admin-users.service';

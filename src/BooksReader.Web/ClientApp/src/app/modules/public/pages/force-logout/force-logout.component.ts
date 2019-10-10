@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '@br/core/services';
 
 @Component({
   selector: 'app-force-logout',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForceLogoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public userSvc: UserService
+  ) { }
 
   ngOnInit() {
+
   }
 
 }

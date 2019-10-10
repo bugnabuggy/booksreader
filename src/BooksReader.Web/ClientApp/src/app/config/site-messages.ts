@@ -5,11 +5,16 @@ class SiteMessages {
             },
             profile: {
                 updated: "PROFILE_UPDATED"
-            }
+            },
+            userDeleted: "USER_DELETED"
         }
     
     static errors = {
         anyError: "ERROR"
+    }
+
+    static system = {
+        noForceLogoutCallback: 'NO_FORCE_LOGOUT_CALLBACK'
     }
 }
 

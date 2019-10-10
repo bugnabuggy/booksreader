@@ -23,6 +23,7 @@ class Endpoints {
             profile: 'profile', 
             profileUrl: '/' + Endpoints.areas.user + '/profile',
             forceLogout: 'logout',
+            forceLogoutUrl: '/logout',
             becomeAnAuthor: 'become-an-author',
             becomeAnAuthorUrl: '/' + Endpoints.areas.user + '/become-an-author'
         },

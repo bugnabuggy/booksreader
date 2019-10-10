@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:ssr": "ng run ClientApp:server:production && echo Date",
+    "build:dev:ssr": "ng run ClientApp:server:dev && echo Date",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -23,6 +24,7 @@
     "@angular/platform-browser-dynamic": "~8.2.8",
     "@angular/platform-server": "^8.2.8",
     "@angular/router": "~8.2.8",
+    "@aspnet/signalr": "^1.1.4",
     "@nguniversal/module-map-ngfactory-loader": "^7.1.0",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",

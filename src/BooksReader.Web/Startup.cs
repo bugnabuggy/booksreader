@@ -37,7 +37,18 @@ namespace BooksReader.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    "AllowAny",
+                    x =>
+                    {
+                        x.AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .SetIsOriginAllowed(isOriginAllowed: _ => true)
+                            .AllowCredentials();
+                    });
+            });
 
             services.AddDbContext<BrDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -160,13 +171,8 @@ namespace BooksReader.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyOrigin();
-                builder.AllowAnyMethod();
-                builder.AllowAnyHeader();
-                builder.AllowCredentials();
-            });
+            // CORS workaround  https://github.com/aspnet/AspNetCore/issues/4483
+            app.UseCors("AllowAny");
 
             if (env.IsDevelopment() || env.IsEnvironment("Test"))
             {
@@ -186,7 +192,11 @@ namespace BooksReader.Web
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<UserHub>("/hub/user");
+            });
 
             app.UseMvc(routes =>
             {
@@ -195,10 +205,6 @@ namespace BooksReader.Web
                     template: "api/{controller}/{action=Index}/{id?}");
             });
 
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<UserHub>("/hub/user");
-            });
 
             app.UseSpa(spa =>
             {
@@ -211,7 +217,7 @@ namespace BooksReader.Web
                 {
                     options.BootModulePath = $"{spa.Options.SourcePath}/dist-server/main.js";
                     options.BootModuleBuilder = env.IsDevelopment()
-                        ? new AngularCliBuilder(npmScript: "build:ssr")
+                        ? new AngularCliBuilder(npmScript: "build:dev:ssr")
                         : null;
                     options.ExcludeUrls = new[] { "/sockjs-node" };
 
