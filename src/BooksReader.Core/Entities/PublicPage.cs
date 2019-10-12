@@ -8,16 +8,15 @@ using BooksReader.Core.Models;
 
 namespace BooksReader.Core.Entities
 {
-    public class PersonalPage: IIdentified
+    public class PublicPage: IIdentified
     {
         public Guid Id { get; set; }
 
-        public PersonalPageType PageType { get; set; }
+        public PublicPageType PageType { get; set; }
 
         public Guid? SubjectId { get; set; }
 
-        [MaxLength(256)]
-        public string Domain { get; set; }
+        public Guid DomainId { get; set; }
 
         [MaxLength(256)]
         public string UrlPath { get; set; }
@@ -30,6 +29,9 @@ namespace BooksReader.Core.Entities
         /* Navigation properties */
         [ForeignKey("SeoInfoId")]
         public SeoInfo SeoInfo{ get; set; }
+
+        [ForeignKey("DomainId")]
+        public UserDomain Domain { get; set; }
 
     }
 }

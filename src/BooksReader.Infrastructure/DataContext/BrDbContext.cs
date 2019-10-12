@@ -13,7 +13,7 @@ namespace BooksReader.Infrastructure.DataContext
         public BrDbContext(DbContextOptions<BrDbContext> options)
             : base(options)
         {
-            
+
         }
 
         public DbSet<TypesList> TypesLists { get; set; }
@@ -22,7 +22,12 @@ namespace BooksReader.Infrastructure.DataContext
         public DbSet<LoginHistory> LoginHistory { get; set; }
         public DbSet<AuthorProfile> AuthorProfiles { get; set; }
 
-        
+        public DbSet<UserDomain> UserDomains{ get; set; }
+        public DbSet<PublicPage> PublicPages { get; set; }
+        public DbSet<SeoInfo> SeoInfos{ get; set; }
+
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

@@ -65,8 +65,7 @@ export class UserService {
   }
 
   initMenu(user) {
-    // init menu
-    let menuSections = [];
+        let menuSections = [];
     user.roles.forEach(x => {
       if (MenuSections[x]) {
         menuSections.push(MenuSections[x]);
@@ -121,7 +120,6 @@ export class UserService {
   }
 
   logOut(logoutData?: LogoutData) {
-    debugger;
     this.userHub.stop();
     this.securitySvc.logout();
     this.menuSections$.next([]);

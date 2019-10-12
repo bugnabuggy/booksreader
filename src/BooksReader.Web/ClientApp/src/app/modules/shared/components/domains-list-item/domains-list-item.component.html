@@ -1,0 +1,59 @@
+<div class='row' *ngIf='!isEdit'>
+    <div class="col">
+        <a [href]="domain.protocol + domain.name">{{domain.name}}</a>
+        <div class="d-inline-block">
+            <mat-icon class="text-success" *ngIf='domain.verified' title='domain verified'>check</mat-icon>
+            <mat-icon class="text-danger" *ngIf='!domain.verified' title='domain not verified'>priority_high</mat-icon>
+            <button class="text-info btn btn-link" *ngIf='!domain.verified' title='domain not verified'>verify</button>
+        </div>
+        <div class="">
+            Protocol: <span class="badge badge-pill badge-light p-1">{{domain.protocol}}</span>
+            <span *ngIf="!domain.verified"> Verification code: <span class="badge badge-pill badge-light p-1">{{domain.verificationCode}}</span></span>
+        </div>
+    </div>
+    <div class="col-auto d-flex flex-column flex-sm-row">
+
+        <button mat-icon-button (click)="action.emit({action:'select', data: domain})">
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="action.emit({action:'delete', data: domain})">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</div>
+
+<div *ngIf='isEdit' class='row'>
+    <div class="col">
+            <mat-form-field class="col">
+                    <input matInput [(ngModel)]="domain.name" placeholder="Domain" >
+            </mat-form-field>
+
+            <mat-form-field class="col">
+                    <mat-label>Protocol</mat-label>
+                    <mat-select [(value)]="domain.protocol">
+                        <mat-option value="http://">http://</mat-option>
+                        <mat-option value="https://">https://</mat-option>
+                    </mat-select>
+            </mat-form-field>
+            <div class="col mb-2" *ngIf='domain.protocol == "https://"'>
+                <input class='position-absolute' type="file" #fileInput />
+                <button mat-raised-button class='w-100' (click)="fileInput.click()">SSL Certificate</button>
+            </div>
+            <mat-form-field class="col">
+                    <mat-label>Verification type</mat-label>
+                    <mat-select [(value)]="domain.verificationType">
+                        <mat-option [value]="DomainVerificationType.dns">By dns txt record</mat-option>
+                        <mat-option [value]="DomainVerificationType.file">By file</mat-option>
+                        <mat-option [value]="DomainVerificationType.manually">Manually</mat-option>
+                    </mat-select>
+            </mat-form-field>
+    </div>
+    <div class="col-auto d-flex flex-column flex-sm-row">
+        <button mat-icon-button color='primary' (click)="action.emit({action:'edit', data: domain})">
+            <mat-icon>check</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" (click)="action.emit({action:'select', data: domain})">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>

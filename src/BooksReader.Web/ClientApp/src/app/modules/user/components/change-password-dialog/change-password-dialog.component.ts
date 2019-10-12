@@ -16,7 +16,7 @@ export class ChangePasswordDialogComponent implements OnInit {
   changePassForm: FormGroup;
   serverMessages:string[] = [];
   
-  isUiBlocked = false;
+  uiIsBlocked = false;
 
   constructor(
     private securitySvc: SecurityService,
@@ -39,10 +39,10 @@ export class ChangePasswordDialogComponent implements OnInit {
   }
 
   changePass(){
-    this.isUiBlocked = true;
+    this.uiIsBlocked = true;
     this.securitySvc.changePassword(this.changePassForm.value as ChangePasswordRquest)
     .pipe(finalize(()=>{
-      this.isUiBlocked = false;
+      this.uiIsBlocked = false;
     }))
     .subscribe(val=>{
       this.notifications.showSuccess('PASSWORD_CHANGED');

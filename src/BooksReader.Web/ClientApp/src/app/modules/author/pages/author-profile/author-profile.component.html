@@ -1,1 +1,26 @@
-<p>author-profile works!</p>
+<div class="flex-1 p-3">
+  <div class="col-12 col-sm-10 col-lg-8 col-xl-6 m-auto">
+    <h2>Author profile page</h2>
+    <form (ngSubmit)="save()" [formGroup]="profileForm">
+      <div *ngIf="profileForm.errors || errors.length > 0" class="alert alert-danger" role="alert">
+        ERRORROS
+      </div>
+      <mat-form-field class="w-100">
+        <input matInput placeholder="Author name" required formControlName="authorName">
+        <mat-error *ngIf="profileForm.controls.authorName.errors?.required">
+          Author name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <textarea rows="3" matInput placeholder="Description" formControlName="description"></textarea>
+      </mat-form-field>
+
+      <div class='p-2'></div>
+      <button [disabled]="uiIsBlocked && profileForm.valid" mat-raised-button color="primary">Save</button>
+    </form>
+
+    <h3 class="mt-4">Author domains</h3>
+    <app-domains-list [domains]='domains'>
+    </app-domains-list>
+  </div>
+</div>

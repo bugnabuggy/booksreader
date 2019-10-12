@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BooksReader.Core.Enums
 {
-    public enum PersonalPageType
+    public enum PublicPageType
     {
         AuthorPage = 1,
         BookPage = 2,

@@ -1,0 +1,15 @@
+<ul class="list-group mt-2">
+        <li class="list-group-item" *ngFor="let domain of domains">
+            <app-domains-list-item 
+            [isEdit]='domain.id == editItem.id' 
+            [domain]='domain.id == editItem.id ? editItem : domain'
+            (action)='doAction($event)'
+            > 
+            </app-domains-list-item>
+        </li>
+        <li class="list-group-item" *ngIf='!addInProgress '>
+          <button (click)='addDomain()' class='btn btn-link d-flex'>
+            <mat-icon>add_circle_outline</mat-icon> <span class="mx-2">Add new domain</span>
+          </button> 
+        </li> 
+</ul>

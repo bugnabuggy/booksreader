@@ -25,10 +25,12 @@ namespace BooksReader.Configuration
             services.AddTransient<IRepository<TypeValue>, DbRepository<TypeValue>>();
             services.AddTransient<IRepository<LoginHistory>, DbRepository<LoginHistory>>();
             services.AddTransient<IRepository<AuthorProfile>, DbRepository<AuthorProfile>>();
+            services.AddTransient<IRepository<PublicPage>, DbRepository<PublicPage>>();
+
             //services.AddTransient<IRepository<Book>, DbRepository<Book>>();
             //services.AddTransient<IRepository<BrUser>, DbRepository<BrUser>>();
             //services.AddTransient<IRepository<SeoInfo>, DbRepository<SeoInfo>>();
-            //services.AddTransient<IRepository<PersonalPage>, DbRepository<PersonalPage>>();
+
             //services.AddTransient<IRepository<BookChapter>, DbRepository<BookChapter>>();
             //services.AddTransient<IRepository<BookPrice>, DbRepository<BookPrice>>();
 

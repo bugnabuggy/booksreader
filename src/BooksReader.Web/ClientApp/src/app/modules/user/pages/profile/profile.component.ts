@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
 
   Endpoints = Endpoints;
   profileForm: FormGroup;
-  isUiBlocked = false;
+  uiIsBlocked = false;
 
   constructor(
     public userSvc: UserService,
@@ -40,11 +40,11 @@ export class ProfileComponent implements OnInit {
   }
 
   updateProfile() {
-    this.isUiBlocked = true;
+    this.uiIsBlocked = true;
     console.log(this.profileForm.value)
     this.userSvc.updateProfile(this.profileForm.value as AppUser)
       .pipe(finalize(()=>{
-        this.isUiBlocked = false;
+        this.uiIsBlocked = false;
       }))
       .subscribe(()=>{
         this.notifications.showSuccess(SiteMessages.user.profile.updated);

@@ -3,10 +3,15 @@ import { CommonModule } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@br/material/material.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { DomainsListComponent } from './components/domains-list/domains-list.component';
+import { DomainsListItemComponent } from './components/domains-list-item/domains-list-item.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    DomainsListComponent,
+    DomainsListItemComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -18,6 +23,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
+    
+    DomainsListComponent,
+    DomainsListItemComponent
   ]
 })
 export class SharedModule { }
