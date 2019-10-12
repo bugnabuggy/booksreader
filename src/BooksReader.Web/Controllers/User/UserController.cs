@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using BooksReader.Configuration;
+using BooksReader.Core;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Models.Requests.Author;
 using BooksReader.Core.Models.Requests.User;

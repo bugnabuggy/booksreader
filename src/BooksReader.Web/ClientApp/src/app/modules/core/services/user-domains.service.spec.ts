@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AuthorProfileService } from './author-profile.service';
+import { UserDomainsService } from './user-domains.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('AuthorProfileService', () => {
+describe('UserDomainsService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports:[ HttpClientTestingModule]
   }));
 
   it('should be created', () => {
-    const service: AuthorProfileService = TestBed.get(AuthorProfileService);
+    const service: UserDomainsService = TestBed.get(UserDomainsService);
     expect(service).toBeTruthy();
   });
 });

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BooksReader.Infrastructure.Migrations
 {
     [DbContext(typeof(BrDbContext))]
-    [Migration("20191010074728_Restart")]
-    partial class Restart
+    [Migration("20191012184122_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -124,6 +124,73 @@ namespace BooksReader.Infrastructure.Migrations
                     b.ToTable("LoginHistory");
                 });
 
+            modelBuilder.Entity("BooksReader.Core.Entities.PublicPage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Content");
+
+                    b.Property<Guid>("DomainId");
+
+                    b.Property<int>("PageType");
+
+                    b.Property<Guid?>("SeoInfoId");
+
+                    b.Property<Guid?>("SubjectId");
+
+                    b.Property<string>("UrlPath")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DomainId");
+
+                    b.HasIndex("SeoInfoId");
+
+                    b.ToTable("PublicPages");
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.SeoInfo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("MetaAuthor")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("MetaCopyright")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("MetaDescription")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("MetaKeywords")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("MetaTitle")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("OgDescription")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("OgImage")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("OgTitle")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("OgType")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("OgUrl")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SeoInfos");
+                });
+
             modelBuilder.Entity("BooksReader.Core.Entities.TypeValue", b =>
                 {
                     b.Property<long>("Id")
@@ -161,6 +228,37 @@ namespace BooksReader.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TypesLists");
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.UserDomain", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Certificate");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
+
+                    b.Property<Guid>("OwnerId");
+
+                    b.Property<string>("Protocol");
+
+                    b.Property<Guid>("VerificationCode");
+
+                    b.Property<DateTime?>("VerificationDate");
+
+                    b.Property<DateTime?>("VerificationRequested");
+
+                    b.Property<int>("VerificationType");
+
+                    b.Property<bool>("Verified");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("UserDomains");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -286,11 +384,31 @@ namespace BooksReader.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("BooksReader.Core.Entities.PublicPage", b =>
+                {
+                    b.HasOne("BooksReader.Core.Entities.UserDomain", "Domain")
+                        .WithMany()
+                        .HasForeignKey("DomainId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BooksReader.Core.Entities.SeoInfo", "SeoInfo")
+                        .WithMany()
+                        .HasForeignKey("SeoInfoId");
+                });
+
             modelBuilder.Entity("BooksReader.Core.Entities.TypeValue", b =>
                 {
                     b.HasOne("BooksReader.Core.Entities.TypesList", "Type")
                         .WithMany("Values")
                         .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.UserDomain", b =>
+                {
+                    b.HasOne("BooksReader.Core.Entities.BrUser", "User")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -92,7 +92,7 @@ namespace BooksReader.Services
             }
 
             var domains = _domainsRepo.Data.AsNoTracking()
-                .Where(x => x.UserId.Equals(brUserId));
+                .Where(x => x.OwnerId.Equals(brUserId));
 
             var page = _pagesRepo.Data.AsNoTracking()
                 .FirstOrDefault(x => x.SubjectId.Equals(brUserId) 

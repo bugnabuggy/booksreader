@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BooksReader.Core;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Infrastrcture;
 using BooksReader.Core.Services;
@@ -25,22 +26,25 @@ namespace BooksReader.Configuration
             services.AddTransient<IRepository<TypeValue>, DbRepository<TypeValue>>();
             services.AddTransient<IRepository<LoginHistory>, DbRepository<LoginHistory>>();
             services.AddTransient<IRepository<AuthorProfile>, DbRepository<AuthorProfile>>();
+            services.AddTransient<IRepository<UserDomain>, DbRepository<UserDomain>>();
             services.AddTransient<IRepository<PublicPage>, DbRepository<PublicPage>>();
+            services.AddTransient<IRepository<SeoInfo>, DbRepository<SeoInfo>>();
 
             //services.AddTransient<IRepository<Book>, DbRepository<Book>>();
             //services.AddTransient<IRepository<BrUser>, DbRepository<BrUser>>();
-            //services.AddTransient<IRepository<SeoInfo>, DbRepository<SeoInfo>>();
 
             //services.AddTransient<IRepository<BookChapter>, DbRepository<BookChapter>>();
             //services.AddTransient<IRepository<BookPrice>, DbRepository<BookPrice>>();
 
             //// infrastructure services
-            //services.AddTransient<ISecurityService, SecurityService>();
+            services.AddTransient<ISecurityService, SecurityService>();
             services.AddTransient<IUsersService, UsersService>();
             
             //// domain services
             services.AddTransient<IListsService, ListsService>();
             services.AddTransient<IAuthorProfileService, AuthorProfileService>();
+            services.AddTransient<IDomainsService, DomainsService>();
+
             //services.AddTransient<IPublicService, PublicService>();
             //services.AddTransient<IPersonalPageService, PersonalPageService>();
             //services.AddTransient<IBooksService, BooksService>();

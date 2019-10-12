@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BooksReader.Configuration;
+using BooksReader.Core;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Models.DTO;
 using BooksReader.Core.Models.DTO.Author;
@@ -40,12 +41,7 @@ namespace BooksReader.Web.Controllers.Author
             var result = _authorProfileSvc.GetAuthorFullProfile(BrUser.Id);
             if (result != null)
             {
-                return Ok(new AuthorProfileDto()
-                {
-                    Id = result.Id,
-                    AuthorName = result.AuthorName,
-                    Description = result.Description,
-                });
+                return Ok(result);
             }
 
             return NotFound(MessageStrings.AuthorNotFound);

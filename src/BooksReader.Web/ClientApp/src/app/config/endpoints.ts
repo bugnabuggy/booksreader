@@ -74,6 +74,7 @@ class Endpoints {
         },
         author: {
             profile: Endpoints.baseApiUrl + 'api/author/profile',
+            fullProfile: Endpoints.baseApiUrl + 'api/author/profile/full',
             book: Endpoints.baseApiUrl + 'api/author/book/{id}',
             bookFullEditInfo: Endpoints.baseApiUrl + 'api/author/book/{id}/edit',
             chapter: Endpoints.baseApiUrl + 'api/author/book/{bookId}/chapter/{id}',
@@ -83,6 +84,9 @@ class Endpoints {
         public: {
             pageInfo: Endpoints.baseApiUrl + 'api/public',
             lists:  Endpoints.baseApiUrl + 'api/public/lists',
+        },
+        domains: {
+            domain: Endpoints.baseApiUrl + 'api/domains'
         }
 
     };

@@ -233,12 +233,14 @@ namespace BooksReader.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("IsVerified");
+                    b.Property<string>("Certificate");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256);
 
-                    b.Property<Guid>("UserId");
+                    b.Property<Guid>("OwnerId");
+
+                    b.Property<string>("Protocol");
 
                     b.Property<Guid>("VerificationCode");
 
@@ -248,9 +250,11 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<int>("VerificationType");
 
+                    b.Property<bool>("Verified");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("UserDomains");
                 });
@@ -402,7 +406,7 @@ namespace BooksReader.Infrastructure.Migrations
                 {
                     b.HasOne("BooksReader.Core.Entities.BrUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

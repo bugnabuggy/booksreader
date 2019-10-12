@@ -1,5 +1,5 @@
 export enum DomainVerificationType {
-    dns = 1,
+    dns = 3,
     file = 2,
-    manually = 3
+    manually = 1
 }

@@ -1,7 +1,7 @@
 class SiteMessages {
     static user = {
             registration: {
-                SUCCESS: "REGISTRATION_SUCCESS"
+                success: "REGISTRATION_SUCCESS"
             },
             profile: {
                 updated: "PROFILE_UPDATED"
@@ -14,7 +14,13 @@ class SiteMessages {
     }
 
     static system = {
-        noForceLogoutCallback: 'NO_FORCE_LOGOUT_CALLBACK'
+        noForceLogoutCallback: 'NO_FORCE_LOGOUT_CALLBACK',
+        errorWhileRequest: 'ERROR_WHILE_REQUEST'
+    }
+    
+    static domains = {
+        added: 'DOMAIN_ADDED',
+        deleted: 'DOMAIN_DELETED',
     }
 }
 

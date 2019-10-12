@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BooksReader.Core\BooksReader.Core.csproj" />
+    <ProjectReference Include="..\BooksReader.Dictionaries\BooksReader.Dictionaries.csproj" />
   </ItemGroup>
 
 </Project>

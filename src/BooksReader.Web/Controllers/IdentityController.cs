@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using BooksReader.Configuration;
+using BooksReader.Core;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Infrastrcture;
 using BooksReader.Core.Models;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BooksReader.Configuration
+﻿namespace BooksReader.Core
 {
     public static class SiteRoles
     {

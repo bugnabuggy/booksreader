@@ -47,7 +47,7 @@ export class RegistrationComponent implements OnInit {
     this.userSvc.registration(data)
       .pipe(
         finalize(() => { this.uiIsBlocked = false; }),
-        flatMap(() => this.translate.get(SiteMessages.user.registration.SUCCESS)))
+        flatMap(() => this.translate.get(SiteMessages.user.registration.success)))
       .subscribe(val => {
         this.notifications.showSuccess(val);
       }, (err: HttpErrorResponse) => {

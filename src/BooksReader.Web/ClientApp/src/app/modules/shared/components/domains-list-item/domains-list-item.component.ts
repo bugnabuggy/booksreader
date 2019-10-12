@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UserDomain } from '@br/core/models';
-import { DomainVerificationType } from '@br/core/enums';
+import { DomainVerificationType, ActionType } from '@br/core/enums';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-domains-list-item',
@@ -15,8 +16,20 @@ export class DomainsListItemComponent implements OnInit {
 
   DomainVerificationType = DomainVerificationType;
 
-  constructor() { }
+  domainForm: FormGroup; 
+
+  constructor(
+    private fb: FormBuilder
+  ) { 
+
+  }
 
   ngOnInit() {
+    this.domainForm = this.fb.group({
+      id: [this.domain.id],
+      name: [this.domain.name, [Validators.required]],
+      protocol: [this.domain.protocol,  Validators.required],
+      verificationType: [this.domain.verificationType, Validators.required]
+    });
   }
 }

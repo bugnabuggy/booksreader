@@ -1,6 +1,7 @@
 import { DomainVerificationType } from '@br/core/enums';
+import { IIdentifiable } from '../entities';
 
-export interface UserDomain {
+export interface UserDomain extends IIdentifiable{
     id: string;
     protocol: string;
     name: string;

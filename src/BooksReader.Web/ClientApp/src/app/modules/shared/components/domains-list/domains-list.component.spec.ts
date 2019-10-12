@@ -4,6 +4,7 @@ import { DomainsListComponent } from './domains-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@br/material/material.module';
 import { DomainsListItemComponent } from '..';
+import { COMMON_TESTING_MODULES } from '@br/test/common-dependencies-modules';
 
 describe('DomainsListComponent', () => {
   let component: DomainsListComponent;
@@ -13,12 +14,13 @@ describe('DomainsListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ 
         DomainsListComponent,
-        DomainsListItemComponent
+        DomainsListItemComponent,
        ],
       imports:[
         FormsModule,
         ReactiveFormsModule,
-        MaterialModule
+        MaterialModule,
+        COMMON_TESTING_MODULES
       ]
     })
     .compileComponents();

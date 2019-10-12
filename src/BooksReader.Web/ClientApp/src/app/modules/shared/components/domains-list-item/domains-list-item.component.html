@@ -22,26 +22,31 @@
     </div>
 </div>
 
-<div *ngIf='isEdit' class='row'>
+<form *ngIf='isEdit' class='row' [formGroup]="domainForm" 
+(ngSubmit)="domainForm.valid ? action.emit({action: 'edit', data: domainForm.value}): ''" 
+(reset)="action.emit({action: 'select', data: domain})">
     <div class="col">
             <mat-form-field class="col">
-                    <input matInput [(ngModel)]="domain.name" placeholder="Domain" >
+                    <input matInput formControlName='name' placeholder="Domain" >
+                    <mat-error *ngIf="domainForm.controls['name']?.errors?.required">
+                        Domain name is <strong>required</strong>
+                    </mat-error>
             </mat-form-field>
 
             <mat-form-field class="col">
                     <mat-label>Protocol</mat-label>
-                    <mat-select [(value)]="domain.protocol">
+                    <mat-select formControlName='protocol'>
                         <mat-option value="http://">http://</mat-option>
                         <mat-option value="https://">https://</mat-option>
                     </mat-select>
             </mat-form-field>
-            <div class="col mb-2" *ngIf='domain.protocol == "https://"'>
-                <input class='position-absolute' type="file" #fileInput />
-                <button mat-raised-button class='w-100' (click)="fileInput.click()">SSL Certificate</button>
+            <div class="col mb-2" *ngIf='domainForm.controls?.protocol?.value == "https://"'>
+                <input class='position-absolute' type="file" #fileInput  />
+                <button mat-raised-button class='w-100' type="button" (click)="fileInput.click()">SSL Certificate</button>
             </div>
             <mat-form-field class="col">
                     <mat-label>Verification type</mat-label>
-                    <mat-select [(value)]="domain.verificationType">
+                    <mat-select formControlName='verificationType'>
                         <mat-option [value]="DomainVerificationType.dns">By dns txt record</mat-option>
                         <mat-option [value]="DomainVerificationType.file">By file</mat-option>
                         <mat-option [value]="DomainVerificationType.manually">Manually</mat-option>
@@ -49,11 +54,11 @@
             </mat-form-field>
     </div>
     <div class="col-auto d-flex flex-column flex-sm-row">
-        <button mat-icon-button color='primary' (click)="action.emit({action:'edit', data: domain})">
+        <button mat-icon-button type="submit" color='primary'>
             <mat-icon>check</mat-icon>
         </button>
-        <button mat-icon-button color="accent" (click)="action.emit({action:'select', data: domain})">
+        <button mat-icon-button type="reset" color="accent">
             <mat-icon>close</mat-icon>
         </button>
     </div>
-</div>
+</form>
