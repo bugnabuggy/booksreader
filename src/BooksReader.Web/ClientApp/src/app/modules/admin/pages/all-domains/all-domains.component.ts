@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserDomain, StandardFilters } from '@br/core/models';
 import { UserDomainsService } from '@br/core/services';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-all-domains',
@@ -14,7 +15,7 @@ export class AllDomainsComponent implements OnInit {
   filters = {
 
   } as StandardFilters;
-
+  pageEvent: PageEvent;
   columns = [
     'name', 
     'username', 
