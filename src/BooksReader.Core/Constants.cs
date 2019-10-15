@@ -4,5 +4,6 @@
     {
         public const int AsyncTaskWaitTime = 10_000;
         public const string DefaultLanguage = "en";
+        public const ushort MaxUserDomainsCount = 5;
     }
 }

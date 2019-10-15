@@ -8,4 +8,7 @@ export interface UserDomain extends IIdentifiable{
     verified: boolean;
     verificationType: DomainVerificationType;
     verificationCode: string;
+
+    certificate?: string;
+    ownerId?: string;
 }

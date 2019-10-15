@@ -26,7 +26,9 @@ namespace BooksReader.Infrastructure.DataContext
         public DbSet<PublicPage> PublicPages { get; set; }
         public DbSet<SeoInfo> SeoInfos{ get; set; }
 
-
+        public DbSet<Book> Books { get; set; }
+        public DbSet<BookChapter> BookChapters { get; set; }
+        public DbSet<BookPrice> BookPrices { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

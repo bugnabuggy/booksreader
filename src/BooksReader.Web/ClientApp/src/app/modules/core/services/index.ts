@@ -8,4 +8,5 @@ export * from './notification.service';
 export * from './admin-users.service';
 export * from './author-profile.service';
 export * from './user-domains.service';
+export * from './public-pages.service';
 

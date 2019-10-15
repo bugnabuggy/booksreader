@@ -30,11 +30,11 @@ namespace BooksReader.Configuration
             services.AddTransient<IRepository<PublicPage>, DbRepository<PublicPage>>();
             services.AddTransient<IRepository<SeoInfo>, DbRepository<SeoInfo>>();
 
-            //services.AddTransient<IRepository<Book>, DbRepository<Book>>();
-            //services.AddTransient<IRepository<BrUser>, DbRepository<BrUser>>();
+            services.AddTransient<IRepository<BrUser>, DbRepository<BrUser>>();
 
-            //services.AddTransient<IRepository<BookChapter>, DbRepository<BookChapter>>();
-            //services.AddTransient<IRepository<BookPrice>, DbRepository<BookPrice>>();
+            services.AddTransient<IRepository<Book>, DbRepository<Book>>();
+            services.AddTransient<IRepository<BookChapter>, DbRepository<BookChapter>>();
+            services.AddTransient<IRepository<BookPrice>, DbRepository<BookPrice>>();
 
             //// infrastructure services
             services.AddTransient<ISecurityService, SecurityService>();
@@ -44,9 +44,9 @@ namespace BooksReader.Configuration
             services.AddTransient<IListsService, ListsService>();
             services.AddTransient<IAuthorProfileService, AuthorProfileService>();
             services.AddTransient<IDomainsService, DomainsService>();
+            services.AddTransient<IPublicPagesService, PublicPageService>();
 
             //services.AddTransient<IPublicService, PublicService>();
-            //services.AddTransient<IPersonalPageService, PersonalPageService>();
             //services.AddTransient<IBooksService, BooksService>();
             //services.AddTransient<IBookChapterService, BookChapterService>();
             //services.AddTransient<IBookPriceService, BookPriceService>();

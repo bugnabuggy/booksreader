@@ -37,7 +37,9 @@ class Endpoints {
             dashboard: 'dashboard',
             dashboardUrl: '/' + Endpoints.areas.admin + '/dashboard',
             allUsers: 'users',
-            allUsersUrl: '/' + Endpoints.areas.admin + '/users'
+            allUsersUrl: '/' + Endpoints.areas.admin + '/users',
+            allDomains: 'domains',
+            allDomainsUrl: '/' + Endpoints.areas.admin + '/domains',
         },
         author: {
             profile: 'profile',
@@ -87,7 +89,10 @@ class Endpoints {
         },
         domains: {
             domain: Endpoints.baseApiUrl + 'api/domains'
-        }
+        },
+        publicPages:{ 
+            pages: Endpoints.baseApiUrl + 'api/public-pages'
+        } 
 
     };
 }

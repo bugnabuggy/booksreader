@@ -8,7 +8,6 @@ import { share } from 'rxjs/operators';
 })
 export class AuthorProfileService {
 
-
   constructor(
     private http: HttpClient
   ) { }

@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@br/material/material.module';
 import { DomainsListItemComponent } from '..';
 import { COMMON_TESTING_MODULES } from '@br/test/common-dependencies-modules';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DomainsListComponent', () => {
   let component: DomainsListComponent;
@@ -20,7 +21,7 @@ describe('DomainsListComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        COMMON_TESTING_MODULES
+        COMMON_TESTING_MODULES,
       ]
     })
     .compileComponents();

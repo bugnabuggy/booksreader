@@ -8,11 +8,13 @@
         </div>
         <div class="">
             Protocol: <span class="badge badge-pill badge-light p-1">{{domain.protocol}}</span>
-            <span *ngIf="!domain.verified"> Verification code: <span class="badge badge-pill badge-light p-1">{{domain.verificationCode}}</span></span>
+            <span *ngIf="!domain.verified"> 
+                Verification type: <span class="badge badge-pill badge-light p-1">{{DomainVerificationTypeStrings[domain.verificationType] | translate}}</span>
+                Verification code: <span class="badge badge-pill badge-light p-1">{{domain.verificationCode}}</span>
+        </span>
         </div>
     </div>
-    <div class="col-auto d-flex flex-column flex-sm-row">
-
+    <div class="col-auto d-flex flex-row flex-sm-column">
         <button mat-icon-button (click)="action.emit({action:'select', data: domain})">
             <mat-icon>edit</mat-icon>
         </button>
@@ -47,13 +49,13 @@
             <mat-form-field class="col">
                     <mat-label>Verification type</mat-label>
                     <mat-select formControlName='verificationType'>
-                        <mat-option [value]="DomainVerificationType.dns">By dns txt record</mat-option>
-                        <mat-option [value]="DomainVerificationType.file">By file</mat-option>
-                        <mat-option [value]="DomainVerificationType.manually">Manually</mat-option>
+                        <mat-option [value]="DomainVerificationType.dns">{{DomainVerificationTypeStrings[DomainVerificationType.dns] | translate}}</mat-option>
+                        <mat-option [value]="DomainVerificationType.file">{{DomainVerificationTypeStrings[DomainVerificationType.file] | translate}}</mat-option>
+                        <mat-option [value]="DomainVerificationType.manually">{{DomainVerificationTypeStrings[DomainVerificationType.manually] | translate}}</mat-option>
                     </mat-select>
             </mat-form-field>
     </div>
-    <div class="col-auto d-flex flex-column flex-sm-row">
+    <div class="col-auto d-flex flex-row flex-sm-column">
         <button mat-icon-button type="submit" color='primary'>
             <mat-icon>check</mat-icon>
         </button>

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UserDomain } from '@br/core/models';
-import { DomainVerificationType, ActionType } from '@br/core/enums';
+import { DomainVerificationType, DomainVerificationTypeStrings } from '@br/core/enums';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -15,6 +15,7 @@ export class DomainsListItemComponent implements OnInit {
   @Output() action = new EventEmitter<any>()
 
   DomainVerificationType = DomainVerificationType;
+  DomainVerificationTypeStrings = DomainVerificationTypeStrings;
 
   domainForm: FormGroup; 
 
@@ -27,9 +28,11 @@ export class DomainsListItemComponent implements OnInit {
   ngOnInit() {
     this.domainForm = this.fb.group({
       id: [this.domain.id],
+      ownerId:[this.domain.ownerId],
       name: [this.domain.name, [Validators.required]],
       protocol: [this.domain.protocol,  Validators.required],
-      verificationType: [this.domain.verificationType, Validators.required]
+      verificationType: [this.domain.verificationType, Validators.required],
+      certificate: [this.domain.certificate]
     });
   }
 }

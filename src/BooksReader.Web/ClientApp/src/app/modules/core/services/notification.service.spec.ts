@@ -2,11 +2,13 @@ import { TestBed } from '@angular/core/testing';
 
 import { NotificationService } from './notification.service';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NotificationService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
-      SimpleNotificationsModule.forRoot()
+      SimpleNotificationsModule.forRoot(),
+      TranslateModule.forRoot()
     ]
   }));
 

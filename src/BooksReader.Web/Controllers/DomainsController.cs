@@ -6,6 +6,7 @@ using BooksReader.Configuration;
 using BooksReader.Core;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Models.Requests;
+using BooksReader.Core.Models.Requests.Admin;
 using BooksReader.Core.Services;
 using BooksReader.Dictionaries.Messages;
 using BooksReader.Validators.FilterAttributes;
@@ -35,9 +36,12 @@ namespace BooksReader.Web.Controllers
 
 
         [HttpGet]
-        public IActionResult Get()
+        [Authorize(Roles =  SiteRoles.Admin)]
+        public IActionResult Get(AllDomainsFilters filters)
         {
-            return Ok();
+            var result = this._domainssSvc.Get(filters);
+
+            return StandartReturn(result);
         }
 
         [HttpGet("{id}")]
@@ -47,10 +51,16 @@ namespace BooksReader.Web.Controllers
         }
 
         [HttpPost]
-        
-        public IActionResult Post([FromBody] UserDomainRequest domain)
+        public IActionResult Post([FromBody]UserDomainRequest domain)
         {
             var result = _domainssSvc.Add(domain, BrUser);
+            return StandartReturn(result);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(Guid id, [FromBody] UserDomainRequest domain)
+        {
+            var result = _domainssSvc.Update(domain, BrUser);
             return StandartReturn(result);
         }
 

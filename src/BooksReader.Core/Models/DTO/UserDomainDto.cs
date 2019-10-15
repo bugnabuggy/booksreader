@@ -5,7 +5,7 @@ using BooksReader.Core.Enums;
 
 namespace BooksReader.Core.Models.DTO
 {
-    public class UserDomainDto : IIdentified
+    public class UserDomainDto : IIdentified, IOwned
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

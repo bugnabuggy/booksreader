@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
+import { TranslateService } from '@ngx-translate/core';
+import { getErrorMessage } from '@br/utilities/error-extractor';
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +15,21 @@ export class NotificationService {
     };
 
   constructor(
-    private notifications: NotificationsService
+    private notifications: NotificationsService,
+    private translate: TranslateService
   ) { }
 
   showNotification(message: string, buttonText: string, type) {
     //throw new Error('Not implemented');
   }
 
-  showError(message: string) {
+  showError(message: any) {
     // this.messages['errors'].push({ message, buttonText });
-    this.notifications.error('', message);
+    let msg = typeof message === 'object' 
+    ? getErrorMessage(message)
+    : message;  
+      
+    this.notifications.error('', msg);
   }
 
   showInfo(message: string) {

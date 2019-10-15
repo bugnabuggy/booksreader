@@ -20,10 +20,16 @@
     </form>
 
     <h3 class="mt-4">Author domains</h3>
-    <app-domains-list [domains]='domains'>
+    <app-domains-list 
+      [domains]='domains'
+      (modified)='domainsChanged($event)'>
     </app-domains-list>
 
     <h3 class="mt-4">Author personal page</h3>
-    
+    <app-public-page-editor
+      [page]="page"
+      [pageType]="PublicPageType.authorPage"
+      [domains]="domains"
+    ></app-public-page-editor>
   </div>
 </div>

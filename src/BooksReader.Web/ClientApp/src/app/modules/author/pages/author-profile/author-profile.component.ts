@@ -5,6 +5,7 @@ import { UserDomain, PublicPage } from '@br/core/models';
 import { getErrorMessage } from '@br/utilities/error-extractor';
 import { AuthorFullProfile } from '@br/core/models/api/dto/author/author-full-profile.dto';
 import { finalize } from 'rxjs/operators';
+import { PublicPageType } from '@br/core/enums';
 
 @Component({
   selector: 'app-author-profile',
@@ -25,6 +26,8 @@ export class AuthorProfileComponent  implements OnInit {
   domains: UserDomain[] = [];
 
   errors = [];
+
+  PublicPageType = PublicPageType;
 
   constructor(
     private fb: FormBuilder, 
@@ -51,6 +54,10 @@ export class AuthorProfileComponent  implements OnInit {
       const msg = getErrorMessage(err);
       this.notifications.showError(msg);
     })
+  }
+
+  domainsChanged(domains: UserDomain[]){
+    this.domains = [...domains];
   }
 
   save() {

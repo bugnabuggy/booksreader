@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <p>{{data.question}}</p>
+</div>
+<div mat-dialog-actions >
+  <div class='d-flex flex-1'></div>
+  <button mat-raised-button [mat-dialog-close]="ConfirmationResult.yes" color="warn" >Yes</button>
+  <button mat-raised-button [mat-dialog-close]="ConfirmationResult.no" color="primary" cdkFocusInitial>No</button>
+  <button *ngIf="data.type == ConfirmationType.yesNoCancel" mat-raised-button color="accent" [mat-dialog-close]="ConfirmationResult.cancel" cdkFocusInitial>Cancel</button>
+</div>

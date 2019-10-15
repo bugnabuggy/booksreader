@@ -6,11 +6,12 @@ import { AppUser, RegistrationRequest, Language, AuthorRequest, LogoutData } fro
 import { SecurityService } from './security.service';
 import { MenuSections } from '@br/config/menu-sections';
 import { SiteRoles } from '../enums';
-import { Endpoints } from '@br/config';
+import { Endpoints, SiteConstants } from '@br/config';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { UserHubService } from '../../communications/hubs/user-hub.service';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class UserService {
   constructor(
     private notifications: NotificationService,
     private securitySvc: SecurityService,
+    private storage: StorageService,
     private http: HttpClient,
     public router: Router,
     public translate: TranslateService,
@@ -36,6 +38,9 @@ export class UserService {
   }
 
   init() {
+    let lang = this.storage.getItem(SiteConstants.storageKeys.userLang) || SiteConstants.defaultLanguage;
+    this.translate.setDefaultLang(lang);
+
     let observabe = of(null).pipe(
       flatMap(() => this.securitySvc.init()),
       flatMap((user: AppUser) => {
@@ -151,6 +156,7 @@ export class UserService {
   }
 
   changeLanguage(lang: Language) {
+    this.storage.setItem(SiteConstants.storageKeys.userLang, lang.code);
     this.translate.use(lang.code);
   }
 

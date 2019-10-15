@@ -6,17 +6,23 @@ import { MaterialModule } from '@br/material/material.module';
 
 import { DomainsListComponent } from './components/domains-list/domains-list.component';
 import { DomainsListItemComponent } from './components/domains-list-item/domains-list-item.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { PublicPageEditorComponent } from './components/public-page-editor/public-page-editor.component';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
     DomainsListComponent,
-    DomainsListItemComponent
+    DomainsListItemComponent,
+    PublicPageEditorComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
+    TranslateModule.forChild()
   ],
   exports:[
     CommonModule,
@@ -25,7 +31,12 @@ import { DomainsListItemComponent } from './components/domains-list-item/domains
     MaterialModule,
     
     DomainsListComponent,
-    DomainsListItemComponent
+    DomainsListItemComponent,
+    PublicPageEditorComponent,
+    ConfirmationDialogComponent
+  ],
+  entryComponents: [
+    ConfirmationDialogComponent
   ]
 })
 export class SharedModule { }

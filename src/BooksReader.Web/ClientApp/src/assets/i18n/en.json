@@ -1,3 +1,9 @@
 {
-  "siteName": "BooksReader"
+  "siteName": "BooksReader",
+
+  "DOMAIN_VERIFICATION_ENUM": {
+    "DNS": "By dns txt record",
+    "FILE": "By file",
+    "MANUALLY": "Manually"
+  }
 }

@@ -5,6 +5,7 @@ import { SharedModule } from '@br/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@br/material/material.module';
 import { UserDomain } from '@br/core/models';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DomainsListItemComponent', () => {
   let component: DomainsListItemComponent;
@@ -16,7 +17,8 @@ describe('DomainsListItemComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        MaterialModule
+        MaterialModule,
+        TranslateModule.forRoot()
       ]
     })
     .compileComponents();

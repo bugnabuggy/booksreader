@@ -7,3 +7,7 @@ export enum ActionType {
     verify = 'verify',
     close = 'close'
 }
+
+export const ActionTypeStrings = {
+    [ActionType.add] : "ACTION_TYPE_ADD"
+}

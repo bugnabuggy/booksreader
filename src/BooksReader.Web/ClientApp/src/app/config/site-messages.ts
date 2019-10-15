@@ -20,7 +20,13 @@ class SiteMessages {
     
     static domains = {
         added: 'DOMAIN_ADDED',
+        saved: 'DOMAIN_SAVED',
         deleted: 'DOMAIN_DELETED',
+    }
+
+    static publicPages = {
+        added: 'PUBLIC_PAGE_ADDED',
+        deleted: 'PUBLIC_PAGE_DELETED'
     }
 }
 

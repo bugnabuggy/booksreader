@@ -1,0 +1,49 @@
+<div *ngIf='!page'>
+    <button (click)='add()' class='btn btn-link d-flex'>
+        <mat-icon>add_circle_outline</mat-icon> <span class="mx-2">Add author public page</span>
+    </button>
+</div>
+
+<form *ngIf='page' action="" [formGroup]="pageForm" (ngSubmit)="submit()">
+    <mat-form-field class="col">
+        <mat-label>Domain</mat-label>
+        <mat-select formControlName='domainId'>
+            <mat-option *ngFor='let domain of domainsForSelect' [value]="domain.id">
+                {{domain.name}}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="pageForm.controls.domainId.errors?.required">
+            The domain is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="col">
+        <input matInput formControlName='urlPath' placeholder="Url path">
+    </mat-form-field>
+
+    <div class="col mb-2">
+        <button mat-stroked-button type="button" class='my-2' (click)="showHelp = !showHelp">
+            List of avaliable tags
+        </button>
+        <mat-card *ngIf="showHelp">Simple card</mat-card>
+    </div>
+
+    <mat-form-field class="col">
+        <textarea rows="6" matInput placeholder="Page html content" formControlName="content"></textarea>
+        <mat-error *ngIf="pageForm.controls.content.errors?.required">
+            The page content is required
+        </mat-error>
+    </mat-form-field>
+    <!-- <mat-label>Public page html content</mat-label>
+        <textarea class='w-100' matInput formControlname='content' class='border' placeholder="Html content" rows="10"></textarea> -->
+
+    <div class='col d-flex flex-column flex-sm-row justify-content-between'>
+        <button type="submit" class='col-auto' mat-raised-button color="primary" [disabled]='pageForm.invalid && !uiIsBlocked'>
+            Save public page
+        </button>
+
+        <button type="button" (click)='delete()' class='btn btn-link ml-auto mt-3 mt-sm-auto'>
+            <mat-icon>delete</mat-icon> <span class="mx-2">Delete author public page</span>
+        </button>
+    </div>
+</form>

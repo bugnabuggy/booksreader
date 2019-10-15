@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Endpoints } from '@br/config';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -8,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class AdminDashboardComponent implements OnInit {
 
   constructor() { }
+  Urls = Endpoints.frontend.admin;
 
   ngOnInit() {
   }
