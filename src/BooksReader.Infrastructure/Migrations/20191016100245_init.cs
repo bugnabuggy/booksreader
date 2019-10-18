@@ -51,6 +51,26 @@ namespace BooksReader.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Books",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    OwnerId = table.Column<Guid>(nullable: false),
+                    Title = table.Column<string>(maxLength: 1000, nullable: true),
+                    Author = table.Column<string>(maxLength: 1000, nullable: true),
+                    Description = table.Column<string>(maxLength: 3000, nullable: true),
+                    IsPublished = table.Column<bool>(nullable: false),
+                    IsForSale = table.Column<bool>(nullable: false),
+                    Picture = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Published = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Books", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SeoInfos",
                 columns: table => new
                 {
@@ -191,13 +211,34 @@ namespace BooksReader.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AuthorApplications",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Approved = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuthorApplications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuthorApplications_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AuthorProfiles",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
                     AuthorName = table.Column<string>(maxLength: 256, nullable: true),
-                    Description = table.Column<string>(maxLength: 3000, nullable: true)
+                    Description = table.Column<string>(maxLength: 3000, nullable: true),
+                    Active = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -260,6 +301,32 @@ namespace BooksReader.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BookChapters",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    OwnerId = table.Column<Guid>(nullable: false),
+                    BookId = table.Column<Guid>(nullable: false),
+                    Number = table.Column<long>(nullable: false),
+                    Title = table.Column<string>(maxLength: 1000, nullable: true),
+                    Description = table.Column<string>(maxLength: 3000, nullable: true),
+                    Version = table.Column<long>(nullable: false),
+                    Content = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    IsPublished = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookChapters", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BookChapters_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TypeValues",
                 columns: table => new
                 {
@@ -309,6 +376,34 @@ namespace BooksReader.Infrastructure.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BookPrices",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    OwnerId = table.Column<Guid>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
+                    BookId = table.Column<Guid>(nullable: false),
+                    CurrencyId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookPrices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BookPrices_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookPrices_TypeValues_CurrencyId",
+                        column: x => x.CurrencyId,
+                        principalTable: "TypeValues",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -349,9 +444,29 @@ namespace BooksReader.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AuthorApplications_UserId",
+                table: "AuthorApplications",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AuthorProfiles_UserId",
                 table: "AuthorProfiles",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookChapters_BookId",
+                table: "BookChapters",
+                column: "BookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookPrices_BookId",
+                table: "BookPrices",
+                column: "BookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookPrices_CurrencyId",
+                table: "BookPrices",
+                column: "CurrencyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LoginHistory_UserId",
@@ -397,7 +512,16 @@ namespace BooksReader.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AuthorApplications");
+
+            migrationBuilder.DropTable(
                 name: "AuthorProfiles");
+
+            migrationBuilder.DropTable(
+                name: "BookChapters");
+
+            migrationBuilder.DropTable(
+                name: "BookPrices");
 
             migrationBuilder.DropTable(
                 name: "LoginHistory");
@@ -406,10 +530,13 @@ namespace BooksReader.Infrastructure.Migrations
                 name: "PublicPages");
 
             migrationBuilder.DropTable(
-                name: "TypeValues");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Books");
+
+            migrationBuilder.DropTable(
+                name: "TypeValues");
 
             migrationBuilder.DropTable(
                 name: "UserDomains");

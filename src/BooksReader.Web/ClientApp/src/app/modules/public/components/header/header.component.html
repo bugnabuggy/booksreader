@@ -12,6 +12,10 @@
       <button  *ngIf="userSvc.authorized" mat-button [matMenuTriggerFor]="menu"><i class='material-icons f-44'>menu</i></button>
       <mat-menu #menu="matMenu">
         <!-- Here will be dynamically loaded sectiopns for user roles -->
+        <div *ngIf="userSvc.authorized" class="text-center m-2">
+          <strong>{{userSvc.user.username}}</strong>
+        </div>
+        <mat-divider></mat-divider>
         <div *ngFor="let section of menuSections">
           <a mat-menu-item *ngFor="let link of section" [routerLink]="link.url" routerLinkActive="active" class=''>{{link.text}}</a>
           <mat-divider></mat-divider>

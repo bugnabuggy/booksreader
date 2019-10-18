@@ -88,7 +88,8 @@ class Endpoints {
             lists:  Endpoints.baseApiUrl + 'api/public/lists',
         },
         domains: {
-            domain: Endpoints.baseApiUrl + 'api/domains'
+            domain: Endpoints.baseApiUrl + 'api/domains',
+            toggleState: Endpoints.baseApiUrl + 'api/domains/{id}/toggle',
         },
         publicPages:{ 
             pages: Endpoints.baseApiUrl + 'api/public-pages'

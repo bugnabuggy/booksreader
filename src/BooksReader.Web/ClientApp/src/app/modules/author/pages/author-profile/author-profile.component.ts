@@ -6,6 +6,8 @@ import { getErrorMessage } from '@br/utilities/error-extractor';
 import { AuthorFullProfile } from '@br/core/models/api/dto/author/author-full-profile.dto';
 import { finalize } from 'rxjs/operators';
 import { PublicPageType } from '@br/core/enums';
+import { Router } from '@angular/router';
+import { Endpoints } from '@br/config';
 
 @Component({
   selector: 'app-author-profile',
@@ -32,7 +34,8 @@ export class AuthorProfileComponent  implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private authorProfileSvc: AuthorProfileService,
-    private notifications: NotificationService
+    private notifications: NotificationService,
+    private router: Router
   ) { 
   }
 
@@ -51,8 +54,11 @@ export class AuthorProfileComponent  implements OnInit {
       });
     }, 
     err => {
-      const msg = getErrorMessage(err);
-      this.notifications.showError(msg);
+      this.notifications.showError(err);
+      if(err.status == 404){
+        this.router.navigateByUrl(Endpoints.frontend.user.becomeAnAuthorUrl);
+      }
+
     })
   }
 

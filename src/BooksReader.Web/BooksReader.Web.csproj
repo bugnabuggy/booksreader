@@ -42,7 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Author\" />
     <Folder Include="Controllers\Admin\" />
     <Folder Include="Controllers\Reader\" />
   </ItemGroup>

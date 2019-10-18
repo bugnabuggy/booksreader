@@ -26,6 +26,7 @@ namespace BooksReader.Configuration
             services.AddTransient<IRepository<TypeValue>, DbRepository<TypeValue>>();
             services.AddTransient<IRepository<LoginHistory>, DbRepository<LoginHistory>>();
             services.AddTransient<IRepository<AuthorProfile>, DbRepository<AuthorProfile>>();
+            services.AddTransient<IRepository<AuthorApplication>, DbRepository<AuthorApplication>>();
             services.AddTransient<IRepository<UserDomain>, DbRepository<UserDomain>>();
             services.AddTransient<IRepository<PublicPage>, DbRepository<PublicPage>>();
             services.AddTransient<IRepository<SeoInfo>, DbRepository<SeoInfo>>();
@@ -45,8 +46,9 @@ namespace BooksReader.Configuration
             services.AddTransient<IAuthorProfileService, AuthorProfileService>();
             services.AddTransient<IDomainsService, DomainsService>();
             services.AddTransient<IPublicPagesService, PublicPageService>();
+            services.AddTransient<IPublicService, PublicService>();
 
-            //services.AddTransient<IPublicService, PublicService>();
+
             //services.AddTransient<IBooksService, BooksService>();
             //services.AddTransient<IBookChapterService, BookChapterService>();
             //services.AddTransient<IBookPriceService, BookPriceService>();
@@ -93,7 +95,7 @@ namespace BooksReader.Configuration
                 var admin = userManager.FindByNameAsync("admin").Result;
                 var token = userManager.GeneratePasswordResetTokenAsync(admin).Result;
                 var result = userManager
-                    .ResetPasswordAsync(admin, token, config["Security:NewPassword"] ?? "Pasword@123")
+                    .ResetPasswordAsync(admin, token, config["Security:NewPassword"] ?? Constants.DefaultPassword)
                     .Result;
             }
         }

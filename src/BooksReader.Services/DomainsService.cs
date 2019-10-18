@@ -7,20 +7,25 @@ using BooksReader.Core;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Infrastrcture;
 using BooksReader.Core.Models.DTO;
+using BooksReader.Core.Models.DTO.Admin;
 using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Models.Requests.Admin;
 using BooksReader.Core.Services;
 using BooksReader.Dictionaries.Messages;
+using BooksReader.Utilities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BooksReader.Services
 {
     public class DomainsService : IDomainsService
     {
         private readonly IRepository<UserDomain> _domainsRepo;
+        private readonly IRepository<BrUser> _usersRepo;
+        private readonly IRepository<PublicPage> _pagesRepo;
         private readonly ISecurityService _security;
         private readonly IMapper _mapper;
 
-        private IEnumerable<Func<UserDomainRequest, DomainsService, BrUser, string>> _validations = 
+        private IEnumerable<Func<UserDomainRequest, DomainsService, BrUser, string>> _validations =
             new List<Func<UserDomainRequest, DomainsService, BrUser, string>>()
             {
                 // check that domain name is not empty
@@ -52,17 +57,62 @@ namespace BooksReader.Services
         public DomainsService(
             IMapper mapper,
             ISecurityService security,
-            IRepository<UserDomain> domainsRepo
+            IRepository<UserDomain> domainsRepo,
+            IRepository<BrUser> usersRepo,
+            IRepository<PublicPage> pagesRepo
             )
         {
             _domainsRepo = domainsRepo;
             _mapper = mapper;
             _security = security;
+            _usersRepo = usersRepo;
+            _pagesRepo = pagesRepo;
         }
 
-        public IOperationResult<IEnumerable<UserDomain>> Get(AllDomainsFilters filters)
+        public IWebResult<IEnumerable<UserDomainStateDto>> Get(AllDomainsFilters filters)
         {
-            throw new NotImplementedException();
+            var data = _domainsRepo.Data.AsNoTracking();
+
+            data = string.IsNullOrWhiteSpace(filters.Name)
+                ? data
+                : data.Where(x => x.Name.Equals(filters.Name, StringComparison.CurrentCultureIgnoreCase));
+
+            var userIds = _usersRepo.Data.AsNoTracking()
+                .Where(x => x.UserName.Equals(filters.Username, StringComparison.InvariantCultureIgnoreCase))
+                .Select(x => x.Id);
+
+            data = string.IsNullOrWhiteSpace(filters.Username)
+                ? data
+                : data.Where(x => userIds.Contains(x.OwnerId));
+
+            data = PaginationHelper.GetPaged(data, filters, out int totalRecords);
+
+            var domainsStats = data.Join(_usersRepo.Data,
+                d => d.OwnerId,
+                u => u.Id,
+                (d, u) => new UserDomainStateDto()
+                {
+                    Type = d.VerificationType,
+                    Username = u.UserName,
+                    DomainId = d.Id,
+                    DomainName = d.Name,
+                    Protocol = d.Protocol,
+                    Verified = d.Verified,
+                    VerificationDate = d.VerificationDate,
+                    VerificationRequested = d.VerificationRequested,
+                    NumberOfPages =  _pagesRepo.Data.AsNoTracking().Count(x=>x.DomainId.Equals(d.Id))
+                });
+
+            var result = new WebResult<IEnumerable<UserDomainStateDto>>()
+            {
+                PageSize = filters.PageSize,
+                PageNumber = filters.PageNumber,
+                Total = totalRecords,
+                Data = domainsStats,
+                Success = true,
+            };
+
+            return result;
         }
 
         public IOperationResult<UserDomainDto> Add(UserDomainRequest domain, BrUser actingUser)
@@ -75,8 +125,8 @@ namespace BooksReader.Services
             }
 
             // can only add domain for self or if a user is an admin
-            if (domain.OwnerId == Guid.Empty) 
-            { 
+            if (domain.OwnerId == Guid.Empty)
+            {
                 domain.OwnerId = actingUser.Id;
 
                 var domainsCount = _domainsRepo.Data.Count(x => x.OwnerId.Equals(actingUser.Id));
@@ -138,13 +188,15 @@ namespace BooksReader.Services
             }
 
             // can update owner only if user is administrator
-            if (!entity.OwnerId.Equals(domain.OwnerId) )
+            if (!entity.OwnerId.Equals(domain.OwnerId))
             {
                 if (_security.IsInRole(actingUser.Id, SiteRoles.Admin))
                 {
                     entity.OwnerId = domain.OwnerId;
-                } else { 
-                    result.Messages.Add(MessageStrings.UserDomainsMessages.CantChangeAnOwner);      
+                }
+                else
+                {
+                    result.Messages.Add(MessageStrings.UserDomainsMessages.CantChangeAnOwner);
                 }
             }
 
@@ -171,6 +223,29 @@ namespace BooksReader.Services
             result.Data = _mapper.Map<UserDomainDto>(entity);
             result.Success = true;
             return result;
+        }
+
+        public IOperationResult<UserDomainDto> ToggleVerification(Guid domainId)
+        {
+            var domain = _domainsRepo.Data
+                .FirstOrDefault(x => x.Id.Equals(domainId));
+
+            // cancel verification for other domains with the same name
+            var otherDomainsWithSameName = _domainsRepo.Data.Where(x =>
+                x.Name.Equals(domain.Name, StringComparison.InvariantCultureIgnoreCase) 
+                && !x.Id.Equals(domainId));
+
+            otherDomainsWithSameName.ForEachAsync(x => x.Verified = false).Wait();
+
+            domain.Verified = !domain.Verified;
+
+            _domainsRepo.Update(otherDomainsWithSameName);
+            _domainsRepo.Update(domain);
+
+            var result = new OperationResult<UserDomainDto>(true);
+            result.Data = _mapper.Map<UserDomainDto>(domain);
+            return result;
+
         }
 
         IEnumerable<string> Validate(UserDomainRequest domain, BrUser actingUser)

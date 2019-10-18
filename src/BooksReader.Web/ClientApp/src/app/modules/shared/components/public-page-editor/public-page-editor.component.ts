@@ -16,7 +16,7 @@ import { SiteMessages } from '@br/config/site-messages';
   styleUrls: ['./public-page-editor.component.scss']
 })
 export class PublicPageEditorComponent implements OnInit, OnChanges {
- 
+
   @Input() domains: UserDomain[];
   domainsForSelect: UserDomain[] = [];
 
@@ -32,7 +32,7 @@ export class PublicPageEditorComponent implements OnInit, OnChanges {
     content: ['']
   });
 
-  constructor (
+  constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
     private publicPagesSvc: PublicPagesService,
@@ -47,7 +47,7 @@ export class PublicPageEditorComponent implements OnInit, OnChanges {
       this.initForm();
     }
 
-    this.domainsForSelect = [...this.domains].filter(x=>x.id);
+    this.domainsForSelect = [...this.domains].filter(x => x.id);
   }
 
   add() {
@@ -59,24 +59,29 @@ export class PublicPageEditorComponent implements OnInit, OnChanges {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       minHeight: "50%",
       data: {
-        title:'Please confirm',
-        question:`Are you sure that you wnat to delete public page?`,
+        title: 'Please confirm',
+        question: `Are you sure that you wnat to delete public page?`,
         type: ConfirmationType.yesNo
       }
     });
 
     dialogRef.afterClosed().subscribe((result: ConfirmationResult) => {
       if (result == ConfirmationResult.yes) {
-        
-        this.publicPagesSvc.delete(this.page.id)
-        .subscribe( val => {
+
+        if (this.page.id) {
+          this.publicPagesSvc.delete(this.page.id)
+            .subscribe(val => {
+              this.page = null;
+              this.notifications.showSuccess(SiteMessages.publicPages.deleted)
+            }, err => {
+              this.notifications.showError(err);
+            })
+        } else {
           this.page = null;
-          this.notifications.showSuccess(SiteMessages.publicPages.deleted)
-        }, err => {
-          this.notifications.showError(err);
-        })
+        }
+
       }
-      
+
     });
   }
 
@@ -92,25 +97,39 @@ export class PublicPageEditorComponent implements OnInit, OnChanges {
     });
   }
 
+  onKey($event: KeyboardEvent)  {
+    let charCode = String.fromCharCode($event.which).toLowerCase();
+    if ($event.ctrlKey && charCode === 's') {
+      $event.preventDefault();
+      $event.cancelBubble = true;
+
+      if(this.pageForm.valid) {
+        this.submit();
+      }
+    }
+  }
+
   submit() {
-    debugger;
     let form = this.pageForm.value as PublicPage;
-    
+
     form.pageType = this.pageType;
-    
+
     form = ClearNullValues(form);
 
     const observable = form.id
-    ? this.publicPagesSvc.update(form)
-    : this.publicPagesSvc.add(form)
-    
+      ? this.publicPagesSvc.update(form)
+      : this.publicPagesSvc.add(form)
+
     this.uiIsBlocked = true;
     observable.pipe(
-      finalize(()=>{
+      finalize(() => {
         this.uiIsBlocked = false;
       })
     ).subscribe((val) => {
-      this.notifications.showSuccess(SiteMessages.publicPages.added);
+      let msg = form.id 
+      ? SiteMessages.publicPages.saved
+      : SiteMessages.publicPages.added;
+      this.notifications.showSuccess(msg);
     }, (err) => {
       this.notifications.showError(err);
     })

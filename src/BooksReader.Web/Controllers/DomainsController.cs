@@ -76,5 +76,19 @@ namespace BooksReader.Web.Controllers
             var result = _domainssSvc.Delete(id, BrUser);
             return StandartReturn(result);
         }
+
+
+        [HttpPut("{id}/toggle")]
+        [Authorize(Roles = SiteRoles.Admin)]
+        [Validate(typeof(Getter<UserDomain>),
+            new[]
+            {
+                typeof(ItemExistsValidator),
+            })]
+        public IActionResult ToggleDomainVerification(Guid id)
+        {
+            var result = _domainssSvc.ToggleVerification(id);
+            return StandartReturn(result);
+        }
     }
 }

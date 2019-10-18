@@ -4,8 +4,11 @@
 @import "./utilities.scss";
 @import "./components.scss";
 
-html, body { min-height: 100%;}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { min-height: 100%; display: flex; flex: 1;}
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
 
 app-root,
 app-login, 
@@ -13,18 +16,22 @@ app-registration,
 app-force-logout,
 app-profile,
 app-all-users,
+app-all-domains,
 app-become-an-author,
 app-author-profile,
 app-author-dashboard,
 app-author-container,
 app-book-editing-page,
 app-book-chapters-editor,
-app-book-info-edit {
+app-book-info-edit,
+runtime-component {
     flex: 1;
     display: flex;
 }
 
-
+runtime-component {
+    flex-direction: column;
+}
 
 .br-break-label .mat-checkbox-label {
     white-space: initial;

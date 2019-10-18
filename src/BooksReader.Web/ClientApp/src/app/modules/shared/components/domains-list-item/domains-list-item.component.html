@@ -50,7 +50,7 @@
                     <mat-label>Verification type</mat-label>
                     <mat-select formControlName='verificationType'>
                         <mat-option [value]="DomainVerificationType.dns">{{DomainVerificationTypeStrings[DomainVerificationType.dns] | translate}}</mat-option>
-                        <mat-option [value]="DomainVerificationType.file">{{DomainVerificationTypeStrings[DomainVerificationType.file] | translate}}</mat-option>
+                        <mat-option disabled='true' [value]="DomainVerificationType.file">{{DomainVerificationTypeStrings[DomainVerificationType.file] | translate}}</mat-option>
                         <mat-option [value]="DomainVerificationType.manually">{{DomainVerificationTypeStrings[DomainVerificationType.manually] | translate}}</mat-option>
                     </mat-select>
             </mat-form-field>

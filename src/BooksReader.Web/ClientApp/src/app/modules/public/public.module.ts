@@ -10,6 +10,8 @@ import { RegistrationComponent } from './pages/registration/registration.compone
 import { ForceLogoutComponent } from './pages/force-logout/force-logout.component';
 import { MainComponent } from './pages/main/main.component';
 import { IntegrationsModule } from '@br/integrations/integrations.module';
+import { LoginButtonComponent } from './public-tags/login-button/login-button.component';
+import { BuyButtonComponent } from './public-tags/buy-button/buy-button.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { IntegrationsModule } from '@br/integrations/integrations.module';
     LoginComponent,
     RegistrationComponent,
     ForceLogoutComponent,
-    MainComponent
+    MainComponent,
+    LoginButtonComponent,
+    BuyButtonComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +32,9 @@ import { IntegrationsModule } from '@br/integrations/integrations.module';
     IntegrationsModule
   ],
   exports: [
-    HeaderComponent
+    HeaderComponent,
+    LoginButtonComponent,
+    BuyButtonComponent
   ]
 })
 export class PublicModule { }

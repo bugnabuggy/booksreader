@@ -22,10 +22,12 @@ class SiteMessages {
         added: 'DOMAIN_ADDED',
         saved: 'DOMAIN_SAVED',
         deleted: 'DOMAIN_DELETED',
+        verificationToggled: 'DOMAIN_VERIFICATION_TOGGLED'
     }
 
     static publicPages = {
         added: 'PUBLIC_PAGE_ADDED',
+        saved: 'PUBLIC_PAGE_SAVED',
         deleted: 'PUBLIC_PAGE_DELETED'
     }
 }

@@ -225,6 +225,7 @@ namespace BooksReader.Web
                     {
                         data["cookies"] = context.Request.Cookies;
                         data["servEnv"] = env.EnvironmentName;
+                        data["hostname"] = context.Request.Host.Value;
                     });
                 });
 

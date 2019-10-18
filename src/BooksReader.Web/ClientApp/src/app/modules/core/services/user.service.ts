@@ -17,6 +17,8 @@ import { StorageService } from './storage.service';
   providedIn: 'root'
 })
 export class UserService {
+  private _isUiVisible = true;
+  private _keepUi = false;
 
   menuSections$ = new BehaviorSubject<any>([]);
   logoutData: LogoutData = null;
@@ -29,12 +31,30 @@ export class UserService {
     public router: Router,
     public translate: TranslateService,
     private userHub: UserHubService
-  ) { }
+  ) { 
+    this._keepUi = JSON.parse(this.storage.getItem(SiteConstants.storageKeys.uiIsShown));
+  }
 
-  get user() { return this.securitySvc.user$.getValue(); }
+  get user(): AppUser { return this.securitySvc.user$.getValue(); }
 
   get authorized() {
     return this.securitySvc.isAuthorized;
+  }
+
+  get keepUi() {
+     return this._keepUi;
+  }
+
+  get isUiVisible() {
+    return this._isUiVisible;
+  }
+
+  public toggleUi(isVisible) {
+    this._isUiVisible = isVisible;
+
+    if(isVisible) {
+      this.storage.setItem(SiteConstants.storageKeys.uiIsShown, isVisible);
+    }
   }
 
   init() {
@@ -57,7 +77,7 @@ export class UserService {
     observabe.subscribe(val => {
       console.warn('the app initialized');
     }, err => {
-      this.notifications.showError(err.value);
+      this.notifications.showError(err);
     })
 
     return observabe;

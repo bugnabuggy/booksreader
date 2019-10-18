@@ -6,6 +6,7 @@ import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard
 import { AllUsersComponent } from './pages/all-users/all-users.component';
 import { SharedModule } from '@br/shared/shared.module';
 import { AllDomainsComponent } from './pages/all-domains/all-domains.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { AllDomainsComponent } from './pages/all-domains/all-domains.component';
   imports: [
     CommonModule,
     SharedModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    TranslateModule.forChild()
   ]
 })
 export class AdminModule { }

@@ -17,6 +17,8 @@ namespace BooksReader.Core.Entities
         [MaxLength(3000)]
         public string Description { get; set; }
 
+        public bool Active { get; set; }
+
         /* Navigation properties */
         [ForeignKey("UserId")]
         public BrUser User { get; set; }

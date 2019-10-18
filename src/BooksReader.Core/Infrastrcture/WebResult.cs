@@ -4,15 +4,15 @@ using System.Text;
 
 namespace BooksReader.Core.Infrastrcture
 {
-    public class WebResult : OperationResult
+    public class WebResult<T> :  OperationResult<T>, IWebResult<T>
     {
-        public int Total { get; set; }
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; }
+        public long Total { get; set; }
+        public int? PageNumber { get; set; }
+        public int? PageSize { get; set; }
 
-        public WebResult(){}
+        public WebResult() { }
 
-        public WebResult(OperationResult result)
+        public WebResult(OperationResult<T> result)
         {
             base.Success = result.Success;
             base.Messages = result.Messages;
@@ -20,8 +20,13 @@ namespace BooksReader.Core.Infrastrcture
         }
     }
 
-    public class WebResult<T> : WebResult
+    public class WebResult: WebResult<object>
     {
-        public new T Data { get; set; }
+        public WebResult(OperationResult result)
+        {
+            base.Success = result.Success;
+            base.Messages = result.Messages;
+            base.Data = result.Data;
+        }
     }
 }

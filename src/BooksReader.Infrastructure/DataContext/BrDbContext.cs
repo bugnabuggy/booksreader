@@ -21,6 +21,7 @@ namespace BooksReader.Infrastructure.DataContext
 
         public DbSet<LoginHistory> LoginHistory { get; set; }
         public DbSet<AuthorProfile> AuthorProfiles { get; set; }
+        public DbSet<AuthorApplication> AuthorApplications { get; set; }
 
         public DbSet<UserDomain> UserDomains{ get; set; }
         public DbSet<PublicPage> PublicPages { get; set; }

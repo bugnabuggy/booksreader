@@ -16,16 +16,19 @@ namespace BooksReader.Services
     public class AuthorProfileService : IAuthorProfileService
     {
         private readonly IRepository<AuthorProfile> _authorProfileRepo;
+        private readonly IRepository<AuthorApplication> _authorApplicationsRepo;
         private readonly IRepository<UserDomain> _domainsRepo;
         private readonly IRepository<PublicPage> _pagesRepo;
 
         public AuthorProfileService(
             IRepository<AuthorProfile> authorProfileRepo,
+            IRepository<AuthorApplication> authorApplicationsRepo,
             IRepository<UserDomain> domainsRepo,
             IRepository<PublicPage> pagesRepo
             )
         {
             _authorProfileRepo = authorProfileRepo;
+            _authorApplicationsRepo = authorApplicationsRepo;
             _domainsRepo = domainsRepo;
             _pagesRepo = pagesRepo;
         }
@@ -37,7 +40,7 @@ namespace BooksReader.Services
             var result = new OperationResult<AuthorProfile>(){};
 
             var profile = _authorProfileRepo.Data.AsNoTracking()
-                .FirstOrDefault(x => x.User.UserName.Equals(user.UserName));
+                .FirstOrDefault(x => x.UserId.Equals(user.Id));
 
             if (profile != null)
             {
@@ -49,8 +52,16 @@ namespace BooksReader.Services
             profile = new AuthorProfile()
             {
                 UserId = user.Id,
-                AuthorName = user.Name
+                AuthorName = user.Name,
+                Active = false
             };
+
+            var application = new AuthorApplication()
+            {
+                Created = DateTime.UtcNow,
+                UserId = user.Id,
+            };
+            _authorApplicationsRepo.Add(application);
 
             var authorProfile = await _authorProfileRepo.AddAsync(profile);
             

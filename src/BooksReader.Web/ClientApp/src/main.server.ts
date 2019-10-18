@@ -21,6 +21,7 @@ export default createServerRenderer(params => {
             { provide: 'BASE_URL', useValue: params.origin + params.baseUrl },
             { provide: 'COOKIES', useValue: params.data.cookies },
             { provide: 'SERV_ENV', useValue: params.data.servEnv },
+            { provide: 'HOST_NAME', useValue: params.data.hostname },
         ]
     };
 

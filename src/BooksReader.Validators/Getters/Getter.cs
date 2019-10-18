@@ -18,7 +18,8 @@ namespace BooksReader.Validators.Getters
         public object Get(Guid id, IServiceProvider provider)
         {
             var repo = provider.GetRequiredService<IRepository<T>>();
-            var item = repo.Data.FirstOrDefault(x => x.Id.Equals(id));
+            // item must not be tracked
+            var item = repo.Get(x => x.Id.Equals(id)).FirstOrDefault();
             return item;
         }
     }

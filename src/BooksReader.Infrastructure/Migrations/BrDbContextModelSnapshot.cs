@@ -19,10 +19,30 @@ namespace BooksReader.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("BooksReader.Core.Entities.AuthorApplication", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Approved");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AuthorApplications");
+                });
+
             modelBuilder.Entity("BooksReader.Core.Entities.AuthorProfile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Active");
 
                     b.Property<string>("AuthorName")
                         .HasMaxLength(256);
@@ -451,6 +471,14 @@ namespace BooksReader.Infrastructure.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.AuthorApplication", b =>
+                {
+                    b.HasOne("BooksReader.Core.Entities.BrUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BooksReader.Core.Entities.AuthorProfile", b =>

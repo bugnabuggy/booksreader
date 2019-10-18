@@ -25,11 +25,18 @@
         <button mat-stroked-button type="button" class='my-2' (click)="showHelp = !showHelp">
             List of avaliable tags
         </button>
-        <mat-card *ngIf="showHelp">Simple card</mat-card>
+        <mat-card *ngIf="showHelp">
+                <mat-card-title>Login button</mat-card-title>
+                <mat-card-content>
+                        <code>&lt;app-login-button  text='%text in button%' class='%classes applied to button tag%'&gt;&lt;/app-login-button&gt;</code>
+                        <label> Button which shows serviec UI and redirects to the login page (on same domain)</label>
+                </mat-card-content>
+        </mat-card>
+
     </div>
 
     <mat-form-field class="col">
-        <textarea rows="6" matInput placeholder="Page html content" formControlName="content"></textarea>
+        <textarea (keydown)="onKey($event)" rows="6" matInput placeholder="Page html content" formControlName="content"></textarea>
         <mat-error *ngIf="pageForm.controls.content.errors?.required">
             The page content is required
         </mat-error>

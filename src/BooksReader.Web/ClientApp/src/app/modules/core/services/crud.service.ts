@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { ICrudService } from './interfaces';
-import { OperationResult, IIdentifiable, StandardFilters } from '../models';
+import { OperationResult, IIdentifiable, StandardFilters, WebResult } from '../models';
 import { Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 
@@ -25,12 +25,12 @@ export class CRUDService<T extends IIdentifiable> implements ICrudService<T> {
     }
 
     // get generic list by filters
-    list(filters: StandardFilters): Observable<OperationResult<T[]>> {
+    list(filters: StandardFilters): Observable<WebResult<T[]>> {
         let keys = Object.keys(filters);
         var filterHeaders = {};
         keys.forEach(val => filterHeaders[val] = filters[val])
 
-        let observable = this.http.get<OperationResult<T[]>>(`${this.baseUrl}`, {
+        let observable = this.http.get<WebResult<T[]>>(`${this.baseUrl}`, {
             params: filterHeaders
         })
         return observable.pipe(share());

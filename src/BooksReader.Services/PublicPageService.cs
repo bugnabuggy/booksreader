@@ -50,6 +50,20 @@ namespace BooksReader.Services
                     return msg;
                 },
 
+                // url path must not be duplicated
+                (page, svc, user) =>
+                {
+                    var pages = svc._pagesRepo.Data.AsNoTracking()
+                        .Any(x => string.Equals(x.UrlPath, page.UrlPath, StringComparison.InvariantCultureIgnoreCase) 
+                                  && x.DomainId.Equals(page.DomainId)
+                                  && !x.Id.Equals(page.Id));
+
+                    var msg = pages
+                        ? MessageStrings.PublicPageMessages.DuplicatedUrlPath
+                        : "";
+                    return msg;
+                },
+
                 // check if user already has a public page and tries add new one
                 (page, svc, user) =>
                 {
