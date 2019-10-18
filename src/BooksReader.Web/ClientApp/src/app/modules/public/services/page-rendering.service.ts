@@ -1,4 +1,12 @@
-import { Injectable, Compiler, ViewContainerRef, Component, ComponentFactory, NgModule, ModuleWithComponentFactories } from '@angular/core';
+import { 
+  Injectable, 
+  Compiler, 
+  ViewContainerRef, 
+  Component, 
+  ComponentFactory, 
+  NgModule, 
+  ModuleWithComponentFactories } from '@angular/core';
+  
 import { CommonModule } from '@angular/common';
 import { PublicModule } from '../public.module';
 

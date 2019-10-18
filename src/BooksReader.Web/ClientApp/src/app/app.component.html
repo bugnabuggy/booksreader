@@ -1,4 +1,4 @@
-<div class='d-flex flex-column w-100' *ngIf='userSvc.isUiVisible'>
+<div class='d-flex flex-column w-100' *ngIf='userSvc.isUiVisible && isBrowser'>
   <app-header></app-header>
   
   <div class='d-flex flex-1 min-h-400'>
@@ -7,6 +7,8 @@
 
   <simple-notifications></simple-notifications>
 </div>
+
+<div *ngIf='!isBrowser' [innerHtml]="publicPageInfo?.content"></div>
 
 <div class='d-flex flex-1' *ngIf='!userSvc.isUiVisible'>
   <ng-template  #publicContent></ng-template>
