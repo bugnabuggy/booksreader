@@ -30,6 +30,16 @@ class SiteMessages {
         saved: 'PUBLIC_PAGE_SAVED',
         deleted: 'PUBLIC_PAGE_DELETED'
     }
+
+    static author = {
+        books: {
+            errorLoadingList: 'ERROR_LOADING_BOOKS_LIST',
+            added: 'BOOK_ADDED',
+            edited: 'BOOK_EDITED',
+            deleted: 'BOOK_DELETED',
+            deleteQuestion: 'BOOK_DELET_QUESTION'
+        }
+    }
 }
 
 export { SiteMessages };

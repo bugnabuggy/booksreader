@@ -1,7 +1,6 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 export function getErrorMessage(err: HttpErrorResponse | any) {
-    debugger;
     let msg = '';
 
     // if error is operation result response

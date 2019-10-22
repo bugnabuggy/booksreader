@@ -26,9 +26,5 @@ namespace BooksReader.Core.Entities
 
 		public DateTime Created { get; set; }
 		public DateTime? Published { get; set; }
-
-		// non database properties
-		public string OwnerName;
-		public string OwnerUserName;
 	}
 }

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using BooksReader.Configuration;
 using BooksReader.Core;
 using BooksReader.Core.Entities;
+using BooksReader.Core.Infrastrcture;
+using BooksReader.Core.Models.DTO;
+using BooksReader.Core.Models.DTO.Admin;
 using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Models.Requests.Admin;
 using BooksReader.Core.Services;
@@ -37,11 +40,11 @@ namespace BooksReader.Web.Controllers
 
         [HttpGet]
         [Authorize(Roles =  SiteRoles.Admin)]
-        public IActionResult Get(AllDomainsFilters filters)
+        public ActionResult<IWebResult<IEnumerable<UserDomainStateDto>>> Get(AllDomainsFilters filters)
         {
             var result = this._domainssSvc.Get(filters);
 
-            return StandartReturn(result);
+            return StandardReturn(result);
         }
 
         [HttpGet("{id}")]
@@ -51,17 +54,17 @@ namespace BooksReader.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]UserDomainRequest domain)
+        public ActionResult<IOperationResult<UserDomainDto>> Post([FromBody]UserDomainRequest domain)
         {
             var result = _domainssSvc.Add(domain, BrUser);
-            return StandartReturn(result);
+            return StandardReturn(result);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(Guid id, [FromBody] UserDomainRequest domain)
+        public ActionResult<IOperationResult<UserDomainDto>> Put(Guid id, [FromBody] UserDomainRequest domain)
         {
             var result = _domainssSvc.Update(domain, BrUser);
-            return StandartReturn(result);
+            return StandardReturn(result);
         }
 
         [HttpDelete("{id}")]
@@ -71,10 +74,10 @@ namespace BooksReader.Web.Controllers
                 typeof(ItemExistsValidator),
                 typeof(OwnerOrAdministratorValidator)
             })]
-        public IActionResult Delete(Guid id)
+        public ActionResult<IOperationResult<UserDomainDto>> Delete(Guid id)
         {
             var result = _domainssSvc.Delete(id, BrUser);
-            return StandartReturn(result);
+            return StandardReturn(result);
         }
 
 
@@ -85,10 +88,10 @@ namespace BooksReader.Web.Controllers
             {
                 typeof(ItemExistsValidator),
             })]
-        public IActionResult ToggleDomainVerification(Guid id)
+        public ActionResult<IOperationResult<UserDomainDto>> ToggleDomainVerification(Guid id)
         {
             var result = _domainssSvc.ToggleVerification(id);
-            return StandartReturn(result);
+            return StandardReturn(result);
         }
     }
 }

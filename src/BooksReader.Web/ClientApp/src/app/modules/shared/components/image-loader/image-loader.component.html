@@ -1,0 +1,13 @@
+<figure class='row m-0 mw-100' [style.height]='height'>
+    <div class="position-relative w-100 text-center">
+        <img class='img-fluid ' [src]="image || defaultImage" alt="selected image">
+        <input class='' name='picture' type="file" #picture (change)="fileSelected(picture)"
+            accept="image/*"/>
+
+        <button type="button" mat-mini-fab color="warn"  *ngIf="image"
+            class="position-absolute "
+            (click)="delete($event)">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</figure>

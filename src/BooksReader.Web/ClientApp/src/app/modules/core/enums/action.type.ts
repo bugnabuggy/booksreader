@@ -5,7 +5,8 @@ export enum ActionType {
     delete = 'delete',
 
     verify = 'verify',
-    close = 'close'
+    close = 'close',
+    fastEdit = 'fastEdit'
 }
 
 export const ActionTypeStrings = {

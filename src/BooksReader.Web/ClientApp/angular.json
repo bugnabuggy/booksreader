@@ -134,8 +134,9 @@
                   "with": "src/environments/environment.test.ts"
                 }
               ],
+              "sourceMap": true,
               "optimization": false,
-              "outputHashing": "media",
+              "outputHashing": "media"
             },
             "production": {
               "fileReplacements": [

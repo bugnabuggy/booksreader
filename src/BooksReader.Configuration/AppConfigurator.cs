@@ -47,7 +47,7 @@ namespace BooksReader.Configuration
             services.AddTransient<IDomainsService, DomainsService>();
             services.AddTransient<IPublicPagesService, PublicPageService>();
             services.AddTransient<IPublicService, PublicService>();
-
+            services.AddTransient<IBookEditingService, BookEditingService>();
 
             //services.AddTransient<IBooksService, BooksService>();
             //services.AddTransient<IBookChapterService, BookChapterService>();

@@ -1,0 +1,21 @@
+<div class="br-author-book-list-item d-flex flex-column">
+    <h4 class="">
+        {{book.title}}
+    </h4>
+
+    <figure class="flex-1 d-flex justify-content-center m-0">
+        <img *ngIf='book.picture'  class="img-fluid" [src]="book.picture" alt="">
+    </figure>
+
+    <div class="text-right">
+        <button (click)="fastEdit()" mat-icon-button color="accent">
+            <mat-icon>border_color</mat-icon>
+        </button>
+        <button (click)="edit()" mat-icon-button color="primary">
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button (click)="delete()" mat-icon-button color="warn">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>Enter new book name</h1>
+<form autocomplete="off" [formGroup]='bookBasicForm' (ngSubmit)="add()">
+  <mat-form-field class='col'>
+    <input matInput type="text"  placeholder="Book name" formControlName='title' >
+    <mat-error *ngIf="bookBasicForm.controls.title?.invalid">
+      Please enter Book name
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class='col'>
+    <input matInput type="text" placeholder="Book author" formControlName='author' >
+    <mat-error *ngIf="bookBasicForm.controls.author?.invalid">
+      Please enter Book author
+    </mat-error>
+  </mat-form-field>
+
+  <div class='col'>
+      <app-image-loader 
+        [maxFileSize] = "2097152" 
+        (validationFailed)='showErr($event)'
+        (deleteImage)='deleteImage()'
+        class='img-fluid'
+        formControlName='picture' >
+      </app-image-loader>
+  </div>
+
+  <div mat-dialog-actions class='justify-content-end pb-3'>
+    <button type="reset" mat-raised-button (click)="close()">Cancel</button>
+    <button [disabled]="bookBasicForm.invalid" mat-raised-button color="primary">Ok</button>
+  </div>
+</form>
+

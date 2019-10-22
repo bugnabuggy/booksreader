@@ -9,13 +9,15 @@ import { DomainsListItemComponent } from './components/domains-list-item/domains
 import { TranslateModule } from '@ngx-translate/core';
 import { PublicPageEditorComponent } from './components/public-page-editor/public-page-editor.component';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import { ImageLoaderComponent } from './components/image-loader/image-loader.component';
 
 @NgModule({
   declarations: [
     DomainsListComponent,
     DomainsListItemComponent,
     PublicPageEditorComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ImageLoaderComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
     DomainsListComponent,
     DomainsListItemComponent,
     PublicPageEditorComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ImageLoaderComponent
   ],
   entryComponents: [
     ConfirmationDialogComponent

@@ -23,7 +23,7 @@ export class NotificationService {
     //throw new Error('Not implemented');
   }
 
-  showError(message: any) {
+  showError(message: any, defaultMessage?: string) {
     // this.messages['errors'].push({ message, buttonText });
     let msg = typeof message === 'object' 
     ? getErrorMessage(message)

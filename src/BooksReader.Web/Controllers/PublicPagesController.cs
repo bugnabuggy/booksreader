@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BooksReader.Configuration;
 using BooksReader.Core;
 using BooksReader.Core.Entities;
+using BooksReader.Core.Infrastrcture;
 using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Services;
 using BooksReader.Dictionaries.Messages;
@@ -47,10 +48,10 @@ namespace BooksReader.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]PublicPage page)
+        public ActionResult<IOperationResult<PublicPage>> Post([FromBody]PublicPage page)
         {
             var result = _publicPagesSvc.Add(page, BrUser);
-            return StandartReturn(result);
+            return StandardReturn(result);
         }
 
         [HttpPut("{id}")]
@@ -59,10 +60,10 @@ namespace BooksReader.Web.Controllers
             {
                 typeof(ItemExistsValidator),
             })]
-        public IActionResult Put(Guid id, [FromBody] PublicPage page)
+        public ActionResult<IOperationResult<PublicPage>> Put(Guid id, [FromBody] PublicPage page)
         {
             var result = _publicPagesSvc.Update(page, BrUser);
-            return StandartReturn(result);
+            return StandardReturn(result);
         }
 
         [HttpDelete("{id}")]
@@ -71,10 +72,10 @@ namespace BooksReader.Web.Controllers
             {
                 typeof(ItemExistsValidator),
             })]
-        public IActionResult Delete(Guid id)
+        public ActionResult<IOperationResult<PublicPage>> Delete(Guid id)
         {
             var result = _publicPagesSvc.Delete(id, BrUser);
-            return StandartReturn(result);
+            return StandardReturn(result);
         }
     }
 }

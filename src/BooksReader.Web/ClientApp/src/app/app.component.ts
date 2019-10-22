@@ -61,25 +61,25 @@ export class AppComponent implements OnInit {
 
   loadPublicInfo() {
     // do not load twice
-    if(this.publicPageInfo) return;
+    if (this.publicPageInfo) return;
 
     const observable = this.publicSvc.getPageInfo();
-    
+
     observable
       .subscribe(val => {
-        if (val) {
-          this.publicPageInfo = val;
+          if (val) {
+            this.publicPageInfo = val;
 
-          if (!this.userSvc.authorized) {
-            this.userSvc.toggleUi(false);
-            // show client content again
-            this.changeDetector.detectChanges();
-            this.pageSvc.compileTemplate(val.content, this.publicContent);
+            if (!this.userSvc.authorized) {
+              this.userSvc.toggleUi(false);
+              // show client content again
+              this.changeDetector.detectChanges();
+              this.pageSvc.compileTemplate(val.content, this.publicContent);
+            }
           }
-        }
-      }, err => {
-        
-      })
+        }, err => {
+
+        });
 
       return observable;
   }

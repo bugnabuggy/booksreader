@@ -1,0 +1,23 @@
+<h2>
+    My Books
+    <button 
+      mat-icon-button 
+      color="primary" 
+      (click)="add()">
+        <mat-icon>add_circle_outline</mat-icon>
+    </button>
+</h2>
+
+<ul class='border br-books-list p-2 '>
+    <li *ngFor="let book of books; let i = $index" class="border m-3">
+        <app-author-books-list-item 
+            [book]='book'
+            (action)='doAction($event)'
+            class="d-flex flex-column h-100 w-100"
+        ></app-author-books-list-item>
+    </li>
+
+    <li *ngIf="books.length < 1">
+        No books found.
+    </li>
+</ul>

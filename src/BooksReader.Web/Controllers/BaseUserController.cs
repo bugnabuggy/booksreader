@@ -30,7 +30,20 @@ namespace BooksReader.Web.Controllers
         }
 
         [NonAction]
-        protected IActionResult StandartReturn<T>(IOperationResult<T> result)
+        protected ActionResult<IOperationResult<T>> StandardReturn<T>(IOperationResult<T> result)
+        {
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
+        }
+
+        [NonAction]
+        protected ActionResult<IWebResult<T>> StandardReturn<T>(IWebResult<T> result)
         {
             if (result.Success)
             {
