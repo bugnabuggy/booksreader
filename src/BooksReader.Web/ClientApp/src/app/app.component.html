@@ -7,6 +7,8 @@
 
   <simple-notifications></simple-notifications>
 </div>
+ 
+  <div *ngIf='error'>{{error}}</div>
 
 <div *ngIf='!isBrowser' [innerHtml]="publicPageInfo?.content"></div>
 

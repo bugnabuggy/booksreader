@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -223,9 +224,12 @@ namespace BooksReader.Web
 
                     options.SupplyData = ((context, data) =>
                     {
+                        IdnMapping idn = new IdnMapping();
+                        string punyCode = idn.GetAscii(context.Request.Host.Value);
+
                         data["cookies"] = context.Request.Cookies;
                         data["servEnv"] = env.EnvironmentName;
-                        data["hostname"] = context.Request.Host.Value;
+                        data["hostname"] = punyCode;
                     });
                 });
 

@@ -73,7 +73,8 @@ namespace BooksReader.Services
         {
             var data = _domainsRepo.Data.AsNoTracking();
 
-            data = string.IsNullOrWhiteSpace(filters.Name)
+            
+            data = string.IsNullOrEmpty(filters.Name)
                 ? data
                 : data.Where(x => x.Name.Equals(filters.Name, StringComparison.CurrentCultureIgnoreCase));
 
@@ -254,7 +255,7 @@ namespace BooksReader.Services
                 .Select(validation => validation(domain, this, actingUser))
                 .ToList();
 
-            return errors.Where(x => !string.IsNullOrWhiteSpace(x));
+            return errors.Where(x => !(x == null || x.Trim() == string.Empty));
         }
     }
 }

@@ -47,8 +47,9 @@ namespace BooksReader.Services
                 };
             }
 
-            page = pages.Any(x => string.IsNullOrWhiteSpace(x.UrlPath))
-                ? pages.FirstOrDefault(x => string.IsNullOrWhiteSpace(x.UrlPath))
+            // because of linq translation cant use string.IsNullOrEmpty
+            page = pages.Any(x => !(x.UrlPath == null || x.UrlPath.Trim() == string.Empty))
+                ? pages.FirstOrDefault(x => !(x.UrlPath == null || x.UrlPath.Trim() == string.Empty))
                 : pages.FirstOrDefault();
 
             if (page == null)

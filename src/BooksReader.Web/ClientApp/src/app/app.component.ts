@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
 
   publicPageInfo: PublicPageInfo;
   isBrowser = true;
+  error = '';
 
   @ViewChild('publicContent', { read: ViewContainerRef, static: false })
   publicContent: ViewContainerRef;
@@ -78,7 +79,7 @@ export class AppComponent implements OnInit {
             }
           }
         }, err => {
-
+          this.error = err;
         });
 
       return observable;
