@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Book } from '@br/core/models';
+import { NotificationService } from '@br/core/services';
 
 @Component({
   selector: 'app-book-properties',
@@ -22,7 +23,8 @@ export class BookPropertiesComponent implements OnInit, OnChanges{
   });
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private notifications: NotificationService
   ) { }
 
   ngOnInit() {
@@ -49,5 +51,9 @@ export class BookPropertiesComponent implements OnInit, OnChanges{
 
   updateBook() {
     console.log(this.bookForm.valid);
+  }
+
+  showErr(message) {
+    this.notifications.showError(message);
   }
 }

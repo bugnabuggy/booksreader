@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Book } from '@br/core/models';
 import { bookMock } from '@br/test/mock-data';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { COMMON_TESTING_MODULES } from '@br/test/common-dependencies-modules';
 
 describe('BookPropertiesComponent', () => {
   let component: BookPropertiesComponent;
@@ -16,8 +17,7 @@ describe('BookPropertiesComponent', () => {
       declarations: [ BookPropertiesComponent ],
       imports:[
         SharedModule,
-        TranslateModule.forRoot(),
-        NoopAnimationsModule
+        COMMON_TESTING_MODULES
       ]
     })
     .compileComponents();
