@@ -55,22 +55,22 @@
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
   </Target>
 
-  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
-    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-    <!-- TODO: remove this from here and make a part of build process -->
+  <!-- TODO: remove this from here and make a part of build process -->
+  <!--<Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+     --><!--As part of publishing, ensure the JS resources are freshly built in production mode--><!-- 
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- -c=production" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build - - -c=production" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr - - - -prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
 
-    <!-- Include the newly-built files in the publish output -->
+     --><!--Include the newly-built files in the publish output--><!-- 
     <ItemGroup>
       <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
-      <!--<DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />-->
+      <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
       <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>%(DistFiles.Identity)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </ResolvedFileToPublish>
     </ItemGroup>
-  </Target>
+  </Target>-->
 
 </Project>
