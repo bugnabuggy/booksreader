@@ -21,7 +21,7 @@ using MessageStrings = BooksReader.Dictionaries.Messages.MessageStrings;
 namespace BooksReader.Web.Controllers.Author
 {
     [Route("api/author/profile")]
-    [Authorize]
+    [Authorize(Roles = SiteRoles.Admin + ", " + SiteRoles.Author)]
     [ApiController]
     public class AuthorProfileController : BaseUserController
     {

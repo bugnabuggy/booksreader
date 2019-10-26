@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using BooksReader.Core.Entities;
+using BooksReader.Core.Enums;
 
 namespace BooksReader.Infrastructure.SeedData
 {
@@ -9,7 +10,7 @@ namespace BooksReader.Infrastructure.SeedData
     {
         private static readonly TypesList[] typesLists =
         {
-            new TypesList{ Id = 1, Name = "Currency", LocalizationKey = "TYPE_CURRENCY" }
+            new TypesList{ Id = (ushort)TypeLists.Currencies, Name = "Currency", LocalizationKey = "TYPE_CURRENCY" }
         };
 
         public static TypesList[] GetTypesLists()

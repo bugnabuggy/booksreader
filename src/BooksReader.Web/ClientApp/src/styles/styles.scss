@@ -21,15 +21,12 @@ app-become-an-author,
 app-author-profile,
 app-author-dashboard,
 app-author-container,
-app-book-editing-page,
+app-book-editing,
 app-book-chapters-editor,
 app-book-info-edit,
 runtime-component {
     flex: 1;
     display: flex;
-}
-
-runtime-component {
     flex-direction: column;
 }
 

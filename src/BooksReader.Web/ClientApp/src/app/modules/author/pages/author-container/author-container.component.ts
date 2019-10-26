@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserDomain } from '@br/core/models';
+import { AuthorProfileService } from '@br/core/services';
 
 @Component({
   selector: 'app-author-container',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthorContainerComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private authorProfileSvc: AuthorProfileService,
+  ) { }
 
   ngOnInit() {
+    this.authorProfileSvc.getFullProfile();
   }
 
 }

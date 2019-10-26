@@ -40,6 +40,7 @@ export class AuthorProfileComponent  implements OnInit {
   }
 
   ngOnInit() {
+    
     this.authorProfileSvc.getFullProfile()
     .pipe(finalize( () => {
       this.uiIsBlocked = false;

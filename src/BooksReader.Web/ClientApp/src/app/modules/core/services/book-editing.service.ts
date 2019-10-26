@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Endpoints } from '@br/config';
 import { share } from 'rxjs/operators';
-import { WebResult, Book } from '../models';
+import { WebResult, Book, OperationResult } from '../models';
 import { Observable } from 'rxjs';
 import { CRUDService } from './crud.service';
 
@@ -28,5 +28,18 @@ export class BookEditingService extends CRUDService<Book> {
     return observable;
   }
 
+  getFull(bookId: string) {
+    const url = Endpoints.api.author.bookFullEditInfo.replace('{id}', bookId);
+    const observable = this.http.get(url).pipe(share());
+    return observable;
+  }
+
+  editFull(book: Book) {
+    const url = Endpoints.api.author.bookFullEditInfo.replace('{id}', book.id);
+    const observable = this.http.put<OperationResult<Book>>(url, book).pipe(share());
+    return observable;
+
+  }
 
 }
+

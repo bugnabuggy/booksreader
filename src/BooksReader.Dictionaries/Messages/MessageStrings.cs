@@ -11,7 +11,8 @@
         public const string AuthorNotFound = "REQUESTED_AUTHOR_NOT_FOUND";
         public const string CantBeEmpty = "VALUE_CANT_BE_EMPTY";
         public const string AuthorAlreadyExists = "AUTHOR_ALREADY_EXISTS";
-        public const string DomainAlreadyInUse = "DOMAIN_ALREADY_USED_BY_ANOTHER_AUTHOR";
         public const string NotFound = "ITEM_NOT_FOUND";
+
+        public const string RequestedIdNotEqualDataId = "REQUESTED_ID_NOT_EQUAL_DATA_ID";
     }
 }

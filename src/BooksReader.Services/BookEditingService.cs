@@ -5,7 +5,9 @@ using System.Text;
 using AutoMapper;
 using BooksReader.Core;
 using BooksReader.Core.Entities;
+using BooksReader.Core.Enums;
 using BooksReader.Core.Infrastrcture;
+using BooksReader.Core.Models.DTO.Author;
 using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Models.Requests.Author;
 using BooksReader.Core.Services;
@@ -18,6 +20,10 @@ namespace BooksReader.Services
     public class BookEditingService: IBookEditingService
     {
         private readonly IRepository<Book> _booksRepo;
+        private readonly IRepository<PublicPage> _pagesRepo;
+        private readonly IRepository<BookPrice> _pricessRepo;
+        private readonly IRepository<BookChapter> _chaptersRepo;
+
         private readonly IMapper _mapper;
 
         private IEnumerable<Func<Book, BookEditingService, BrUser, string>> _validations =
@@ -32,15 +38,38 @@ namespace BooksReader.Services
 
                     return msg;
                 },
+
+                // if book for sale it should have prices
+                (book, svc, user) =>
+                {
+                    if (!book.IsForSale) return "";
+
+                    var hasPrices = svc._pricessRepo.Data
+                        .AsNoTracking()
+                        .Any(x => x.BookId.Equals(book.Id));
+
+                    var msg = hasPrices
+                        ? ""
+                        : MessageStrings.BooksMessages.BookForSaleMustHavePrices;
+
+                    return msg;
+
+                }
             };
         
         public BookEditingService(
-            IRepository<Book> booksRepo,
-            IMapper mapper
+                IRepository<Book> booksRepo,
+                IRepository<PublicPage>pagesRepo,
+                IRepository<BookPrice> pricessRepo,
+                IRepository<BookChapter> chaptersRepo,
+                IMapper mapper
             )
         {
             _booksRepo = booksRepo;
             _mapper = mapper;
+            _pagesRepo = pagesRepo;
+            _pricessRepo = pricessRepo;
+            _chaptersRepo = chaptersRepo;
         }
 
         public IWebResult<IEnumerable<Book>> GetBooks(StandardBooksFilters filters)
@@ -116,8 +145,8 @@ namespace BooksReader.Services
         public IOperationResult<Book> Edit(BookBasicInfoRequest basicBook, BrUser user)
         {
             var result = new OperationResult<Book>();
-            
-            var book = _booksRepo.Data.FirstOrDefault(x => x.Id == basicBook.Id);
+
+            var book = _mapper.Map<Book>(basicBook);
 
             var validations = Validate(book, user).ToList();
             if (validations.Any())
@@ -125,14 +154,17 @@ namespace BooksReader.Services
                 result.Messages = validations;
                 return result;
             }
-            
-            book.Title = basicBook.Title;
-            book.Author = basicBook.Author;
-            book.Picture = basicBook.Picture;
 
-            _booksRepo.Update(book);
+            var existingBook = _booksRepo.Data.FirstOrDefault(x => x.Id == basicBook.Id);
 
-            result.Data = book;
+            // update basic info
+            existingBook.Title = basicBook.Title;
+            existingBook.Author = basicBook.Author;
+            existingBook.Picture = basicBook.Picture;
+
+            _booksRepo.Update(existingBook);
+
+            result.Data = existingBook;
             result.Success = true;
 
             return result;
@@ -151,6 +183,69 @@ namespace BooksReader.Services
                 Data = book,
                 Success = true
             };
+        }
+
+        public IOperationResult<BookFullEditInfoDto> Get(Guid bookId)
+        {
+            var book = _booksRepo.Data.AsNoTracking()
+                .FirstOrDefault(x=>x.Id.Equals(bookId));
+
+            var prices = _pricessRepo.Data.AsNoTracking()
+                .Where(x => x.BookId.Equals(bookId));
+
+            var page = _pagesRepo.Data.AsNoTracking()
+                .FirstOrDefault(x => x.SubjectId.Equals(bookId) && x.PageType == PublicPageType.BookPage);
+
+            var chapters = _chaptersRepo.Data.AsNoTracking()
+                .Where(x => x.BookId.Equals(bookId));
+
+            var data = new BookFullEditInfoDto()
+            {
+                Book = book,
+                Prices = prices,
+                Page = page,
+                Chapters = chapters
+            };
+
+            var result = new OperationResult<BookFullEditInfoDto>()
+            {
+                Data = data,
+                Success = true
+            };
+            
+            return result;
+        }
+
+        public IOperationResult<Book> EditFull(BookEditRequest bookData, BrUser user)
+        {
+            var result = new OperationResult<Book>();
+            var book = _mapper.Map<Book>(bookData);
+
+            var validations = Validate(book, user).ToList();
+            if (validations.Any())
+            {
+                result.Messages = validations;
+                return result;
+            }
+
+            var existingBook = _booksRepo.Data.FirstOrDefault(x => x.Id == bookData.Id);
+
+            // update basic info
+            existingBook.Title = bookData.Title;
+            existingBook.Author = bookData.Author;
+            existingBook.Picture = bookData.Picture;
+            existingBook.Description = bookData.Description;
+            existingBook.IsForSale = bookData.IsForSale;
+            existingBook.IsPublished = book.IsPublished;
+
+            existingBook.Verified = false;
+
+            _booksRepo.Update(existingBook);
+
+            result.Data = existingBook;
+            result.Success = true;
+
+            return result;
         }
     }
 }

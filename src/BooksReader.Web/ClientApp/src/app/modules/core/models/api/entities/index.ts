@@ -7,3 +7,5 @@ export * from './author-profile';
 export * from './public-page';
 
 export * from './book';
+export * from './book-price';
+export * from './book-chapter';

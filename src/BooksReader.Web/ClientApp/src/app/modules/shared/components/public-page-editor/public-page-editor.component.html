@@ -1,6 +1,6 @@
 <div *ngIf='!page'>
     <button (click)='add()' class='btn btn-link d-flex'>
-        <mat-icon>add_circle_outline</mat-icon> <span class="mx-2">Add author public page</span>
+        <mat-icon>add_circle_outline</mat-icon><span class="mx-2" >{{'PUBLIC_PAGES.ADD_PUBLIC_PAGE' | translate: {pageType: pageTypeString} }}</span>
     </button>
 </div>
 
@@ -41,8 +41,6 @@
             The page content is required
         </mat-error>
     </mat-form-field>
-    <!-- <mat-label>Public page html content</mat-label>
-        <textarea class='w-100' matInput formControlname='content' class='border' placeholder="Html content" rows="10"></textarea> -->
 
     <div class='col d-flex flex-column flex-sm-row justify-content-between'>
         <button type="submit" class='col-auto' mat-raised-button color="primary" [disabled]='pageForm.invalid && !uiIsBlocked'>
@@ -50,7 +48,7 @@
         </button>
 
         <button type="button" (click)='delete()' class='btn btn-link ml-auto mt-3 mt-sm-auto'>
-            <mat-icon>delete</mat-icon> <span class="mx-2">Delete author public page</span>
+            <mat-icon>delete</mat-icon> <span class="mx-2">Delete {{pageTypeString}} public page</span>
         </button>
     </div>
 </form>

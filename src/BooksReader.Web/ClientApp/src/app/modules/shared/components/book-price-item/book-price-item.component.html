@@ -1,0 +1,43 @@
+<div *ngIf='!isEdit' class='row' >
+        <div class='col'><b>Price</b>&nbsp;<span>{{price.price}}</span></div>
+        <div class='col'><b>Currency</b>&nbsp;<span>{{price.currencyId}}</span> </div>
+        <div class='col'><b>Created</b>&nbsp;<span>{{price.created | date}}</span></div> 
+
+        <div class="col-auto">
+                <button (click)="select(price)" mat-icon-button color="primary">
+                        <mat-icon>edit</mat-icon>
+                </button>
+                <button (click)="delete(price)" mat-icon-button color="warn">
+                        <mat-icon>delete</mat-icon>
+                </button>
+        </div>
+</div>
+
+<div *ngIf='isEdit'>
+    <form  class='row' [formGroup]='editForm' (ngSubmit)="save()">
+        <mat-form-field class="col-4">
+                <input matInput type="number" min="0.01" formControlName='price' placeholder="Price">
+                <mat-error *ngIf="editForm.controls.price.errors?.required">
+                        Price sould be greater than zero
+                </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col">
+                <mat-select formControlName='currencyId' placeholder='Currency'>
+                        <mat-option *ngFor='let currency of avaliableCurrencies' [value]="currency.id">
+                            {{currency.name}}
+                        </mat-option>
+                    </mat-select>
+                <mat-error *ngIf="editForm.controls.price.errors?.required">
+                        Price sould be greater than zero
+                </mat-error>
+        </mat-form-field>
+        <div class="ml-auto col-auto">
+                <button type="submit" [disabled]='editForm.invalid' mat-icon-button color="primary" >
+                        <mat-icon>check</mat-icon>
+                </button>
+                <button type="reset" (click)="close(price)" mat-icon-button color="warn">
+                        <mat-icon>close</mat-icon>
+                </button>
+        </div>
+    </form>
+</div>

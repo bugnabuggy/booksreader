@@ -77,10 +77,10 @@ export class ImageLoaderComponent implements ControlValueAccessor {
     if (this.file) {
       this.file = null;
       this.input.value = '';
-      this.image = '';
-      this.propagateChange('');
     }
-
+    
+    this.image = '';
+    this.propagateChange('');
     this.deleteImage.emit(this.image);
   }
 }

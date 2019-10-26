@@ -80,6 +80,7 @@ class Endpoints {
             book: Endpoints.baseApiUrl + 'api/author/book/{id}',
             bookFullEditInfo: Endpoints.baseApiUrl + 'api/author/book/{id}/edit',
             chapter: Endpoints.baseApiUrl + 'api/author/book/{bookId}/chapter/{id}',
+            price: Endpoints.baseApiUrl + 'api/author/book-price/{id}',
         },
         admin: {
         },

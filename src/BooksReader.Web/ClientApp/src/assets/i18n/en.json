@@ -5,5 +5,13 @@
     "DNS": "By dns txt record",
     "FILE": "By file",
     "MANUALLY": "Manually"
+  },
+
+  "PUBLIC_PAGES": {
+    "BOOK_PAGE": "book",
+    "AUTHOR_PAGE": "author",
+    "PROMO_PAGE": "promo",
+
+    "ADD_PUBLIC_PAGE": "Add {{pageType}} public page"
   }
 }

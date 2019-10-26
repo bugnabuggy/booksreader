@@ -85,6 +85,10 @@ namespace BooksReader.Infrastructure.Migrations
                     b.Property<string>("Title")
                         .HasMaxLength(1000);
 
+                    b.Property<bool>("Verified");
+
+                    b.Property<long>("Version");
+
                     b.HasKey("Id");
 
                     b.ToTable("Books");
@@ -120,6 +124,58 @@ namespace BooksReader.Infrastructure.Migrations
                     b.HasIndex("BookId");
 
                     b.ToTable("BookChapters");
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.BookChapterHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("ChapterId");
+
+                    b.Property<string>("Content");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<Guid>("OwnerId");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(1000);
+
+                    b.Property<long>("Version");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChapterId");
+
+                    b.ToTable("ChaptersHistory");
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.BookHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Author")
+                        .HasMaxLength(1000);
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(3000);
+
+                    b.Property<Guid>("OwnerId");
+
+                    b.Property<string>("Picture");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(1000);
+
+                    b.Property<long>("Version");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BooksHistory");
                 });
 
             modelBuilder.Entity("BooksReader.Core.Entities.BookPrice", b =>
@@ -494,6 +550,14 @@ namespace BooksReader.Infrastructure.Migrations
                     b.HasOne("BooksReader.Core.Entities.Book", "Book")
                         .WithMany()
                         .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.BookChapterHistory", b =>
+                {
+                    b.HasOne("BooksReader.Core.Entities.BookChapter", "BookChapter")
+                        .WithMany()
+                        .HasForeignKey("ChapterId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -38,6 +38,13 @@ class SiteMessages {
             edited: 'BOOK_EDITED',
             deleted: 'BOOK_DELETED',
             deleteQuestion: 'BOOK_DELET_QUESTION'
+        },
+
+        prices: {
+            added: 'BOOK_PRICE_ADDED',
+            edited: 'BOOK_PRICE_EDITED',
+            deleted: 'BOOK_PRICE_DELETED',
+            deleteQuestion: 'BOOK_PRICE_DELETE_QUESTION'
         }
     }
 }

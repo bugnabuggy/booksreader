@@ -1,0 +1,34 @@
+<div class="col">
+
+    <div class="alert alert-primary my-3" role="alert">
+        {{'Status of the book:' }}
+    </div>
+    
+    <mat-card>
+            <button [disabled]='!canSave || uiIsBlocked' mat-raised-button (click)='saveBook()' color="primary">Save</button>
+    </mat-card>
+
+    <div class="my-2">
+        <h3>{{'BOOK.PROPERTIES' | translate}}</h3>
+        <app-book-properties [book]="book" (valueChanged)="bookChanaged($event)">
+        </app-book-properties>
+
+        <div class="my-2" *ngIf='isBookForSale'>
+
+            <mat-divider></mat-divider>
+
+            <app-book-prices-editor 
+                [prices]="prices" 
+                [bookId]="book.id"
+                (updated)="prices = $event; "
+                >
+            </app-book-prices-editor>
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <h3 class="mt-4">{{'BOOK.PUBLIC_PAGE' | translate}}</h3>
+    <app-public-page-editor [page]="page" [pageType]="PublicPageType.bookPage" [domains]="domains"
+        [subjectId]="book.id"></app-public-page-editor>
+</div>

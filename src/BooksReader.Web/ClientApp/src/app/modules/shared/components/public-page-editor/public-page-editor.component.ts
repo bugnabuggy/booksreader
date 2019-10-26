@@ -3,12 +3,14 @@ import { UserDomain, PublicPage } from '@br/core/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { ConfirmationType, ConfirmationResult, PublicPageType } from '@br/core/enums';
+import { ConfirmationType, ConfirmationResult, PublicPageType, PublicPageTypeStrings } from '@br/core/enums';
 import { PublicPagesService, NotificationService } from '@br/core/services';
 import { ClearNullValues } from '@br/utilities/clear-null-values';
 import { finalize } from 'rxjs/operators';
-import { getErrorMessage } from '@br/utilities/error-extractor';
 import { SiteMessages } from '@br/config/site-messages';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+
+
 
 @Component({
   selector: 'app-public-page-editor',
@@ -24,6 +26,8 @@ export class PublicPageEditorComponent implements OnInit, OnChanges {
   @Input() pageType: PublicPageType;
   @Input() subjectId: string;
 
+  pageTypeString: string;
+
   showHelp = false;
   uiIsBlocked = false;
 
@@ -36,7 +40,8 @@ export class PublicPageEditorComponent implements OnInit, OnChanges {
     private fb: FormBuilder,
     private dialog: MatDialog,
     private publicPagesSvc: PublicPagesService,
-    private notifications: NotificationService
+    private notifications: NotificationService, 
+    private translateSvc: TranslateService
   ) { }
 
   ngOnInit() {
@@ -47,11 +52,19 @@ export class PublicPageEditorComponent implements OnInit, OnChanges {
       this.initForm();
     }
 
+    this.translateSvc.get(PublicPageTypeStrings[PublicPageType.bookPage] || '')
+      .subscribe(val => {
+        this.pageTypeString = val; 
+      });
+    
     this.domainsForSelect = [...this.domains].filter(x => x.id);
   }
 
   add() {
-    this.page = {} as PublicPage;
+    this.page = {
+      pageType: this.pageType,
+      subjectId: this.subjectId
+    } as PublicPage;
     this.initForm();
   }
 
@@ -89,8 +102,9 @@ export class PublicPageEditorComponent implements OnInit, OnChanges {
     this.pageForm = this.fb.group({
       id: [this.page.id],
       subjectId: [this.page.subjectId],
+      pageType: [this.page.pageType],
       seoInfoId: [this.page.seoInfoId],
-
+      
       domainId: [this.page.domainId, Validators.required],
       urlPath: [this.page.urlPath],
       content: [this.page.content, Validators.required]
@@ -112,8 +126,6 @@ export class PublicPageEditorComponent implements OnInit, OnChanges {
   submit() {
     let form = this.pageForm.value as PublicPage;
 
-    form.pageType = this.pageType;
-
     form = ClearNullValues(form);
 
     const observable = form.id
@@ -126,6 +138,11 @@ export class PublicPageEditorComponent implements OnInit, OnChanges {
         this.uiIsBlocked = false;
       })
     ).subscribe((val) => {
+
+      // update passed page
+      this.page = val.data;
+      this.pageForm.patchValue({id: val.data.id});
+
       let msg = form.id 
       ? SiteMessages.publicPages.saved
       : SiteMessages.publicPages.added;

@@ -24,7 +24,7 @@ using MessageStrings = BooksReader.Dictionaries.Messages.MessageStrings;
 namespace BooksReader.Web.Controllers.Author
 {
     [Route("api/author/book")]
-    [Authorize]
+    [Authorize(Roles = SiteRoles.Admin +", "+ SiteRoles.Author)]
     [ApiController]
     public class AuthorBookController : BaseUserController
     {
@@ -86,7 +86,7 @@ namespace BooksReader.Web.Controllers.Author
                     },
                 });
             }
-
+            
             var result = _bookEditingSvc.Edit(data, BrUser);
 
             return StandardReturn(result);
@@ -106,11 +106,37 @@ namespace BooksReader.Web.Controllers.Author
             return StandardReturn(result);
         }
 
-        [HttpPost("{id}/edit")]
-        public ActionResult<IOperationResult<Book>> EditFull()
+        [HttpGet("{id}/edit")]
+        [Validate(typeof(Getter<Book>),
+            new[]
+            {
+                typeof(ItemExistsValidator),
+                typeof(OwnerOrAdministratorValidator)
+            })]
+        public ActionResult<IOperationResult<BookFullEditInfoDto>> GetFull([FromRoute] Guid id)
         {
-            return null;
+            var result = _bookEditingSvc.Get(id);
+
+            return StandardReturn(result);
         }
 
+
+        [HttpPut("{id}/edit")]
+        [Validate(typeof(Getter<Book>),
+            new[]
+            {
+                typeof(ItemExistsValidator),
+                typeof(OwnerOrAdministratorValidator)
+            })]
+        public ActionResult<IOperationResult<Book>> EditFull([FromRoute] Guid id, [FromBody] BookEditRequest book)
+        {
+            var idCheck = CheckWrongId<Book>(book, id);
+            if (idCheck != null) return idCheck;
+
+
+            var result = _bookEditingSvc.EditFull(book, BrUser);
+
+            return StandardReturn(result);
+        }
     }
 }

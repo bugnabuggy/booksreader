@@ -10,9 +10,9 @@ import { share } from 'rxjs/operators';
 })
 export class ListsService {
   
-  readonly _lists = new BehaviorSubject<TypesList[]>([]);
+  private readonly _lists = new BehaviorSubject<TypesList[]>([]);
 
-  get lists ()  { return this._lists; }
+  get lists$ ()  { return this._lists; }
 
   constructor(
     private http: HttpClient

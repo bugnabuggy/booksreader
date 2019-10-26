@@ -1,0 +1,35 @@
+<div class='d-flex flex-1 flex-column'>
+    <h2 class='m-1'>Editing [{{book?.title}}]</h2>
+    <mat-tab-group  
+    class='br-book-content-edit flex-1' 
+    
+    [selectedIndex]='tabIndex' 
+    (selectedIndexChange)='changeTab($event)'>
+      <mat-tab 
+        label="{{'Book editing'}}">
+            <!-- <app-book-content-editor 
+  
+            class='d-flex flex-1'
+            [book]='book' 
+            [chapters]='chapters' 
+            [isTabActive]='tabIndex == 0'
+            >
+            </app-book-content-editor> -->
+      </mat-tab>
+  
+      <mat-tab label="{{'Book properties'}}">
+        <app-book-info-edit 
+          [book]='book' 
+          [page]='bookPage'
+          [prices]='bookPrices'>
+        </app-book-info-edit>
+      </mat-tab>
+  
+      <mat-tab label="{{'Reader preview'}}">
+        <!-- <app-book-reader-preview
+        class='flex-1'
+        [book]='book' >
+        </app-book-reader-preview> -->
+      </mat-tab>
+  </mat-tab-group>
+  </div>

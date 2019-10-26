@@ -18,7 +18,7 @@ namespace BooksReader.Core.Entities
         public string Description { get; set; }
 
         public bool Active { get; set; }
-
+        
         /* Navigation properties */
         [ForeignKey("UserId")]
         public BrUser User { get; set; }

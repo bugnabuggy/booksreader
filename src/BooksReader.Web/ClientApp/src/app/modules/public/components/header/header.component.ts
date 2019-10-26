@@ -13,7 +13,7 @@ import { UserService } from '@br/core/services';
 export class HeaderComponent implements OnInit {
 
   languages = Languages.get();
-  language = new FormControl(this.languages[1]);
+  language = new FormControl(this.languages.find(x=>x.code == this.userSvc.language));
   langSub: Subscription;
 
   menuSections = [] ;

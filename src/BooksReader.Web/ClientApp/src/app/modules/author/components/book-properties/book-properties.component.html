@@ -1,0 +1,37 @@
+<form class='row' (ngSubmit)="updateBook()" [formGroup]="bookForm">
+    <mat-form-field class="col-12">
+        <input matInput placeholder="Title" formControlName="title">
+        <mat-error *ngIf="bookForm.controls.title.errors?.required">
+            Title must not be empty
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="col-12">
+        <input matInput placeholder="{{'Author' | translate}}" formControlName="author">
+        <mat-error *ngIf="bookForm.controls.author.errors?.required">
+            Author must not be empty
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="col-12">
+        <textarea rows="6" matInput placeholder="{{'Description' | translate}}"
+            formControlName="description"></textarea>
+        <mat-error *ngIf="bookForm.controls.description.errors?.required">
+            Decripion should not be empty
+        </mat-error>
+    </mat-form-field>
+
+    <div class='col-12 my-2'>
+        <app-image-loader [maxFileSize]="2097152" (validationFailed)='showErr($event)' class='img-fluid'
+            formControlName='picture'>
+        </app-image-loader>
+    </div>
+
+    <div class="col-12" [style.fontSize.px]="18">
+        <mat-slide-toggle  formControlName="isPublished" >{{'The book is published?' | translate}}</mat-slide-toggle>
+    </div>
+
+    <div class="col-12" [style.fontSize.px]="18" >
+        <mat-slide-toggle  formControlName="isForSale">{{'Is For Sale' | translate}}</mat-slide-toggle>
+    </div>
+</form>

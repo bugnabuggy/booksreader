@@ -3,13 +3,17 @@ import { CommonModule } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@br/material/material.module';
-
-import { DomainsListComponent } from './components/domains-list/domains-list.component';
-import { DomainsListItemComponent } from './components/domains-list-item/domains-list-item.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { PublicPageEditorComponent } from './components/public-page-editor/public-page-editor.component';
-import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
-import { ImageLoaderComponent } from './components/image-loader/image-loader.component';
+
+import { 
+    DomainsListComponent,
+    DomainsListItemComponent, 
+    PublicPageEditorComponent, 
+    ConfirmationDialogComponent, 
+    ImageLoaderComponent, 
+    BookPricesEditorComponent, 
+    BookPriceItemComponent } from './components';
+
 
 @NgModule({
   declarations: [
@@ -17,7 +21,9 @@ import { ImageLoaderComponent } from './components/image-loader/image-loader.com
     DomainsListItemComponent,
     PublicPageEditorComponent,
     ConfirmationDialogComponent,
-    ImageLoaderComponent
+    ImageLoaderComponent,
+    BookPricesEditorComponent,
+    BookPriceItemComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +42,9 @@ import { ImageLoaderComponent } from './components/image-loader/image-loader.com
     DomainsListItemComponent,
     PublicPageEditorComponent,
     ConfirmationDialogComponent,
-    ImageLoaderComponent
+    ImageLoaderComponent,
+    BookPricesEditorComponent,
+    BookPriceItemComponent
   ],
   entryComponents: [
     ConfirmationDialogComponent

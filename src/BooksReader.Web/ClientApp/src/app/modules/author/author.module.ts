@@ -9,6 +9,10 @@ import { SharedModule } from '@br/shared/shared.module';
 import { AuthorBooksListComponent } from './components/author-books-list/author-books-list.component';
 import { AddBookDialogComponent } from './components/add-book-dialog/add-book-dialog.component';
 import { AuthorBooksListItemComponent } from './components/author-books-list-item/author-books-list-item.component';
+import { BookEditingComponent } from './pages/book-editing/book-editing.component';
+import { BookInfoEditComponent } from './pages/book-info-edit/book-info-edit.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { BookPropertiesComponent } from './components/book-properties/book-properties.component';
 
 
 @NgModule({
@@ -18,12 +22,16 @@ import { AuthorBooksListItemComponent } from './components/author-books-list-ite
     AuthorProfileComponent, 
     AuthorBooksListComponent,
     AddBookDialogComponent,
-    AuthorBooksListItemComponent
+    AuthorBooksListItemComponent,
+    BookEditingComponent,
+    BookInfoEditComponent,
+    BookPropertiesComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
-    AuthorRoutingModule
+    AuthorRoutingModule,
+    TranslateModule.forChild()
   ],
   entryComponents: [
     AddBookDialogComponent

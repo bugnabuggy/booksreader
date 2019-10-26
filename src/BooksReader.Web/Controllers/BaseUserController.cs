@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Infrastrcture;
+using BooksReader.Core.Models;
+using BooksReader.Dictionaries.Messages;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -54,5 +56,24 @@ namespace BooksReader.Web.Controllers
                 return BadRequest(result);
             }
         }
+
+        [NonAction]
+        protected ActionResult<IOperationResult<T>> CheckWrongId<T>(IIdentified data, Guid id)
+        {
+            var wrongId = (data.Id != Guid.Empty) && (data.Id != id);
+            if (wrongId)
+            {
+                return BadRequest(new OperationResult<Book>()
+                {
+                    Messages = new List<string>()
+                    {
+                        MessageStrings.RequestedIdNotEqualDataId
+                    },
+                });
+            }
+
+            return null;
+        }
+
     }
 }

@@ -12,6 +12,7 @@ import { MainComponent } from './pages/main/main.component';
 import { IntegrationsModule } from '@br/integrations/integrations.module';
 import { LoginButtonComponent } from './public-tags/login-button/login-button.component';
 import { BuyButtonComponent } from './public-tags/buy-button/buy-button.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { BuyButtonComponent } from './public-tags/buy-button/buy-button.componen
     ForceLogoutComponent,
     MainComponent,
     LoginButtonComponent,
-    BuyButtonComponent
+    BuyButtonComponent,
+    PageNotFoundComponent
   ],
   imports: [
     CommonModule,

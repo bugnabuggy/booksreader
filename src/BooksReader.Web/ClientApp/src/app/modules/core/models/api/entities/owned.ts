@@ -1,3 +1,3 @@
 export interface IOwned {
-    OwnerId: string;
+    ownerId: string;
 }

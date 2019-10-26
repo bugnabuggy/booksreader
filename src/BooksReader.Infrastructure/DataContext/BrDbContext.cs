@@ -31,6 +31,9 @@ namespace BooksReader.Infrastructure.DataContext
         public DbSet<BookChapter> BookChapters { get; set; }
         public DbSet<BookPrice> BookPrices { get; set; }
 
+        public DbSet<BookChapterHistory> ChaptersHistory { get; set; }
+        public DbSet<BookHistory> BooksHistory { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

@@ -5,5 +5,13 @@
     "DNS": "По dns записи",
     "FILE": "По файлу на сервере",
     "MANUALLY": "По запросу через администратора"
+  },
+
+  "PUBLIC_PAGES": {
+    "BOOK_PAGE": "книжную",
+    "AUTHOR_PAGE": "авторскую",
+    "PROMO_PAGE": "промо",
+
+    "ADD_PUBLIC_PAGE": "Добавить {{pageType}} публичную страницу"
   }
 }

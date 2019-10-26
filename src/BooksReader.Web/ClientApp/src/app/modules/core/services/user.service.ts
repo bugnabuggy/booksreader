@@ -19,6 +19,7 @@ import { StorageService } from './storage.service';
 export class UserService {
   private _isUiVisible = true;
   private _keepUi = false;
+  private _lang = '';
 
   menuSections$ = new BehaviorSubject<any>([]);
   logoutData: LogoutData = null;
@@ -49,6 +50,10 @@ export class UserService {
     return this._isUiVisible;
   }
 
+  get language() {
+    return this._lang;
+  }
+
   public toggleUi(isVisible) {
     this._isUiVisible = isVisible;
 
@@ -58,8 +63,9 @@ export class UserService {
   }
 
   init() {
-    let lang = this.storage.getItem(SiteConstants.storageKeys.userLang) || SiteConstants.defaultLanguage;
-    this.translate.setDefaultLang(lang);
+    this._lang = this.storage.getItem(SiteConstants.storageKeys.userLang) || SiteConstants.defaultLanguage;
+    
+    this.translate.setDefaultLang(this._lang);
 
     let observabe = of(null).pipe(
       flatMap(() => this.securitySvc.init()),

@@ -21,7 +21,11 @@ const routes: Routes = [
     pathMatch: 'full'  
   },
 
-  
+  // for any public page route show main page
+  {
+    path: '**',
+    component: MainComponent
+  }
 
 ];
 

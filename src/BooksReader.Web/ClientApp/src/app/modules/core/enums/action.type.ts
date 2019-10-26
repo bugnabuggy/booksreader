@@ -4,6 +4,7 @@ export enum ActionType {
     edit = 'edit',
     delete = 'delete',
 
+    save = 'save',
     verify = 'verify',
     close = 'close',
     fastEdit = 'fastEdit'

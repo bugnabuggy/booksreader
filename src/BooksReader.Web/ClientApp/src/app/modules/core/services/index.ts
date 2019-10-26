@@ -11,3 +11,4 @@ export * from './user-domains.service';
 export * from './public-pages.service';
 export * from './public.service';
 export * from './book-editing.service';
+export * from './books-prices.service';

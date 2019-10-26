@@ -1,0 +1,17 @@
+<h3 class="mt-4">{{'BOOK.PRICES' | translate}}</h3>
+<button (click)='addNew()' class='btn btn-link d-flex'>
+        <mat-icon>add_circle_outline</mat-icon><span class="mx-2" >{{'BOOK_PRICES.ADD_PRICE' | translate }}</span>
+</button>
+<ul class="list-group">
+    <li *ngFor='let price of prices; let i = index' class='list-group-item'>
+        <app-book-price-item 
+            [price] = 'price'
+            [isEdit] = 'price.id == editItem.id'
+            [takenCurrencies] = 'takenCurrencies'
+            (doAction) = 'doAction($event)'
+        ></app-book-price-item>
+    </li>
+    <li *ngIf="prices?.length < 1" class="list-group-item">
+        {{'No prices for the book' | translate }}
+    </li>
+</ul>

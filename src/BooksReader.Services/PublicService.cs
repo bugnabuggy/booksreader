@@ -48,8 +48,8 @@ namespace BooksReader.Services
             }
 
             // because of linq translation cant use string.IsNullOrEmpty
-            page = pages.Any(x => !(x.UrlPath == null || x.UrlPath.Trim() == string.Empty))
-                ? pages.FirstOrDefault(x => !(x.UrlPath == null || x.UrlPath.Trim() == string.Empty))
+            page = pages.Any(x => (x.UrlPath == null || x.UrlPath.Trim() == string.Empty))
+                ? pages.FirstOrDefault(x => (x.UrlPath == null || x.UrlPath.Trim() == string.Empty))
                 : pages.FirstOrDefault();
 
             if (page == null)

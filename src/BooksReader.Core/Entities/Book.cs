@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using BooksReader.Core.Enums;
 using BooksReader.Core.Models;
 
 namespace BooksReader.Core.Entities
@@ -26,5 +27,8 @@ namespace BooksReader.Core.Entities
 
 		public DateTime Created { get; set; }
 		public DateTime? Published { get; set; }
+
+        public bool Verified { get; set; }
+        public uint Version { get; set; }
 	}
 }

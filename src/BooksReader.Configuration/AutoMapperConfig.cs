@@ -16,14 +16,13 @@ namespace BooksReader.Configuration
             CreateMap<UserDomainRequest, UserDomain>();
             CreateMap<UserDomain, UserDomainDto>();
 
+            // book editing models
             CreateMap<Book, BookBasicInfoRequest>();
             CreateMap<BookBasicInfoRequest, Book>();
+            CreateMap<BookEditRequest, Book>();
 
+            CreateMap<BookPriceRequest, BookPrice>();
 
-
-            //CreateMap<PublicPageRequest, PersonalPage>();
-            //CreateMap<BookPricesRequest, BookPrice>();
-            //CreateMap<BookFormSubRequest, Book>();
         }
     }
 }

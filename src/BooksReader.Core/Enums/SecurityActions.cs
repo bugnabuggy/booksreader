@@ -6,9 +6,9 @@ namespace BooksReader.Core.Enums
 {
 	enum SecurityActions
 	{
-		GetBook,
-		AddBook,
-		EditBook,
-		DeleteBook
+		GetBook = 1,
+		AddBook = 2 ,
+		EditBook = 3,
+		DeleteBook = 4
 	}
 }
