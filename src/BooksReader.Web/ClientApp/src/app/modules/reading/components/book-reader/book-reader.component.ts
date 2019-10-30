@@ -12,12 +12,14 @@ export class BookReaderComponent implements OnInit {
   @Input() book: Book;
   @Input() chapters: BookChapter[];
 
+  sidebarIsOpened = false;
+
   constructor (
     private chapterEditingSvc: BookChapterEditingService
   ) { }
 
   ngOnInit() {
-    
+
   }
 
 }
