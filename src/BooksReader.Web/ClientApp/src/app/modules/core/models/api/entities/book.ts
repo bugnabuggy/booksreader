@@ -11,4 +11,5 @@ export interface Book extends IIdentifiable, IOwned {
         picture: string;
         created: Date;
         published?: Date;
+        verified: boolean;
 }
