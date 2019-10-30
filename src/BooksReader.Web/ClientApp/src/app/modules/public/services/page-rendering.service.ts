@@ -16,16 +16,15 @@ import { PublicModule } from '../public.module';
 export class PageRenderingService {
 
   constructor(
-    private compiler: Compiler,
   ) { }
 
-  compileTemplate(template: string, container: ViewContainerRef){
+  compileTemplate(compiler: Compiler, template: string, container: ViewContainerRef){
     let metadata = {
       selector: `runtime-component`,
       template: template,
     };
 
-    let factory = this.createComponentFactorySync(this.compiler, metadata, null);
+    let factory = this.createComponentFactorySync(compiler, metadata, null);
   
     return container.createComponent(factory);
   }

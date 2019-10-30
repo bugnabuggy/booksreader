@@ -8,7 +8,7 @@ export interface BookChapter extends IIdentifiable, IOwned {
     title: string;
     description: string;
 
-    verson: number;
+    version: number;
     content: string;
 
     created: Date;

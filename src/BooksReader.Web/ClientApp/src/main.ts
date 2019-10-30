@@ -13,6 +13,13 @@ const providers = [
   { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
 ];
 
+if(window) {
+  (window as any).tinyMCE.overrideDefaults({
+    base_url: '/tinymce/',  // Base for assets such as skins, themes and plugins
+    suffix: '.min'          // This will make Tiny load minified versions of all its assets
+  });
+}
+
 if (environment.production) {
   enableProdMode();
 }

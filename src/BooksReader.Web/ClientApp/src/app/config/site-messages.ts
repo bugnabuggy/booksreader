@@ -32,12 +32,22 @@ class SiteMessages {
     }
 
     static author = {
+        chapters: {
+            added: 'CHAPTER_ADDED',
+            edited: 'CHAPTER_EDITED',
+            deleted: 'CHAPTER_DELETED',
+            deleteQuestion: 'CHAPTERS.CHAPTER_DELETE_QUESTION',
+            chapterName: 'CHAPTER_NAME',
+            add: 'ADD_CHAPTER',
+            edit: 'EDIT_CHAPTER'
+        },
+
         books: {
             errorLoadingList: 'ERROR_LOADING_BOOKS_LIST',
             added: 'BOOK_ADDED',
             edited: 'BOOK_EDITED',
             deleted: 'BOOK_DELETED',
-            deleteQuestion: 'BOOK_DELET_QUESTION'
+            deleteQuestion: 'BOOK_DELETE_QUESTION'
         },
 
         prices: {

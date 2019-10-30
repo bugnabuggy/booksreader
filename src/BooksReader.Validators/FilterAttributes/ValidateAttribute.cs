@@ -28,7 +28,7 @@ namespace BooksReader.Validators.FilterAttributes
         {
             // if something goes wrong, do not process the exception
 
-            var id = (Guid)ctx.ActionArguments[_fieldId];
+            var id = Guid.Parse(ctx.RouteData.Values[_fieldId].ToString());
             var getter = Activator.CreateInstance(_getterType) as IGetter;
             var services = ctx.HttpContext.RequestServices;
 

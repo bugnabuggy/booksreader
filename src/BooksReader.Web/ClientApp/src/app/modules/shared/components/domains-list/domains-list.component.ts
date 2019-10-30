@@ -7,7 +7,7 @@ import { finalize } from 'rxjs/operators';
 import { SiteMessages } from '@br/config/site-messages';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from '@br/controls/dialogs';
 
 
 @Component({
@@ -105,7 +105,7 @@ export class DomainsListComponent {
       minHeight: "50%",
       data: {
         title:'Please confirm',
-        question:`Are you sure that you wnat to delete domain?`,
+        text:`Are you sure that you wnat to delete domain?`,
         type: ConfirmationType.yesNo
       }
     });

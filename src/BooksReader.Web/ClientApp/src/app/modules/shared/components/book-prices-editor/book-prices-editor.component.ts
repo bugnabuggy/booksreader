@@ -5,8 +5,8 @@ import { BooksPricesService, NotificationService } from '@br/core/services';
 import { finalize } from 'rxjs/operators';
 import { ClearNullValues } from '@br/utilities/clear-null-values';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { SiteMessages } from '@br/config/site-messages';
+import { ConfirmationDialogComponent } from '@br/controls/dialogs';
 
 @Component({
   selector: 'app-book-prices-editor',
@@ -125,7 +125,7 @@ export class BookPricesEditorComponent implements OnInit, OnChanges{
       minHeight: "50%",
       data: {
         type: ConfirmationType.yesNo,
-        question: SiteMessages.author.prices.deleteQuestion
+        text: SiteMessages.author.prices.deleteQuestion
       } as ConfirmationDialogModel
     });
 

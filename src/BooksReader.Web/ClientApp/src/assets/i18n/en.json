@@ -13,5 +13,14 @@
     "PROMO_PAGE": "promo",
 
     "ADD_PUBLIC_PAGE": "Add {{pageType}} public page"
+  },
+
+  "BOOK": {
+    "PROPERTIES": "Book properties",
+    "PUBLIC_PAGE": "Book public page"
+  },
+
+  "CHAPTERS" : {
+    "CHAPTER_DELETE_QUESTION": "Are you sure that wnat to delete [{{title}}] chapter?"
   }
 }

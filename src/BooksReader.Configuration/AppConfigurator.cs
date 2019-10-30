@@ -51,7 +51,7 @@ namespace BooksReader.Configuration
             services.AddTransient<IBookPricesService, BookPricesService>();
 
             //services.AddTransient<IBooksService, BooksService>();
-            //services.AddTransient<IBookChapterService, BookChapterService>();
+            services.AddTransient<IBookChapterService, BookChapterService>();
             //services.AddTransient<IBookPriceService, BookPriceService>();
         }
 

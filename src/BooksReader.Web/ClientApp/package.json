@@ -38,6 +38,7 @@
     "lodash": "^4.17.11",
     "material-design-icons": "^3.0.1",
     "rxjs": "~6.5.3",
+    "tinymce": "^5.0.14",
     "tslib": "^1.9.0",
     "zone.js": "^0.10.2"
   },

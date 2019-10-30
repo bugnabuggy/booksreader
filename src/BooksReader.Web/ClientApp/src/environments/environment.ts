@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseApiUrl: 'https://localhost:5001/',
+  baseApiUrl: 'https://developer3:5001/',
   facebookAppId: '277711532267100',
   tinyMCEApiKey:'rn8afmd09o68emfvblb3yifrdm28g4tfaar7dj1je3z9p0fk' 
 };

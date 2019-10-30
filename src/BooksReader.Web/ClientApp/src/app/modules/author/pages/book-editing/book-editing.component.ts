@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BookEditingService, NotificationService } from '@br/core/services';
+import { BookEditingService, NotificationService, BookChapterEditingService } from '@br/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Book, PublicPage, BookChapter, BookPrice } from '@br/core/models';
 import { SiteMessages } from '@br/config/site-messages';
@@ -30,10 +30,13 @@ export class BookEditingComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private bookEditingSvc: BookEditingService,
+    private chapterEditingSvc: BookChapterEditingService,
     private notifications: NotificationService
   ) { }
 
   ngOnInit() {
+    this.chapterEditingSvc.activeChapter.next(null);
+
     this.route.params.subscribe(x => {
       let bookId = x.id;
       this.bookId = bookId;

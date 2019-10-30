@@ -1,4 +1,4 @@
-import { environment } from '@br/env/environment';
+    import { environment } from '@br/env/environment';
 
 class Endpoints {
     static baseApiUrl = environment.baseApiUrl;
@@ -80,6 +80,7 @@ class Endpoints {
             book: Endpoints.baseApiUrl + 'api/author/book/{id}',
             bookFullEditInfo: Endpoints.baseApiUrl + 'api/author/book/{id}/edit',
             chapter: Endpoints.baseApiUrl + 'api/author/book/{bookId}/chapter/{id}',
+            reorderChapters:  Endpoints.baseApiUrl + 'api/author/book/{bookId}/chapter/reorder',
             price: Endpoints.baseApiUrl + 'api/author/book-price/{id}',
         },
         admin: {

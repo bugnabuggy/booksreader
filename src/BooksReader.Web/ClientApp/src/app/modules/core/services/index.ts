@@ -12,3 +12,4 @@ export * from './public-pages.service';
 export * from './public.service';
 export * from './book-editing.service';
 export * from './books-prices.service';
+export * from './book-chapter-editing.service';

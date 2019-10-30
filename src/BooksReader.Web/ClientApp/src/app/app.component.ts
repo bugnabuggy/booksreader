@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ChangeDetectorRef, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ChangeDetectorRef, AfterViewInit, Inject, PLATFORM_ID, Compiler } from '@angular/core';
 import { ListsService, UserService, PublicService } from '@br/core/services/';
 import { PageRenderingService } from '@br/public/services';
 import { PublicPageInfo } from '@br/core/models';
@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
     private pageSvc: PageRenderingService,
     private router: Router,
     private changeDetector: ChangeDetectorRef,
+    private compiler: Compiler,
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -44,12 +45,7 @@ export class AppComponent implements OnInit {
         if (event.url == '/'
           && this.publicPageInfo
           && this.userSvc.isUiVisible) {
-          this.userSvc.toggleUi(false);
-
-          // show client content again
-          this.changeDetector.detectChanges();
-
-          this.pageSvc.compileTemplate(this.publicPageInfo.content, this.publicContent);
+            this.showClientPage();
         }
       }
     });
@@ -58,6 +54,13 @@ export class AppComponent implements OnInit {
       .subscribe(val => {
         this.loadPublicInfo();
       });
+  }
+
+  showClientPage() {
+    this.userSvc.toggleUi(false);
+    // show client content again
+    this.changeDetector.detectChanges();
+    this.pageSvc.compileTemplate(this.compiler, this.publicPageInfo.content, this.publicContent);
   }
 
   loadPublicInfo() {
@@ -72,10 +75,7 @@ export class AppComponent implements OnInit {
             this.publicPageInfo = val;
 
             if (!this.userSvc.authorized) {
-              this.userSvc.toggleUi(false);
-              // show client content again
-              this.changeDetector.detectChanges();
-              this.pageSvc.compileTemplate(val.content, this.publicContent);
+                this.showClientPage();
             }
           }
         }, err => {

@@ -4,3 +4,4 @@ export * from './author-profile/author-profile.component';
 
 export * from './book-editing/book-editing.component';
 export * from './book-info-edit/book-info-edit.component';
+export * from './book-content-editor/book-content-editor.component';

@@ -13,5 +13,9 @@
     "PROMO_PAGE": "промо",
 
     "ADD_PUBLIC_PAGE": "Добавить {{pageType}} публичную страницу"
+  },
+  
+  "CHAPTERS" : {
+    "CHAPTER_DELETE_QUESTION": "Вы уверенны что хотите удалить главу [{{title}}]?"
   }
 }

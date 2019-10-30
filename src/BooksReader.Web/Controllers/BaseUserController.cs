@@ -58,6 +58,19 @@ namespace BooksReader.Web.Controllers
         }
 
         [NonAction]
+        protected ActionResult StandardReturn(IOperationResult result)
+        {
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
+        }
+
+        [NonAction]
         protected ActionResult<IOperationResult<T>> CheckWrongId<T>(IIdentified data, Guid id)
         {
             var wrongId = (data.Id != Guid.Empty) && (data.Id != id);

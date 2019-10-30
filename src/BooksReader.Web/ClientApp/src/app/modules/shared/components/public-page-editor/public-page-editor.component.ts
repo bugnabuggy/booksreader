@@ -2,13 +2,13 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/cor
 import { UserDomain, PublicPage } from '@br/core/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationType, ConfirmationResult, PublicPageType, PublicPageTypeStrings } from '@br/core/enums';
 import { PublicPagesService, NotificationService } from '@br/core/services';
 import { ClearNullValues } from '@br/utilities/clear-null-values';
 import { finalize } from 'rxjs/operators';
 import { SiteMessages } from '@br/config/site-messages';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { ConfirmationDialogComponent } from '@br/controls/dialogs';
 
 
 
@@ -73,7 +73,7 @@ export class PublicPageEditorComponent implements OnInit, OnChanges {
       minHeight: "50%",
       data: {
         title: 'Please confirm',
-        question: `Are you sure that you wnat to delete public page?`,
+        text: `Are you sure that you wnat to delete public page?`,
         type: ConfirmationType.yesNo
       }
     });

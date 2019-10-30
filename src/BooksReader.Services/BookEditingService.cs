@@ -197,7 +197,8 @@ namespace BooksReader.Services
                 .FirstOrDefault(x => x.SubjectId.Equals(bookId) && x.PageType == PublicPageType.BookPage);
 
             var chapters = _chaptersRepo.Data.AsNoTracking()
-                .Where(x => x.BookId.Equals(bookId));
+                .Where(x => x.BookId.Equals(bookId))
+                .OrderBy(x=>x.Number);
 
             var data = new BookFullEditInfoDto()
             {

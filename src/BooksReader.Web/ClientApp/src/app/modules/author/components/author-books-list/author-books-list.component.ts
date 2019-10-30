@@ -7,8 +7,8 @@ import { SiteMessages } from '@br/config/site-messages';
 import { ActionType, ConfirmationType, ConfirmationResult } from '@br/core/enums';
 import { Router } from '@angular/router';
 import { Endpoints } from '@br/config';
-import { ConfirmationDialogComponent } from '@br/shared/components';
 import { ClearNullValues } from '@br/utilities/clear-null-values';
+import { ConfirmationDialogComponent } from '@br/controls/dialogs';
 
 @Component({
   selector: 'app-author-books-list',
@@ -95,7 +95,7 @@ export class AuthorBooksListComponent implements OnInit {
       minHeight: "50%",
       data: {
         type: ConfirmationType.yesNo,
-        question: SiteMessages.author.books.deleteQuestion
+        text: SiteMessages.author.books.deleteQuestion
       } as ConfirmationDialogModel
     });
 

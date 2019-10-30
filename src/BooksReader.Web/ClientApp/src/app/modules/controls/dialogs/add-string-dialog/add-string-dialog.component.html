@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>{{title || '' | translate}}</h1>
+<form 
+  class='br-mw-50vw'
+  autocomplete="off" 
+  #form="ngForm" 
+  (ngSubmit)="add()">
+  <mat-form-field class='col'>
+    <input matInput required type="text" name="name" [placeholder]="caption" #item="ngModel" [(ngModel)]='value'>
+    <mat-error *ngIf="!item.value && item.touched">
+      {{'VALUE_REQUIRED' | translate}}
+    </mat-error>
+  </mat-form-field>
+  <div mat-dialog-actions class='justify-content-end pb-3'>
+    <button type="reset" mat-raised-button (click)="close()">{{'CANCEL' | translate}}</button>
+    <button [disabled]="form.invalid" mat-raised-button color="primary">{{'OK' | translate}}</button>
+  </div>
+</form>

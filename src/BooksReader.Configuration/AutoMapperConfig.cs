@@ -23,6 +23,9 @@ namespace BooksReader.Configuration
 
             CreateMap<BookPriceRequest, BookPrice>();
 
+            CreateMap<BookChapterRequest, BookChapter>();
+            
+
         }
     }
 }

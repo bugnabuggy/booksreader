@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@br/material/material.module';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ImageLoaderComponent } from '@br/shared/components';
+import { ImageLoaderComponent } from '@br/controls/edits';
 import { COMMON_TESTING_MODULES } from '@br/test/common-dependencies-modules';
 
 describe('AddBookDialogComponent', () => {

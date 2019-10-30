@@ -1,4 +1,4 @@
-<div class='d-flex flex-column w-100' *ngIf='userSvc.isUiVisible && isBrowser'>
+<div class='d-flex flex-1 flex-column w-100' *ngIf='userSvc.isUiVisible && isBrowser'>
   <app-header></app-header>
   
   <div class='d-flex flex-1 min-h-400'>
@@ -8,7 +8,7 @@
   <simple-notifications></simple-notifications>
 </div>
  
-  <div *ngIf='error'>{{error}}</div>
+  <div *ngIf='error'>{{error.messsage}}</div>
 
 <div *ngIf='!isBrowser' [innerHtml]="publicPageInfo?.content"></div>
 

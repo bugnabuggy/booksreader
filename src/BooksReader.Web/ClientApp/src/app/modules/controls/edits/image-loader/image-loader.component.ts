@@ -38,16 +38,16 @@ export class ImageLoaderComponent implements ControlValueAccessor {
       this.image = obj; 
   }
   registerOnChange(fn: any): void {
-    console.log('registerOnChange');
+    // console.log('registerOnChange');
     this.propagateChange = fn;
     // throw new Error("Method not implemented.");
   }
   registerOnTouched(fn: any): void {
-    console.log('registerOnTouched');
+    // console.log('registerOnTouched');
     // throw new Error("Method not implemented.");
   }
   setDisabledState?(isDisabled: boolean): void {
-    console.log('setDisabledState');
+    // console.log('setDisabledState');
     // throw new Error("Method not implemented.");
   }
 

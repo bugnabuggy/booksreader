@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '@br/material/material.module';
+
 import { TranslateModule } from '@ngx-translate/core';
+
+import { MaterialModule } from '@br/material/material.module';
+import { ControlsModule } from '@br/controls/controls.module';
 
 import { 
     DomainsListComponent,
     DomainsListItemComponent, 
     PublicPageEditorComponent, 
-    ConfirmationDialogComponent, 
-    ImageLoaderComponent, 
     BookPricesEditorComponent, 
     BookPriceItemComponent } from './components';
 
@@ -20,8 +20,6 @@ import {
     DomainsListComponent,
     DomainsListItemComponent,
     PublicPageEditorComponent,
-    ConfirmationDialogComponent,
-    ImageLoaderComponent,
     BookPricesEditorComponent,
     BookPriceItemComponent
   ],
@@ -30,6 +28,7 @@ import {
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
+    ControlsModule,
     TranslateModule.forChild()
   ],
   exports:[
@@ -37,17 +36,16 @@ import {
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    
+    ControlsModule,
+
     DomainsListComponent,
     DomainsListItemComponent,
     PublicPageEditorComponent,
-    ConfirmationDialogComponent,
-    ImageLoaderComponent,
     BookPricesEditorComponent,
     BookPriceItemComponent
   ],
   entryComponents: [
-    ConfirmationDialogComponent
+    
   ]
 })
 export class SharedModule { }

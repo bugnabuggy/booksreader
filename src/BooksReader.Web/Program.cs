@@ -18,7 +18,8 @@ namespace BooksReader.Web
     {
         public static void Main(string[] args)
         {
-            var webHost = CreateWebHostBuilder(args).Build();
+            var webHost = CreateWebHostBuilder(args)
+                .Build();
 
             using (var scope = webHost.Services.CreateScope())
             {
@@ -48,6 +49,7 @@ namespace BooksReader.Web
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                
                 .UseStartup<Startup>();
     }
 }

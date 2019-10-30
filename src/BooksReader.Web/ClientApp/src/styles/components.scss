@@ -15,13 +15,14 @@
     overflow: hidden;
 
     figure {
-        height: 100%;
         width: 250px;
         vertical-align: middle;
 
+        overflow: hidden;
+
         img {
-           width: 100%;
-            height: auto;
+            max-width: 100%;
+            max-height: 100%;
             align-self: center;
         }
     }
@@ -32,4 +33,30 @@
         text-overflow: ellipsis;
         overflow-y: auto; 
     }
+}
+
+
+.br-book-content-edit{
+    .mat-tab-body-wrapper{
+        display: flex;
+        flex: 1;
+
+        .mat-tab-body-content, 
+        .mat-drawer-content, 
+        .mat-drawer-inner-container{
+            display: flex;
+            flex: 1;
+        }
+    }
+}
+
+.br-chapters-sidenav {
+    width: 320px;
+    display: flex;
+}
+
+
+.br-chapter-card-title {
+    overflow-y: auto;
+    max-height: 300px;
 }

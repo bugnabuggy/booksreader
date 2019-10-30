@@ -1,0 +1,11 @@
+<div class="flex-1 d-flex">
+    <editor 
+    *ngIf="isActive && bookChapter"
+    
+    [apiKey]="tinyMCEApiKey"
+    [init]="initConfig"
+    [initialValue]="bookChapter?.content"
+    [(ngModel)]="bookChapter.content"
+    class='flex-1'> </editor>
+  </div>
+  

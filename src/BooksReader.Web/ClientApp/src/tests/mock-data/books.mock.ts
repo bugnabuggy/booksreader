@@ -6,7 +6,8 @@ const bookMock = {
     description: 'Test description',
     isPublished: false,
     isForSale: true,
-    picture: ''
+    picture: '',
+    id: 'test_book_id'
 } as Book;
 
 
