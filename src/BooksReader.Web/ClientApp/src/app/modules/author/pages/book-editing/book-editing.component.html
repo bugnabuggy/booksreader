@@ -26,10 +26,12 @@
       </mat-tab>
   
       <mat-tab label="{{'Reader preview'}}">
-        <!-- <app-book-reader-preview
-        class='flex-1'
-        [book]='book' >
-        </app-book-reader-preview> -->
+        <app-book-reader
+          [book]='book'
+          [chapters]='chapters'
+        >
+        </app-book-reader>
+        
       </mat-tab>
   </mat-tab-group>
   </div>

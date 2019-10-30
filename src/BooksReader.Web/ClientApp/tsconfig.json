@@ -24,6 +24,7 @@
       "@br/config": ["src/app/config"],
       "@br/config/*": ["src/app/config/*"],
       "@br/public/*": ["src/app/modules/public/*"],
+      "@br/reading/*": ["src/app/modules/reading/*"],
       "@br/material/*": ["src/app/modules/material/*"],
       "@br/utilities/*": ["src/app/utilities/*"],
       "@br/controls/*": ["src/app/modules/controls/*"],

@@ -24,6 +24,9 @@ import {
         BookContentEditorComponent 
       } from '..';
 
+import { BookReaderComponent } from '@br/reading/components';
+import { ReadingModule } from '@br/reading/reading.module';
+
 describe('BookEditingComponent', () => {
   let component: BookEditingComponent;
   let fixture: ComponentFixture<BookEditingComponent>;
@@ -42,6 +45,7 @@ describe('BookEditingComponent', () => {
       ],
       imports:[
         SharedModule,
+        ReadingModule,
         COMMON_TESTING_MODULES,
         COMMON_VISUAL_MODULES
       ]
@@ -52,6 +56,7 @@ describe('BookEditingComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BookEditingComponent);
     component = fixture.componentInstance;
+    component.chapters = [];
     fixture.detectChanges();
   });
 

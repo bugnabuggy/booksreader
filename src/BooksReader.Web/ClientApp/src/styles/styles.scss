@@ -31,7 +31,8 @@ app-book-editing,
 app-book-chapters-editor,
 app-book-info-edit,
 app-book-content-editor,
-runtime-component {
+runtime-component,
+app-book-reader {
     flex: 1;
     display: flex;
     flex-direction: column;

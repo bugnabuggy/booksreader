@@ -41,8 +41,10 @@ export class BookChapterInfoEditorComponent implements OnInit, OnChanges {
     let request = {
       title: this.chapter.title,
       id: this.chapter.id,
+      content: this.chapter.content,
       description: this.chapter.description,
-      isPublished: data.isPublished
+      
+      isPublished: data.isPublished,
     } as BookChapterRequest;
 
     this.chapterEditingSvc.save(this.chapter.bookId, request)

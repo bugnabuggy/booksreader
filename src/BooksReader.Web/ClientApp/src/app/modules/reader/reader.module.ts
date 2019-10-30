@@ -5,9 +5,11 @@ import { ReaderRoutingModule } from './reader-routing.module';
 import { ReaderProfileComponent } from './pages/reader-profile/reader-profile.component';
 import { ReaderDashboardComponent } from './pages/reader-dashboard/reader-dashboard.component';
 
-
 @NgModule({
-  declarations: [ReaderProfileComponent, ReaderDashboardComponent],
+  declarations: [
+    ReaderProfileComponent, 
+    ReaderDashboardComponent, 
+    ],
   imports: [
     CommonModule,
     ReaderRoutingModule

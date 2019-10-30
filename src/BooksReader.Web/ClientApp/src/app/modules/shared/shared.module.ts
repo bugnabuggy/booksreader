@@ -12,7 +12,8 @@ import {
     DomainsListItemComponent, 
     PublicPageEditorComponent, 
     BookPricesEditorComponent, 
-    BookPriceItemComponent } from './components';
+    BookPriceItemComponent,
+  } from './components';
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import {
     DomainsListItemComponent,
     PublicPageEditorComponent,
     BookPricesEditorComponent,
-    BookPriceItemComponent
+    BookPriceItemComponent,
   ],
   imports: [
     CommonModule,
@@ -42,7 +43,7 @@ import {
     DomainsListItemComponent,
     PublicPageEditorComponent,
     BookPricesEditorComponent,
-    BookPriceItemComponent
+    BookPriceItemComponent,
   ],
   entryComponents: [
     

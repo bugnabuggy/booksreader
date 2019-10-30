@@ -4,6 +4,8 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedModule } from '@br/shared/shared.module';
+import { ReadingModule } from '@br/reading/reading.module';
+
 import { AuthorRoutingModule } from './author-routing.module';
 
 import {
@@ -25,6 +27,8 @@ import {
         BookContentInnerEditorComponent
       } from './components';
 
+
+
 @NgModule({
   declarations: [
     AuthorDashboardComponent,
@@ -45,6 +49,7 @@ import {
     CommonModule,
     SharedModule,
     AuthorRoutingModule,
+    ReadingModule,
     TranslateModule.forChild(),
     EditorModule 
   ],
