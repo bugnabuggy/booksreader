@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MainComponent } from './main.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { COMMON_VISUAL_MODULES, COMMON_TESTING_MODULES } from '@br/test/common-dependencies-modules';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -11,7 +12,8 @@ describe('MainComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ MainComponent ],
       imports:[
-        RouterTestingModule
+        RouterTestingModule,
+        COMMON_TESTING_MODULES
       ]
     })
     .compileComponents();

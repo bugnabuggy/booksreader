@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BookMarketComponent } from './book-market.component';
+import { COMMON_TESTING_MODULES, COMMON_VISUAL_MODULES } from '@br/test/common-dependencies-modules';
 
 describe('BookMarketComponent', () => {
   let component: BookMarketComponent;
@@ -8,7 +9,11 @@ describe('BookMarketComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BookMarketComponent ]
+      declarations: [ BookMarketComponent ],
+      imports:[
+        COMMON_TESTING_MODULES,
+        COMMON_VISUAL_MODULES
+      ]
     })
     .compileComponents();
   }));

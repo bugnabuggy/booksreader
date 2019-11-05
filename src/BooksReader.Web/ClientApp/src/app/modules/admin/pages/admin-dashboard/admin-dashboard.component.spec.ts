@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminDashboardComponent } from './admin-dashboard.component';
-import { COMMON_TESTING_MODULES } from '@br/test/common-dependencies-modules';
+import { COMMON_TESTING_MODULES, COMMON_VISUAL_MODULES } from '@br/test/common-dependencies-modules';
 
 describe('AdminDashboardComponent', () => {
   let component: AdminDashboardComponent;
@@ -11,7 +11,8 @@ describe('AdminDashboardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AdminDashboardComponent ],
       imports:[
-        COMMON_TESTING_MODULES
+        COMMON_TESTING_MODULES,
+        COMMON_VISUAL_MODULES
       ]
     })
     .compileComponents();

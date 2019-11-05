@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AllBooksComponent } from './all-books.component';
+import { COMMON_VISUAL_MODULES, COMMON_TESTING_MODULES } from '@br/test/common-dependencies-modules';
 
 describe('AllBooksComponent', () => {
   let component: AllBooksComponent;
@@ -8,7 +9,11 @@ describe('AllBooksComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AllBooksComponent ]
+      declarations: [ AllBooksComponent ],
+      imports:[
+        COMMON_VISUAL_MODULES,
+        COMMON_TESTING_MODULES
+      ]
     })
     .compileComponents();
   }));
