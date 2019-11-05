@@ -13,6 +13,7 @@ namespace BooksReader.Core.Models.Requests.Author
 
         public bool IsPublished { get; set; }
         public bool IsForSale { get; set; }
+        public int SubscriptionDurationDays { get; set; }
 
         public string Picture { get; set; }
     }

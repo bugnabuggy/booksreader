@@ -36,6 +36,7 @@ namespace BooksReader.Configuration
             services.AddTransient<IRepository<Book>, DbRepository<Book>>();
             services.AddTransient<IRepository<BookChapter>, DbRepository<BookChapter>>();
             services.AddTransient<IRepository<BookPrice>, DbRepository<BookPrice>>();
+            services.AddTransient<IRepository<BookSubscription>, DbRepository<BookSubscription>>();
 
             //// infrastructure services
             services.AddTransient<ISecurityService, SecurityService>();
@@ -50,9 +51,11 @@ namespace BooksReader.Configuration
             services.AddTransient<IBookEditingService, BookEditingService>();
             services.AddTransient<IBookPricesService, BookPricesService>();
 
-            //services.AddTransient<IBooksService, BooksService>();
+            services.AddTransient<IAdminBooksService, AdminBooksService>();
             services.AddTransient<IBookChapterService, BookChapterService>();
-            //services.AddTransient<IBookPriceService, BookPriceService>();
+
+
+            services.AddTransient<IBookMarketService, BookMarketService>();
         }
 
         public static void InitRolesAndUsers(IServiceProvider services)

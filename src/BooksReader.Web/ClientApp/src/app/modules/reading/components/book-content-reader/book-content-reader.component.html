@@ -1,1 +1,9 @@
-<p>book-content-reader works!</p>
+<div class='flex-1 d-flex bg-white br-content-reader'>
+    <div *ngIf='chapter?.content' class="flex-1 "
+        [innerHtml]='chapter?.content | safeHtml'>
+    </div>
+
+    <div class="flex-1 d-flex justify-content-center align-items-center" *ngIf='!chapter?.content'>
+        {{'NO_CONTENT' | translate}}
+    </div>
+</div>

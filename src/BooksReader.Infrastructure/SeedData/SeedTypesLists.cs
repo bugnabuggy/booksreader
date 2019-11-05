@@ -10,7 +10,7 @@ namespace BooksReader.Infrastructure.SeedData
     {
         private static readonly TypesList[] typesLists =
         {
-            new TypesList{ Id = (ushort)TypeLists.Currencies, Name = "Currency", LocalizationKey = "TYPE_CURRENCY" }
+            new TypesList{ Id = (short)TypeLists.Currencies, Name = "Currency", LocalizationKey = "TYPE_CURRENCY" }
         };
 
         public static TypesList[] GetTypesLists()

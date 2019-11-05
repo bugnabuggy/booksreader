@@ -237,7 +237,11 @@ namespace BooksReader.Services
             existingBook.Picture = bookData.Picture;
             existingBook.Description = bookData.Description;
             existingBook.IsForSale = bookData.IsForSale;
+            existingBook.SubscriptionDurationDays = bookData.SubscriptionDurationDays;
             existingBook.IsPublished = book.IsPublished;
+            existingBook.Published = book.IsPublished
+                ? DateTime.UtcNow
+                : (DateTime?)null;
 
             existingBook.Verified = false;
 

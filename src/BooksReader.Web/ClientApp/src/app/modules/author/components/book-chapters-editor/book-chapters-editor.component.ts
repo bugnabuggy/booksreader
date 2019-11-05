@@ -31,7 +31,13 @@ export class BookChaptersEditorComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
+    this.bookChapterEditingSvc.activeChapter.subscribe(val=>{
+      this.selectedChapterIndex = this.chapters
+      ? this.chapters.findIndex(x=>x.id == (val && val.id))
+      : -1;
+    });
   }
+
 
   ngOnChanges() {
     if (this.chapters && this.chapters.length > 0) {

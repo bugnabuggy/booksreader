@@ -22,6 +22,7 @@ namespace BooksReader.Core.Entities
 
         public bool IsPublished { get; set; }
         public bool IsForSale { get; set; }
+        public int SubscriptionDurationDays { get; set; }
 
         public string Picture { get; set; }
 
@@ -30,5 +31,8 @@ namespace BooksReader.Core.Entities
 
         public bool Verified { get; set; }
         public uint Version { get; set; }
-	}
+
+
+        public ICollection<BookPrice> Prices { get; set; }
+    }
 }

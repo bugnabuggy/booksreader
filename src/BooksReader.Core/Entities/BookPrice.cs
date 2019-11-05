@@ -14,7 +14,7 @@ namespace BooksReader.Core.Entities
         public double Price { get; set; }
 
         public Guid BookId { get; set; }
-        public uint CurrencyId { get; set; }
+        public int CurrencyId { get; set; }
 
         [ForeignKey("BookId")]
         public Book Book { get; set; }

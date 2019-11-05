@@ -1,0 +1,88 @@
+<div class="d-flex flex-1 flex-column position-relative">
+        <h2 class='m-2'>
+            All Books Table
+            <button (click)="getData(filters)" mat-icon-button color="primary">
+                <mat-icon>refresh</mat-icon>
+            </button>
+        </h2>
+    
+        <div class='col p-0 px-sm-2 flex-1'>
+            <table mat-table [dataSource]="data" class="mat-elevation-z0 w-100">
+                <!-- Name Column -->
+                <ng-container matColumnDef="bookTitle">
+                    <th mat-header-cell class='w-50' *matHeaderCellDef> {{'BOOKS.TITLE' | translate}} </th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <a [routerLink]='Urls.bookVerification.replace(":id", element.bookId)' >
+                            {{element.bookTitle}}
+                        </a> 
+                    </td>
+                </ng-container>
+                
+                <!-- Username Column -->
+                <ng-container matColumnDef="username">
+                    <th mat-header-cell *matHeaderCellDef> {{'BOOKS.USERNAME' | translate}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+                </ng-container>
+    
+                <!-- Is Published Column -->
+                <ng-container matColumnDef="created">
+                    <th mat-header-cell *matHeaderCellDef> {{'BOOKS.CREATED' | translate}} </th>
+                    <td mat-cell *matCellDef="let element"  class='text-center'> {{element.created | date: 'shortDate'}} </td>
+                </ng-container>
+    
+                <!-- Type Column -->
+                <ng-container matColumnDef="isPublished">
+                    <th mat-header-cell *matHeaderCellDef>{{'BOOKS.PUBLISHED' | translate}} </th>
+                    <td mat-cell *matCellDef="let element" class='text-center'>
+                        {{element.isPublished ? 'YES': 'NO' | translate}}
+                    </td>
+                </ng-container>
+
+                <!-- Is Published Column -->
+                <ng-container matColumnDef="published">
+                    <th mat-header-cell *matHeaderCellDef> {{'BOOKS.PUBLISH_DATE' | translate}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.published | date: 'shortDate' }} </td>
+                </ng-container>
+    
+                <!-- Status Column -->
+                <ng-container matColumnDef="verified">
+                    <th mat-header-cell *matHeaderCellDef>{{'BOOKS.VERIFIED' | translate}}</th>
+                    <td mat-cell *matCellDef="let element"  class='text-center'>
+                        {{element.verified ? 'YES': 'NO' | translate}}
+                    </td>
+                </ng-container>
+
+                
+    
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class=''> {{"SITE.ACTIONS" | translate}} </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-button [matMenuTriggerFor]="menu"><i class="material-icons">build</i></button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="toggle(element)">Toggle Verification</button>
+                            <button mat-menu-item (click)="delete(element)">Delete</button>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+            </table>
+    
+            <mat-paginator 
+    
+                [length]="totalRecords" 
+                [pageSize]="filters.pageSize" 
+                [pageIndex]="filters.pageNumber"
+                [pageSizeOptions]="[5, 15, 30, 100, 1000, 10000]"
+                [showFirstLastButtons]="true" 
+                (page)="pageChanged($event)">
+            </mat-paginator>
+        </div>
+
+        <div *ngIf='uiIsBlocked' class="br-overlay">
+            <mat-spinner></mat-spinner>
+        </div>
+    </div>
+    

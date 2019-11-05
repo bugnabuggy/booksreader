@@ -19,7 +19,8 @@ export class BookPropertiesComponent implements OnInit, OnChanges{
     description: '',
     picture: '',
     isForSale: false,
-    isPublished: false
+    isPublished: false,
+    subscriptionDurationDays: 1
   });
 
   constructor(
@@ -41,6 +42,7 @@ export class BookPropertiesComponent implements OnInit, OnChanges{
       picture: [this.book.picture],
       isPublished: [this.book.isPublished],
       isForSale: [this.book.isForSale],
+      subscriptionDurationDays: [this.book.subscriptionDurationDays, [Validators.required, Validators.min(1), Validators.max(36500)]]
     });
 
     this.bookForm.valueChanges.subscribe(val => {

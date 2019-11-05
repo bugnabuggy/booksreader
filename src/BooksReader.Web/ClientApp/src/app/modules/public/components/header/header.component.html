@@ -20,6 +20,7 @@
           <a mat-menu-item *ngFor="let link of section" [routerLink]="link.url" routerLinkActive="active" class=''>{{link.text}}</a>
           <mat-divider></mat-divider>
         </div>
+        <a mat-menu-item [routerLink]="Urls.public.bookMarketUrl" >Book Market</a>
         <a mat-menu-item class='' (click)='userSvc.logOut()'>Logout</a>
       </mat-menu>
     </nav>

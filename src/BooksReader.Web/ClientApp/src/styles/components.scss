@@ -37,6 +37,8 @@
 
 
 .br-book-content-edit{
+    max-width: 100vw;
+
     .mat-tab-body-wrapper{
         display: flex;
         flex: 1;
@@ -59,4 +61,18 @@
 .br-chapter-card-title {
     overflow-y: auto;
     max-height: 300px;
+}
+
+.br-content-reader {
+    position: absolute;
+    overflow-y: auto;
+    bottom: 0;
+    top:0;
+    width: 100%;
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
 }

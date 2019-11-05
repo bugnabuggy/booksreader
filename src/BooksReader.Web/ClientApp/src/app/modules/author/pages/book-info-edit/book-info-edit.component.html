@@ -1,6 +1,6 @@
 <div class="col">
 
-    <div class="alert alert-primary my-3" role="alert">
+    <div class="alert  my-3" [ngClass]="{'alert-primary': !book?.verified, 'alert-success':book?.verified  }" role="alert">
         {{'Status of the book verification: ' + book?.verified}}
     </div>
     

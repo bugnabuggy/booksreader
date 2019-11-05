@@ -1,2 +1,19 @@
-<p>admin-dashboard works!</p>
-<a [routerLink]="Urls.allDomainsUrl" href="">All domains</a>
+<div>
+    <h2>Indicators</h2>
+    <div></div>
+</div>
+<mat-divider></mat-divider>
+<div class="p-2 d-flex">
+    <a class="br-tile-link m-2" [routerLink]="Urls.allUsersUrl" href="">
+        <mat-icon aria-hidden="false" aria-label="Users">people</mat-icon>
+        All users
+    </a>
+    <a class="br-tile-link m-2" [routerLink]="Urls.allDomainsUrl" href="">
+        <mat-icon aria-hidden="false" aria-label="User's domains">language</mat-icon>
+        All domains
+    </a>
+    <a class="br-tile-link m-2" [routerLink]="Urls.allBooksUrl" href="">
+        <mat-icon aria-hidden="false" aria-label="User's domains">collections_bookmark</mat-icon>
+        All books
+    </a>
+</div>

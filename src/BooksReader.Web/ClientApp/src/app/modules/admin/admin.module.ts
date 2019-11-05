@@ -7,10 +7,11 @@ import { AllUsersComponent } from './pages/all-users/all-users.component';
 import { SharedModule } from '@br/shared/shared.module';
 import { AllDomainsComponent } from './pages/all-domains/all-domains.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { AllBooksComponent } from './pages/all-books/all-books.component';
 
 
 @NgModule({
-  declarations: [AdminDashboardComponent, AllUsersComponent, AllDomainsComponent],
+  declarations: [AdminDashboardComponent, AllUsersComponent, AllDomainsComponent, AllBooksComponent],
   imports: [
     CommonModule,
     SharedModule,

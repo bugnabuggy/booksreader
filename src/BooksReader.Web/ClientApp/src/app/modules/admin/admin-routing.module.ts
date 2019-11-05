@@ -4,10 +4,13 @@ import { Endpoints } from '@br/config';
 import { 
     AllUsersComponent,
     AdminDashboardComponent, 
-    AllDomainsComponent } from './pages';
+    AllDomainsComponent, 
+    AllBooksComponent} from './pages';
+
 
 
 const routes: Routes = [
+  { path:Endpoints.frontend.admin.allBooks, component: AllBooksComponent },
   { path:Endpoints.frontend.admin.allUsers, component: AllUsersComponent },
   { path:Endpoints.frontend.admin.allDomains, component: AllDomainsComponent },
   { path:Endpoints.frontend.admin.dashboard, component: AdminDashboardComponent }

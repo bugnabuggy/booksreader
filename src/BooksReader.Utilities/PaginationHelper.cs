@@ -20,6 +20,8 @@ namespace BooksReader.Utilities
                     ? numberOfPages
                     : filters.PageNumber.Value;
 
+            pageNumber = pageNumber > 0 ? pageNumber : 1;
+
             var query = data
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize);

@@ -82,6 +82,8 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<DateTime?>("Published");
 
+                    b.Property<int>("SubscriptionDurationDays");
+
                     b.Property<string>("Title")
                         .HasMaxLength(1000);
 
@@ -116,6 +118,8 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<string>("Title")
                         .HasMaxLength(1000);
+
+                    b.Property<bool>("Verified");
 
                     b.Property<long>("Version");
 
@@ -187,7 +191,7 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<DateTime>("Created");
 
-                    b.Property<long>("CurrencyId");
+                    b.Property<int>("CurrencyId");
 
                     b.Property<Guid>("OwnerId");
 
@@ -200,6 +204,26 @@ namespace BooksReader.Infrastructure.Migrations
                     b.HasIndex("CurrencyId");
 
                     b.ToTable("BookPrices");
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.BookSubscription", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("BookId");
+
+                    b.Property<string>("Comment");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BookSubscriptions");
                 });
 
             modelBuilder.Entity("BooksReader.Core.Entities.BrUser", b =>
@@ -354,8 +378,7 @@ namespace BooksReader.Infrastructure.Migrations
 
             modelBuilder.Entity("BooksReader.Core.Entities.TypeValue", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id");
 
                     b.Property<string>("LocalizationKey")
                         .HasMaxLength(60);
@@ -364,7 +387,7 @@ namespace BooksReader.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(120);
 
-                    b.Property<int>("TypeId");
+                    b.Property<short>("TypeId");
 
                     b.Property<string>("Value");
 
@@ -377,8 +400,7 @@ namespace BooksReader.Infrastructure.Migrations
 
             modelBuilder.Entity("BooksReader.Core.Entities.TypesList", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<short>("Id");
 
                     b.Property<string>("LocalizationKey")
                         .HasMaxLength(60);
@@ -564,7 +586,7 @@ namespace BooksReader.Infrastructure.Migrations
             modelBuilder.Entity("BooksReader.Core.Entities.BookPrice", b =>
                 {
                     b.HasOne("BooksReader.Core.Entities.Book", "Book")
-                        .WithMany()
+                        .WithMany("Prices")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
 

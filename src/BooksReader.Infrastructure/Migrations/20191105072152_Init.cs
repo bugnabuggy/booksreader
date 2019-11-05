@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BooksReader.Infrastructure.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -61,13 +61,50 @@ namespace BooksReader.Infrastructure.Migrations
                     Description = table.Column<string>(maxLength: 3000, nullable: true),
                     IsPublished = table.Column<bool>(nullable: false),
                     IsForSale = table.Column<bool>(nullable: false),
+                    SubscriptionDurationDays = table.Column<int>(nullable: false),
                     Picture = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
-                    Published = table.Column<DateTime>(nullable: true)
+                    Published = table.Column<DateTime>(nullable: true),
+                    Verified = table.Column<bool>(nullable: false),
+                    Version = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Books", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BooksHistory",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    OwnerId = table.Column<Guid>(nullable: false),
+                    Title = table.Column<string>(maxLength: 1000, nullable: true),
+                    Author = table.Column<string>(maxLength: 1000, nullable: true),
+                    Picture = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(maxLength: 3000, nullable: true),
+                    Version = table.Column<long>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BooksHistory", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BookSubscriptions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    BookId = table.Column<Guid>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    Comment = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookSubscriptions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -95,7 +132,7 @@ namespace BooksReader.Infrastructure.Migrations
                 name: "TypesLists",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<short>(nullable: false),
                     Name = table.Column<string>(maxLength: 120, nullable: true),
                     LocalizationKey = table.Column<string>(maxLength: 60, nullable: true)
                 },
@@ -310,10 +347,11 @@ namespace BooksReader.Infrastructure.Migrations
                     Number = table.Column<long>(nullable: false),
                     Title = table.Column<string>(maxLength: 1000, nullable: true),
                     Description = table.Column<string>(maxLength: 3000, nullable: true),
-                    Version = table.Column<long>(nullable: false),
                     Content = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
-                    IsPublished = table.Column<bool>(nullable: false)
+                    IsPublished = table.Column<bool>(nullable: false),
+                    Verified = table.Column<bool>(nullable: false),
+                    Version = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -330,11 +368,11 @@ namespace BooksReader.Infrastructure.Migrations
                 name: "TypeValues",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false),
+                    Id = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 120, nullable: false),
                     LocalizationKey = table.Column<string>(maxLength: 60, nullable: true),
                     Value = table.Column<string>(nullable: true),
-                    TypeId = table.Column<int>(nullable: false)
+                    TypeId = table.Column<short>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -377,6 +415,29 @@ namespace BooksReader.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ChaptersHistory",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    OwnerId = table.Column<Guid>(nullable: false),
+                    ChapterId = table.Column<Guid>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    Version = table.Column<long>(nullable: false),
+                    Content = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(maxLength: 1000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChaptersHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ChaptersHistory_BookChapters_ChapterId",
+                        column: x => x.ChapterId,
+                        principalTable: "BookChapters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BookPrices",
                 columns: table => new
                 {
@@ -385,7 +446,7 @@ namespace BooksReader.Infrastructure.Migrations
                     Created = table.Column<DateTime>(nullable: false),
                     Price = table.Column<double>(nullable: false),
                     BookId = table.Column<Guid>(nullable: false),
-                    CurrencyId = table.Column<long>(nullable: false)
+                    CurrencyId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -469,6 +530,11 @@ namespace BooksReader.Infrastructure.Migrations
                 column: "CurrencyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ChaptersHistory_ChapterId",
+                table: "ChaptersHistory",
+                column: "ChapterId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LoginHistory_UserId",
                 table: "LoginHistory",
                 column: "UserId");
@@ -518,10 +584,16 @@ namespace BooksReader.Infrastructure.Migrations
                 name: "AuthorProfiles");
 
             migrationBuilder.DropTable(
-                name: "BookChapters");
+                name: "BookPrices");
 
             migrationBuilder.DropTable(
-                name: "BookPrices");
+                name: "BooksHistory");
+
+            migrationBuilder.DropTable(
+                name: "BookSubscriptions");
+
+            migrationBuilder.DropTable(
+                name: "ChaptersHistory");
 
             migrationBuilder.DropTable(
                 name: "LoginHistory");
@@ -533,10 +605,10 @@ namespace BooksReader.Infrastructure.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Books");
+                name: "TypeValues");
 
             migrationBuilder.DropTable(
-                name: "TypeValues");
+                name: "BookChapters");
 
             migrationBuilder.DropTable(
                 name: "UserDomains");
@@ -546,6 +618,9 @@ namespace BooksReader.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "TypesLists");
+
+            migrationBuilder.DropTable(
+                name: "Books");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

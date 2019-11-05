@@ -12,4 +12,5 @@ export interface Book extends IIdentifiable, IOwned {
         created: Date;
         published?: Date;
         verified: boolean;
+        subscriptionDurationDays?: number;
 }

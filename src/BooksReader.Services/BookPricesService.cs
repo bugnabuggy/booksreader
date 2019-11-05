@@ -64,7 +64,7 @@ namespace BooksReader.Services
                 (price, svc, user) =>
                 {
                     var currencies = svc._typevaluesRepo.Data.AsNoTracking()
-                        .Where(x => x.TypeId.Equals((ushort) TypeLists.Currencies));
+                        .Where(x => x.TypeId.Equals((short)TypeLists.Currencies));
 
                     var msg = currencies.Any(x=>x.Id == price.CurrencyId)
                         ? null

@@ -19,6 +19,19 @@ class Endpoints {
         registrationUrl: '/registration',
 
         error: 'error',
+
+        public: {
+            bookMarket: 'book-market',
+            bookMarketUrl: '/book-market' ,
+
+            book: 'book/:id',
+            bookUrl: '/book/:id',
+
+            authors: 'authors',
+            authorsUrl: '/authors',
+
+        },
+
         user: {
             profile: 'profile', 
             profileUrl: '/' + Endpoints.areas.user + '/profile',
@@ -40,6 +53,9 @@ class Endpoints {
             allUsersUrl: '/' + Endpoints.areas.admin + '/users',
             allDomains: 'domains',
             allDomainsUrl: '/' + Endpoints.areas.admin + '/domains',
+            allBooks: 'books',
+            allBooksUrl: '/' + Endpoints.areas.admin + '/books',
+            bookVerification: '/' + Endpoints.areas.admin + '/book/:id/verification'
         },
         author: {
             profile: 'profile',
@@ -84,6 +100,10 @@ class Endpoints {
             price: Endpoints.baseApiUrl + 'api/author/book-price/{id}',
         },
         admin: {
+            books: {
+                all: Endpoints.baseApiUrl + 'api/admin/books',
+                verification: Endpoints.baseApiUrl + 'api/admin/books/verification'
+            }
         },
         public: {
             pageInfo: Endpoints.baseApiUrl + 'api/public',
@@ -93,8 +113,11 @@ class Endpoints {
             domain: Endpoints.baseApiUrl + 'api/domains',
             toggleState: Endpoints.baseApiUrl + 'api/domains/{id}/toggle',
         },
-        publicPages:{ 
+        publicPages: { 
             pages: Endpoints.baseApiUrl + 'api/public-pages'
+        },
+        booksMarket: {
+            books: Endpoints.baseApiUrl + 'api/book-market',
         } 
 
     };

@@ -13,3 +13,5 @@ export * from './public.service';
 export * from './book-editing.service';
 export * from './books-prices.service';
 export * from './book-chapter-editing.service';
+export * from './book-reading.service';
+export * from './admin-book.service';

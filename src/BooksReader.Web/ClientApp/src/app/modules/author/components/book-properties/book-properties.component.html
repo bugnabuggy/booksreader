@@ -34,4 +34,11 @@
     <div class="col-12" [style.fontSize.px]="18" >
         <mat-slide-toggle  formControlName="isForSale">{{'Is For Sale' | translate}}</mat-slide-toggle>
     </div>
+
+    <mat-form-field class="col-12 mt-2" *ngIf='bookForm.value.isForSale'>
+        <input matInput type="number" placeholder="{{'DAYS_FOR_SUBSCRIPTION' | translate}}" formControlName="subscriptionDurationDays">
+        <mat-error *ngIf="bookForm.controls.subscriptionDurationDays.errors">
+            Subscription duration is wrong
+        </mat-error>
+    </mat-form-field>
 </form>

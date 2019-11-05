@@ -1,6 +1,11 @@
 {
   "siteName": "КнигоЧитатель",
 
+  "SITE": {
+    "ACTIONS": "Действия",
+    "SITE_DESCRIPTION": "КнигоЧитатель - вёб сервис объединяющий авторов книг и их читателей"
+  },
+
   "DOMAIN_VERIFICATION_ENUM": {
     "DNS": "По dns записи",
     "FILE": "По файлу на сервере",
@@ -15,6 +20,21 @@
     "ADD_PUBLIC_PAGE": "Добавить {{pageType}} публичную страницу"
   },
   
+  "BOOK": {
+    "PROPERTIES": "Book properties",
+    "PUBLIC_PAGE": "Book public page"
+  },
+
+  "BOOKS": {
+    "TITLE":"Название",
+    "USERNAME":"Пользователь",
+    "CREATED":"Дата создания",
+    "PUBLISHED":"Опубликована",
+    "PUBLISH_DATE":"Дата публикации",
+    "VERIFIED":"Верифицированна"
+  },
+
+
   "CHAPTERS" : {
     "CHAPTER_DELETE_QUESTION": "Вы уверенны что хотите удалить главу [{{title}}]?"
   }

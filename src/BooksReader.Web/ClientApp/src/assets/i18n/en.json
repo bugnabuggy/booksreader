@@ -1,6 +1,11 @@
 {
   "siteName": "BooksReader",
 
+  "SITE": {
+    "ACTIONS": "Actions",
+    "SITE_DESCRIPTION": "BooksReader - the web servise which connects book authors with readers "
+  },
+
   "DOMAIN_VERIFICATION_ENUM": {
     "DNS": "By dns txt record",
     "FILE": "By file",
@@ -18,6 +23,15 @@
   "BOOK": {
     "PROPERTIES": "Book properties",
     "PUBLIC_PAGE": "Book public page"
+  },
+
+  "BOOKS": {
+    "TITLE":" Title",
+    "USERNAME":"Username",
+    "CREATED":"Created",
+    "PUBLISHED":"Published",
+    "PUBLISH_DATE":"Publish date",
+    "VERIFIED":"Verified"
   },
 
   "CHAPTERS" : {

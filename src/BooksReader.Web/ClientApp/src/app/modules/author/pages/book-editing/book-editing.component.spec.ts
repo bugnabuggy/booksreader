@@ -24,7 +24,6 @@ import {
         BookContentEditorComponent 
       } from '..';
 
-import { BookReaderComponent } from '@br/reading/components';
 import { ReadingModule } from '@br/reading/reading.module';
 
 describe('BookEditingComponent', () => {

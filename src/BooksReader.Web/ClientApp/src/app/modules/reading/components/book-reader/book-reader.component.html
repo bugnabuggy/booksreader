@@ -22,13 +22,15 @@
         </div>
         <div class="col">
           <div class="d-inline-block font-weight-bold text-truncat">
-                bookChapter?.title 
+                {{bookChapter?.title}}
           </div>  
           
         </div>
       </div>
-        <app-book-content-reader 
-          class="d-flex flex-1 bg-info">
+        <app-book-content-reader
+          [chapter]='bookChapter'
+          class='flex-1 position-relative' 
+          >
         </app-book-content-reader>
       </div>
   </mat-drawer-container>

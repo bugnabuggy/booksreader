@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { BookChapter } from '@br/core/models';
-import { BookChapterEditingService } from '@br/core/services';
+import { BookChapterEditingService, BookReadingService } from '@br/core/services';
 
 @Component({
   selector: 'app-book-chapters-list',
@@ -10,22 +10,24 @@ import { BookChapterEditingService } from '@br/core/services';
 export class BookChaptersListComponent implements OnInit {
 
   @Input() bookId: string;
-  @Input() chapters: BookChapter[];
+  @Input() chapters: BookChapter[] = [];
 
   selectedChapterIndex: number = -1;
 
   constructor(
-    private chapterEditingSvc: BookChapterEditingService
+    private readingSvc: BookReadingService
   ) { }
 
   ngOnInit() {
-    this.chapterEditingSvc.activeChapter.subscribe(val => { 
-      this.selectedChapterIndex = this.chapters.findIndex(x=>x.id == val.id);
-    })
+    this.readingSvc.activeChapter.subscribe(val=>{
+      this.selectedChapterIndex = this.chapters 
+      ? this.chapters.findIndex(x=>x.id == (val && val.id))
+      : -1;
+    });
   }
 
   select(chapter: BookChapter) {
-    this.chapterEditingSvc.activeChapter.next(chapter);
+    this.readingSvc.activeChapter.next(chapter);
   }
 
   dec() {

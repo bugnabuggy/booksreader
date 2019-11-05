@@ -5,6 +5,7 @@ import { COMMON_TESTING_MODULES, COMMON_VISUAL_MODULES } from '@br/test/common-d
 import { BookChaptersListComponent } from '../book-chapters-list/book-chapters-list.component';
 import { BookContentReaderComponent } from '../book-content-reader/book-content-reader.component';
 import { BookChapterInfoComponent } from '../book-chapter-info/book-chapter-info.component';
+import { CoreModule } from '@br/core/core.module';
 
 describe('BookReaderComponent', () => {
   let component: BookReaderComponent;
@@ -19,6 +20,7 @@ describe('BookReaderComponent', () => {
         BookChapterInfoComponent
        ],
        imports:[
+         CoreModule,
          COMMON_VISUAL_MODULES,
          COMMON_TESTING_MODULES
        ]

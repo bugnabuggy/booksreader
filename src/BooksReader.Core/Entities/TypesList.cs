@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace BooksReader.Core.Entities
 {
     public class TypesList
     {
-        public ushort Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public short Id { get; set; }
 
         [MaxLength(120)]
         public string Name { get; set; }

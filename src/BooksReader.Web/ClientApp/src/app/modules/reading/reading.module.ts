@@ -8,6 +8,8 @@ import {
 } from './components';
 import { MaterialModule } from '@br/material/material.module';
 import { BookChapterInfoComponent } from './components/book-chapter-info/book-chapter-info.component';
+import { CoreModule } from '@br/core/core.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -20,7 +22,9 @@ import { BookChapterInfoComponent } from './components/book-chapter-info/book-ch
   ],
   imports: [
     CommonModule,
-    MaterialModule
+    CoreModule,
+    MaterialModule,
+    TranslateModule.forChild()
   ],
   exports: [
     BookReaderComponent

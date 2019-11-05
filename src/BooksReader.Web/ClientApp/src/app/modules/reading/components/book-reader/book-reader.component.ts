@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BookChapter, Book } from '@br/core/models';
-import { BookChapterEditingService } from '@br/core/services';
+import { BookReadingService } from '@br/core/services';
 
 @Component({
   selector: 'app-book-reader',
@@ -10,16 +10,20 @@ import { BookChapterEditingService } from '@br/core/services';
 export class BookReaderComponent implements OnInit {
 
   @Input() book: Book;
-  @Input() chapters: BookChapter[];
+  @Input() chapters: BookChapter[] = [];
 
   sidebarIsOpened = false;
+  bookChapter: BookChapter;
 
   constructor (
-    private chapterEditingSvc: BookChapterEditingService
+    private readingSvc: BookReadingService
   ) { }
 
   ngOnInit() {
-
+    this.readingSvc.activeChapter.subscribe(val=>{
+      this.bookChapter = val;
+    });
   }
 
+  
 }

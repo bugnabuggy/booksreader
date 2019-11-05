@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { BookReadingService } from '@br/core/services';
+import { BookChapter } from '@br/core/models';
 
 @Component({
   selector: 'app-book-content-reader',
@@ -6,8 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./book-content-reader.component.scss']
 })
 export class BookContentReaderComponent implements OnInit {
+  
+  @Input() chapter: BookChapter;
 
-  constructor() { }
+  constructor(
+  ) { }
 
   ngOnInit() {
   }

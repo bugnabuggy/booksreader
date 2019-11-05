@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BookContentReaderComponent } from './book-content-reader.component';
+import { CoreModule } from '@br/core/core.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('BookContentReaderComponent', () => {
   let component: BookContentReaderComponent;
@@ -8,7 +10,11 @@ describe('BookContentReaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BookContentReaderComponent ]
+      declarations: [ BookContentReaderComponent ],
+      imports: [
+        CoreModule,
+        TranslateModule.forRoot()
+      ]
     })
     .compileComponents();
   }));

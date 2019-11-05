@@ -8,7 +8,7 @@ import { Endpoints } from '@br/config';
 })
 export class MainComponent implements OnInit {
 
-  Endpoints = Endpoints;
+  Urls = Endpoints.frontend;
 
   constructor() { }
 

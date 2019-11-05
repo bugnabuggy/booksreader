@@ -13,6 +13,8 @@ import { IntegrationsModule } from '@br/integrations/integrations.module';
 import { LoginButtonComponent } from './public-tags/login-button/login-button.component';
 import { BuyButtonComponent } from './public-tags/buy-button/buy-button.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { BookMarketComponent } from './pages/book-market/book-market.component';
+import { BookComponent } from './pages/book/book.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     MainComponent,
     LoginButtonComponent,
     BuyButtonComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    BookMarketComponent,
+    BookComponent
   ],
   imports: [
     CommonModule,

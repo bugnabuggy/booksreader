@@ -8,8 +8,8 @@ namespace BooksReader.Core.Entities
 {
     public class TypeValue
     {
-        [Key]
-        public uint Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
         [Required]
         [MaxLength(120)]
         public string Name { get; set; }
@@ -17,7 +17,7 @@ namespace BooksReader.Core.Entities
         public string LocalizationKey { get; set; }
         public string Value { get; set; }
 
-        public ushort TypeId { get; set; }
+        public short TypeId { get; set; }
         [ForeignKey("TypeId")]
         public TypesList Type { get; set; }
     }

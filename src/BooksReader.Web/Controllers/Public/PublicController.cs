@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Ruteco.AspNetCore.Translate;
 
-namespace BooksReader.Web.Controllers
+namespace BooksReader.Web.Controllers.Public
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -4,6 +4,8 @@
 @import "./utilities.scss";
 @import "./components.scss";
 
+@import '~@angular/cdk/overlay-prebuilt.css';
+
 html, body { 
     min-height: 100%;
     display: flex;
@@ -17,22 +19,26 @@ body {
 }
 
 app-root,
+app-main,
 app-login, 
 app-registration, 
 app-force-logout,
 app-profile,
 app-all-users,
 app-all-domains,
+app-admin-dashboard,
 app-become-an-author,
 app-author-profile,
 app-author-dashboard,
 app-author-container,
+app-all-books,
 app-book-editing,
 app-book-chapters-editor,
 app-book-info-edit,
 app-book-content-editor,
 runtime-component,
-app-book-reader {
+app-book-reader,
+app-book-market {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -47,3 +53,32 @@ app-book-reader {
     background: #3f51b5;
     color: white;
 }
+
+.br-tile-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 15px;
+    border: 1px solid darkgray !important;
+}
+
+.br-big-tile-link {
+ @extend .br-tile-link;
+ width: auto
+}
+
+.br-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

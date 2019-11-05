@@ -4,7 +4,9 @@ import {
   LoginComponent,
   RegistrationComponent, 
   ForceLogoutComponent, 
-  MainComponent 
+  MainComponent, 
+  BookMarketComponent,
+  BookComponent
   } from './pages';
 import { Endpoints } from '@br/config';
 
@@ -14,6 +16,9 @@ const routes: Routes = [
   { path: Endpoints.frontend.authorization, component: LoginComponent },
   { path: Endpoints.frontend.registration, component: RegistrationComponent },
   { path: Endpoints.frontend.user.forceLogout, component: ForceLogoutComponent },
+  { path: Endpoints.frontend.public.bookMarket, component: BookMarketComponent },
+  { path: Endpoints.frontend.public.book, component: BookComponent },
+
 
   { 
     path: '',

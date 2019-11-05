@@ -55,7 +55,6 @@ export class AuthorBooksListComponent implements OnInit {
         result = ClearNullValues(result);
         this.bookSvc.add(result)
           .subscribe((val: OperationResult<Book>) => {
-            debugger;
             this.books.push(val.data);
             this.notifications.showSuccess(SiteMessages.author.books.added);
           });
