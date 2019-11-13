@@ -11,5 +11,8 @@ namespace BooksReader.Core.Services
     public interface IBookMarketService
     {
         IWebResult<IEnumerable<BookMarketDto>> GetBooks(BookMarketFilters filters, BrUser user);
+        BookMarketDto GetBook(Guid bookId, BrUser user);
+
+        IOperationResult<BookSubscription> Add(Guid bookId, BrUser user);
     }
 }

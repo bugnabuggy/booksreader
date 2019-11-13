@@ -9,7 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\DTO\Reader\" />
+    <Folder Include="Services\Author\" />
+    <Folder Include="Services\Admin\" />
   </ItemGroup>
 
 </Project>

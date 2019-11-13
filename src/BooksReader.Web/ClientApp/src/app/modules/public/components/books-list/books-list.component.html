@@ -1,0 +1,12 @@
+<div class='flex-1 d-flex '>
+    <ul *ngIf='books.length > 0' class="flex-1 br-books-list p-1">
+        <li *ngFor="let book of books; let i = index" class='m-1'>  
+            <app-books-list-item 
+                [book]='book'
+                (action)='doAction($event)'
+                >
+            </app-books-list-item>
+        </li>
+    </ul>
+    <div class='flex-1' *ngIf='books.length < 1'>{{'SITE.NO_CONTENT' | translate}}</div>
+</div>

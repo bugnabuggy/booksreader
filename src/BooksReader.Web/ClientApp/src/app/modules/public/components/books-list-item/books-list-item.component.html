@@ -1,0 +1,29 @@
+<div class="br-book-market-list-item d-flex flex-column border rounded p-1">
+        <h5 class="">
+            <a class='d-block' [routerLink]="Urls.public.bookUrl.replace(':id',  book.semanticUrl || book.bookId)">{{book.title}}</a> 
+        </h5>
+        <h5>
+            <a [routerLink]="Urls.public.authorUrl.replace(':id', book.authorId || book.authorSemanticUrl)">{{book.author}}</a>
+        </h5>
+        <figure class="flex-1 d-flex justify-content-center m-0">
+            <img *ngIf='book.picture'  class="" [src]="book.picture" alt="">
+        </figure>
+    
+        <div *ngIf='!book.subscription' class="">
+            <button *ngIf="book.isForSale" (click)='buy()' mat-icon-button color="accent" title='{{"BOOK_MARKET.BUY" | translate}}'>
+                {{"BOOK_MARKET.BUY" | translate}}
+                <mat-icon>shopping_cart</mat-icon>
+            </button>
+
+            <button *ngIf="!book.isForSale" (click)='add()' mat-icon-button color="accent" title='{{"BOOK_MARKET.BUY" | translate}}'>
+                {{"BOOK_MARKET.ADD" | translate}}
+                <mat-icon>move_to_inbox</mat-icon>
+            </button>
+        </div>
+        <div *ngIf='book.subscription == 2' class="">
+                This book is in your library
+        </div>
+        <div *ngIf='book.subscription == 1' class="">
+                Renew subscription
+        </div>
+    </div>

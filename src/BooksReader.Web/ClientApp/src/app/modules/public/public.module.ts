@@ -15,6 +15,9 @@ import { BuyButtonComponent } from './public-tags/buy-button/buy-button.componen
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { BookMarketComponent } from './pages/book-market/book-market.component';
 import { BookComponent } from './pages/book/book.component';
+import { BooksListComponent } from './components/books-list/books-list.component';
+import { BooksListItemComponent } from './components/books-list-item/books-list-item.component';
+import { LoginOrRegisterComponent } from './components/login-or-register/login-or-register.component';
 
 
 @NgModule({
@@ -28,7 +31,10 @@ import { BookComponent } from './pages/book/book.component';
     BuyButtonComponent,
     PageNotFoundComponent,
     BookMarketComponent,
-    BookComponent
+    BookComponent,
+    BooksListComponent,
+    BooksListItemComponent,
+    LoginOrRegisterComponent
   ],
   imports: [
     CommonModule,
@@ -41,6 +47,9 @@ import { BookComponent } from './pages/book/book.component';
     HeaderComponent,
     LoginButtonComponent,
     BuyButtonComponent
+  ],
+  entryComponents:[
+    LoginOrRegisterComponent
   ]
 })
 export class PublicModule { }

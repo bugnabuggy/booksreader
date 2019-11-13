@@ -45,5 +45,30 @@ namespace BooksReader.Web.Controllers.Public
             return StandardReturn(result);
         }
 
+        [HttpGet("{id}")]
+        [Validate(typeof(Getter<Book>),
+            new[]
+            {
+                typeof(ItemExistsValidator),
+            })]
+        public ActionResult<BookMarketDto> Get([FromRoute] Guid id)
+        {
+            var result = _bookMarketSvc.GetBook(id, BrUser);
+
+            return Ok(result);
+        }
+
+        [HttpPost("{id}/add")]
+        [Authorize]
+        [Validate(typeof(Getter<Book>),
+            new[]
+            {
+                typeof(ItemExistsValidator),
+            })]
+        public ActionResult<IOperationResult<BookSubscription>> Add([FromRoute] Guid id)
+        {
+            var result = _bookMarketSvc.Add(id, BrUser);
+            return StandardReturn(result);
+        }
     }
 }

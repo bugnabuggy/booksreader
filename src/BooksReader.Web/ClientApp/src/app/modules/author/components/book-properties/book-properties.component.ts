@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 import { Book } from '@br/core/models';
 import { NotificationService } from '@br/core/services';
 
@@ -31,6 +31,18 @@ export class BookPropertiesComponent implements OnInit, OnChanges{
   ngOnInit() {
   }
 
+  formValidator(g: FormGroup) {
+    if( g.get('isForSale').value) {
+      let err;
+      let control = g.get('subscriptionDurationDays');
+      err = Validators.min(1)(control);
+      err = err || Validators.max(36500)(control);
+      return err;
+    }
+
+    return null;
+  }
+
   ngOnChanges() {
     this.bookForm = this.fb.group({
       id: [this.book.id],
@@ -42,8 +54,8 @@ export class BookPropertiesComponent implements OnInit, OnChanges{
       picture: [this.book.picture],
       isPublished: [this.book.isPublished],
       isForSale: [this.book.isForSale],
-      subscriptionDurationDays: [this.book.subscriptionDurationDays, [Validators.required, Validators.min(1), Validators.max(36500)]]
-    });
+      subscriptionDurationDays: [this.book.subscriptionDurationDays]
+    }, { validators: [this.formValidator]});
 
     this.bookForm.valueChanges.subscribe(val => {
         this.valueChanged.emit(this.bookForm);      

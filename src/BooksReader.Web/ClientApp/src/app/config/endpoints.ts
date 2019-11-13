@@ -29,7 +29,7 @@ class Endpoints {
 
             authors: 'authors',
             authorsUrl: '/authors',
-
+            authorUrl: '/authors/:id',
         },
 
         user: {

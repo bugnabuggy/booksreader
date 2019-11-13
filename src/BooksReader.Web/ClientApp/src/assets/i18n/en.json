@@ -36,5 +36,12 @@
 
   "CHAPTERS" : {
     "CHAPTER_DELETE_QUESTION": "Are you sure that wnat to delete [{{title}}] chapter?"
+  },
+
+  "BOOK_MARKET": {
+    "BOOKS": "Books",
+    "FILTERS": "Filters",
+    "BUY": "Buy",
+    "ADD": "Add to library"
   }
 }

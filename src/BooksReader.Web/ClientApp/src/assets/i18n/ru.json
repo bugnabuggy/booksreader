@@ -37,5 +37,12 @@
 
   "CHAPTERS" : {
     "CHAPTER_DELETE_QUESTION": "Вы уверенны что хотите удалить главу [{{title}}]?"
+  },
+
+  "BOOK_MARKET": {
+    "BOOKS": "Книги",
+    "FILTERS": "Фильтры",
+    "BUY": "Купить",
+    "ADD": "Добавить в библиотеку"
   }
 }

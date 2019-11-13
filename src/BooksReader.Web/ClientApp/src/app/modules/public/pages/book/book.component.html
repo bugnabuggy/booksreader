@@ -1,1 +1,19 @@
-<p>book works!</p>
+<div class="flex-1 row">
+    <div class="col-12 col-sm-5 ">
+        <figure>
+            <img [src]="" alt="">
+        </figure>
+        <div class='row'>
+            <div class='col'>{{'Subscription period'}}</div>
+            <div class='col-auto'>{{book.subscriptionDurationDays}}&nbsp; {{'days'}}</div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-7">
+        <h1 class='h3' title='Book title'>{{book.title}}</h1>
+        <h2 class='h4' title='Book author'>{{book.author}}</h2>
+        <label for="">Description</label>
+        <div>
+            {{book.description}}
+        </div>
+    </div>
+</div>

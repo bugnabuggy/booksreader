@@ -1,4 +1,6 @@
 <form class='row' (ngSubmit)="updateBook()" [formGroup]="bookForm">
+    {{bookForm.errors | json}}
+    {{bookForm.valid | json}}
     <mat-form-field class="col-12">
         <input matInput placeholder="Title" formControlName="title">
         <mat-error *ngIf="bookForm.controls.title.errors?.required">
@@ -37,7 +39,7 @@
 
     <mat-form-field class="col-12 mt-2" *ngIf='bookForm.value.isForSale'>
         <input matInput type="number" placeholder="{{'DAYS_FOR_SUBSCRIPTION' | translate}}" formControlName="subscriptionDurationDays">
-        <mat-error *ngIf="bookForm.controls.subscriptionDurationDays.errors">
+        <mat-error *ngIf="bookForm.errors">
             Subscription duration is wrong
         </mat-error>
     </mat-form-field>

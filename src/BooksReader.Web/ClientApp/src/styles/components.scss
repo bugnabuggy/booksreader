@@ -76,3 +76,36 @@
     }
 
 }
+
+
+.br-book-market-list-item {
+    width: 300px;
+    height: 400px;
+
+
+    overflow: hidden;
+
+    figure {
+        width: 300px;
+        vertical-align: middle;
+
+        overflow: hidden;
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            align-self: center;
+        }
+    }
+
+    h5 {
+        display: block;
+        max-height: 20%;
+        text-overflow: ellipsis;
+        overflow-y: auto; 
+    }
+
+    button {
+        font-size: 24px;
+    }
+}

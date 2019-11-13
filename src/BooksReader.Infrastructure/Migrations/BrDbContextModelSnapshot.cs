@@ -50,6 +50,9 @@ namespace BooksReader.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(3000);
 
+                    b.Property<string>("SemanticUrl")
+                        .HasMaxLength(256);
+
                     b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
@@ -81,6 +84,9 @@ namespace BooksReader.Infrastructure.Migrations
                     b.Property<string>("Picture");
 
                     b.Property<DateTime?>("Published");
+
+                    b.Property<string>("SemanticUrl")
+                        .HasMaxLength(256);
 
                     b.Property<int>("SubscriptionDurationDays");
 
@@ -215,13 +221,15 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<string>("Comment");
 
-                    b.Property<DateTime>("EndDate");
+                    b.Property<DateTime?>("EndDate");
 
                     b.Property<DateTime>("StartDate");
 
                     b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BookId");
 
                     b.ToTable("BookSubscriptions");
                 });
@@ -593,6 +601,14 @@ namespace BooksReader.Infrastructure.Migrations
                     b.HasOne("BooksReader.Core.Entities.TypeValue", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BooksReader.Core.Entities.BookSubscription", b =>
+                {
+                    b.HasOne("BooksReader.Core.Entities.Book")
+                        .WithMany("Subscriptions")
+                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

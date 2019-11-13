@@ -5,6 +5,7 @@ export class SiteConstants {
 
     static defaultLanguage = 'en';
     static defaultImageSelectorHeight = '240px';
+    static defaultImage = '/assets/images/default-image.png';
 
     static storageKeys = {
         userToken: 'userToken',

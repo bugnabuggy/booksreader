@@ -57,6 +57,10 @@ class SiteMessages {
             deleteQuestion: 'BOOK_PRICE_DELETE_QUESTION'
         }
     }
+
+    static booksMarket = {
+        bookAdded : 'BOOKS_MARKET.BOOK_ADDED'
+    }
 }
 
 export { SiteMessages };
