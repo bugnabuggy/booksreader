@@ -10,7 +10,7 @@ namespace BooksReader.Core.Entities
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
-        public DateTime Created { get; set; }
+        public DateTimeOffset Created { get; set; }
         public bool Approved { get; set; }
 
         [ForeignKey("UserId")]

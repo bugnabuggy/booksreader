@@ -144,7 +144,7 @@ namespace BooksReader.Services
                 };
             }
 
-            price.Created = DateTime.UtcNow;
+            price.Created = DateTimeOffset.UtcNow;
             
             // OwnerId should be filled as part of the data
 
@@ -176,7 +176,7 @@ namespace BooksReader.Services
 
             existingPrice.CurrencyId = price.CurrencyId;
             existingPrice.Price = price.Price;
-            existingPrice.Created = DateTime.UtcNow;
+            existingPrice.Created = DateTimeOffset.UtcNow;
 
             _pricesRepo.Update(existingPrice);
 

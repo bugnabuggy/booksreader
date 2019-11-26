@@ -197,6 +197,7 @@ namespace BooksReader.Web
             app.UseSignalR(routes =>
             {
                 routes.MapHub<UserHub>("/hub/user");
+                routes.MapHub<BooksHub>("/hub/books");
             });
 
             app.UseMvc(routes =>

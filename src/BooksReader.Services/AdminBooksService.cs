@@ -60,25 +60,25 @@ namespace BooksReader.Services
 
             if (!string.IsNullOrWhiteSpace(filters.PublishedFrom))
             {
-                var publishedFrom = DateTime.Parse(filters.PublishedFrom);
+                var publishedFrom = DateTimeOffset.Parse(filters.PublishedFrom);
                 query = query.Where(x => x.Published >= publishedFrom);
             }
 
             if (!string.IsNullOrWhiteSpace(filters.PublishedTo))
             {
-                var publishedTo = DateTime.Parse(filters.PublishedTo);
+                var publishedTo = DateTimeOffset.Parse(filters.PublishedTo);
                 query = query.Where(x => x.Published <= publishedTo);
             }
 
             if (!string.IsNullOrWhiteSpace(filters.CreatedFrom))
             {
-                var createdFrom = DateTime.Parse(filters.CreatedFrom);
+                var createdFrom = DateTimeOffset.Parse(filters.CreatedFrom);
                 query = query.Where(x => x.Published >= createdFrom);
             }
 
             if (!string.IsNullOrWhiteSpace(filters.CreatedTo))
             {
-                var createdTo = DateTime.Parse(filters.CreatedTo);
+                var createdTo = DateTimeOffset.Parse(filters.CreatedTo);
                 query = query.Where(x => x.Published <= createdTo);
             }
 

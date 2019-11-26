@@ -117,7 +117,6 @@ export class BookChaptersEditorComponent implements OnInit, OnChanges {
   }
 
   inc() {
-    debugger;
     this.selectedChapterIndex = this.chapters.length >= this.selectedChapterIndex + 1
       ? 0
       : this.selectedChapterIndex++;

@@ -36,7 +36,7 @@ export class AuthorBooksListComponent implements OnInit {
   }
 
   doAction(action: Action<Book>) {
-    let actionFunc = this.actions[action.action];
+    let actionFunc = this.actions[action.type];
 
     if (actionFunc) {
       actionFunc = actionFunc.bind(this);

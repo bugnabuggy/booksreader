@@ -45,9 +45,9 @@ namespace BooksReader.Web.IdentityServerExtensions.Helpers
                         var oauth_token = tokenString["oauth_token"];
                         var oauth_version = "1.0";
                         var oauth_signature_method = "HMAC-SHA1";
-                        string oauth_nonce = Convert.ToBase64String(new ASCIIEncoding().GetBytes(DateTime.Now.Ticks.ToString()));
+                        string oauth_nonce = Convert.ToBase64String(new ASCIIEncoding().GetBytes(DateTimeOffset.Now.Ticks.ToString()));
 
-                        TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+                        TimeSpan ts = DateTimeOffset.UtcNow - new DateTimeOffset(1970, 1, 1, 0, 0, 0, 0, TimeSpan.Zero);
                         string oauth_timestamp = Convert.ToInt64(ts.TotalSeconds).ToString();
 
                         SortedDictionary<string, string> sd = new SortedDictionary<string, string>();

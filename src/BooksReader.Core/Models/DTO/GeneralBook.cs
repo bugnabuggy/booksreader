@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BooksReader.Core.Models.DTO
 {
-    public abstract class GeneralBook
+    public class GeneralBook
     {   
         public Guid BookId { get; set; }
         

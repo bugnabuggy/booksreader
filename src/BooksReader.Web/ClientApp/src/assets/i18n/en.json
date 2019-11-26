@@ -43,5 +43,17 @@
     "FILTERS": "Filters",
     "BUY": "Buy",
     "ADD": "Add to library"
+  },
+
+  "READER": {
+    "DASHBOARD": {
+      "READ" : "Read the book",
+      "UNSUBSCRIBE": "Unsubscribe from book",
+      "MY_BOOKS": "My subscriptions books",
+      "FILTERS": "Filters",
+      "SUBSCRIPTION_START":"Subscription start",
+      "SUBSCRIPTION_END":"Subscription end",
+      "FREE_SUBSCRIPTION": "Free subscription"
+    }
   }
 }

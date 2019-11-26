@@ -61,6 +61,13 @@ class SiteMessages {
     static booksMarket = {
         bookAdded : 'BOOKS_MARKET.BOOK_ADDED'
     }
+
+    static reader =  {
+        books: {
+            deleteQuestion: 'READER.BOOKS.DELETE_QUESTION',
+            removed: 'READER.BOOKS.DELETED'
+        }
+    }
 }
 
 export { SiteMessages };

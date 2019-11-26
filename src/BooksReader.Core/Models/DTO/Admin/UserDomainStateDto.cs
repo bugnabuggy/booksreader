@@ -14,8 +14,8 @@ namespace BooksReader.Core.Models.DTO.Admin
 
         public string Protocol { get; set; }
         public DomainVerificationType Type { get; set; }
-        public DateTime? VerificationDate { get; set; }
-        public DateTime? VerificationRequested { get; set; }
+        public DateTimeOffset? VerificationDate { get; set; }
+        public DateTimeOffset? VerificationRequested { get; set; }
 
         public int NumberOfPages { get; set; }
     }

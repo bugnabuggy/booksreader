@@ -10,7 +10,7 @@ namespace BooksReader.Core.Entities
     {
         public Guid Id { get; set; }
         public Guid OwnerId { get; set; }
-        public DateTime Created { get; set; }
+        public DateTimeOffset Created { get; set; }
         public double Price { get; set; }
 
         public Guid BookId { get; set; }

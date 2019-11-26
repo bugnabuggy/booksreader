@@ -123,7 +123,7 @@ namespace BooksReader.Services
                     Author = basicBook.Author,
                     Picture = basicBook.Picture,
                     
-                    Created = DateTime.UtcNow,
+                    Created = DateTimeOffset.UtcNow,
                     OwnerId =  user.Id
                 };
 
@@ -240,8 +240,8 @@ namespace BooksReader.Services
             existingBook.SubscriptionDurationDays = bookData.SubscriptionDurationDays;
             existingBook.IsPublished = book.IsPublished;
             existingBook.Published = book.IsPublished
-                ? DateTime.UtcNow
-                : (DateTime?)null;
+                ? DateTimeOffset.UtcNow
+                : (DateTimeOffset?)null;
 
             existingBook.Verified = false;
 

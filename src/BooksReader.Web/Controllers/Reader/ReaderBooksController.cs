@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BooksReader.Core;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Infrastrcture;
 using BooksReader.Core.Models;
@@ -14,6 +15,7 @@ using BooksReader.Core.Models.Requests.Public;
 using BooksReader.Core.Models.Requests.Reader;
 using BooksReader.Core.Services;
 using BooksReader.Core.Services.Reader;
+using BooksReader.Dictionaries.Messages;
 using BooksReader.Infrastructure.Services;
 using BooksReader.Validators.FilterAttributes;
 using BooksReader.Validators.Getters;
@@ -25,13 +27,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BooksReader.Web.Controllers.Reader
 {
-    [Route("api/reader/dashboard")]
+    [Route("api/reader/books")]
     [ApiController]
-    public class ReaderDashboardController : BaseUserController
+    public class ReaderBooksController : BaseUserController
     {
         private readonly IReaderDashboardService _readerDashboardSvc;
 
-        public ReaderDashboardController(
+        public ReaderBooksController(
             UserManager<BrUser> userManager,
             
             IReaderDashboardService readerDashboardSvc
@@ -41,12 +43,35 @@ namespace BooksReader.Web.Controllers.Reader
         }
 
         [HttpGet]
-        public ActionResult<IWebResult<IEnumerable<ReaderDashboardBookDto>>> Get([FromQuery] ReaderDashboardFilters filters)
+        public async Task<ActionResult<IWebResult<IEnumerable<ReaderDashboardBookDto>>>> Get([FromQuery] ReaderDashboardFilters filters)
         {
+            if (filters.UserId.HasValue)
+            {
+                var isAdmin = await _userManager.IsInRoleAsync(BrUser, SiteRoles.Admin);
+
+                // user can ask for books list of other users only if he is in admin role
+                if (!isAdmin
+                    && !filters.UserId.Equals(BrUser.Id))
+                {
+                    return Forbid(MessageStrings.DoNotHavePermissions);
+                }
+            }
+            else
+            {
+                filters.UserId = BrUser.Id;
+            }
+
             var result = _readerDashboardSvc.GetReaderBooks(filters, BrUser);
 
             return StandardReturn(result);
         }
-        
+
+        [HttpDelete("{bookId}")]
+        public ActionResult<IOperationResult<object>> RemoveSubscription([FromRoute] Guid bookId)
+        {
+            var result = _readerDashboardSvc.RemoveSubscription(bookId, BrUser);
+            return StandardReturn(result);
+        }
+
     }
 }

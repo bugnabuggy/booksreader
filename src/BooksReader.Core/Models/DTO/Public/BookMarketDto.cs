@@ -13,7 +13,7 @@ namespace BooksReader.Core.Models.DTO.Public
         public string AuthorSemanticUrl { get; set; }
 
         public Guid AuthorId { get; set; }
-        public DateTime? Published { get; set; }
+        public DateTimeOffset? Published { get; set; }
         public int SubscriptionDurationDays { get; set; }
 
         // not sure that it should be shown at market page

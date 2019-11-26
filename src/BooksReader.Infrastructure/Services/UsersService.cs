@@ -20,7 +20,7 @@ namespace BooksReader.Infrastructure.Services
     {
         private Dictionary<string, Expression<Func<LoginHistory, object>>> orderBys = new Dictionary<string, Expression<Func<LoginHistory, object>>>()
         {
-            {"dateTime", x => x.DateTime},
+            {"DateTimeOffset", x => x.DateTimeOffset},
             {"browser", x=>x.Browser},
             {"geolocation", x=>x.Geolocation},
             {"ipAddress", x=>x.IpAddress},
@@ -48,7 +48,7 @@ namespace BooksReader.Infrastructure.Services
             var result = await this._loginHistory.AddAsync(new LoginHistory
             {
                 Id = Guid.NewGuid(),
-                DateTime = logHistory.DateTime,
+                DateTimeOffset = logHistory.DateTimeOffset,
                 IpAddress = logHistory.IpAddress,
                 Browser = logHistory.Browser,
                 UserId = userId,

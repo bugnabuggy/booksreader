@@ -10,6 +10,7 @@ import { MaterialModule } from '@br/material/material.module';
 import { BookChapterInfoComponent } from './components/book-chapter-info/book-chapter-info.component';
 import { CoreModule } from '@br/core/core.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ReadingTopNavComponent } from './components/reading-top-nav/reading-top-nav.component';
 
 
 
@@ -18,7 +19,8 @@ import { TranslateModule } from '@ngx-translate/core';
     BookReaderComponent,
     BookContentReaderComponent,
     BookChaptersListComponent,
-    BookChapterInfoComponent
+    BookChapterInfoComponent,
+    ReadingTopNavComponent
   ],
   imports: [
     CommonModule,

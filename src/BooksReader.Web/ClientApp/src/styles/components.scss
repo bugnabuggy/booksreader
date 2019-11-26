@@ -36,7 +36,7 @@
 }
 
 
-.br-book-content-edit{
+.br-book-content-edit  {
     max-width: 100vw;
 
     .mat-tab-body-wrapper{
@@ -82,7 +82,6 @@
     width: 300px;
     height: 400px;
 
-
     overflow: hidden;
 
     figure {
@@ -107,5 +106,14 @@
 
     button {
         font-size: 24px;
+    }
+}
+
+.br-book-content-reader {
+    .mat-tab-body-content, 
+    .mat-drawer-content, 
+    .mat-drawer-inner-container{
+        display: flex;
+        flex: 1;
     }
 }

@@ -14,22 +14,15 @@
     </mat-drawer>
   
     <div class="d-flex flex-1 flex-column">
-      <div class="py-2 mx-0 row">
-        <div class='col-auto'>
-          <button type="button" class='br-toggle-button' mat-raised-button color="primary" (click)="drawer.toggle()">
-                Toggle chapters panel
-          </button>
-        </div>
-        <div class="col">
-          <div class="d-inline-block font-weight-bold text-truncat">
-                {{bookChapter?.title}}
-          </div>  
-          
-        </div>
-      </div>
+        <app-reading-top-nav
+          (toggleChaptes)="drawer.toggle()"
+          [chapter]="bookChapter"
+          >
+        </app-reading-top-nav>
+
         <app-book-content-reader
           [chapter]='bookChapter'
-          class='flex-1 position-relative' 
+          class='flex-1 position-relative'  
           >
         </app-book-content-reader>
       </div>

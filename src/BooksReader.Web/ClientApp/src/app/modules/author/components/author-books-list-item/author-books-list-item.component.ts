@@ -21,21 +21,21 @@ export class AuthorBooksListItemComponent implements OnInit {
   fastEdit() {
     this.action.emit({
       data: this.book,
-      action: ActionType.fastEdit
+      type: ActionType.fastEdit
     });
   }
 
   edit() {
     this.action.emit({
       data: this.book,
-      action: ActionType.edit
+      type: ActionType.edit
     });
   }
 
   delete() {
     this.action.emit({
       data: this.book,
-      action: ActionType.delete
+      type: ActionType.delete
     });
   }
 

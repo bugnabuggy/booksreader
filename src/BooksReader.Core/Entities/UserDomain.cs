@@ -21,8 +21,8 @@ namespace BooksReader.Core.Entities
         public string Certificate { get; set; }
 
         public Guid VerificationCode { get; set; }
-        public DateTime? VerificationDate { get; set; }
-        public DateTime? VerificationRequested { get; set; }
+        public DateTimeOffset? VerificationDate { get; set; }
+        public DateTimeOffset? VerificationRequested { get; set; }
         public DomainVerificationType VerificationType { get; set; }
 
         [ForeignKey("OwnerId")]

@@ -134,7 +134,7 @@ export class DomainsListComponent {
   }
 
   doAction(action: Action<UserDomain>) {
-    let func = this.actions[action.action];
+    let func = this.actions[action.type];
     if (func && typeof func == 'function') {
       func.apply(this, [action.data]);
     }

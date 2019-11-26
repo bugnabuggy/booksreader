@@ -6,11 +6,15 @@ import { Endpoints } from '@br/config';
 
 import { 
   ReaderDashboardComponent,
-  ReaderProfileComponent } from './pages';
+  ReaderProfileComponent,
+  ReadBookComponent
+} from './pages';
 
 const routes: Routes = [
   { path: Endpoints.frontend.reader.dashboard, component: ReaderDashboardComponent, canActivate:[AuthGuard]},
-  { path: Endpoints.frontend.reader.profile, component: ReaderProfileComponent, canActivate:[AuthGuard]}
+  { path: Endpoints.frontend.reader.profile, component: ReaderProfileComponent, canActivate:[AuthGuard]},
+  { path: Endpoints.frontend.reader.readTheBook, component: ReadBookComponent, canActivate: [AuthGuard]}
+
 ];
 
 @NgModule({

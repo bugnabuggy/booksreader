@@ -14,7 +14,7 @@ namespace BooksReader.Core.Entities
 
         public Guid ChapterId { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTimeOffset Date { get; set; }
         public uint Version { get; set; }
         public string Content { get; set; }
         [MaxLength(1000)]

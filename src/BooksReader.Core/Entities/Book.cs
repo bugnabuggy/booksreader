@@ -28,8 +28,8 @@ namespace BooksReader.Core.Entities
 
         public string Picture { get; set; }
 
-		public DateTime Created { get; set; }
-		public DateTime? Published { get; set; }
+		public DateTimeOffset Created { get; set; }
+		public DateTimeOffset? Published { get; set; }
 
         public bool Verified { get; set; }
         public uint Version { get; set; }

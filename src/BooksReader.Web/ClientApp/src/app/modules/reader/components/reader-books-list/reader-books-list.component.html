@@ -1,1 +1,16 @@
-<p>reader-books-list works!</p>
+<ul class='br-books-list' *ngIf='books.length > 0' 
+    class="flex-1 br-books-list p-1">
+    <li *ngFor='let sub of books; let i = index'
+     class='m-1'>
+        <app-reader-books-list-item
+            [bookSubscription]="sub"
+            (action)='doAction($event)'
+            class="d-flex flex-column h-100 w-100 border"
+        >
+        </app-reader-books-list-item>
+    </li>
+</ul>
+
+<div *ngIf='books.length < 1'>
+    {{'READER.NO_SUBSCRIPTIONS' | translate}}
+</div>

@@ -58,7 +58,7 @@ namespace BooksReader.Services
 
             var application = new AuthorApplication()
             {
-                Created = DateTime.UtcNow,
+                Created = DateTimeOffset.UtcNow,
                 UserId = user.Id,
             };
             _authorApplicationsRepo.Add(application);

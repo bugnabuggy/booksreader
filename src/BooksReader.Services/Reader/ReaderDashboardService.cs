@@ -5,10 +5,12 @@ using System.Text;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Enums;
 using BooksReader.Core.Infrastrcture;
+using BooksReader.Core.Models.DTO;
 using BooksReader.Core.Models.DTO.Public;
 using BooksReader.Core.Models.DTO.Reader;
 using BooksReader.Core.Models.Requests.Reader;
 using BooksReader.Core.Services.Reader;
+using BooksReader.Dictionaries.Messages;
 using BooksReader.Utilities;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,25 +42,23 @@ namespace BooksReader.Services.Reader
 
             var data = query.Include(x=>x.Book).Select(x => new ReaderDashboardBookDto()
             {
-                Book = new BookMarketDto()
+                Book = new GeneralBook()
                 {
+                    BookId = x.BookId,
                     Title =  x.Book.Title,
-                    Published =  x.Book.Published,
                     IsForSale =  x.Book.IsForSale,
                     Picture = x.Book.Picture,
-                    SemanticUrl =  x.Book.SemanticUrl,
-                    Subscription =  x.EndDate.HasValue && x.EndDate.Value > DateTime.UtcNow
-                            ? SubscriptionStatus.Active
-                            : SubscriptionStatus.Ended,
-                    Author = x.Book.Author,
-                    
+                    Author = x.Book.Author
                 },
                 Subscription = new BookSubscriptionDto()
                 {
                     BookId = x.BookId,
                     StartDate = x.StartDate,
                     EndDate = x.EndDate,
-                    SubscriptionId = x.Id
+                    SubscriptionId = x.Id,
+                    Status = x.EndDate.HasValue && x.EndDate.Value > DateTimeOffset.UtcNow
+                        ? SubscriptionStatus.Active
+                        : SubscriptionStatus.Ended,
                 }
             });
 
@@ -70,6 +70,28 @@ namespace BooksReader.Services.Reader
                 PageNumber = filters.PageNumber,
                 PageSize = filters.PageSize
             };
+        }
+
+        public IOperationResult<object> RemoveSubscription(Guid bookId, BrUser user)
+        {
+            var result = new OperationResult();
+
+            var sub = _subscriptionsRepo.Data
+                .FirstOrDefault(x => x.BookId == bookId && x.UserId == user.Id);
+
+            if (sub == null)
+            {
+                result.Messages.Add(MessageStrings.ReaderMessages.NoSubscriptionForUser);
+                return result;
+            }
+
+            // todo: prevent removing not ended subscriptions
+
+            _subscriptionsRepo.Delete(sub);
+            result.Data = sub;
+            result.Success = true;
+
+            return result;
         }
     }
 }

@@ -1,7 +1,6 @@
 import { Injectable, Inject, Optional } from '@angular/core';
 import { HubConnectionBuilder, HubConnection, HubConnectionState, HttpTransportType } from '@aspnet/signalr';
 import { SecurityService } from '@br/core/services/security.service';
-import { UserService } from '@br/core/services/user.service';
 import { environment } from '@br/env/environment';
 import { from, of } from 'rxjs';
 import { LogoutData } from '@br/core/models';
@@ -22,7 +21,7 @@ export class UserHubService {
       .withUrl(environment.baseApiUrl + 'hub/user', { accessTokenFactory: () => this.security.token, transport: HttpTransportType.WebSockets })
       .build();
 
-
+    // events binding
     this.connection.on('GetStats', (val: any) => {
       console.log(val);
       alert(val);

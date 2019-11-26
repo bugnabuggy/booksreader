@@ -44,7 +44,9 @@ class Endpoints {
             profile: 'profile',
             profileUrl: '/' +  Endpoints.areas.reader + '/profile',
             dashboard: 'dashboard',
-            dashboardUrl: '/' +  Endpoints.areas.reader + '/dashboard'
+            dashboardUrl: '/' +  Endpoints.areas.reader + '/dashboard',
+            readTheBook: 'read-book/:bookId',
+            readTheBookUrl: '/' + Endpoints.areas.reader + '/read-book/:bookId',
         },
         admin: {
             dashboard: 'dashboard',
@@ -83,7 +85,7 @@ class Endpoints {
             becomeAnAuthor: Endpoints.baseApiUrl + 'api/user/author'
         },
         reader: {
-            books: Endpoints.baseApiUrl + 'api/books',
+            books: Endpoints.baseApiUrl + 'api/reader/books/{id}',
         },
         users: {
             all: Endpoints.baseApiUrl + 'api/admin/users',

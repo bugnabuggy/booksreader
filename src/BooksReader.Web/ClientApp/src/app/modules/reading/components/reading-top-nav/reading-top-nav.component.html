@@ -1,0 +1,12 @@
+<div class="py-2 mx-0 row">
+    <div class='col-auto'>
+        <button type="button" class='br-toggle-button' mat-raised-button color="primary" (click)="toggleChaptes.emit($event)">
+            Toggle chapters panel
+        </button>
+    </div>
+    <div class="col">
+        <div class="d-inline-block font-weight-bold text-truncat">
+            {{chapter?.title}}
+        </div>
+    </div>
+</div>

@@ -49,7 +49,6 @@ export class ProfileComponent implements OnInit {
       .subscribe(()=>{
         this.notifications.showSuccess(SiteMessages.user.profile.updated);
       }, err => {
-        debugger;
         this.notifications.showError(err.name);
       })
   }

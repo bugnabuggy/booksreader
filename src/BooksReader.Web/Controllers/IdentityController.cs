@@ -47,10 +47,10 @@ namespace BooksReader.Web.Controllers
         //public IActionResult GetAntiforgeryKey()
         //{
         //    var key = Guid.NewGuid();
-        //    var validTill = DateTime.UtcNow.AddMinutes(5);
+        //    var validTill = DateTimeOffset.UtcNow.AddMinutes(5);
 
         //    // cleanup, get lists 
-        //    var keysToRemove = StaticLists.AntiforgeryKeys.Where(pair => pair.Value <= DateTime.UtcNow).ToList();
+        //    var keysToRemove = StaticLists.AntiforgeryKeys.Where(pair => pair.Value <= DateTimeOffset.UtcNow).ToList();
         //    foreach (var keyValuePair in keysToRemove)
         //    {
         //        StaticLists.AntiforgeryKeys.Remove(keyValuePair.Key);
@@ -142,7 +142,7 @@ namespace BooksReader.Web.Controllers
 
             var logHistory = this._usersService.AddLoginHistory(new LoginHistory
             {
-                DateTime = DateTime.Now,
+                DateTimeOffset = DateTimeOffset.Now,
                 IpAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
                 Browser = HttpContext.Request.Headers["User-Agent"].ToString(),
                 Screen = Newtonsoft.Json.JsonConvert.SerializeObject(loginHistory.Screen),

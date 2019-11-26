@@ -76,7 +76,7 @@ namespace BooksReader.Services
                 BookPrices = x.Book.Prices,
                 Subscription = x.Book.Subscriptions.All(b => b.UserId != user.Id) 
                     ? SubscriptionStatus.None
-                    : x.Book.Subscriptions.FirstOrDefault(y =>y.UserId == user.Id).EndDate > DateTime.UtcNow
+                    : x.Book.Subscriptions.FirstOrDefault(y =>y.UserId == user.Id).EndDate > DateTimeOffset.UtcNow
                       ||
                       x.Book.Subscriptions.FirstOrDefault(y => y.UserId == user.Id).EndDate == null
                       ? SubscriptionStatus.Active
@@ -120,7 +120,7 @@ namespace BooksReader.Services
                     BookPrices = x.Book.Prices,
                     Subscription = x.Book.Subscriptions.All(b => b.UserId != user.Id)
                         ? SubscriptionStatus.None
-                        : x.Book.Subscriptions.FirstOrDefault(y => y.UserId == user.Id).EndDate > DateTime.UtcNow || 
+                        : x.Book.Subscriptions.FirstOrDefault(y => y.UserId == user.Id).EndDate > DateTimeOffset.UtcNow || 
                         x.Book.Subscriptions.FirstOrDefault(y => y.UserId == user.Id).EndDate == null 
                             ? SubscriptionStatus.Active
                             : SubscriptionStatus.Ended
@@ -155,14 +155,14 @@ namespace BooksReader.Services
 
 
             // TODO: implement payment checks for books for sale
-            DateTime? subscriptionEndDate = !book.IsForSale
+            DateTimeOffset? subscriptionEndDate = !book.IsForSale
                 ? null
-                : (DateTime?)DateTime.UtcNow.AddDays(book.SubscriptionDurationDays);
+                : (DateTimeOffset?)DateTimeOffset.UtcNow.AddDays(book.SubscriptionDurationDays);
 
             var subscription = new BookSubscription()
             {
                 BookId = bookId,
-                StartDate = DateTime.UtcNow,
+                StartDate = DateTimeOffset.UtcNow,
                 EndDate =  subscriptionEndDate,
                 UserId = user.Id,
             };

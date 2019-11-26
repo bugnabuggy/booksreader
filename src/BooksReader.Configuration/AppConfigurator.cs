@@ -7,10 +7,12 @@ using BooksReader.Core;
 using BooksReader.Core.Entities;
 using BooksReader.Core.Infrastrcture;
 using BooksReader.Core.Services;
+using BooksReader.Core.Services.Reader;
 using BooksReader.Infrastructure.Repositories;
 using BooksReader.Infrastructure.SeedData;
 using BooksReader.Infrastructure.Services;
 using BooksReader.Services;
+using BooksReader.Services.Reader;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -50,12 +52,14 @@ namespace BooksReader.Configuration
             services.AddTransient<IPublicService, PublicService>();
             services.AddTransient<IBookEditingService, BookEditingService>();
             services.AddTransient<IBookPricesService, BookPricesService>();
+            services.AddTransient<IBookMarketService, BookMarketService>();
+            services.AddTransient<IReaderDashboardService, ReaderDashboardService>();
 
             services.AddTransient<IAdminBooksService, AdminBooksService>();
             services.AddTransient<IBookChapterService, BookChapterService>();
 
+            services.AddTransient<IBookReadingService, BookReadingService>();
 
-            services.AddTransient<IBookMarketService, BookMarketService>();
         }
 
         public static void InitRolesAndUsers(IServiceProvider services)

@@ -25,13 +25,15 @@
       "@br/config/*": ["src/app/config/*"],
       "@br/public/*": ["src/app/modules/public/*"],
       "@br/reading/*": ["src/app/modules/reading/*"],
+      "@br/reader/*": ["src/app/modules/reader/*"],
       "@br/material/*": ["src/app/modules/material/*"],
       "@br/utilities/*": ["src/app/utilities/*"],
       "@br/controls/*": ["src/app/modules/controls/*"],
       "@br/shared/*": ["src/app/modules/shared/*"],
       "@br/core/*": ["src/app/modules/core/*"],
       "@br/test/*": ["src/tests/*"],
-      "@br/integrations/*": ["src/app/modules/integrations/*"]
+      "@br/integrations/*": ["src/app/modules/integrations/*"],
+      "@br/communications/*": ["src/app/modules/communications/*"]
     }
   }
 }

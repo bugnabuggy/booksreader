@@ -1,5 +1,9 @@
 <section class="p-2">
-    <h2>My books</h2>
-    <app-reader-books-list>
+    <h2>{{'READER.DASHBOARD.MY_BOOKS' | translate}}</h2>
+    <div>
+        {{'READER.DASHBOARD.FILTERS' | translate}}
+    </div>
+    <app-reader-books-list
+    [books]='data' >
     </app-reader-books-list>
 </section>

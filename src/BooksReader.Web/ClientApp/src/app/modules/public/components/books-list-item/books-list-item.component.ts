@@ -22,14 +22,14 @@ export class BooksListItemComponent implements OnInit {
 
   add() {
     this.action.emit({
-      action: ActionType.add,
+      type: ActionType.add,
       data: this.book
     });
   }
   
   buy() {
     this.action.emit({
-      action: ActionType.select,
+      type: ActionType.select,
       data: this.book
     });
   }

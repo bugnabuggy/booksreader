@@ -27,14 +27,19 @@ export class BookChaptersListComponent implements OnInit {
   }
 
   select(chapter: BookChapter) {
-    this.readingSvc.activeChapter.next(chapter);
+    this.readingSvc.setActiveChapter(chapter.id);
+    //this.readingSvc.activeChapter.next(chapter);
   }
 
   dec() {
-
+    this.selectedChapterIndex = this.selectedChapterIndex < 1 
+      ? this.chapters.length
+      : this.selectedChapterIndex - 1;
   }
 
   inc() {
-    
+    this.selectedChapterIndex = this.selectedChapterIndex > this.chapters.length -1 
+      ? 0
+      : this.selectedChapterIndex + 1;
   }
 }

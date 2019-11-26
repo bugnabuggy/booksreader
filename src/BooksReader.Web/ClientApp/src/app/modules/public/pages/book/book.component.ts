@@ -20,7 +20,6 @@ export class BookComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(x=> {
-      debugger;
       if(x.id){
         this.bookMarketSvc.get(x.id).subscribe(x => {
           this.book = x;

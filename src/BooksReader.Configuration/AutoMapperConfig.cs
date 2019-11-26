@@ -6,6 +6,7 @@ using BooksReader.Core.Entities;
 using BooksReader.Core.Models.DTO;
 using BooksReader.Core.Models.DTO.Admin;
 using BooksReader.Core.Models.DTO.Public;
+using BooksReader.Core.Models.DTO.Reader;
 using BooksReader.Core.Models.Requests;
 using BooksReader.Core.Models.Requests.Author;
 
@@ -25,6 +26,8 @@ namespace BooksReader.Configuration
                 .ForMember(x => x.BookId, opt => opt.MapFrom(y => y.Id));
 
             CreateMap<Book, BookMarketDto>();
+            CreateMap<Book, GeneralBook>()
+                .ForMember(x => x.BookId, opt => opt.MapFrom(y => y.Id));
 
             CreateMap<BookBasicInfoRequest, Book>();
             CreateMap<BookEditRequest, Book>();
@@ -33,7 +36,8 @@ namespace BooksReader.Configuration
             CreateMap<BookPriceRequest, BookPrice>();
 
             CreateMap<BookChapterRequest, BookChapter>();
-            
+
+            CreateMap<BookChapter, ChapterReadingDto>();
 
         }
     }

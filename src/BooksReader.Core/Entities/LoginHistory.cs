@@ -8,7 +8,7 @@ namespace BooksReader.Core.Entities
 	{
 		public Guid Id { get; set; }
 		public Guid UserId { get; set; }
-		public DateTime DateTime { get; set; }
+		public DateTimeOffset DateTimeOffset { get; set; }
 		public string IpAddress { get; set; }
 		public string Browser { get; set; }
 		public string Screen { get; set; }

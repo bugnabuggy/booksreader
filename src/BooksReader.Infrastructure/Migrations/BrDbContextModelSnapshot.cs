@@ -26,7 +26,7 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<bool>("Approved");
 
-                    b.Property<DateTime>("Created");
+                    b.Property<DateTimeOffset>("Created");
 
                     b.Property<Guid>("UserId");
 
@@ -70,7 +70,7 @@ namespace BooksReader.Infrastructure.Migrations
                     b.Property<string>("Author")
                         .HasMaxLength(1000);
 
-                    b.Property<DateTime>("Created");
+                    b.Property<DateTimeOffset>("Created");
 
                     b.Property<string>("Description")
                         .HasMaxLength(3000);
@@ -83,7 +83,7 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<string>("Picture");
 
-                    b.Property<DateTime?>("Published");
+                    b.Property<DateTimeOffset?>("Published");
 
                     b.Property<string>("SemanticUrl")
                         .HasMaxLength(256);
@@ -111,7 +111,7 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<string>("Content");
 
-                    b.Property<DateTime>("Created");
+                    b.Property<DateTimeOffset>("Created");
 
                     b.Property<string>("Description")
                         .HasMaxLength(3000);
@@ -145,7 +145,7 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<string>("Content");
 
-                    b.Property<DateTime>("Date");
+                    b.Property<DateTimeOffset>("Date");
 
                     b.Property<Guid>("OwnerId");
 
@@ -169,7 +169,7 @@ namespace BooksReader.Infrastructure.Migrations
                     b.Property<string>("Author")
                         .HasMaxLength(1000);
 
-                    b.Property<DateTime>("Created");
+                    b.Property<DateTimeOffset>("Created");
 
                     b.Property<string>("Description")
                         .HasMaxLength(3000);
@@ -195,7 +195,7 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<Guid>("BookId");
 
-                    b.Property<DateTime>("Created");
+                    b.Property<DateTimeOffset>("Created");
 
                     b.Property<int>("CurrencyId");
 
@@ -221,9 +221,9 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<string>("Comment");
 
-                    b.Property<DateTime?>("EndDate");
+                    b.Property<DateTimeOffset?>("EndDate");
 
-                    b.Property<DateTime>("StartDate");
+                    b.Property<DateTimeOffset>("StartDate");
 
                     b.Property<Guid>("UserId");
 
@@ -300,7 +300,7 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<string>("Browser");
 
-                    b.Property<DateTime>("DateTime");
+                    b.Property<DateTimeOffset>("DateTimeOffset");
 
                     b.Property<string>("Geolocation");
 
@@ -437,9 +437,9 @@ namespace BooksReader.Infrastructure.Migrations
 
                     b.Property<Guid>("VerificationCode");
 
-                    b.Property<DateTime?>("VerificationDate");
+                    b.Property<DateTimeOffset?>("VerificationDate");
 
-                    b.Property<DateTime?>("VerificationRequested");
+                    b.Property<DateTimeOffset?>("VerificationRequested");
 
                     b.Property<int>("VerificationType");
 
@@ -606,7 +606,7 @@ namespace BooksReader.Infrastructure.Migrations
 
             modelBuilder.Entity("BooksReader.Core.Entities.BookSubscription", b =>
                 {
-                    b.HasOne("BooksReader.Core.Entities.Book")
+                    b.HasOne("BooksReader.Core.Entities.Book", "Book")
                         .WithMany("Subscriptions")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -53,6 +53,11 @@ namespace BooksReader.Web.Controllers.Author
                 return Forbid(MessageStrings.DoNotHavePermissions);
             }
 
+            if (!filters.UserId.HasValue)
+            {
+                filters.UserId = BrUser.Id;
+            }
+
             var result = _bookEditingSvc.GetBooks(filters);
 
             return StandardReturn(result);

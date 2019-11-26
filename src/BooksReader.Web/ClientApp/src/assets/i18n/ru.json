@@ -34,7 +34,6 @@
     "VERIFIED":"Верифицированна"
   },
 
-
   "CHAPTERS" : {
     "CHAPTER_DELETE_QUESTION": "Вы уверенны что хотите удалить главу [{{title}}]?"
   },
@@ -44,5 +43,18 @@
     "FILTERS": "Фильтры",
     "BUY": "Купить",
     "ADD": "Добавить в библиотеку"
+  },
+
+  "READER": {
+    "DASHBOARD": {
+      "READ" : "Читать книгу",
+      "UNSUBSCRIBE": "Отписаться от книги",
+      "MY_BOOKS": "Мои подписки на книги",
+      "FILTERS": "Фильтры",
+      "SUBSCRIPTION_START":"Дата начала подписки",
+      "SUBSCRIPTION_END":"Дата окончания подписки",
+      "FREE_SUBSCRIPTION": "Бесплатная подписка"
+    }
   }
+
 }

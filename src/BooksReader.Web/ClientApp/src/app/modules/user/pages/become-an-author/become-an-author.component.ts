@@ -29,7 +29,6 @@ export class BecomeAnAuthorComponent implements OnInit {
         this.userSvc.refresh();
         this.router.navigateByUrl(Endpoints.frontend.author.profileUrl);
     }, err => {
-      debugger;
       this.notifications.showError(err.error || err.message);
     });
   }

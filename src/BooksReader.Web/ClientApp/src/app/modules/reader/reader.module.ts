@@ -6,15 +6,22 @@ import { ReaderProfileComponent } from './pages/reader-profile/reader-profile.co
 import { ReaderDashboardComponent } from './pages/reader-dashboard/reader-dashboard.component';
 import { ReaderBooksListComponent } from './components/reader-books-list/reader-books-list.component';
 import { ReaderBooksListItemComponent } from './components/reader-books-list-item/reader-books-list-item.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from '@br/shared/shared.module';
+import { ReadBookComponent } from './pages/read-book/read-book.component';
+import { ReadingModule } from '@br/reading/reading.module';
 
 @NgModule({
   declarations: [
     ReaderProfileComponent, 
-    ReaderDashboardComponent, ReaderBooksListComponent, ReaderBooksListItemComponent, 
+    ReaderDashboardComponent, ReaderBooksListComponent, ReaderBooksListItemComponent, ReadBookComponent, 
     ],
   imports: [
     CommonModule,
-    ReaderRoutingModule
+    TranslateModule.forChild(),
+    SharedModule,
+    ReaderRoutingModule,
+    ReadingModule
   ]
 })
 export class ReaderModule { }

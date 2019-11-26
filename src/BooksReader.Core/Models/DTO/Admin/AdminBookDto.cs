@@ -9,8 +9,8 @@ namespace BooksReader.Core.Models.DTO.Admin
         public Guid BookId { get; set; }
         public string BookTitle { get; set; }
         public string Username { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime? Published { get; set; }
+        public DateTimeOffset Created { get; set; }
+        public DateTimeOffset? Published { get; set; }
         public bool IsPublished { get; set; }
         public bool Verified { get; set; }
 

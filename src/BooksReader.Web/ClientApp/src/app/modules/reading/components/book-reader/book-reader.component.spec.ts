@@ -1,11 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BookReaderComponent } from './book-reader.component';
+import { CoreModule } from '@br/core/core.module';
 import { COMMON_TESTING_MODULES, COMMON_VISUAL_MODULES } from '@br/test/common-dependencies-modules';
 import { BookChaptersListComponent } from '../book-chapters-list/book-chapters-list.component';
 import { BookContentReaderComponent } from '../book-content-reader/book-content-reader.component';
 import { BookChapterInfoComponent } from '../book-chapter-info/book-chapter-info.component';
-import { CoreModule } from '@br/core/core.module';
+import { ReadingTopNavComponent } from '../reading-top-nav/reading-top-nav.component';
 
 describe('BookReaderComponent', () => {
   let component: BookReaderComponent;
@@ -17,7 +18,8 @@ describe('BookReaderComponent', () => {
         BookReaderComponent,
         BookChaptersListComponent,
         BookContentReaderComponent,
-        BookChapterInfoComponent
+        BookChapterInfoComponent,
+        ReadingTopNavComponent
        ],
        imports:[
          CoreModule,

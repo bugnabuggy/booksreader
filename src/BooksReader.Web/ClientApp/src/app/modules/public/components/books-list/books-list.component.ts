@@ -33,8 +33,7 @@ export class BooksListComponent implements OnInit {
   }
 
   doAction(event: Action<BookMarketDto>) {
-    let func = this.actions[event.action];
-    debugger;
+    let func = this.actions[event.type];
     if( !this.userSvc.authorized) {
       const dialogRef = this.dialog.open(LoginOrRegisterComponent, {
         minHeight: "50%",
@@ -51,7 +50,6 @@ export class BooksListComponent implements OnInit {
   add(book: BookMarketDto) {
     this.bookMarketSvc.add(book)
     .subscribe(x => {
-        debugger;
         this.notifications.showSuccess(SiteMessages.booksMarket.bookAdded);
         this.books.find(y => y.bookId == x.data.bookId).subscription = SubscriptionStatus.active;
     }, err=>{

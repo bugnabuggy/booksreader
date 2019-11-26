@@ -74,7 +74,7 @@ namespace BooksReader.Services
             var chapters = _chaptersRepo.Data.AsNoTracking()
                                 .Where(x => x.BookId == bookId);
 
-            bookChapter.Created = DateTime.UtcNow;
+            bookChapter.Created = DateTimeOffset.UtcNow;
             bookChapter.Version = 0;
             bookChapter.OwnerId = user.Id;
             bookChapter.Number = chapters.Any() 

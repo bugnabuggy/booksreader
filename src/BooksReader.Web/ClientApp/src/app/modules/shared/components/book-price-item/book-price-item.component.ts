@@ -62,7 +62,7 @@ export class BookPriceItemComponent implements OnInit, OnChanges, OnDestroy {
 
   close(item: BookPrice) {
     this.doAction.emit({
-      action: ActionType.close,
+      type: ActionType.close,
       data: item
     } as Action<BookPrice>);
   }
@@ -71,21 +71,21 @@ export class BookPriceItemComponent implements OnInit, OnChanges, OnDestroy {
     let data = this.editForm.value;
 
     this.doAction.emit({
-      action: ActionType.save,
+      type: ActionType.save,
       data: data
     } as Action<BookPrice>);
   }
 
   delete(item: BookPrice) {
     this.doAction.emit({
-      action: ActionType.delete,
+      type: ActionType.delete,
       data: item
     } as Action<BookPrice>);
   } 
 
   select(item: BookPrice) {
     this.doAction.emit({
-      action: ActionType.select,
+      type: ActionType.select,
       data: item
     } as Action<BookPrice>);
   }

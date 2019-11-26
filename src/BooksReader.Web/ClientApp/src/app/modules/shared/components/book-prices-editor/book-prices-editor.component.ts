@@ -55,7 +55,7 @@ export class BookPricesEditorComponent implements OnInit, OnChanges{
   }
 
   doAction(action: Action<BookPrice>) {
-    let actionFunc = this.actions[action.action];
+    let actionFunc = this.actions[action.type];
 
     if(actionFunc){
       actionFunc = actionFunc.bind(this);
@@ -80,8 +80,6 @@ export class BookPricesEditorComponent implements OnInit, OnChanges{
   }
 
   save(item: BookPrice) {
-    debugger;
-
     item = ClearNullValues(item);
 
     const observable = item.id

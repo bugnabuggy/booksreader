@@ -1,1 +1,45 @@
-<p>reader-books-list-item works!</p>
+<div class="br-book-market-list-item d-flex flex-column p-1">
+    <h4 class="">
+        {{bookSubscription.book.title}}
+    </h4>
+    <h5>
+        {{bookSubscription.book.author}}
+    </h5>
+    <figure class="flex-1 d-flex justify-content-center m-0">
+        <img *ngIf='bookSubscription.book.picture' class="" [src]="bookSubscription.book.picture" alt="">
+    </figure>
+
+    <div>
+            {{"READER.DASHBOARD.SUBSCRIPTION_START" | translate}}: {{bookSubscription.subscription.startDate | date:'yyyy/MM/dd hh:mm'}}
+    </div>
+    <div *ngIf="bookSubscription.subscription.endDate">
+            {{"READER.DASHBOARD.SUBSCRIPTION_ENDS" | translate}}: {{bookSubscription.subscription.endDate | date:'yyyy/MM/dd hh:mm'}}
+    </div>
+    <div *ngIf="!bookSubscription.subscription.endDate">
+            {{"READER.DASHBOARD.FREE_SUBSCRIPTION" | translate}} 
+    </div>
+    <div>
+        <div>
+                <button 
+                (click)='read()'
+                class="w-100"
+                mat-button 
+                color="primary" 
+                [title]='"READER.DASHBOARD.READ" | translate'>
+                    {{"READER.DASHBOARD.READ" | translate}}
+                    <i class="fas fa-book-open"></i>
+                </button>
+        </div>
+        <div >
+                <button 
+                class="w-100"
+                (click)='remove()' 
+                mat-button color="accent" 
+                [title]='"READER.DASHBOARD.UNSUBSCRIBE" | translate'>
+                    {{"READER.DASHBOARD.UNSUBSCRIBE" | translate}}
+                    <mat-icon>delete_forever</mat-icon>
+                </button>
+        </div>
+    </div>
+    
+</div>

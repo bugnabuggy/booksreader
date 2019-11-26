@@ -21,6 +21,6 @@ namespace BooksReader.Core.Entities
         public string Description { get; set; }
 
         public uint Version { get; set; }
-        public DateTime Created { get; set; }
+        public DateTimeOffset Created { get; set; }
     }
 }
